@@ -1,0 +1,402 @@
+/*  general */
+
+MxButton:scanning { 
+    color: #ccc;
+    border-image: url("black_flat.png");
+}
+
+PisakButton:disabled{
+    color: grey;
+    font-size: 20pt;
+    font-family: serif;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakClock {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+
+/* Loading panel  */
+
+MxLabel.LoadingPanel {
+  font-family: Kelson Sans;
+  font-size: 50pt;
+  font-weight: bold;
+  color: black;
+}
+
+
+/* Main panel */
+
+PisakButton.PisakMainPanelButton {
+    color: black;
+    font-size: 35pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakMainPanelButton:hover {
+    color: white;
+    border-image: url("purple_flat.png") 5;
+}
+
+
+/* Speller */
+
+PisakSpellerText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+    border-image: url("fence_frame.png");
+}
+
+PisakButton.PisakSpellerButton, PisakSpellerKey, PisakSpellerPrediction {
+    color: rgb(62, 62, 62);
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("white_curve.png") 25;
+}
+
+PisakButton.PisakSpellerButton:hover, PisakSpellerKey:hover, PisakSpellerPrediction:hover {
+    color: white;
+    border-image: url("cardinal_curve.png") 25;
+}
+
+PisakButton.PisakSpellerButton:active, PisakSpellerKey:active, PisakSpellerPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakSpellerButton:scanning, MxButton.PisakSpellerKey:scanning, MxButton.PisakSpellerPrediction:scanning {
+    color: white;
+    border-image: url("willow_green_curve.png") 25;
+}
+
+MxButton.PisakSpellerButton:disabled, MxButton.PisakSpellerKey:disabled, MxButton.PisakSpellerPrediction:disabled {
+    color: grey;
+    border-image: url("white_curve.png") 25;
+}
+
+
+/* Viewer */
+
+MxProgressBar.PisakViewerProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakViewerProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakViewerProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+MxLabel.PisakViewerPhotoTile {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+MxLabel.PisakViewerAlbumHeader {
+  font-size: 40pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakButton.PisakViewerButton {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+
+}
+
+PisakButton.PisakViewerButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakViewerButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+
+/* Paint */
+
+PisakButton.PisakPaintButton {
+  color: white;
+  font-size: 15pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+}
+
+PisakButton.PisakPaintButton:hover {
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakPaintButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PaintColorMenu {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+MxLabel.PaintLineMenu {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+PisakButton.PisakPaintColorButton {
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakPaintColorButton:hover {
+    border-image: url("purple_frame.png") 5;
+}
+
+MxStack.PisakPaintEaselFrame {
+    padding: 5 5 5 5;
+    border-image: url("black_frame.png") 5;
+}
+
+
+/* Symboler */
+
+PisakButton.PisakSymbolerButton {
+   color: black;
+   font-size: 18pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakSymbolerButton:hover {
+   color: white;
+   border-image: url("purple_flat.png");
+}
+
+
+MxButton.PisakSymbolerButton:scanning { 
+    color: #ccc;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakSymbolerButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakSlider.PisakSymbolerSlider {
+  -mx-trough-height: 15;
+  -mx-handle-height: 15;
+  -mx-handle-width: 25;
+}
+
+MxLabel.PisakSymbolerPhotoTileLabel {
+  font-family: Kelson Sans;
+  font-size: 16pt;
+  color: black;
+}
+
+MxFrame.PisakSymbolerEntryBackground {
+  border-image: url("fence_frame.png");
+}
+
+PisakSlider.PisakSymbolerSlider *#trough-background {
+   border-image: url("fence_frame.png") 2 2 2 2;
+}
+
+PisakSlider.PisakSymbolerSlider *#fill {
+}
+
+PisakSlider.PisakSymbolerSlider > MxButton {
+   border-image: url("black_flat.png");
+}
+
+PisakSlider.PisakSymbolerSlider {
+  -mx-trough-height: 15;
+  -mx-handle-height: 15;
+  -mx-handle-width: 25;
+}
+
+
+/* Audio */
+
+MxLabel.PisakAudioHeader {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+MxLabel.PisakAudioFolderTile {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+MxScrollBar *.vtrough {
+  border-image: url("white_flat.png") 5;
+}
+
+MxScrollBar MxButton.vhandle, MxScrollBar MxButton.vhandle:hover, MxScrollBar MxButton.vhandle:active {
+  border-image: url("cyan_flat.png");
+}
+
+MxButton.up-stepper, MxButton.up-stepper:hover, MxButton.up-stepper:active {
+  -mx-content-image: url("transparent.png");
+}
+
+MxButton.down-stepper, MxButton.down-stepper:hover, MxButton.down-stepper:active {
+  -mx-content-image: url("transparent.png");
+}
+
+PisakFrame.PisakAudioPlaylist {
+   border-image: url("white_frame_open.png") 5;
+}
+
+PisakFrame.PisakAudioFolderTile {
+   border-image: url("white_frame.png") 5;
+}
+
+MxLabel.PisakAudioPlaylistInfo {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+PisakButton.PisakAudioButton {
+   color: white;
+   font-size: 15pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("white_frame.png") 5;
+}
+
+PisakButton.PisakAudioButton:hover {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakAudioButton:toggled {
+}
+
+PisakButton.PisakAudioPlaylistButton {
+   color: white;
+   font-size: 20pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("transparent.png") 5;
+}
+
+PisakButton.PisakAudioPlaylistButton:hover {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakAudioPlaylistButton:toggled {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakAudioButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxProgressBar.PisakAudioProgressBar {
+  border-image: url("white_flat.png");
+}
+
+MxProgressBarFill.PisakAudioProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakAudioProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+
+/*Movie*/
+
+MxLabel.PisakMoviePhotoTile {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+MxLabel.PisakMovieHeader {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+PisakFrame.PisakMoviePhotoTile {
+   border-image: url("white_frame.png") 5;
+}
+
+PisakButton.PisakMovieButton {
+   color: white;
+   font-size: 15pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("white_frame.png") 5;
+}
+
+PisakButton.PisakMovieButton:hover {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakMovieButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakButton.PisakMovieButton:toggled {
+}
+
+PisakButton.PisakMovieButton:working {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+MxLabel.PisakMovieClock {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+MxProgressBar.PisakMovieProgressBar {
+  border-image: url("white_flat.png");
+}
+
+MxProgressBarFill.PisakMovieProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakMovieProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}

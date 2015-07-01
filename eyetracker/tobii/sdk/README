@@ -1,0 +1,16 @@
+
+Tobii SDK can be obtained from http://developer.tobii.com/
+
+You will need the following files:
+
+include/tobiigaze.h
+include/tobiigaze_calibration.h
+include/tobiigaze_callback_types.h
+include/tobiigaze_data_types.h
+include/tobiigaze_define.h
+include/tobiigaze_discovery.h
+include/tobiigaze_display_area.h
+include/tobiigaze_error_codes.h
+include/tobiigaze_ext.h
+lib/libtobiigazecore.so
+

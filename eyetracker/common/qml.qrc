@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="calibration.qml">calibration.qml</file>
+        <file alias="eye.svg">eye.svg</file>
+        <file alias="no_eye.svg">no_eye.svg</file>
+    </qresource>
+</RCC>

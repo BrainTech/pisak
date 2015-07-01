@@ -1,0 +1,177 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box_group", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box_group",
+        "type": "PisakScanningGroup",
+        "children": ["main_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "y-align": "end",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.05,
+        "ratio-margin-bottom": 0.04,
+        "ratio-spacing": 0.015,
+        "orientation": "vertical",
+        "children": ["progress_bar", "middle_box", "header"]
+    },
+    {
+        "id": "header",
+        "type": "MxLabel",
+        "style-class": "PisakViewerAlbumHeader",
+        "x-expand": true,
+        "margin-right": 100,
+        "x-align": "end"
+    },
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.05,
+        "children": ["pager", "button_menu"]
+    },
+    {
+        "id": "button_menu",
+        "type": "PisakScanningGroup",
+        "children": ["button_menu_box"],
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "button_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.015,
+        "y-expand": true,
+        "y-align": "end",
+        "children": ["button_start", "button_library",  "button_select_page", "button_next_page",
+                     "button_automatic"]
+    },
+    {
+        "id": "button_library",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "BIBLIOTEKA",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "bib"
+    },
+    {
+        "id": "button_start",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "PANEL STARTOWY",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+        "id": "button_automatic",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "icon-size": 50,
+	"scanning-pauser": true,
+        "label": "AUTOMAT",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-name": "auto",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "pager/toggle_automatic",
+                           "object": "pager"
+                       }
+                    ]
+    },
+    {
+        "id": "button_select_page",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "WYBIERZ ZDJĘCIE",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "oryginal",
+        "disabled_when": "scanning_off",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "pager/scan_page",
+                           "object": "pager"
+                       }
+                    ]
+    },
+    {
+        "id": "button_next_page",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "DALEJ",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "next",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "pager/next_page",
+                           "object": "pager"
+                       }
+                    ]
+    },
+    {
+        "id": "pager",
+        "type": "PisakPagerWidget",
+        "transition-duration": 1000,
+        "idle-duration": 3000,
+        "page-ratio-spacing": 0.015,
+        "ratio-height": 0.75,
+        "ratio-width": 0.71,
+        "y-align": "start",
+        "rows": 3,
+        "columns": 3,
+        "page-strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "button_menu"
+        },
+        "data-source": "library_data"
+    },
+    {
+        "id": "library_data",
+        "type": "PisakViewerAlbumTilesSource",
+        "item-preview-ratio-height": 1,
+        "item-preview-ratio-width": 1
+    },
+    {
+        "id": "progress_bar",
+        "type": "PisakProgressBar",
+        "style-class": "PisakViewerProgressBar",
+        "label": {"type": "MxLabel"},
+        "ratio-width": 1,
+        "followed-object": "pager",
+        "progress-transition-duration": 1000,
+        "ratio-height": 0.05,
+        "label-ratio-x-offset": 0.85
+    }
+]

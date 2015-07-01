@@ -1,0 +1,583 @@
+[
+    {
+        "id": "main",
+        "type": "PisakScanningGroup",
+        "x-expand": true,
+        "y-expand": true,
+        "strategy": {
+            "id": "main_strategy",
+            "type": "PisakArbitraryOrderStrategy",
+            "subgroup-order": "entry_menu, symboler_menu, pager_menu"
+        },
+        "children": [
+                        "main_box", "background_box"
+                    ]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "center",
+        "x-expand": true,
+        "y-expand": true,
+        "orientation": "vertical",
+        "children": [
+                        "lower_box", "upper_bin"
+                    ]
+    },
+    {
+        "id": "upper_bin",
+        "type": "PisakBinLayout",
+        "x-align": "center",
+        "ratio-height": 0.14117647,
+        "ratio-width": 1,
+        "children": [
+                        "upper_box", "entry_background"
+                    ]
+    },
+    {
+        "id": "entry_background",
+        "type": "MxFrame",
+        "style-class": "PisakSymbolerEntryBackground",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "upper_box",
+        "type": "PisakBoxLayout",
+        "x-align": "end",
+        "ratio-width": 1,
+        "y-expand": true,
+        "ratio-margin-right": 0.02950819,
+        "ratio-spacing": 0.005,
+        "children": [
+                        "entry_menu", "entry"
+                    ]
+    },
+    {
+        "id": "lower_box",
+        "type": "PisakBoxLayout",
+        "x-align": "center",
+        "y-align": "start",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-spacing": 0.022950819,
+        "orientation": "horizontal",
+        "children": [
+                        "pager_menu", "pager_box_group", "symboler_menu"
+                    ]
+    },
+    {
+        "id": "entry",
+        "type": "PisakSymbolerEntry",
+        "ratio-width": 0.935,
+        "y-expand": true,
+        "tile-ratio-height": 0.157,
+        "tile-ratio-width": 0.11,
+        "tile-preview-ratio-height": 0.125,
+        "tile-preview-ratio-width": 0.11,
+        "tile-ratio-spacing": 0.0005
+    },
+    {
+        "id": "entry_menu",
+        "type": "PisakScanningGroup",
+        "children": ["entry_menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "main"
+        }
+    },
+    {
+        "id": "entry_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-margin-top": 0.0028823,
+        "y-align": "center",
+        "y-expand": true,
+        "ratio-spacing": 0.00529411,
+        "children": [
+                        "entry_button_2", "entry_button_1"
+                    ]
+    },
+    {
+        "id": "entry_button_1",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.032786885,
+        "ratio-height": 0.0588235294,
+        "icon-size": 14,
+        "icon-name": "nav_right",
+        "signals": [
+                        {
+                                "name": "clicked",
+                                "handler": "symboler/scroll_right",
+                                "object": "entry"
+                        }
+                    ]
+    },
+    {
+        "id": "entry_button_2",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.032786885,
+        "ratio-height": 0.0588235294,
+        "icon-size": 14,
+        "icon-name": "nav_left",
+        "signals": [
+                        {
+                                "name": "clicked",
+                                "handler": "symboler/scroll_left",
+                                "object": "entry"
+                        }
+        ]
+    },
+    {
+        "id": "pop_up_scanning_group",
+        "type": "PisakScanningGroup",
+        "scanning-hilite": true,
+        "x-expand": true,
+        "y-expand": true,
+        "background-color": "rgba(0, 0, 0, 0.4)",
+        "reactive": true,
+        "strategy": {
+                        "type": "PisakRowStrategy",
+                        "max-cycle-count": -1
+                    },
+        "children": ["pop_up_box", "pop_up_background"]
+    },
+    {
+        "id": "pop_up_background",
+        "type": "PisakBackgroundPattern",
+        "background-color": "white",
+        "ratio-width": 0.8,
+        "ratio-height": 0.8
+    },
+    {
+        "id": "pop_up_box",
+        "type": "PisakSymbolerPopUp",
+        "target": "entry",
+        "row-count": 3,
+        "column-count": 3,
+        "background-scene": "main",
+        "orientation": "vertical",
+        "ratio-margin-top": 0.1,
+        "ratio-margin-bottom": 0.1,
+        "ratio-margin-left": 0.1,
+        "ratio-margin-right": 0.1,
+        "ratio-spacing": 0.07,
+        "tile-ratio-height": 0.1,
+        "tile-ratio-width": 0.2,
+        "children": ["pop_up_space", "pop_up_header"]
+    },
+    {
+        "id": "pop_up_header",
+        "type": "ClutterText",
+        "font-name": "Kelson Sans light 30",
+        "line-alignment": "center"
+    },
+    {
+        "id": "pop_up_space",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.07,
+        "orientation": "vertical"
+    },
+    {
+        "id": "menu_header",
+        "type": "PisakMenuHeader",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.04852941,
+        "name": "funkcjenapis"
+    },
+    {
+        "id": "symboler_menu",
+        "type": "PisakScanningGroup",
+        "children": ["symboler_menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "main"
+        }
+    },
+    {
+        "id": "symboler_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-margin-top": 0.011764705,
+        "y-align": "start",
+        "y-expand": true,
+        "ratio-spacing": 0.011764705,
+        "children": [
+                        "button_exit", "button_7",
+                        "button_5","button_4", "button_6", "button_3",
+                        "button_2", "button_1", "menu_header"
+                    ]
+    },
+    {
+        "id": "button_1",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "text": "PISANIE",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "TABLICA",
+        "icon-name": "bliss",
+        "disabled_when": "scanning_off",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "pager/scan_page",
+                "object": "pager"
+            }
+        ]
+    },
+    {
+        "id": "button_2",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "text": "ZAPISZ",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "ZAPISZ",
+        "icon-name": "zapisz",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/save",
+                           "object": "pop_up_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_3",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "text": "WCZYTAJ",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "WCZYTAJ",
+        "icon-name": "wczytaj",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/load",
+                           "object": "pop_up_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_4",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "disabled": true,
+        "text": "WYŚLIJ",
+        "x-align": "start",
+        "disabled": true,
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "WYŚLIJ",
+        "icon-name": "wyslij"
+    },
+    {
+        "id": "button_5",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "disabled": true,
+        "text": "DRUKUJ",
+        "x-align": "start",
+        "disabled": true,
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "DRUKUJ",
+        "icon-name": "drukuj"
+    },
+    {
+        "id": "button_6",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "text": "NOWY DOKUMENT",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "NOWY",
+        "icon-name": "nowy_dokument",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/clear_all",
+                           "object": "entry"
+                       }
+                    ]
+        
+    },
+    {
+        "id": "button_7",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "disabled": true,
+        "text": "WRÓĆ",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "WRÓĆ",
+        "icon-name": "powrot"
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "text": "PANEL STARTOWY",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.082352941,
+        "icon-size": 50,
+        "label": "WYJŚCIE",
+        "icon-name": "wyjdz"
+    },
+    {
+        "id": "pager_box_group",
+        "type": "PisakScanningGroup",
+        "children": ["pager_box"],
+        "strategy": {
+            "id": "pager_group_strategy",
+            "type": "PisakRowStrategy",
+	    "unwind-to": "main"
+        }
+    },
+    {
+        "id": "pager_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "y-align": "start",
+        "y-expand": true,
+        "x-align": "center",
+        "ratio-margin-top": 0.0711176470,
+        "ratio-spacing": 0.0411764705,
+        "children": [
+                        "slider_bin", "pager"
+                    ]
+    },
+    {
+        "id": "slider_bin",
+        "type": "PisakBinLayout",
+        "ratio-width": 0.714754,
+        "ratio-height": 0.0176470588,
+        "children": ["slider"]
+    },
+    {
+        "id": "slider",
+        "type": "PisakSlider",
+        "style-class": "PisakSymbolerSlider",
+        "y-expand": true,
+        "x-expand": true,
+        "followed-object": "pager"
+    },
+    {
+        "id": "pager",
+	"background-color": "black",
+        "type": "PisakPagerWidget",
+        "data-source": "data_source",
+        "transition-duration": 1000,
+        "idle-duration": 3000,
+        "page-ratio-spacing": 0.005,
+        "ratio-height": 0.6795,
+        "ratio-width": 0.714754,
+        "y-align": "start",
+        "page-strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "main"
+        }
+    },
+    {
+        "id": "data_source",
+        "type": "PisakSymbolerTilesSource",
+        "target": "entry",
+        "item-preview-ratio-height": 0.7,
+        "item-preview-ratio-width": 0.9,
+        "item-ratio-spacing": 0.01
+    },
+    {
+        "id": "pager_menu",
+        "type": "PisakScanningGroup",
+        "children": ["pager_menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "main"
+        }
+    },
+    {
+        "id": "pager_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "y-align": "start",
+        "y-expand": true,
+        "ratio-margin-top": 0.070588235,
+        "ratio_spacing": 0.011764705,
+        "children": [
+                        "pager_button_5", "pager_button_8", "pager_button_6",
+                        "pager_button_4", "pager_button_7", "pager_button_3",
+                        "pager_button_2", "pager_button_1"
+                    ]
+    },
+    {
+        "id": "pager_button_1",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+	"scanning-pauser": true,
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "auto_symboler",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "pager/toggle_automatic",
+                           "object": "pager"
+                       }
+                    ]
+    },
+    {
+        "id": "pager_button_2",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "nav_right",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "pager/next_page",
+                           "object": "pager"
+                       }
+                    ]
+    },
+    {
+        "id": "pager_button_3",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "nav_left",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "pager/previous_page",
+                           "object": "pager"
+                       }
+                    ]
+    },
+    {
+        "id": "pager_button_4",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "backspace",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/backspace",
+                           "object": "entry"
+                       }
+                    ]
+    },
+    {
+        "id": "pager_button_5",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "disabled": true,
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.09,
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "cofnij"
+    },
+    {
+        "id": "pager_button_6",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "przeczytaj",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/text_to_speech",
+                           "object": "entry"
+                       }
+                    ]
+    },
+    {
+        "id": "pager_button_7",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "bliss",
+        "disabled_when": "scanning_off",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "pager/scan_page",
+                "object": "pager"
+            }
+        ]    
+    },
+    {
+        "id": "pager_button_8",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "x-align": "start",
+        "text": " ",
+        "ratio-width": 0.049180327,
+        "ratio-height": 0.082352941,
+        "icon-size": 37,
+        "icon-name": "funkcje",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "scanning/set_pending_group",
+                "object": "symboler_menu"
+            }
+        ]
+    }
+]
