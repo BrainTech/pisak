@@ -9,7 +9,7 @@ from collections import OrderedDict
 from functools import total_ordering
 
 from gi.repository import Clutter, GObject
-from pisak import res, logger
+from pisak import res, logger, exceptions
 from pisak.libs import properties, scanning, layout, unit, configurator, unit
 
 
@@ -100,6 +100,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._length = 0
         # synchronization for an access to the `data` buffer.
         self._lock = threading.RLock()
+        # something to do when new data is available..
+        self.on_new_data = None
 
         self._init_lazy_props()
 
@@ -310,30 +312,34 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     def _prepare_filler(self, filler):
         filler.set_background_color(Clutter.Color.new(255, 255, 255, 0))
 
-    def get_items_forward(self, count):
+    def query_items_forward(self, count):
         """
-        Return given number of forward items generated from data.
+        Query a given number of forward items generated from data.
         Method is compatible with a normal topology mode but NOT with
         a custom one. Data items are picked from a flat data list.
 
-        :param count: number of items to be returned
+        :param count: number of items to be returned.
+
+        :return: list of data items or None if in the lazy loading mode.
         """
         self.from_idx = self.to_idx % self._length if \
                                         self._length > 0 else 0
         self.to_idx = min(self.from_idx + count, self._length)
 
         if self.lazy_loading:
-            self._ensure_data(1)
+            self._schedule_sending_data(1)
+        else:
+            return self._generate_items_normal()
 
-        return self._generate_items_normal()
-
-    def get_items_backward(self, count):
+    def query_items_backward(self, count):
         """
-        Return given number of backward items generated from data.
+        Query a given number of backward items generated from data.
         Method is compatible with a normal topology mode but NOT with
         a custom one. Data items are picked from a flat data list.
 
-        :param count: number of items to be returned
+        :param count: number of items to be returned.
+
+        :return: list of data items or None if in the lazy loading mode.
         """ 
         rows, cols = self.target_spec["rows"], self.target_spec["columns"]
         self.to_idx = self.from_idx or self._length
@@ -345,9 +351,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
             self.from_idx = self.to_idx - count
 
         if self.lazy_loading:
-            self._ensure_data(-1)
-
-        return self._generate_items_normal()
+            self._schedule_sending_data(-1)
+        else:
+            return self._generate_items_normal()
 
     def next_data_set(self):
         """
@@ -505,16 +511,35 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.data = self.produce_data(list(self._lazy_data.values()),
                                       self._data_sorting_key)
 
-    def _ensure_data(self, direction):
+    def _schedule_sending_data(self, direction):
         """
-        Ensure there is data available, that is needed in the current query.
-        If not, wait until it comes. Data should be loaded in a background.
+        Schedule sending the data when they are avilable.
+        Data should be loaded in a background.
 
         :param direction: -1 or 1, that is whether data should be
-        ensured backward or forward.
+        sent from backward or forward.
         """
-        while not self._has_data(direction):
-            time.sleep(0.1)
+        Clutter.threads_add_timeout(0, 0.1, self._send_data, direction)
+
+    def _send_data(self, direction):
+        """
+        Send the data somewhere.
+
+        :param direction: data in which direction should be sent.
+
+        :return: True when no data available or False after sending the data.
+        """
+        if self._has_data(direction):
+            if not callable(self.on_new_data):
+                raise exceptions.PisakException('No data receiver has been declared.')
+            try:
+                self.on_new_data(self._generate_items_normal())
+            except TypeError as exc:
+                _LOG.error(exc)
+                raise
+            return False
+        else:
+            return True
 
     def _has_data(self, direction):
         """
@@ -693,6 +718,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.page_index = 0
         self._page_count = 1
         self.page_spacing = 0
+        self._current_direction = 0
         self.old_page_transition = Clutter.PropertyTransition.new("x")
         self.new_page_transition = Clutter.PropertyTransition.new("x")
         self.new_page_transition.connect("stopped", self._clean_up)
@@ -743,6 +769,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
     def data_source(self, value):
         self._data_source = value
         if value is not None:
+            value.on_new_data = self.on_new_items
             self.connect('destroy', lambda *_: value.clean_up)
             value.connect("data-is-ready", lambda *_:
                                 self._show_initial_page())
@@ -793,21 +820,22 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self.page_count = ceil(data_length /
                                             (self.rows*self.columns))
 
-    def _introduce_new_page(self, items, direction):
+    def _introduce_new_page(self, items):
         """
         Method for adding and displaying new page and disposing of the old one.
         When 'direction' is 0 then adjusting the content of the new page happens
         immediately, otherwise it is performed in the `_clean_up` method when
         any page transisions are already over.
 
-        :param items: list of items to be placed on the new page
-        :param direction: which page should be introduced next.
-        1 for the next page, -1 for the previous page and 0 for the initial one. 
+        :param items: list of items to be placed on the new page.
+
+        :return: None.
         """
         _new_page = _Page(items, self.page_spacing,
                           self.page_strategy,
                           self.get_width(), self.get_height())
 
+        direction = self._current_direction
         if direction == 0:
             self._current_page = _new_page
             self._current_page.set_id(self.get_id() + "_page")
@@ -849,13 +877,15 @@ class PagerWidget(layout.Bin, configurator.Configurable):
                         "height": self.get_height(),
                         "spacing": self.page_spacing,
                         "rows": self.rows, "columns": self.columns}
+            self._current_direction = 0
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom(self.page_index)
             else:
-                items = self.data_source.get_items_forward(
+                items = self.data_source.query_items_forward(
                     self.rows*self.columns)
             self._calculate_page_count(self.data_source.length)
-            self._introduce_new_page(items, 0)
+            if items:
+                self._introduce_new_page(items)
 
     def _automatic_timeout(self, data):
         """
@@ -888,18 +918,30 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.get_stage().pending_group = self._current_page
         self._current_page.start_cycle()
 
+    def on_new_items(self, items):
+        """
+        Receive new items.
+
+        :param items: list of items.
+
+        :return: None.
+        """
+        self._introduce_new_page(items)
+
     def next_page(self):
         """
         Move to the next page.
         """
         if self.old_page is None and self._page_count > 1:
             self.page_index = (self.page_index+1) % self._page_count
+            self._current_direction = 1
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom(self.page_index)
             else:
-                items = self.data_source.get_items_forward(
-                    self.rows*self.columns)
-            self._introduce_new_page(items, 1)
+                items = self.data_source.query_items_forward(
+                    self.rows * self.columns)
+            if items:
+                self._introduce_new_page(items)
 
     def previous_page(self):
         """
@@ -908,12 +950,14 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         if self.old_page is None and self._page_count > 1:
             self.page_index = self.page_index - 1 if self.page_index >= 1 \
                                     else self._page_count - 1
+            self._current_direction = -1
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom(self.page_index)
             else:
-                items = self.data_source.get_items_backward(
+                items = self.data_source.query_items_backward(
                     self.columns * self.rows)
-            self._introduce_new_page(items, -1)
+            if items:
+                self._introduce_new_page(items)
 
     def run_automatic(self):
         """
