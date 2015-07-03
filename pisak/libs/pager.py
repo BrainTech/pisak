@@ -41,6 +41,78 @@ class DataItem:
         return self.cmp_key < other.cmp_key
 
 
+class LazyWorker:
+
+    def __init__(self, src):
+        self._src = src
+
+        self._step = None
+
+        self._worker = None
+        self._loading_enabled = True
+
+    def _lazy_work(self):
+        """
+        Main worker function that loads all the data at once, in small portions.
+        Loads some data forward and some data backward, in turns.
+        """
+        flat = list(range(0, len(self._src._ids), self._step))
+        half_len = int(len(flat)/2)
+        mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
+            flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
+        for idx in mixed:
+            if not self._loading_enabled:
+                break
+            self._load_portion(self._src._ids[idx : idx+self._step])
+
+    def _load_portion(self, ids):
+        """
+        Load some portion of data items with the given identifiers.
+
+        :param ids: list of ids specifying which data items should be loaded.
+        """
+        self._src._lazy_data.update(list(zip(map(str, ids),
+                                                    self._src._query_portion_of_data(ids))))
+        self._src.data = self._src._produce_data(list(self._src._lazy_data.values()),
+                                      self._src._data_sorting_key)
+
+    @property
+    def step(self):
+        """
+        Integer, number of data items loaded at each step.
+        After setting this, data is started to being loaded.
+        """
+        return self._step
+
+    @step.setter
+    def step(self, value):
+        self._step = value
+
+        # load all the data.
+        self.start()
+
+    def stop(self):
+        """
+        Stop the loader, stop any on-going activities.
+        """
+        self._loading_enabled = False
+        if self._worker is not None:
+            if self._worker.is_alive():
+                self._worker.join()
+            self._worker = None
+
+    def start(self):
+        """
+        Start the loader.
+        """
+        if not self._worker:
+            self._worker = threading.Thread(target=self._lazy_work,
+                                                                        daemon=True)
+            self._worker.start()
+        else:
+            _LOG.warning('Lazy loader has been started already.')
+
+
 class DataSource(GObject.GObject, properties.PropertyAdapter,
                  configurator.Configurable):
     """
@@ -120,7 +192,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
         if self.lazy_loading:
             # set the step of a lazy loader.
-            self.step = ceil((value['columns'] * value['rows'])/2)
+            self._lazy_loader.step = ceil((value['columns'] * value['rows'])/2)
 
     @property
     def custom_topology(self):
@@ -423,16 +495,13 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         self._lazy_loading = False
 
-        self._step = None
-
         # buffer for storing already, lazily, loaded data.
         self._lazy_data = OrderedDict()
         # list of data identifiers, specific for a given data supplier.
         self._ids = []
+
         # main lazy loading worker.
-        self._worker = None
-        # whether data loading is enabled.
-        self._loading_enabled = True
+        self._lazy_loader = LazyWorker(self)
 
     @property
     def lazy_loading(self):
@@ -451,23 +520,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_loading = value
         if value:
             self._set_up_lazy_loading()
-
-    @property
-    def step(self):
-        """
-        Integer, number of data items loaded at each step. Currently, `step`
-        is set in the `target_spec` property setter as a number of items on a
-        single page of the `Pager`. After setting the `step`, data is started
-        to being loaded with the `_load_all` method.
-        """
-        return self._step
-
-    @step.setter
-    def step(self, value):
-        self._step = value
-
-        # load all the data.
-        self._load_all()
 
     def _query_portion_of_data(self, ids):
         """
@@ -513,7 +565,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def _schedule_sending_data(self, direction):
         """
-        Schedule sending the data when they are avilable.
+        Schedule sending the data as soon as it is available.
         Data should be loaded in a background.
 
         :param direction: -1 or 1, that is whether data should be
@@ -564,64 +616,11 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
         return to_idx <= len(self.data) and all(self.data[from_idx : to_idx])
 
-    def _load_all(self):
-        """
-        Load all the data, step by step, in a separate thread.
-        """
-        self._worker = threading.Thread(
-            target=self._lazy_work, daemon=True)
-        self._worker.start()
-
-    def _lazy_work(self):
-        """
-        Main worker function that loads all the data at once, in small portions.
-        Loads some data forward and some data backward, in turns.
-        """
-        flat = list(range(0, len(self._ids), self._step))
-        half_len = int(len(flat)/2)
-        mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
-            flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
-        for idx in mixed:
-            if not self._loading_enabled:
-                break
-            self._load_portion(self._ids[idx : idx+self._step])
-
-    def _load_portion(self, ids):
-        """
-        Load some portion of data items with the given identifiers.
-
-        :param ids: list of ids specifying which data items should be loaded.
-        """
-        self._lazy_data.update(list(zip(map(str, ids),
-                                                    self._query_portion_of_data(ids))))
-        self.data = self.produce_data(list(self._lazy_data.values()),
-                                      self._data_sorting_key)
-
-    def _join_worker(self):
-        """
-        Ensure that `_worker` has finished its work, then
-        set it to None.
-        """
-        self._join_thread(self._worker)
-
-    def _join_thread(self, thread):
-        """
-        Join the given thread and set it to None.
-
-        :param thread: `threading.Thread` instance.
-        """
-        if thread is not None:
-            if thread.is_alive():
-                thread.join()
-            thread = None
-
     def _clean_up_lazy(self):
         """
         Take any actions neccessary for cleaning after the lazy loader.
-        Close any active threads.
         """
-        self._loading_enabled = False
-        self._join_worker()
+        self._lazy_loader.stop()
 
     # ----------------- END OF LAZY LOADING METHODS ------------------ #
 
