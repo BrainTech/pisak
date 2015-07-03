@@ -1,0 +1,111 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "y-align": "center",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.01,
+        "ratio-margin-bottom": 0.04,
+        "ratio-spacing": 0.02,
+        "orientation": "horizontal",
+        "children": ["middle_box", "menu_group"]
+    },
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+	    "orientation": "vertical",
+        "ratio-width": 0.7,
+        "children": ["about"]
+    },
+    {
+        "id": "about",
+        "type": "MxLabel",
+        "style-class": "PisakBlogAboutMe",
+        "x-align": "start",
+	"line-wrap": true
+    },
+    {
+        "id": "menu_group",
+        "type": "PisakScanningGroup",
+        "children": ["menu_box"],
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.015,
+        "y-align": "center",
+        "children": ["button_exit", "button_back",
+		     "photo_widget", "button_edit_desc", "button_edit_photo"]
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "PANEL STARTOWY",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+        "id": "button_back",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "STRONA TYTUŁOWA",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "back"
+    },
+    {
+	"id": "photo_widget",
+	"type": "PisakBinLayout",
+	"ratio-width": 0.24,
+        "ratio-height": 0.3,
+	"children": ["photo"]
+    },
+    {
+	"id": "photo",
+	"type": "PisakBlogUserPhoto"
+    },
+    {
+        "id": "button_edit_desc",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "EDYTUJ OPIS",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "edytuj_opis"
+    },
+    {
+        "id": "button_edit_photo",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "EDYTUJ ZDJĘCIE",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+        "icon-name": "edytuj_zdjecie"
+    }
+]

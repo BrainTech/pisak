@@ -1,0 +1,276 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "y-align": "end",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.01,
+        "ratio-margin-bottom": 0.02,
+        "ratio-spacing": 0.02,
+        "orientation": "vertical",
+        "children": ["middle_box"]
+    },
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.05,
+        "children": ["slide_space", "button_menu"]
+    },
+    {
+        "id": "button_menu",
+        "type": "PisakScanningGroup",
+        "children": ["button_menu_box"],
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "button_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.01,
+        "y-expand": true,
+        "y-align": "end",
+        "children": ["button_start", "button_photo", "button_11", "button_10",
+                     "button_9", "button_8", "button_7","button_6",
+                     "button_5", "button_4", "button_3", "button_2", "button_1"]
+    },
+    {
+        "id": "button_1",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "ZOOM",
+	"scanning-pauser": true,
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "icon-size": 50,
+        "icon-name": "zoom",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/zoom",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_2",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "OBRÓĆ",
+        "icon-size": 50,
+        "icon-name": "obrot",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/rotate",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_3",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "KRAWĘDZIE",
+        "icon-size": 50,
+        "icon-name": "edges",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/edges",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_4",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "KONTURY",
+        "icon-size": 50,
+        "icon-name": "contour",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/contour",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_5",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "SEPIA",
+        "icon-size": 50,
+        "icon-name": "filtr",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/sepia",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_6",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "NEGATYW",
+        "icon-size": 50,
+        "icon-name": "negatyw",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/invert",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_7",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "LUSTRO",
+        "icon-size": 50,
+        "icon-name": "mirror",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/mirror",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_8",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "SKALA SZAROŚCI",
+        "icon-size": 50,
+        "icon-name": "szarosc",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/grayscale",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_9",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "PSYCHO",
+	"scanning-pauser": true,
+        "icon-size": 50,
+        "icon-name": "psycho",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/noise",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_10",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "PRZEŚWIETLENIE",
+        "icon-size": 50,
+        "icon-name": "jasnosc",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/solarize",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_11",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "ORYGINAŁ",
+        "icon-size": 50,
+        "icon-name": "oryginal",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "viewer/original",
+                "object": "slide_space"
+            }
+        ]
+    },
+    {
+        "id": "button_photo",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "POWRÓT",
+        "icon-size": 50,
+        "icon-name": "back",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065
+    },
+    {
+        "id": "button_start",
+        "type": "PisakButton",
+        "style-class": "PisakViewerButton",
+        "label": "PANEL STARTOWY",
+        "icon-size": 50,
+        "icon-name": "exit",
+        "ratio-width": 0.24,
+        "ratio-height": 0.065
+    },
+    {
+        "id": "slide_space",
+        "type": "PisakBinLayout",
+        "ratio-width": 0.71,
+        "ratio-height": 0.75,
+        "children": ["slide"]
+    },
+    {
+        "id": "slide",
+        "type": "PisakViewerPhotoSlide",
+        "ratio-width": 0.71,
+        "ratio-height": 0.75
+    }
+]

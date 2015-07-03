@@ -1,0 +1,14 @@
+*.pyc
+\#*\#
+*~
+.\#*
+*build-pisak-eyetracker-*
+*.pro.user
+*.so
+*.o
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Makefile
+*sdk*
+n_grams.sqlite

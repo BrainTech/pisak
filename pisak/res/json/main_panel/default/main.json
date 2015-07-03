@@ -1,0 +1,56 @@
+[
+  {
+        "id": "main",
+        "type": "PisakScanningGroup",
+        "x-expand": true,
+        "y-expand": true,
+	"strategy": {
+                        "id": "main_group_strategy",
+                        "type": "PisakRowStrategy"
+                    },
+        "children": [
+                        "main_box", "background_box"
+                    ]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.05,
+        "ratio-margin-top": 0.05,
+        "ratio-margin-bottom": 0.05,
+        "ratio-margin-left": 0.05,
+        "ratio-margin-right": 0.05,
+        "orientation": "vertical",
+        "children": ["button_menu", "logo_bin"]
+    },
+    {
+        "id": "logo_bin",
+        "type": "PisakBinLayout",
+        "ratio-width": 0.35,
+        "ratio-height": 0.2,
+        "children": ["pisak_logo"]
+    },
+    {
+        "id": "pisak_logo",
+        "type": "PisakLogo"
+    },
+    {
+        "id": "button_menu",
+        "type": "PisakButtonMenu",
+        "ratio-spacing": 0.01,
+        "ratio-width": 0.8,
+        "ratio-height": 0.6,
+        "orientation": "vertical",
+        "button-source": "app_manager"
+    },
+    {
+        "id": "app_manager",
+        "type": "PisakAppManager"
+    }
+]
