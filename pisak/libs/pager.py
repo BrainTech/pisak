@@ -73,7 +73,7 @@ class LazyWorker:
         """
         self._src._lazy_data.update(list(zip(map(str, ids),
                                                     self._src._query_portion_of_data(ids))))
-        self._src.data = self._src._produce_data(list(self._src._lazy_data.values()),
+        self._src.data = self._src.produce_data(list(self._src._lazy_data.values()),
                                       self._src._data_sorting_key)
 
     @property
@@ -604,7 +604,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
         :return: True or False
         """
-        offset = self._step
+        offset = self._lazy_loader.step
         if direction == -1:
             from_idx = max(self.from_idx - offset, 0)
             to_idx = self.to_idx
