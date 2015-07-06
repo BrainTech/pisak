@@ -1,0 +1,41 @@
+body {
+    color: black;
+    font-family: Kelson Sans;
+    font-size: 30;
+    font-weight: 600;
+}
+
+.published {
+    font-size: 20;
+    text-decoration: underline;
+}
+
+.author {
+    font-size: 30;
+    font-weight: 900;
+}
+
+.comments {
+    font-size: 20;
+    color: blue;
+    font-weight: 300;
+}
+
+.comment_author {
+    color: green;
+}
+
+.date {
+    color: black;
+}
+
+.comment {
+    font-style: italic;
+}
+
+img {
+    width: auto;
+    height: auto;
+    max-width: 540px;
+    max-height: 300px;
+}
