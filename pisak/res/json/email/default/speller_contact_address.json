@@ -78,7 +78,7 @@
         "ratio_spacing": 0.0211,
         "orientation": "horizontal",
         "children": [
-                        "main_panel", "prediction_panel", "speller_menu"
+                        "main_panel", "domain_panel", "speller_menu"
                     ]
     },
     {
@@ -155,19 +155,19 @@
         "id": "button_2",
         "type": "PisakButton",
         "style-class": "PisakEmailSpellerContactAddressButton",
-        "text": "PREDYKCJA",
+        "text": "DOMENA",
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
         "icon-size": 50,
-        "label": "PREDYKCJA",
-        "icon-name": "predykcja",
+        "label": "DOMENA",
+        "icon-name": "domain2",
         "disabled_when": "scanning_off",
         "signals": [
             {
                 "name": "clicked",
                 "handler": "scanning/set_pending_group",
-                "object": "prediction_panel"
+                "object": "domain_panel"
             }
         ]
     },
@@ -199,7 +199,7 @@
                        {
                            "name": "clicked",
                            "handler": "speller/load",
-			   			   "object": "pop_up_box"
+			   "object": "pop_up_box"
                        }
                    ]
     },
@@ -295,24 +295,18 @@
     },
 
     {
-        "id": "prediction_dictionary",
-        "type": "PisakSpellerDictionary",
-        "target": "text_box"
-    },
-
-    {
-        "id": "prediction_panel",
+        "id": "domain_panel",
         "type": "PisakScanningGroup",
-        "children": ["prediction_panel_box"],
+        "children": ["domain_panel_box"],
         "scanning-hilite": true,
         "strategy": {
-            "id": "prediction_group_strategy",
+            "id": "domain_group_strategy",
             "type": "PisakRowStrategy",
             "unwind-to": "main"
         }
     },
     {
-        "id": "prediction_panel_box",
+        "id": "domain_panel_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
         "y-align": "end",
@@ -320,82 +314,94 @@
         "ratio-spacing": 0.0136,
         "children":
         [
-            "prediction_7","prediction_6", "prediction_5", "prediction_4",
-	    "prediction_3", "prediction_2", "prediction_1", "prediction_header"
+            "domain_9","domain_8","domain_7","domain_6",
+	    "domain_5","domain_4","domain_3","domain_2",
+	    "domain_1","domain_header"
         ]
     },
     {
-        "id": "prediction_header",
+        "id": "domain_header",
         "type": "PisakMenuHeader",
-        "name": "predykcjanapis",
+        "name": "domenanapis",
         "height": 65.28
     },
     {
-        "id": "prediction_1",
+        "id": "domain_1",
         "type": "PisakSpellerKey",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 1,
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
 	"default-text": "@gmail.com",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_2",
+        "id": "domain_2",
         "type": "PisakSpellerKey",
-            "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 2,
+            "style-class": "PisakEmailSpellerContactAddressDomain",
         "default-text": "@interia.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_3",
+        "id": "domain_3",
         "type": "PisakSpellerKey",
-            "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 3,
+            "style-class": "PisakEmailSpellerContactAddressDomain",
         "default-text": "@wp.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_4",
+        "id": "domain_4",
         "type": "PisakSpellerKey",
-            "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 4,
+            "style-class": "PisakEmailSpellerContactAddressDomain",
         "default-text": "@o2.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_5",
+        "id": "domain_5",
         "type": "PisakSpellerKey",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 5,
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
         "default-text": "@hotmail.com",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_6",
+        "id": "domain_6",
         "type": "PisakSpellerKey",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 6,
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
         "default-text": "@poczta.onet.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_7",
+        "id": "domain_7",
         "type": "PisakSpellerKey",
-	     "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 7,
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
         "default-text": "@yahoo.com",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_8",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@op.pl",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_9",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@poczta.fm",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
@@ -479,14 +485,14 @@
         "ratio-width": 0.048,
         "ratio-height": 0.085,
         "icon-size": 30,
-        "icon-name": "predykcja",
+        "icon-name": "domain2",
         "disabled_when": "scanning_off",
         "spacing": 0,
         "signals": [
             {
                 "name": "clicked",
                 "handler": "scanning/set_pending_group",
-                "object": "prediction_panel"
+                "object": "domain_panel"
             }
         ]
     },
