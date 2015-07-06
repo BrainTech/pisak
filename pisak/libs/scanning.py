@@ -129,7 +129,7 @@ class Strategy(Clutter.Actor):
                 else:
                     self._do_select(element)
         elif hasattr(element, "enable_hilite"):
-            self.group.wnd.pending_group = self.unwind_to
+            pisak.app.window.pending_group = self.unwind_to
             if hasattr(element, "scanning_pauser") and element.scanning_pauser:
                 if self.group.paused:
                     select_lag_disabled = True
@@ -153,8 +153,8 @@ class Strategy(Clutter.Actor):
                 element.disable_lag_hilite()
             if not self.group.killed and not self.group.paused:
                 # launch next group
-                if self.group.wnd.pending_group:
-                    self.group.wnd.pending_group.start_cycle()
+                if pisak.app.window.pending_group:
+                    pisak.app.window.pending_group.start_cycle()
                 else:
                     self.group.start_cycle()
         else:
@@ -274,7 +274,6 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self._strategy = None
         self.paused = False
         self.killed = False
-        self.wnd = pisak.app.window
         self.parent_group = None
         self.signal_source = None
         self._scanning_hilite = False

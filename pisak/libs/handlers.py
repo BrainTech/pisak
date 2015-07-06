@@ -1,9 +1,10 @@
 '''
 ClutterScript signal handler library
 '''
+from gi.repository import Clutter, Gtk
+
 import pisak
 from pisak.libs import signals
-from gi.repository import Clutter, Gtk
 
 
 @signals.registered_handler("general/run_input_middleware")
@@ -358,15 +359,15 @@ def toggle_automatic(pager):
 
 
 @signals.registered_handler("scanning/set_pending_group")
-def set_pending_group(source):
+def set_pending_group(group):
     """
-    Set the given group strategy's unwind to as the group's parent group
+    Set the given group strategy's unwind to as the group's parent group.
     Set the given group as a pending group of its window.
 
-    :param source: pisak scanning group instance
+    :param group: pisak scanning group instance.
     """
-    source.strategy.group.parent_group = source.strategy.unwind_to
-    source.wnd.pending_group = source
+    group.parent_group = group.strategy.unwind_to
+    pisak.app.window.pending_group = group
 
 
 @signals.registered_handler("general/switch_label")

@@ -461,20 +461,20 @@ class DialogWindow(layout.Box, configurator.Configurable):
         Put the dialog window onto the screen. Generate content.
         If this is the case, start scanning it.
         """
-        self.scanning_group = self.get_parent()
+        self.background_scanning_group = self.get_parent()
         self.stage = self.background_scene.get_stage()
-        self.stage.add_child(self.scanning_group)
+        self.stage.add_child(self.background_scanning_group)
         self.space = self.get_children()[1]
         self.header = self.get_children()[0]
         self.header.set_text(message)
         self._generate_content(items)
-        pisak.app.window.pending_group = self.scanning_group
+        pisak.app.window.pending_group = self.background_scanning_group
 
         self._middleware = pisak.app.window.input_group.middleware
         if self._middleware == "sprite":
             self._prev_content = pisak.app.window.input_group.content
             pisak.app.window.input_group.stop_middleware()
-            pisak.app.window.input_group.load_content(self.scanning_group)
+            pisak.app.window.input_group.load_content(self.background_scanning_group)
 
     def _generate_content(self, items=None):
         raise NotImplementedError
@@ -484,7 +484,7 @@ class DialogWindow(layout.Box, configurator.Configurable):
             pisak.app.window.input_group.stop_middleware()
 
         self.space.remove_all_children()
-        self.stage.remove_child(self.scanning_group)
+        self.stage.remove_child(self.background_scanning_group)
         pisak.app.window.pending_group = self.background_scene
 
         if self._middleware == "sprite":
