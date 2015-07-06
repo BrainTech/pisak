@@ -397,11 +397,21 @@ def prepare_viewer_contact_album_view(app, window, script, data):
 
 
 def prepare_single_message_view(app, window, script, data):
+    box = data["previous_view"]
+    msg_id = data["message_uid"]
+
+    def remove_message():
+        if box == 'sent':
+            app.box['imap_client'].delete_message_from_sent_box(msg_id)
+        elif box == 'inbox':
+            app.box['imap_client'].delete_message_from_inbox(msg_id)
+
+        window.load_view('email/{}'.format(box))
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script,
-                            "button_back", "email/{}".format(data["previous_view"]))
-    handlers.button_to_view(window, script,
-                            "button_remove", "email/{}".format(data["previous_view"]))
+                            "button_back", "email/{}".format(box))
+    handlers.connect_button(script, "button_remove", remove_message)
     handlers.button_to_view(window, script, "button_new_mail",
                             VIEWS_MAP["new_message_initial_view"])
 
