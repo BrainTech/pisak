@@ -41,12 +41,28 @@ class DataItem:
         return self.cmp_key < other.cmp_key
 
 
+class CustomThread(threading.Thread):
+    """
+    Thread class that can be stopped at any times.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._stop = threading.Event()
+
+    def stop(self):
+        self._stop.set()
+
+    def stopped(self):
+        return self._stop.isSet()
+
+
 class LazyWorker:
 
     def __init__(self, src):
         self._src = src
 
-        self._step = None
+        self._step = 5
 
         self._worker = None
         self._loading_enabled = True
@@ -88,9 +104,6 @@ class LazyWorker:
     def step(self, value):
         self._step = value
 
-        # load all the data.
-        self.start()
-
     def stop(self):
         """
         Stop the loader, stop any on-going activities.
@@ -98,7 +111,7 @@ class LazyWorker:
         self._loading_enabled = False
         if self._worker is not None:
             if self._worker.is_alive():
-                self._worker.join()
+                self._worker.stop()
             self._worker = None
 
     def start(self):
@@ -106,8 +119,8 @@ class LazyWorker:
         Start the loader.
         """
         if not self._worker:
-            self._worker = threading.Thread(target=self._lazy_work,
-                                                                        daemon=True)
+            self._worker = CustomThread(target=self._lazy_work,
+                                                        daemon=True)
             self._worker.start()
         else:
             _LOG.warning('Lazy loader has been started already.')
@@ -191,8 +204,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._target_spec = value
 
         if self.lazy_loading:
-            # set the step of a lazy loader.
             self._lazy_loader.step = ceil((value['columns'] * value['rows'])/2)
+            self._lazy_loader.start()
 
     @property
     def custom_topology(self):
