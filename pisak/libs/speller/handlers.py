@@ -253,7 +253,7 @@ def special1_chars(keyboard_item):
             keyboard_item.undo_chain.append(undo)
     else:
         for sub_item in keyboard_item.get_children():
-            special_chars(sub_item)
+            special1_chars(sub_item)
 
 @signals.registered_handler("speller/special2_chars")
 def special2_chars(keyboard_item):
@@ -269,7 +269,7 @@ def special2_chars(keyboard_item):
             keyboard_item.undo_chain.append(undo)
     else:
         for sub_item in keyboard_item.get_children():
-            special_chars(sub_item)
+            special2_chars(sub_item)
 
 @signals.registered_handler("speller/altgr_chars")
 def altgr_chars(keyboard_item):

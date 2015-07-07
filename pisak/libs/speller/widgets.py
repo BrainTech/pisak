@@ -552,6 +552,8 @@ class Key(widgets.Button, configurator.Configurable):
     def __init__(self):
         super().__init__()
         self.pre_special_text = None
+        self._special1_text = None
+        self._special2_text = None
         self.undo_chain = []
         self.allowed_undos = set()
         #self.set_size(dims.MENU_BUTTON_H_PX, dims.MENU_BUTTON_H_PX)
@@ -639,8 +641,14 @@ class Key(widgets.Button, configurator.Configurable):
 
     def set_swap_special_label(self, specialmode):
         try:
-            if (self.get_label() == self.special1_text) or (self.get_label() == self.special2_text):
-                self.set_pre_special_label()
+            if (self.get_label() == self.special1_text) and ("special1" == specialmode):
+                self.set_label(self.default_text)
+            elif (self.get_label() == self.special1_text) and ("special2" == specialmode):
+                self.set_special_label("special2")
+            elif (self.get_label() == self.special2_text) and ("special2" == specialmode):
+                self.set_label(self.default_text)
+            elif (self.get_label() == self.special2_text) and ("special1" == specialmode):
+                self.set_special_label("special1")
             else:
                 self.set_special_label(specialmode)
         except AttributeError:
