@@ -18,7 +18,7 @@ import pisak.libs.viewer.widgets  # @UnusedImport
 _LOG = logger.get_logger(__name__)
 
 MESSAGES = {
-    "no_internet": "Brak połączenia z internetem.\nSprawdź"
+    "no_internet": "Brak połączenia z internetem.\nSprawdź "
                    "łącze i spróbuj ponownie",
     "login_fail": "Błąd podczas logowania. Sprawdź swoje ustawienia\n"
                     "skrzynki i spróbuj ponownie.",
@@ -153,7 +153,7 @@ def prepare_inbox_view(app, window, script, data):
                           container=window.ui.pager)
         else:
             data_source.data = data_source.produce_data(
-                inbox_list, lambda msg: msg["Date"])
+                [(msg, None) for msg in inbox_list], lambda msg: msg["Date"])
 
 
 def prepare_sent_view(app, window, script, data):
@@ -190,7 +190,7 @@ def prepare_sent_view(app, window, script, data):
                           container=window.ui.pager)
         else:
             data_source.data = data_source.produce_data(
-                sent_box_list, lambda msg: msg["Date"])
+                [(msg, None) for msg in sent_box_list], lambda msg: msg["Date"])
 
 
 def prepare_speller_message_body_view(app, window, script, data):
@@ -199,6 +199,8 @@ def prepare_speller_message_body_view(app, window, script, data):
                           data['original_msg']['Body'].split('\n')])
         window.ui.text_box.type_text(body)
         window.ui.text_box.set_cursor_position(0)
+    elif app.box['new_message'].body:
+        window.ui.text_box.type_text(app.box['new_message'].body)
 
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
@@ -217,6 +219,8 @@ def prepare_speller_message_subject_view(app, window, script, data):
             pre = ''
 
         window.ui.text_box.type_text(pre + subject)
+    elif app.box['new_message'].subject:
+        window.ui.text_box.type_text(app.box['new_message'].subject)
 
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
@@ -270,9 +274,21 @@ def prepare_address_book_view(app, window, script, data):
         window.ui.button_specific, specific_button)
     data_source.item_handler = tile_handler
 
+    # set 'picked' flag of a given contact to True if the view is in the
+    # 'pick recipients' mode and the contact's email address has already been
+    # on the new message recipients list.
     data_source.data = sorted(data_source.produce_data(
-        contacts, lambda contact:
-        contact.name if contact.name else contact.address))
+        [
+            (
+                contact,
+                {'picked': True} if
+                (data and data.get("pick_recipients_mode")) and
+                contact.address in app.box["new_message"].recipients else
+                None
+            ) for contact in contacts
+        ],
+        lambda contact:contact.name if contact.name else contact.address)
+    )
 
 
 def prepare_contact_view(app, window, script, data):
