@@ -260,28 +260,28 @@
         "orientation": "vertical",
         "ratio-spacing": 0.012,
         "y-align": "center",
-        "children": ["button_remove", "button_forward", "button_replay_all",
-	    "button_replay", "button_scroll_up", "button_scroll_down"]
+        "children": ["button_remove", "button_forward", "button_reply_all",
+	    "button_reply", "button_scroll_up", "button_scroll_down"]
     },
     {
-        "id": "button_replay",
+        "id": "button_reply",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "play"
+        "icon-name": "reply"
     },
     {
-        "id": "button_replay_all",
+        "id": "button_reply_all",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "forth"
+        "icon-name": "reply_all"
     },
     {
         "id": "button_scroll_up",
@@ -311,7 +311,7 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "looped"
+        "icon-name": "forward"
     },
     {
         "id": "button_remove",

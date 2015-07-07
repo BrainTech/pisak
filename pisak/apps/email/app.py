@@ -483,8 +483,8 @@ def prepare_single_message_view(app, window, script, data):
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'forward'})
 
-        handlers.connect_button(script, "button_replay", reply)
-        handlers.connect_button(script, "button_replay_all", reply_all)
+        handlers.connect_button(script, "button_reply", reply)
+        handlers.connect_button(script, "button_reply_all", reply_all)
         handlers.connect_button(script, "button_forward", forward)
 
 
