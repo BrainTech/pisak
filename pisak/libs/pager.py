@@ -41,22 +41,6 @@ class DataItem:
         return self.cmp_key < other.cmp_key
 
 
-class CustomThread(threading.Thread):
-    """
-    Thread class that can be stopped at any times.
-    """
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._stop = threading.Event()
-
-    def stop(self):
-        self._stop.set()
-
-    def stopped(self):
-        return self._stop.isSet()
-
-
 class LazyWorker:
 
     def __init__(self, src):
@@ -111,7 +95,7 @@ class LazyWorker:
         self._loading_enabled = False
         if self._worker is not None:
             if self._worker.is_alive():
-                self._worker.stop()
+                self._worker.join()
             self._worker = None
 
     def start(self):
@@ -119,7 +103,7 @@ class LazyWorker:
         Start the loader.
         """
         if not self._worker:
-            self._worker = CustomThread(target=self._lazy_work,
+            self._worker = threading.Thread(target=self._lazy_work,
                                                         daemon=True)
             self._worker.start()
         else:
