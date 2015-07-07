@@ -260,11 +260,11 @@
         "orientation": "vertical",
         "ratio-spacing": 0.012,
         "y-align": "center",
-        "children": ["button_remove", "button_forward", "button_response_all",
-	    "button_response", "button_scroll_up", "button_scroll_down"]
+        "children": ["button_remove", "button_forward", "button_replay_all",
+	    "button_replay", "button_scroll_up", "button_scroll_down"]
     },
     {
-        "id": "button_response",
+        "id": "button_replay",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "label": " ",
@@ -274,7 +274,7 @@
         "icon-name": "play"
     },
     {
-        "id": "button_response_all",
+        "id": "button_replay_all",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "label": " ",

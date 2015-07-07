@@ -194,15 +194,32 @@ def prepare_sent_view(app, window, script, data):
 
 
 def prepare_speller_message_body_view(app, window, script, data):
+    if data and 'original_msg' in data and data['original_msg'].get('Body'):
+        body = '\n'.join(['> ' + line for line in
+                          data['original_msg']['Body'].split('\n')])
+        window.ui.text_box.type_text(body)
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
                     "email/address_book", {"pick_recipients_mode": True})
 
 
 def prepare_speller_message_subject_view(app, window, script, data):
+    if data and 'original_msg' in data:
+        subject = data['original_msg']['Subject']
+        action = data.get('action')
+        if action == 'forward':
+            pre = 'Fwd: '
+        elif action in ('reply', 'reply_all'):
+            pre = 'Re: '
+        else:
+            pre = ''
+
+        window.ui.text_box.type_text(pre + subject)
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
-                            "email/speller_message_body")
+                            "email/speller_message_body", data)
 
 
 def prepare_speller_message_to_view(app, window, script, data):
@@ -435,12 +452,23 @@ def prepare_single_message_view(app, window, script, data):
         if "Body" in message:
             window.ui.message_body.set_text(message["Body"])
 
-        handlers.button_to_view(window, script, "button_response",
-                                VIEWS_MAP["new_message_initial_view"])
-        handlers.button_to_view(window, script, "button_response_all",
-                                VIEWS_MAP["new_message_initial_view"])
-        handlers.button_to_view(window, script, "button_forward",
-                                VIEWS_MAP["new_message_initial_view"])
+        def reply():
+            app.box['new_message'].recipients = message['From'][0][1]
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'reply'})
+
+        def reply_all():
+            app.box['new_message'].recipients = [msg[1] for msg in message['From']]
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'reply_all'})
+
+        def forward():
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'forward'})
+
+        handlers.connect_button(script, "button_replay", reply)
+        handlers.connect_button(script, "button_replay_all", reply_all)
+        handlers.connect_button(script, "button_forward", forward)
 
 
 if __name__ == "__main__":
