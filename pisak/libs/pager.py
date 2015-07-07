@@ -49,19 +49,21 @@ class LazyWorker:
         self._step = 5
 
         self._worker = None
-        self._loading_enabled = True
+        self._running = True
 
     def _lazy_work(self):
         """
         Main worker function that loads all the data at once, in small portions.
-        Loads some data forward and some data backward, in turns.
+        Each portion is '_step' number of elements long. Loads one
+        portion of elements with identifiers from the front
+        of the ids list and one portion from the back, in turns.
         """
         flat = list(range(0, len(self._src._ids), self._step))
         half_len = int(len(flat)/2)
         mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
             flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
         for idx in mixed:
-            if not self._loading_enabled:
+            if not self._running:
                 break
             self._load_portion(self._src._ids[idx : idx+self._step])
 
@@ -92,7 +94,7 @@ class LazyWorker:
         """
         Stop the loader, stop any on-going activities.
         """
-        self._loading_enabled = False
+        self._running = False
         if self._worker is not None:
             if self._worker.is_alive():
                 self._worker.join()
