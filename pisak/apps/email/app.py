@@ -195,9 +195,10 @@ def prepare_sent_view(app, window, script, data):
 
 def prepare_speller_message_body_view(app, window, script, data):
     if data and 'original_msg' in data and data['original_msg'].get('Body'):
-        body = '\n'.join(['> ' + line for line in
+        body = '\n' + '\n'.join(['> ' + line for line in
                           data['original_msg']['Body'].split('\n')])
         window.ui.text_box.type_text(body)
+        window.ui.text_box.set_cursor_position(0)
 
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
