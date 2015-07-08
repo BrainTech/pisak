@@ -274,6 +274,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self._strategy = None
         self.paused = False
         self.killed = False
+        self.suppress_collapse_select_on_init = False
         self.parent_group = None
         self.signal_source = None
         self._scanning_hilite = False
@@ -366,12 +367,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         Restart group cycle that had already been startd before but went
         standby in a meantime.
         """
-        self.set_key_focus()
-        self.killed = False
-        if self.scanning_hilite:
-            self.enable_scan_hilite()
-        self.user_action_handler = self.strategy.select
-        self.strategy.start()
+        if self.input_handler_token is not None:
+            self.signal_source.disconnect(self.input_handler_token)
+        self.start_cycle()
 
     def start_cycle(self):
         """
@@ -408,15 +406,19 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         '''
         Do something when the group is singular.
         '''
-        msg = ('Group {} is singular. Selecting its only subelement.')
-        _LOG.debug(msg.format(self.get_id()))
         sub_element =self.get_subgroups()[0]
         if isinstance(sub_element, Group):
+            msg = ('Group {} is singular. Starting its only subgroup.')
+            _LOG.debug(msg.format(self.get_id()))
             sub_element.start_cycle()
             return True
-        elif hasattr(sub_element, "enable_hilite"):
-            # TODO: do we really want this: self.strategy.select(sub_element) ?
-            return False
+        else:
+            if not self.suppress_collapse_select_on_init:
+                self.strategy.select(sub_element)
+                return True
+            else:
+                self.suppress_collapse_select_on_init = False
+                return False
 
     def stop_cycle(self):
         """

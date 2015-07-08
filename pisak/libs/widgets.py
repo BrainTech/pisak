@@ -468,6 +468,7 @@ class DialogWindow(layout.Box, configurator.Configurable):
         self.header = self.get_children()[0]
         self.header.set_text(message)
         self._generate_content(items)
+        self.background_scanning_group.suppress_collapse_select_on_init = True
         pisak.app.window.pending_group = self.background_scanning_group
 
         self._middleware = pisak.app.window.input_group.middleware
