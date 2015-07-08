@@ -239,22 +239,37 @@ def default_chars(keyboard_item):
             default_chars(sub_item)
 
 
-@signals.registered_handler("speller/special_chars")
-def special_chars(keyboard_item):
+@signals.registered_handler("speller/special1_chars")
+def special1_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the special ones.
 
     :param keyboard_item: some possibly nested keyboard item
     """
     if isinstance(keyboard_item, widgets.Key):
-        keyboard_item.set_special_label()
+        keyboard_item.set_special_label("special1")
         undo = widgets.Key.set_swap_special_label
         if undo not in keyboard_item.undo_chain:
             keyboard_item.undo_chain.append(undo)
     else:
         for sub_item in keyboard_item.get_children():
-            special_chars(sub_item)
+            special1_chars(sub_item)
 
+@signals.registered_handler("speller/special2_chars")
+def special2_chars(keyboard_item):
+    """
+    Change chars on the keyboard keys to the extra ones (including emoticons).
+
+    :param keyboard_item: some possibly nested keyboard item
+    """
+    if isinstance(keyboard_item, widgets.Key):
+        keyboard_item.set_special_label("special2")
+        undo = widgets.Key.set_swap_special_label
+        if undo not in keyboard_item.undo_chain:
+            keyboard_item.undo_chain.append(undo)
+    else:
+        for sub_item in keyboard_item.get_children():
+            special2_chars(sub_item)
 
 @signals.registered_handler("speller/altgr_chars")
 def altgr_chars(keyboard_item):
@@ -307,20 +322,33 @@ def lower_chars(keyboard_item):
             lower_chars(sub_item)
 
 
-@signals.registered_handler("speller/swap_special_chars")
-def swap_special_chars(keyboard_item):
+@signals.registered_handler("speller/swap_special1_chars")
+def swap_special1_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the special or default ones.
 
     :param keyboard_item: some possibly nested keyboard item
     """
     if isinstance(keyboard_item, widgets.Key):
-        keyboard_item.set_swap_special_label()
+        keyboard_item.set_swap_special_label("special1")
         keyboard_item.undo_chain.append(widgets.Key.set_swap_special_label)
     else:
         for sub_item in keyboard_item.get_children():
-            swap_special_chars(sub_item)
+            swap_special1_chars(sub_item)
 
+@signals.registered_handler("speller/swap_special2_chars")
+def swap_special2_chars(keyboard_item):
+    """
+    Change chars on the keyboard keys to the special or default ones.
+
+    :param keyboard_item: some possibly nested keyboard item
+    """
+    if isinstance(keyboard_item, widgets.Key):
+        keyboard_item.set_swap_special_label("special2")
+        keyboard_item.undo_chain.append(widgets.Key.set_swap_special_label)
+    else:
+        for sub_item in keyboard_item.get_children():
+            swap_special2_chars(sub_item)
 
 @signals.registered_handler("speller/swap_altgr_chars")
 def swap_altgr_chars(keyboard_item):

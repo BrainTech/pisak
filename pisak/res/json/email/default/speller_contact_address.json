@@ -550,7 +550,7 @@
         "ratio-width": 0.048,
         "ratio-height": 0.085
     },
-     {
+    {
         "id": "keyboard_menu_button_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
