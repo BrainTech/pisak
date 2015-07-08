@@ -611,7 +611,7 @@
         "id": "keyboard_menu_button_9",
         "type": "PisakSpellerKey",
         "default-text": "SZ",
-        "special-text": "+",
+        "special1-text": "+",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -671,7 +671,7 @@
         "type": "PisakSpellerKey",
         "default-text": "A",
 	"altgr-text" : "Ś",
-        "special-text": "1",
+        "special1-text": "1",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -681,7 +681,7 @@
         "type": "PisakSpellerKey",
         "default-text": "O",
 	"altgr-text": "Ń", 
-        "special-text": "2",
+        "special1-text": "2",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -691,7 +691,7 @@
         "type": "PisakSpellerKey",
         "default-text": "E",
         "altgr-text": "V",
-        "special-text": "3",
+        "special1-text": "3",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -701,7 +701,7 @@
         "type": "PisakSpellerKey",
         "default-text": "R",
 	"altgr-text": ":)", 
-        "special-text": "4",
+        "special1-text": "4",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -711,7 +711,7 @@
         "type": "PisakSpellerKey",
         "default-text": "T",
 	"altgr-text": ":(",
-        "special-text": "5",
+        "special1-text": "5",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -721,7 +721,7 @@
         "type": "PisakSpellerKey",
         "default-text": "K",
 	"altgr-text": ";)",
-        "special-text": "6",
+        "special1-text": "6",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -731,7 +731,7 @@
         "type": "PisakSpellerKey",
         "default-text": "M",
 	"altgr-text": ";(",
-        "special-text": "7",
+        "special1-text": "7",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -741,7 +741,7 @@
         "type": "PisakSpellerKey",
         "default-text": "L",
 	"altgr-text": ":]",
-        "special-text": "8",
+        "special1-text": "8",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -751,7 +751,7 @@
         "type": "PisakSpellerKey",
         "default-text": "G",
         "altgr-text": ":[",
-        "special-text": "9",
+        "special1-text": "9",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -761,7 +761,7 @@
         "type": "PisakSpellerKey",
         "default-text": "Ą",
 	"altgr-text": "^^",
-        "special-text": "0",
+        "special1-text": "0",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -792,7 +792,7 @@
         "type": "PisakSpellerKey",
         "default-text": "I",
         "altgr-text": "Ć",
-        "special-text": ",",
+        "special1-text": ",",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -802,7 +802,7 @@
         "type": "PisakSpellerKey",
         "default-text": "Z",
         "altgr-text": "Q",
-        "special-text": ".",
+        "special1-text": ".",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -812,7 +812,7 @@
         "type": "PisakSpellerKey",
         "default-text": "W",
 	"altgr-text": "X",
-        "special-text": ";",
+        "special1-text": ";",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -822,7 +822,7 @@
         "type": "PisakSpellerKey",
         "default-text": "C",
 	"altgr-text": ":*",
-        "special-text": ":",
+        "special1-text": ":",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -832,7 +832,7 @@
         "type": "PisakSpellerKey",
         "default-text": "D",
 	"altgr-text": "<3",
-        "special-text": "\"",
+        "special1-text": "\"",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -842,7 +842,7 @@
         "type": "PisakSpellerKey",
         "default-text": "U",
 	"altgr-text": ":3",
-        "special-text": "!",
+        "special1-text": "!",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -852,7 +852,7 @@
         "type": "PisakSpellerKey",
         "default-text": "Ł",
 	"altgr-text": ":P",
-        "special-text": "\\",
+        "special1-text": "\\",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -862,7 +862,7 @@
         "type": "PisakSpellerKey",
         "default-text": "Ę",
 	"altgr-text": ":\\",
-        "special-text": "&",
+        "special1-text": "&",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -872,7 +872,7 @@
         "type": "PisakSpellerKey",
         "default-text": "Ó",
 	"altgr-text": "-.-",
-        "special-text": "?",
+        "special1-text": "?",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -920,7 +920,7 @@
         "type": "PisakSpellerKey",
         "default-text": "N",
         "altgr-text": "Ż",
-        "special-text": "/",
+        "special1-text": "/",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -930,7 +930,7 @@
         "type": "PisakSpellerKey",
         "default-text": "S",
         "altgr-text": "F",
-        "special-text": "*",
+        "special1-text": "*",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -940,7 +940,7 @@
         "type": "PisakSpellerKey",
         "default-text": "Y",
         "altgr-text": "Ź",
-        "special-text": "%",
+        "special1-text": "%",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -950,7 +950,7 @@
         "type": "PisakSpellerKey",
         "default-text": "P",
 	"altgr-text": ":D",
-        "special-text": "@",
+        "special1-text": "@",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -960,7 +960,7 @@
         "type": "PisakSpellerKey",
         "default-text": "J",
 	"altgr-text": ":>",
-        "special-text": "(",
+        "special1-text": "(",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -970,7 +970,7 @@
         "type": "PisakSpellerKey",
         "default-text": "B",
         "altgr-text": ":<",
-        "special-text": ")",
+        "special1-text": ")",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -980,7 +980,7 @@
         "type": "PisakSpellerKey",
         "default-text": "H",
 	"altgr-text": ":C",
-        "special-text": "=",
+        "special1-text": "=",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085

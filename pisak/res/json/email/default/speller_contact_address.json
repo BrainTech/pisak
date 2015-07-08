@@ -696,7 +696,7 @@
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
         "default-text": "u",
-        "special-text": "7",
+        "special1-text": "7",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
