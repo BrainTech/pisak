@@ -1,0 +1,126 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "y-align": "center",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.08,
+        "ratio-margin-bottom": 0.04,
+        "ratio-spacing": 0.02,
+        "orientation": "horizontal",
+        "children": ["middle_box"]
+    },
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+	"x-align": "start",
+        "x-expand": true,
+	"orientation": "horizontal",
+        "ratio-spacing": 0.001,
+        "children": ["photo_widget", "left_box"]
+    },
+    {
+        "id": "left_box",
+        "type": "PisakBoxLayout",
+	"orientation": "vertical",
+        "ratio-spacing": 0.005,
+        "children": ["menu_group", "title"]
+    },
+    {
+        "id": "title",
+        "type": "MxLabel",
+	"x-align": "end",
+	"x-expand": true,
+        "style-class": "PisakBlogTitle"
+    },
+    {
+        "id": "menu_group",
+        "type": "PisakScanningGroup",
+        "children": ["menu_box"],
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.015,
+	"x-align": "start",
+        "x-expand": true,
+        "y-align": "center",
+        "children": ["button_exit", "button_others", "button_favs",
+		     "button_my_blog"]
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "PANEL STARTOWY",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+	"custom-padding": "left",
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+        "id": "button_others",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "INNE",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	    "custom-padding": "left",
+        "icon-name": "zmeczone_oko"
+    },
+    {
+        "id": "button_favs",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "ULUBIONE",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	"custom-padding": "left",
+        "icon-name": "ulubione"
+    },
+    {
+        "id": "button_my_blog",
+        "type": "PisakButton",
+        "style-class": "PisakBlogFlatButton",
+        "label": "MÓJ BLOG",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	"custom-padding": "left",
+        "icon-name": "blog"
+    },
+    {
+	"id": "photo_widget",
+	"type": "PisakBinLayout",
+	"ratio-width": 0.3,
+        "ratio-height": 0.445,
+	"children": ["photo"]
+    },
+    {
+	"id": "photo",
+	"type": "PisakBlogUserPhoto"
+    }
+]

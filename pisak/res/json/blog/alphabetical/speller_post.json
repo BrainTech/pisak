@@ -2,7 +2,7 @@
     {
         "id": "main",
         "type": "PisakScanningGroup",
-	    "strategy": {
+	"strategy": {
                         "id": "main_group_strategy",
                         "type": "PisakRowStrategy"
                     },
@@ -115,7 +115,7 @@
     {
         "id": "button_save",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "ZAPISZ",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -134,7 +134,7 @@
     {
         "id": "button_1",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "KLAWIATURA",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -154,7 +154,7 @@
     {
         "id": "button_2",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "PREDYKCJA",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -175,18 +175,18 @@
     {
         "id": "button_proceed",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
-        "text": "AKCEPTUJ",
+        "style-class": "PisakBlogSpellerPostButton",
+        "text": "DODAJ TYTUŁ",
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
         "icon-size": 50,
         "label": "AKCEPTUJ",
         "icon-name": "ocena",
-        "signals": [
+	"signals": [
             {
                 "name": "clicked",
-                "handler": "email/new_message_add_body",
+                "handler": "blog/attach_post_content",
                 "object": "text_box"
             }
         ]
@@ -194,7 +194,7 @@
     {
         "id": "button_4",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "WCZYTAJ",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -206,14 +206,14 @@
                        {
                            "name": "clicked",
                            "handler": "speller/load",
-			   			   "object": "pop_up_box"
+			   "object": "pop_up_box"
                        }
                    ]
     },
     {
         "id": "button_5",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "PRZECZYTAJ",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -232,7 +232,7 @@
     {
         "id": "button_6",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "WYŚLIJ",
         "x-align": "start",
         "disabled": true,
@@ -252,7 +252,7 @@
     {
         "id": "button_7",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "DRUKUJ",
         "x-align": "start",
         "disabled": true,
@@ -272,7 +272,7 @@
     {
         "id": "button_8",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "NOWY DOKUMENT",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -291,7 +291,7 @@
     {
         "id": "button_exit",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": "PANEL STARTOWY",
         "x-align": "start",
         "ratio-width": 0.18312,
@@ -341,7 +341,7 @@
     {
         "id": "prediction_1",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 1,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -351,7 +351,7 @@
     {
         "id": "prediction_2",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 2,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -361,7 +361,7 @@
     {
         "id": "prediction_3",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 3,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -371,7 +371,7 @@
     {
         "id": "prediction_4",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 4,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -381,7 +381,7 @@
     {
         "id": "prediction_5",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 5,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -391,7 +391,7 @@
     {
         "id": "prediction_6",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 6,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -401,7 +401,7 @@
     {
         "id": "prediction_7",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 7,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -411,7 +411,7 @@
     {
         "id": "prediction_8",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 8,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -421,7 +421,7 @@
     {
         "id": "prediction_9",
         "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerMessageContentPrediction",
+	"style-class": "PisakBlogSpellerPostPrediction",
         "order-num": 9,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
@@ -449,22 +449,22 @@
                     ]
     },
     {
-	    "id": "speller_header",
-	    "type": "MxLabel",
-	    "x-expand": true,
-	    "x-align": "start",
-	    "style-class": "PisakEmailSpellerMessageContentHeader",
-	    "text": "TREŚĆ WIADOMOŚCI:"
+	"id": "speller_header",
+	"type": "MxLabel",
+	"x-expand": true,
+	"x-align": "start",
+	"style-class": "PisakBlogSpellerPostHeader",
+	"text": "TREŚĆ POSTA:"
     },
     {
-	    "id": "cursored_text",
-	    "type": "PisakCursorGroup",
-	    "children": ["text_box"]
+	"id": "cursored_text",
+	"type": "PisakCursorGroup",
+	"children": ["text_box"]
     },
     {
         "id": "text_box",
         "type": "PisakScrolledText",
-	    "style-class": "PisakEmailSpellerMessageContentText",
+	"style-class": "PisakBlogSpellerPostText",
         "x-align": "start",
         "ratio-width": 0.59514,
         "ratio-height": 0.512
@@ -502,7 +502,7 @@
     {
         "id": "keyboard_menu_button_1",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -521,7 +521,7 @@
     {
         "id": "keyboard_menu_button_2",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -539,7 +539,7 @@
      {
         "id": "keyboard_menu_button_3",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -557,7 +557,7 @@
     {
         "id": "keyboard_menu_button_4",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -574,13 +574,13 @@
     {
         "id": "keyboard_menu_button_5",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "alternative-text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
         "icon-size": 30,
-        "icon-name": "specjalne",
+        "icon-name": "znaki",
         "related-object": "keyboard_panel",
         "signals": [
                        {
@@ -593,7 +593,26 @@
     {
         "id": "keyboard_menu_button_6",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
+        "text": " ",
+        "alternative-text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "specjalne",
+        "related-object": "keyboard_panel",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/swap_special2_chars",
+                           "object": "keyboard"
+                       }
+                   ]
+    },
+    {
+        "id": "keyboard_menu_button_7",
+        "type": "PisakButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -609,9 +628,9 @@
                    ]
     },
     {
-        "id": "keyboard_menu_button_7",
+        "id": "keyboard_menu_button_8",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -627,7 +646,7 @@
                    ]
     },
     {
-	"id": "keyboard_menu_button_8",
+	"id": "keyboard_menu_button_9",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
         "text": " ",
@@ -645,19 +664,9 @@
                    ]
     },
     {
-        "id": "keyboard_menu_button_9",
-        "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "SZ",
-        "special1-text": "+",
-        "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
-    },
-    {
         "id": "keyboard_menu_button_10",
         "type": "PisakButton",
-	"style-class": "PisakEmailSpellerMessageContentButton",
+	"style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -707,9 +716,11 @@
     {
         "id": "key_1_1",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "Q",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "A",
+	"altgr-text": "Ą",
         "special1-text": "1",
+        "special2-text": "#",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -717,9 +728,10 @@
     {
         "id": "key_1_2",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "W",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "B",
         "special1-text": "2",
+        "special2-text": ":-)",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -727,10 +739,11 @@
     {
         "id": "key_1_3",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "E",
-        "altgr-text": "Ę",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "C",
+        "altgr-text": "Ć",
         "special1-text": "3",
+        "special2-text": ":-(",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -738,9 +751,10 @@
     {
         "id": "key_1_4",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "R",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "D",
         "special1-text": "4",
+        "special2-text": ":-D",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -748,9 +762,11 @@
     {
         "id": "key_1_5",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "T",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "E",
+	"altgr-text": "Ę",
         "special1-text": "5",
+        "special2-text": ":-P",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -758,9 +774,10 @@
     {
         "id": "key_1_6",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "Y",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "F",
         "special1-text": "6",
+        "special2-text": ":-*",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -768,9 +785,10 @@
     {
         "id": "key_1_7",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "U",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "G",
         "special1-text": "7",
+        "special2-text": ":-/",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -778,9 +796,10 @@
     {
         "id": "key_1_8",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "I",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "H",
         "special1-text": "8",
+        "special2-text": ":-O",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -788,10 +807,10 @@
     {
         "id": "key_1_9",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "O",
-        "altgr-text": "Ó",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "I",
         "special1-text": "9",
+        "special2-text": ":-3",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -799,9 +818,10 @@
     {
         "id": "key_1_10",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "P",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "J",
         "special1-text": "0",
+        "special2-text": "xD",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -830,10 +850,10 @@
     {
         "id": "key_2_1",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "A",
-        "altgr-text": "Ą",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "K",
         "special1-text": ",",
+        "special2-text": "-",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -841,10 +861,11 @@
     {
         "id": "key_2_2",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "S",
-        "altgr-text": "Ś",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "L",
+        "altgr-text": "Ł",
         "special1-text": ".",
+        "special2-text": ";-)",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -852,9 +873,10 @@
     {
         "id": "key_2_3",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "D",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "M",
         "special1-text": ";",
+        "special2-text": "O.o",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -862,9 +884,10 @@
     {
         "id": "key_2_4",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "F",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "N",
         "special1-text": ":",
+        "special2-text": "-.-",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -872,9 +895,10 @@
     {
         "id": "key_2_5",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "G",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "O",
         "special1-text": "\"",
+        "special2-text": "^^",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -882,9 +906,10 @@
     {
         "id": "key_2_6",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "H",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "P",
         "special1-text": "!",
+        "special2-text": "<3",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -892,9 +917,10 @@
     {
         "id": "key_2_7",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "J",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "Q",
         "special1-text": "\\",
+        "special2-text": "*.*",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -902,9 +928,10 @@
     {
         "id": "key_2_8",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "K",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "R",
         "special1-text": "&",
+        "special2-text": "B-)",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -912,10 +939,11 @@
     {
         "id": "key_2_9",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "L",
-        "altgr-text": "Ł",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "S",
+        "altgr-text": "Ś",
         "special1-text": "?",
+        "special2-text": ":'(",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -923,7 +951,7 @@
     {
 	"id": "key_2_10",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -961,10 +989,10 @@
     {
         "id": "key_3_1",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "Z",
-        "altgr-text": "Ż",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "T",
         "special1-text": "/",
+        "special2-text": "+",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -972,10 +1000,10 @@
     {
         "id": "key_3_2",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "X",
-        "altgr-text": "Ź",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "U",
         "special1-text": "*",
+        "special2-text": "_",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -983,10 +1011,10 @@
     {
         "id": "key_3_3",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "C",
-        "altgr-text": "Ć",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "V",
         "special1-text": "%",
+        "special2-text": "^",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -994,9 +1022,10 @@
     {
         "id": "key_3_4",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "V",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "W",
         "special1-text": "@",
+        "special2-text": "'",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1004,9 +1033,10 @@
     {
         "id": "key_3_5",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "B",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "X",
         "special1-text": "(",
+        "special2-text": "~",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1014,10 +1044,11 @@
     {
         "id": "key_3_6",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "N",
-        "altgr-text": "Ń",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "Y",
+        "altgr-text": "Ż",
         "special1-text": ")",
+        "special2-text": "[",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1025,9 +1056,11 @@
     {
         "id": "key_3_7",
         "type": "PisakSpellerKey",
-	"style-class": "PisakEmailSpellerMessageContentKey",
-        "default-text": "M",
+	"style-class": "PisakBlogSpellerPostKey",
+        "default-text": "Z",
+	"altgr-text": "Ź",
         "special1-text": "=",
+        "special2-text": "]",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1035,7 +1068,7 @@
     {
         "id": "key_3_8",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -1052,7 +1085,7 @@
     {
         "id": "key_3_9",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -1069,7 +1102,7 @@
     {
 	"id": "key_3_10",
 	"type": "PisakButton",
-        "style-class": "PisakEmailSpellerMessageContentButton",
+        "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
