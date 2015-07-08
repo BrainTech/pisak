@@ -1,12 +1,17 @@
 '''
 Basic implementation of sliding page widget.
 '''
+import threading
+import itertools
+import time
 from math import ceil
+from collections import OrderedDict
 from functools import total_ordering
 
 from gi.repository import Clutter, GObject
-from pisak import res, logger
+from pisak import res, logger, exceptions
 from pisak.libs import properties, scanning, layout, unit, configurator, unit
+
 
 _LOG = logger.get_logger(__name__)
 
@@ -36,15 +41,99 @@ class DataItem:
         return self.cmp_key < other.cmp_key
 
 
+class LazyWorker:
+
+    def __init__(self, src):
+        self._src = src
+
+        self._step = 5
+
+        self._worker = None
+        self._running = True
+
+    def _lazy_work(self):
+        """
+        Main worker function that loads all the data at once, in small portions.
+        Each portion is '_step' number of elements long. Loads one
+        portion of elements with identifiers from the front
+        of the ids list and one portion from the back, in turns.
+        """
+        flat = list(range(0, len(self._src._ids), self._step))
+        half_len = int(len(flat)/2)
+        mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
+            flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
+        for idx in mixed:
+            if not self._running:
+                break
+            self._load_portion(self._src._ids[idx : idx+self._step])
+
+    def _load_portion(self, ids):
+        """
+        Load some portion of data items with the given identifiers.
+
+        :param ids: list of ids specifying which data items should be loaded.
+        """
+        self._src._lazy_data.update(list(zip(map(str, ids),
+                                                    self._src._query_portion_of_data(ids))))
+        self._src.data = self._src.produce_data(list(self._src._lazy_data.values()),
+                                      self._src._data_sorting_key)
+
+    @property
+    def step(self):
+        """
+        Integer, number of data items loaded at each step.
+        After setting this, data is started to being loaded.
+        """
+        return self._step
+
+    @step.setter
+    def step(self, value):
+        self._step = value
+
+    def stop(self):
+        """
+        Stop the loader, stop any on-going activities.
+        """
+        self._running = False
+        if self._worker is not None:
+            if self._worker.is_alive():
+                self._worker.join()
+            self._worker = None
+
+    def start(self):
+        """
+        Start the loader.
+        """
+        if not self._worker:
+            self._worker = threading.Thread(target=self._lazy_work,
+                                                        daemon=True)
+            self._worker.start()
+        else:
+            _LOG.warning('Lazy loader has been started already.')
+
+
 class DataSource(GObject.GObject, properties.PropertyAdapter,
                  configurator.Configurable):
     """
-    Base class for Pisak data sources.
+    Base class for the PISAK data sources.
+
+    It can work in a `lazy_loading` mode of operation by setting this property
+    to True. However, it should be noted that only few of all the
+    methods are compatible with the 'lazy' mode and are able to take
+    advantage of the functionality it provides.
+    So far, these are: `get_items_forward` and `get_items_backward`.
+    Before enabling the 'lazy' mode, there should also be certain things
+    supplied by a child class.
     """
     __gtype_name__ = "PisakDataSource"
     __gsignals__ = {
-        "data-is-ready": (GObject.SIGNAL_RUN_FIRST, None, ())
+        "data-is-ready": (
+            GObject.SIGNAL_RUN_FIRST, None, ()),
+        "length-changed": (
+            GObject.SIGNAL_RUN_FIRST, None,
+            (GObject.TYPE_INT64,))
     }
+
     __gproperties__ = {
         "item_ratio_width": (
             GObject.TYPE_FLOAT, None, None,
@@ -71,14 +160,38 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.custom_topology = False
         self.from_idx = 0
         self.to_idx = 0
-        self.data_length = 0
         self.data_sets_count = 0
         self.data_generator = None
-        self.target_spec = None  # specification of the data's target
-        self.data = None
+        self._target_spec = None
+        self._data = None
         self.data_set_id = None
         self.item_handler = None
+        self._data_sorting_key = None
+        # data buffer length.
+        self._length = 0
+        # synchronization for an access to the `data` buffer.
+        self._lock = threading.RLock()
+        # something to do when new data is available..
+        self.on_new_data = None
+
+        self._init_lazy_props()
+
         self.apply_props()
+
+    @property
+    def target_spec(self):
+        """
+        Specification of a target that the `DataSource` serves as a data supplier for.
+        """
+        return self._target_spec
+
+    @target_spec.setter
+    def target_spec(self, value):
+        self._target_spec = value
+
+        if self.lazy_loading:
+            self._lazy_loader.step = ceil((value['columns'] * value['rows'])/2)
+            self._lazy_loader.start()
 
     @property
     def custom_topology(self):
@@ -154,14 +267,23 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         List of some arbitrary data items. Each single item should be an instance
         of the `DataItem` class.
         """
-        return self._data
+        with self._lock:
+            return self._data.copy()
 
     @data.setter
     def data(self, value):
-        self._data = value
-        if value is not None:
-            self.data_length = len(value)
-            self.emit("data-is-ready")
+        with self._lock:
+            self._data = value
+            self._length = len(value)
+        self.emit('length-changed', self._length)
+        self.emit("data-is-ready")
+
+    @property
+    def length(self):
+        """
+        Total length of the whole available data set.
+        """
+        return self._length
 
     def _generate_items_normal(self):
         """
@@ -169,7 +291,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         rows, cols = self.target_spec["rows"], self.target_spec["columns"]
         to = self.to_idx
-        if self.from_idx + rows*cols >= self.data_length:
+        if self.from_idx + rows*cols >= self._length:
             to = self.from_idx + rows*cols
         items = []
         idx = 0
@@ -178,9 +300,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
                 row = []
                 items.append(row)
             idx += 1
-            if index < self.data_length and index < self.to_idx:
+            if index < self._length and index < self.to_idx:
                 item = self._produce_item(self.data[index])
-            elif index > self.data_length or index >= self.to_idx:
+            elif index > self._length or index >= self.to_idx:
                 item = Clutter.Actor()
                 self._prepare_filler(item)
             self._prepare_item(item)
@@ -193,7 +315,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         items = []
         for index in range(self.from_idx, self.to_idx):
-            if index < self.data_length:
+            if index < self._length:
                 item = self._produce_item(self.data[index])
                 self._prepare_item(item)
                 items.append(item)
@@ -222,18 +344,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
                 items_row.append(item)
             items.append(items_row)
         return items
-
-    def _generate_items(self, part=None):
-        """
-        Generate items using a method relevant to the current
-        kind of topology.
-
-        :param part: number of subset of the set of all data items or None
-        """
-        if self.custom_topology:
-           return self._generate_items_custom(part)
-        else:
-            return self._generate_items_normal()
 
     def _prepare_item(self, item):
         """
@@ -273,36 +383,48 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     def _prepare_filler(self, filler):
         filler.set_background_color(Clutter.Color.new(255, 255, 255, 0))
 
-    def get_items_forward(self, count):
+    def query_items_forward(self, count):
         """
-        Return given number of forward items generated from data.
+        Query a given number of forward items generated from data.
         Method is compatible with a normal topology mode but NOT with
         a custom one. Data items are picked from a flat data list.
 
-        :param count: number of items to be returned
-        """
-        self.from_idx = self.to_idx % self.data_length if \
-                        self.data_length > 0 else 0
-        self.to_idx = min(self.from_idx + count, self.data_length)
-        return self._generate_items_normal()
+        :param count: number of items to be returned.
 
-    def get_items_backward(self, count):
+        :return: list of data items or None if in the lazy loading mode.
         """
-        Return given number of backward items generated from data.
+        self.from_idx = self.to_idx % self._length if \
+                                        self._length > 0 else 0
+        self.to_idx = min(self.from_idx + count, self._length)
+
+        if self.lazy_loading:
+            self._schedule_sending_data(1)
+        else:
+            return self._generate_items_normal()
+
+    def query_items_backward(self, count):
+        """
+        Query a given number of backward items generated from data.
         Method is compatible with a normal topology mode but NOT with
         a custom one. Data items are picked from a flat data list.
 
-        :param count: number of items to be returned
-        """
+        :param count: number of items to be returned.
+
+        :return: list of data items or None if in the lazy loading mode.
+        """ 
         rows, cols = self.target_spec["rows"], self.target_spec["columns"]
-        self.to_idx = self.from_idx or self.data_length
+        self.to_idx = self.from_idx or self._length
         if self.to_idx < count:
-            self.from_idx = self.data_length - count + self.to_idx
-        elif self.to_idx == self.data_length and self.data_length % (rows*cols) != 0:
-            self.from_idx = self.to_idx - (self.data_length % (rows*cols))
+            self.from_idx = self._length - count + self.to_idx
+        elif self.to_idx == self._length and self._length % (rows*cols) != 0:
+            self.from_idx = self.to_idx - (self._length % (rows*cols))
         else:
             self.from_idx = self.to_idx - count
-        return self._generate_items_normal()
+
+        if self.lazy_loading:
+            self._schedule_sending_data(-1)
+        else:
+            return self._generate_items_normal()
 
     def next_data_set(self):
         """
@@ -326,7 +448,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         default topology mode of operation.
         """
         self.from_idx = 0
-        self.to_idx = self.data_length
+        self.to_idx = self._length
         return self._generate_items_flat()
 
     def get_items_custom(self, part):
@@ -345,15 +467,161 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     def produce_data(self, raw_data, cmp_key_factory):
         """
         Generate list of `DataItems` out of some arbitrary raw data. Produced list
-        can be then used as the `data`.
+        can be then used as the `data`. If some given raw data item is None
+        then it will remain None on a target list.
 
-        :param raw_data:container with some raw data items.
+        :param raw_data: container with some raw data items.
         :param cmp_key_factory: function to get some comparision
         key out of a data item.
 
         :return: list of `DataItems`.
         """
-        return [DataItem(item, cmp_key_factory(item)) for item in raw_data]
+        return [DataItem(item, cmp_key_factory(item)) if item else None for
+                item in raw_data]
+
+    def clean_up(self):
+        """
+        Clean after any activities of the data source.
+        """
+        if self.lazy_loading:
+            self._clean_up_lazy()
+
+    # ----------------------- LAZY LOADING METHODS ---------------------- #
+
+    def _init_lazy_props(self):
+        """
+        Initialize all the properties specific to the lazy loader.
+        """
+        self._lazy_loading = False
+
+        # buffer for storing already, lazily, loaded data.
+        self._lazy_data = OrderedDict()
+        # list of data identifiers, specific for a given data supplier.
+        self._ids = []
+
+        # main lazy loading worker.
+        self._lazy_loader = LazyWorker(self)
+
+    @property
+    def lazy_loading(self):
+        """
+        Switch the lazy loading mode - can be set True or False,
+        default is False. In the lazy loading mode, data source will
+        load only some limited portion of a given data at a time;
+        automatically load data that will probably be needed in
+        the future queries; store the already loaded data
+        in a proper order for a future use.
+        """
+        return self._lazy_loading
+
+    @lazy_loading.setter
+    def lazy_loading(self, value):
+        self._lazy_loading = value
+        if value:
+            self._set_up_lazy_loading()
+
+    def _query_portion_of_data(self, ids):
+        """
+        Query the data provider for a portion of data with the given ids.
+        Should be implemented by child.
+
+        :params: ids: list of data identifiers.
+
+        :return: list of data items.
+        """
+        raise NotImplementedError
+
+    def _query_ids(self):
+        """
+        Query the data provider for a list of all the available data ids.
+        Should be implemented by child.
+
+        :return: list of ids.
+        """
+        raise NotImplementedError
+
+    def _set_up_lazy_loading(self):
+        """
+        Initialize all the neccessary things and set up the lazy loader.
+        Should be always called on the lazy loader init.
+        """
+        self._check_ids_range()
+
+    def _check_ids_range(self):
+        """
+        Query to the data supplier for a list of identifiers of all the
+        available data. Update the `_lazy_data` container with previously
+        non-existing ids and prepare placeholders for data
+        items with these ids, that will be loaded later.
+        Update the main `data` buffer.
+        """
+        self._ids = self._query_ids()
+        self._lazy_data.update(
+            [(str(ide), None) for ide in self._ids if
+             str(ide) not in self._lazy_data])
+        self.data = self.produce_data(list(self._lazy_data.values()),
+                                      self._data_sorting_key)
+
+    def _schedule_sending_data(self, direction):
+        """
+        Schedule sending the data as soon as it is available.
+        Data should be loaded in a background.
+
+        :param direction: -1 or 1, that is whether data should be
+        sent from backward or forward.
+        """
+        Clutter.threads_add_timeout(0, 0.1, self._send_data, direction)
+
+    def _send_data(self, direction):
+        """
+        Send the data somewhere.
+
+        :param direction: data in which direction should be sent.
+
+        :return: True when no data available or False after sending the data.
+        """
+        if self._has_data(direction):
+            if not callable(self.on_new_data):
+                raise exceptions.PisakException('No data receiver has been declared.')
+            try:
+                self.on_new_data(self._generate_items_normal())
+            except TypeError as exc:
+                _LOG.error(exc)
+                raise
+            return False
+        else:
+            return True
+
+    def _has_data(self, direction):
+        """
+        Check if there is a portion of data available, in the given direction.
+        Data is checked with some offset, just to be sure, in a case when some
+        indexing has been messed up.
+
+        :param direction: -1 or 1, that is whether data should be
+        checked backward or forward.
+
+        :return: True or False
+        """
+        offset = self._lazy_loader.step
+        if direction == -1:
+            from_idx = max(self.from_idx - offset, 0)
+            to_idx = self.to_idx
+        elif direction == 1:
+            from_idx = self.from_idx
+            to_idx = min(self.to_idx + offset, self._length)
+        else:
+            raise ValueError('Invalid direction. Must be -1 or 1.')
+
+        return to_idx <= len(self.data) and all(self.data[from_idx : to_idx])
+
+    def _clean_up_lazy(self):
+        """
+        Take any actions neccessary for cleaning after the lazy loader.
+        """
+        self._lazy_loader.stop()
+
+    # ----------------- END OF LAZY LOADING METHODS ------------------ #
 
 
 class _Page(scanning.Group):
@@ -446,8 +714,9 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.is_running = False
         self.set_clip_to_allocation(True)
         self.page_index = 0
-        self.pages_count = 1
+        self._page_count = 1
         self.page_spacing = 0
+        self._current_direction = 0
         self.old_page_transition = Clutter.PropertyTransition.new("x")
         self.new_page_transition = Clutter.PropertyTransition.new("x")
         self.new_page_transition.connect("stopped", self._clean_up)
@@ -455,6 +724,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.idle_duration = 3000
         self.transition_duration = 1000
         self._data_source = None
+        self._inited = False
         self._page_strategy = None
         self._page_ratio_spacing = 0
         self._rows = 3
@@ -462,6 +732,15 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self._current_page = None
         self.old_page = None
         self.apply_props()
+
+    @property
+    def page_count(self):
+        return self._page_count
+
+    @page_count.setter
+    def page_count(self, value):
+        self._page_count = value
+        self.emit('limit-declared', value)
 
     @property
     def page_strategy(self):
@@ -488,8 +767,12 @@ class PagerWidget(layout.Bin, configurator.Configurable):
     def data_source(self, value):
         self._data_source = value
         if value is not None:
-            value.connect("data-is-ready",
-                          lambda *_: self._show_initial_page())
+            value.on_new_data = self.on_new_items
+            self.connect('destroy', lambda *_: value.clean_up)
+            value.connect("data-is-ready", lambda *_:
+                                self._show_initial_page())
+            value.connect('length-changed', lambda _, length:
+                                self._calculate_page_count(length))
 
     @property
     def rows(self):
@@ -524,21 +807,33 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.new_page_transition.set_duration(value)
         self.old_page_transition.set_duration(value)
 
-    def _introduce_new_page(self, items, direction):
+    def _calculate_page_count(self, data_length):
+        """
+        Calculate the total number of pages in the pager, based on the
+        length of data being supplied by the data source.
+        """
+        if self.data_source.custom_topology:
+            self.page_count = data_length
+        else:
+            self.page_count = ceil(data_length /
+                                            (self.rows*self.columns))
+
+    def _introduce_new_page(self, items):
         """
         Method for adding and displaying new page and disposing of the old one.
         When 'direction' is 0 then adjusting the content of the new page happens
         immediately, otherwise it is performed in the `_clean_up` method when
         any page transisions are already over.
 
-        :param items: list of items to be placed on the new page
-        :param direction: which page should be introduced next.
-        1 for the next page, -1 for the previous page and 0 for the initial one. 
+        :param items: list of items to be placed on the new page.
+
+        :return: None.
         """
         _new_page = _Page(items, self.page_spacing,
                           self.page_strategy,
                           self.get_width(), self.get_height())
 
+        direction = self._current_direction
         if direction == 0:
             self._current_page = _new_page
             self._current_page.set_id(self.get_id() + "_page")
@@ -560,10 +855,9 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self.old_page_transition.set_to(old_page_to)
             self.old_page.add_transition("x", self.old_page_transition)
             self._current_page.add_transition("x", self.new_page_transition)
-
-        if self.pages_count > 0:
+        if self._page_count > 0:
             self.emit("progressed", float(self.page_index+1) \
-                    / self.pages_count, self.page_index+1)
+                    / self._page_count, self.page_index+1)
         else:
             self.emit("progressed", 0, 0)
 
@@ -571,24 +865,25 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         """
         Display pager initial page.
         """
-        if self.data_source is not None and \
-           self.data_source.data is not None and \
-           self._current_page is None:
+        if not self._inited and \
+                self.data_source is not None and \
+                self.data_source.data is not None and \
+                self._current_page is None:
+            self._inited = True
             # create page specification needed for proper items adjustment
             self.data_source.target_spec = {"width": self.get_width(),
                         "height": self.get_height(),
                         "spacing": self.page_spacing,
                         "rows": self.rows, "columns": self.columns}
+            self._current_direction = 0
             if self.data_source.custom_topology:
-                self.pages_count = len(self.data_source.data)
                 items = self.data_source.get_items_custom(self.page_index)
             else:
-                self.pages_count = ceil(self.data_source.data_length \
-                                        / (self.rows*self.columns))
-                items = self.data_source.get_items_forward(
+                items = self.data_source.query_items_forward(
                     self.rows*self.columns)
-            self.emit("limit-declared", self.pages_count)
-            self._introduce_new_page(items, 0)
+            self._calculate_page_count(self.data_source.length)
+            if items:
+                self._introduce_new_page(items)
 
     def _automatic_timeout(self, data):
         """
@@ -621,32 +916,46 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.get_stage().pending_group = self._current_page
         self._current_page.start_cycle()
 
+    def on_new_items(self, items):
+        """
+        Receive new items.
+
+        :param items: list of items.
+
+        :return: None.
+        """
+        self._introduce_new_page(items)
+
     def next_page(self):
         """
         Move to the next page.
         """
-        if self.old_page is None and self.pages_count > 1:
-            self.page_index = (self.page_index+1) % self.pages_count
+        if self.old_page is None and self._page_count > 1:
+            self.page_index = (self.page_index+1) % self._page_count
+            self._current_direction = 1
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom(self.page_index)
             else:
-                items = self.data_source.get_items_forward(
-                    self.rows*self.columns)
-            self._introduce_new_page(items, 1)
+                items = self.data_source.query_items_forward(
+                    self.rows * self.columns)
+            if items:
+                self._introduce_new_page(items)
 
     def previous_page(self):
         """
         Move to the previous page.
         """
-        if self.old_page is None and self.pages_count > 1:
+        if self.old_page is None and self._page_count > 1:
             self.page_index = self.page_index - 1 if self.page_index >= 1 \
-                                    else self.pages_count - 1
+                                    else self._page_count - 1
+            self._current_direction = -1
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom(self.page_index)
             else:
-                items = self.data_source.get_items_backward(
+                items = self.data_source.query_items_backward(
                     self.columns * self.rows)
-            self._introduce_new_page(items, -1)
+            if items:
+                self._introduce_new_page(items)
 
     def run_automatic(self):
         """
@@ -654,7 +963,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
 
         :deprecated: Use scanning instead
         """
-        if self.pages_count > 1:
+        if self._page_count > 1:
             self.is_running = True
             Clutter.threads_add_timeout(0, self.idle_duration,
                                     self._automatic_timeout, None)
