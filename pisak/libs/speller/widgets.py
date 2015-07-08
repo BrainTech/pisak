@@ -643,10 +643,10 @@ class Key(widgets.Button, configurator.Configurable):
 
     def set_swap_special_label(self, specialmode):
         try:
-            if ((self.get_label() == self.special1_text
-                    and specialmode == "special1")
-                    or  (self.get_label() == self.special2_text
-                    and specialmode == "special2")):
+            if ((self.get_label() == self.special1_text and
+                    specialmode == "special1") or
+                    (self.get_label() == self.special2_text and
+                    specialmode == "special2")):
                 self.set_pre_special_label()
             else:
                 self.set_special_label(specialmode)
