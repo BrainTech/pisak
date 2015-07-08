@@ -379,22 +379,22 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         The cycle will also be stopped if the strategy's `has_next` method returns
         False.
         """
-        _LOG.debug("Starting group {}".format(self.get_id()))
-        if not self.get_property("mapped"):
-            self.connect("notify::mapped", lambda *_: self.set_key_focus())
+        if self.get_stage() is None:
             message = \
                 "Started cycle in unmapped group: {}".format(self.get_id())
             _LOG.warning(message)
             # TODO: do something wise here
+            return
+        _LOG.debug("Starting group {}".format(self.get_id()))
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
         self.input_handler_token = self.signal_source.connect(
             signal, lambda *args: handler(self, *args))
-        self.set_key_focus()
         self.killed = False
         if self.scanning_hilite:
             self.enable_scan_hilite()
         self.user_action_handler = self.strategy.select
+        self.set_key_focus()
         self.strategy.start()
 
     def stop_cycle(self):
