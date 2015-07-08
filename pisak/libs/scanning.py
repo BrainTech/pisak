@@ -111,12 +111,12 @@ class Strategy(Clutter.Actor):
     def group(self, value):
         self._group = value
 
-    def select(self):
+    def select(self, element=None):
         """
         Selects currently highlighted element.
         """
         select_lag_disabled = False
-        element = self.get_current_element()
+        element = element or self.get_current_element()
         if element is None:
             _LOG.debug("There is no current element that could be frozen.")
             return
@@ -385,7 +385,14 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             _LOG.warning(message)
             # TODO: do something wise here
             return
+
         _LOG.debug("Starting group {}".format(self.get_id()))
+
+        if self.is_singular():
+            esc = self._on_singular()
+            if esc:
+                return
+
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
         self.input_handler_token = self.signal_source.connect(
@@ -396,6 +403,20 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.user_action_handler = self.strategy.select
         self.set_key_focus()
         self.strategy.start()
+
+    def _on_singular(self):
+        '''
+        Do something when the group is singular.
+        '''
+        msg = ('Group {} is singular. Selecting its only subelement.')
+        _LOG.debug(msg.format(self.get_id()))
+        sub_element =self.get_subgroups()[0]
+        if isinstance(sub_element, Group):
+            sub_element.start_cycle()
+            return True
+        elif hasattr(sub_element, "enable_hilite"):
+            # TODO: do we really want this: self.strategy.select(sub_element) ?
+            return False
 
     def stop_cycle(self):
         """
