@@ -411,14 +411,15 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             msg = ('Group {} is singular. Starting its only subgroup.')
             _LOG.debug(msg.format(self.get_id()))
             sub_element.start_cycle()
-            return True
+            ret = True
         else:
             if not self.suppress_collapse_select_on_init:
                 self.strategy.select(sub_element)
-                return True
+                ret = True
             else:
                 self.suppress_collapse_select_on_init = False
-                return False
+                ret = False
+        return ret
 
     def stop_cycle(self):
         """
