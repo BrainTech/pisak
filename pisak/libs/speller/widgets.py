@@ -586,9 +586,11 @@ class Key(widgets.Button, configurator.Configurable):
     def set_special_label(self, specialmode):
         self._cache_pre_special_text(self.get_label())
         if "special1" == specialmode:
-            self.set_label(self.special1_text)
+            if self.special1_text is not None:
+                self.set_label(self.special1_text)
         elif "special2" == specialmode:
-            self.set_label(self.special2_text)
+            if self.special2_text is not None:
+                self.set_label(self.special2_text)
         else:
             raise exceptions.PisakException("Invalid argument")
 
@@ -641,14 +643,11 @@ class Key(widgets.Button, configurator.Configurable):
 
     def set_swap_special_label(self, specialmode):
         try:
-            if (self.get_label() == self.special1_text) and ("special1" == specialmode):
-                self.set_label(self.default_text)
-            elif (self.get_label() == self.special1_text) and ("special2" == specialmode):
-                self.set_special_label("special2")
-            elif (self.get_label() == self.special2_text) and ("special2" == specialmode):
-                self.set_label(self.default_text)
-            elif (self.get_label() == self.special2_text) and ("special1" == specialmode):
-                self.set_special_label("special1")
+            if ((self.get_label() == self.special1_text
+                    and specialmode == "special1")
+                    or  (self.get_label() == self.special2_text
+                    and specialmode == "special2")):
+                self.set_pre_special_label()
             else:
                 self.set_special_label(specialmode)
         except AttributeError:

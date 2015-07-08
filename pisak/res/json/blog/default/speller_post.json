@@ -580,7 +580,7 @@
         "ratio-width": 0.048,
         "ratio-height": 0.085,
         "icon-size": 30,
-        "icon-name": "specjalne",
+        "icon-name": "znaki",
         "related-object": "keyboard_panel",
         "signals": [
                        {
@@ -592,6 +592,25 @@
     },
     {
         "id": "keyboard_menu_button_6",
+        "type": "PisakButton",
+        "style-class": "PisakBlogSpellerPostButton",
+        "text": " ",
+        "alternative-text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "specjalne",
+        "related-object": "keyboard_panel",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/swap_special2_chars",
+                           "object": "keyboard"
+                       }
+                   ]
+    },
+    {
+        "id": "keyboard_menu_button_7",
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
@@ -609,7 +628,7 @@
                    ]
     },
     {
-        "id": "keyboard_menu_button_7",
+        "id": "keyboard_menu_button_8",
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerPostButton",
         "text": " ",
@@ -627,7 +646,7 @@
                    ]
     },
     {
-	"id": "keyboard_menu_button_8",
+	"id": "keyboard_menu_button_9",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
         "text": " ",
@@ -643,16 +662,6 @@
                            "object": "text_box"
                        }
                    ]
-    },
-    {
-        "id": "keyboard_menu_button_9",
-        "type": "PisakSpellerKey",
-	"style-class": "PisakBlogSpellerPostKey",
-        "default-text": "SZ",
-        "special1-text": "#",
-        "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
     },
     {
         "id": "keyboard_menu_button_10",
@@ -710,6 +719,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "Q",
         "special1-text": "1",
+        "special2-text": "#",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -720,6 +730,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "W",
         "special1-text": "2",
+        "special2-text": ":-)",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -731,6 +742,7 @@
         "default-text": "E",
         "altgr-text": "Ę",
         "special1-text": "3",
+        "special2-text": ":-(",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -741,6 +753,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "R",
         "special1-text": "4",
+        "special2-text": ":-D",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -751,6 +764,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "T",
         "special1-text": "5",
+        "special2-text": ":-P",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -761,6 +775,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "Y",
         "special1-text": "6",
+        "special2-text": ":-*",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -771,6 +786,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "U",
         "special1-text": "7",
+        "special2-text": ":-/",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -781,6 +797,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "I",
         "special1-text": "8",
+        "special2-text": ":-O",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -792,6 +809,7 @@
         "default-text": "O",
         "altgr-text": "Ó",
         "special1-text": "9",
+        "special2-text": ":-3",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -802,6 +820,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "P",
         "special1-text": "0",
+        "special2-text": "xD",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -834,6 +853,7 @@
         "default-text": "A",
         "altgr-text": "Ą",
         "special1-text": ",",
+        "special2-text": "-",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -845,6 +865,7 @@
         "default-text": "S",
         "altgr-text": "Ś",
         "special1-text": ".",
+        "special2-text": ";-)",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -855,6 +876,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "D",
         "special1-text": ";",
+        "special2-text": "O.o",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -865,6 +887,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "F",
         "special1-text": ":",
+        "special2-text": "-.-",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -875,6 +898,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "G",
         "special1-text": "\"",
+        "special2-text": "^^",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -885,6 +909,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "H",
         "special1-text": "!",
+        "special2-text": "<3",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -895,6 +920,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "J",
         "special1-text": "\\",
+        "special2-text": "*.*",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -905,6 +931,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "K",
         "special1-text": "&",
+        "special2-text": "B-)",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -916,6 +943,7 @@
         "default-text": "L",
         "altgr-text": "Ł",
         "special1-text": "?",
+        "special2-text": ":'(",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -965,6 +993,7 @@
         "default-text": "Z",
         "altgr-text": "Ż",
         "special1-text": "/",
+        "special2-text": "+",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -976,6 +1005,7 @@
         "default-text": "X",
         "altgr-text": "Ź",
         "special1-text": "*",
+        "special2-text": "_",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -987,6 +1017,7 @@
         "default-text": "C",
         "altgr-text": "Ć",
         "special1-text": "%",
+        "special2-text": "^",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -997,6 +1028,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "V",
         "special1-text": "@",
+        "special2-text": "'",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1007,6 +1039,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "B",
         "special1-text": "(",
+        "special2-text": "~",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1018,6 +1051,7 @@
         "default-text": "N",
         "altgr-text": "Ń",
         "special1-text": ")",
+        "special2-text": "[",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1028,6 +1062,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "M",
         "special1-text": "=",
+        "special2-text": "]",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
