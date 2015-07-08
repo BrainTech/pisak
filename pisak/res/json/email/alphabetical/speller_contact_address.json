@@ -550,7 +550,7 @@
         "ratio-width": 0.048,
         "ratio-height": 0.085
     },
-    {
+     {
         "id": "keyboard_menu_button_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
@@ -641,7 +641,7 @@
         "id": "key_1_1",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "q",
+        "default-text": "a",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -650,7 +650,7 @@
         "id": "key_1_2",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "w",
+        "default-text": "b",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -659,7 +659,7 @@
         "id": "key_1_3",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "e",
+        "default-text": "c",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -668,7 +668,7 @@
         "id": "key_1_4",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "r",
+        "default-text": "d",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -677,7 +677,7 @@
         "id": "key_1_5",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "t",
+        "default-text": "e",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -686,7 +686,7 @@
         "id": "key_1_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "y",
+        "default-text": "f",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -695,7 +695,7 @@
         "id": "key_1_7",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "u",
+        "default-text": "g",
         "special1-text": "7",
         "target": "text_box",
         "ratio-width": 0.048,
@@ -705,7 +705,7 @@
         "id": "key_1_8",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "i",
+        "default-text": "h",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -714,7 +714,7 @@
         "id": "key_1_9",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "o",
+        "default-text": "i",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -723,7 +723,7 @@
         "id": "key_1_10",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "p",
+        "default-text": "j",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -753,7 +753,7 @@
         "id": "key_2_1",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "a",
+        "default-text": "k",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -762,7 +762,7 @@
         "id": "key_2_2",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "s",
+        "default-text": "l",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -771,7 +771,7 @@
         "id": "key_2_3",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "d",
+        "default-text": "m",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -780,7 +780,7 @@
         "id": "key_2_4",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "f",
+        "default-text": "n",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -789,7 +789,7 @@
         "id": "key_2_5",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "g",
+        "default-text": "o",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -798,7 +798,7 @@
         "id": "key_2_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "h",
+        "default-text": "p",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -807,7 +807,7 @@
         "id": "key_2_7",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "j",
+        "default-text": "q",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -816,7 +816,7 @@
         "id": "key_2_8",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "k",
+        "default-text": "r",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -825,7 +825,7 @@
         "id": "key_2_9",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "l",
+        "default-text": "s",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -872,7 +872,7 @@
         "id": "key_3_1",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "z",
+        "default-text": "t",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -881,7 +881,7 @@
         "id": "key_3_2",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "x",
+        "default-text": "u",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -890,7 +890,7 @@
         "id": "key_3_3",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "c",
+        "default-text": "v",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -899,7 +899,7 @@
         "id": "key_3_4",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "v",
+        "default-text": "w",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -908,7 +908,7 @@
         "id": "key_3_5",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "b",
+        "default-text": "x",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -917,7 +917,7 @@
         "id": "key_3_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "n",
+        "default-text": "y",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -926,7 +926,7 @@
         "id": "key_3_7",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "m",
+        "default-text": "z",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
