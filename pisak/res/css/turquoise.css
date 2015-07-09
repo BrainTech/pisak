@@ -67,7 +67,7 @@ PisakButton.PisakSpellerButton, PisakSpellerKey, PisakSpellerPrediction {
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("white_curve_style4.png") 35;
+    border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakSpellerButton:hover, PisakSpellerKey:hover, PisakSpellerPrediction:hover {
@@ -92,7 +92,7 @@ MxButton.PisakSpellerButton:scanning, PisakSpellerKey:scanning, MxButton.PisakSp
 
 MxButton.PisakSpellerButton:disabled, PisakSpellerKey:disabled, MxButton.PisakSpellerPrediction:disabled {
     color: grey;
-    border-image: url("white_curve_style4.png") 35;
+    border-image: url("white_curve.png") 35;
 }
 
 
