@@ -13,6 +13,9 @@
     {
         "id": "background_box",
         "type": "PisakBackgroundPattern",
+        "pattern": "gradient",
+        "rgba": "142, 196, 196, 255",
+        "background-color": "rgba(216, 244, 244, 255)",
         "x-expand": true,
         "y-expand": true
     },

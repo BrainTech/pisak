@@ -1997,13 +1997,13 @@ class BackgroundPattern(layout.Bin):
         Color of the background pattern.
 
         :param value: color as a string, in a format of comma separated
-        four floatng point values, each corresponding to the normalized
-        amounts of, consecutively, red, green, blue and alpha channels
+        four integer values, each corresponding to the amounts of,
+        consecutively, red, green, blue and alpha channels
         in the resulting color. Given string is then converted to the list
         containing floating point values of the consecutive channels.
         """
         self._rgba = list(map(
-            lambda string: float(string.strip()), value.split(",")))
+            lambda string: float(string.strip())/255, value.split(",")))
         self.background_image.invalidate()
 
     def _draw(self, canvas, context, w, h):
