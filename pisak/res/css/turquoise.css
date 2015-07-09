@@ -53,7 +53,7 @@ PisakButton.PisakMainPanelButton:hover {
 /* Speller */
 
 PisakScrolledText.PisakSpellerText {
-    border-image: url("white_flat.png");
+    border-image: url("shade_frame.png") 5;
 }
 
 MxLabel.PisakSpellerText {
