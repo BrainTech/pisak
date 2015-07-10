@@ -274,22 +274,32 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     def check_to_resize(self, *args):
         pango_layout = self.clutter_text.get_layout()
+        # height of the text layout (?).
         pango_height = pango_layout.get_size()[1] / Pango.SCALE
+        # actual height of the invisible widget that contains all the text.
         label_height = self.text.get_size()[1]
         font_height = re.findall(r'\d+',
                                  self.clutter_text.get_font_name())[0]
+        # size of a font being used.
         font_height = int(font_height)
+
+        # what exactly is going on here ?  ->
         if label_height <= pango_height + font_height:
-            self.text.set_height(self.text.get_height() + unit.h(self.ratio_height))
+            self.text.set_height(
+                self.text.get_height() + unit.h(self.ratio_height) - self.margin.top)
         elif label_height > pango_height + unit.h(self.ratio_height) + font_height:
-            self.text.set_height(self.text.get_height() - unit.h(self.ratio_height))
+            self.text.set_height(
+                self.text.get_height() - unit.h(self.ratio_height) - self.margin.top)
 
     def scroll_to_view(self, *args):
         pos = self.get_cursor_position()
         scroll_bar = self.get_children()[1]
         adj = scroll_bar.get_adjustment()
         coords = self.clutter_text.position_to_coords(pos)
+
+        # scroll only 1/4 of the whole page.
         adj.set_value(coords[2] - 3*unit.h(self.ratio_height)/4)
+
         scroll_bar.set_adjustment(adj)
         
     def type_text(self, text):
