@@ -1,15 +1,15 @@
 /*  general */
 
 MxButton:scanning { 
-    color: #ccc;
-    border-image: url("black_flat.png");
+    color: rgb(60, 60, 60);
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton:disabled{
-    color: grey;
+    color: rgb(220, 220, 220);
     font-size: 20pt;
     font-family: serif;
-    border-image: url("grey_frame.png") 5;
+    border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakClock {
@@ -32,21 +32,21 @@ MxLabel.LoadingPanel {
 /* Main panel */
 
 PisakButton.PisakMainPanelButton {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 30pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 25;
 }
 
 PisakButton.PisakMainPanelButton:lag_hilite {
     color: white;
-    border-image: url("cyan_flat.png");
+    border-image: url("turquoise_curve.png") 25;
 }
 
 PisakButton.PisakMainPanelButton:hover {
     color: white;
-    border-image: url("purple_flat.png") 5;
+    border-image: url("red_curve.png") 25;
 }
 
 
@@ -57,22 +57,23 @@ PisakScrolledText.PisakSpellerText {
 }
 
 MxLabel.PisakSpellerText {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 50px;
     font-family: Kelson Sans;
 }
 
 PisakButton.PisakSpellerButton, PisakSpellerKey, PisakSpellerPrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
+    margin-left: 5;
     border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakSpellerButton:hover, PisakSpellerKey:hover, PisakSpellerPrediction:hover {
     color: white;
-    border-image: url("red_curve.png") 36;
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakSpellerButton:lag_hilite, PisakSpellerKey:lag_hilite, PisakSpellerPrediction:lag_hilite {
@@ -85,13 +86,13 @@ PisakSpellerButton:active, PisakSpellerKey:active, PisakSpellerPrediction:active
     border-image: url("turquoise_curve.png") 35;
 }
 
-MxButton.PisakSpellerButton:scanning, PisakSpellerKey:scanning, MxButton.PisakSpellerPrediction:scanning {
+MxButton.PisakSpellerButton:scanning, MxButton.PisakSpellerKey:scanning, MxButton.PisakSpellerPrediction:scanning {
     color: white;
     border-image: url("turquoise_curve.png") 35;
 }
 
-MxButton.PisakSpellerButton:disabled, PisakSpellerKey:disabled, MxButton.PisakSpellerPrediction:disabled {
-    color: grey;
+MxButton.PisakSpellerButton:disabled, MxButton.PisakSpellerKey:disabled, MxButton.PisakSpellerPrediction:disabled {
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
@@ -99,37 +100,37 @@ MxButton.PisakSpellerButton:disabled, PisakSpellerKey:disabled, MxButton.PisakSp
 /* Viewer */
 
 MxProgressBar.PisakViewerProgressBar {
-  border-image: url("black_flat.png");
+  border-image: url("turquoise_curve.png") 15;
 }
 
 MxProgressBarFill.PisakViewerProgressBar {
-  border-image: url("cyan_flat.png");
+  border-image: url("white_curve.png") 15;
 }
 
 MxLabel.PisakViewerProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
-  color: white;
+  font-size: 25pt;
+  color: rgb(112, 166, 166);
 }
 
 MxLabel.PisakViewerPhotoTile {
   font-family: Kelson Sans;
   font-size: 20pt;
-  color: black;
+  color: rgb(112, 166, 166);
 }
 
 MxLabel.PisakViewerAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(112, 166, 166);
 }
 
 PisakButton.PisakViewerButton {
-  color: white;
+  color: black;
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("black_flat.png");
+  border-image: url("white_curve.png") 15;
 
 }
 
@@ -138,40 +139,42 @@ PisakButton.PisakViewerButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("purple_flat.png");
+  border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakViewerButton:lag_hilite {
-  border-image: url("cyan_flat.png");
+  border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakViewerButton:disabled{
     color: grey;
-    border-image: url("grey_frame.png") 5;
+    border-image: url("white_curve.png") 15;
 }
 
 
 /* Paint */
 
 PisakButton.PisakPaintButton {
-  color: white;
+  color: black
   font-size: 15pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("black_flat.png");
+  border-image: url("white_curve.png") 15;
 }
 
 PisakButton.PisakPaintButton:hover {
-  border-image: url("purple_flat.png");
+  color: white;
+  border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakPaintButton:disabled{
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+  color: grey;
+  border-image: url("white_curve.png") 15;
 }
 
 PisakButton.PisakPaintButton:lag_hilite {
-  border-image: url("cyan_flat.png");
+  color: white;
+  border-image: url("red_curve.png") 15;
 }
 
 MxLabel.PaintColorMenu {
@@ -187,20 +190,20 @@ MxLabel.PaintLineMenu {
 }
 
 PisakButton.PisakPaintColorButton {
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 15;
 }
 
 PisakButton.PisakPaintColorButton:lag_hilite {
-    border-image: url("cyan_frame.png") 5;
+    border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakPaintColorButton:hover {
-    border-image: url("purple_frame.png") 5;
+    border-image: url("red_curve.png") 15;
 }
 
 MxStack.PisakPaintEaselFrame {
     padding: 5 5 5 5;
-    border-image: url("black_frame.png") 5;
+    border-image: url("shade_frame.png") 15;
 }
 
 
@@ -211,27 +214,27 @@ PisakButton.PisakSymbolerButton {
    font-size: 18pt;
    font-family: Kelson Sans;
    font-weight: bold;
-   border-image: url("black_frame.png") 5;
+   border-image: url("white_curve.png") 15;
 }
 
 PisakButton.PisakSymbolerButton:hover {
    color: white;
-   border-image: url("purple_flat.png");
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakSymbolerButton:lag_hilite {
    color: white;
-   border-image: url("cyan_flat.png");
+   border-image: url("red_curve.png") 15;
 }
 
 MxButton.PisakSymbolerButton:scanning { 
-    color: #ccc;
-    border-image: url("black_flat.png");
+    color: white;
+    border-image: url("turquoise_curve.png") 15;
 }
 
 MxButton.PisakSymbolerButton:disabled{
     color: grey;
-    border-image: url("grey_frame.png") 5;
+    border-image: url("white_curve.png") 15;
 }
 
 PisakSlider.PisakSymbolerSlider {
@@ -243,22 +246,22 @@ PisakSlider.PisakSymbolerSlider {
 MxLabel.PisakSymbolerPhotoTileLabel {
   font-family: Kelson Sans;
   font-size: 16pt;
-  color: black;
+  color: rgb(112, 166, 166);
 }
 
 MxFrame.PisakSymbolerEntryBackground {
-  border-image: url("fence_frame.png");
+  border-image: url("shade_frame.png") 15;
 }
 
 PisakSlider.PisakSymbolerSlider *#trough-background {
-   border-image: url("fence_frame.png") 2 2 2 2;
+   border-image: url("shade_frame.png") 15;
 }
 
 PisakSlider.PisakSymbolerSlider *#fill {
 }
 
 PisakSlider.PisakSymbolerSlider > MxButton {
-   border-image: url("black_flat.png");
+   border-image: url("turquoise_curve.png") 15;
 }
 
 PisakSlider.PisakSymbolerSlider {
