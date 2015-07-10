@@ -22,10 +22,10 @@ class DataItem:
     :param content: proper data content.
     :param cmp_key: key used for comparisions.
     """
-    def __init__(self, content, cmp_key):
+    def __init__(self, content, cmp_key, flags=None):
         self.content = content
         self.cmp_key = cmp_key
-        self.flags = {}  # extra flags that can be set on a data item
+        self.flags = flags or {}  # extra flags that can be set on a data item
 
     def _is_valid_operand(self, other):
         return isinstance(other, DataItem)
@@ -347,13 +347,15 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         Generate list of `DataItems` out of some arbitrary raw data. Produced list
         can be then used as the `data`.
 
-        :param raw_data:container with some raw data items.
-        :param cmp_key_factory: function to get some comparision
-        key out of a data item.
+        :param raw_data:container with tuples, each consisting of a
+        raw data item and dictionary of flags specific to this item.
+        :param cmp_key_factory: function to retrieve some comparison
+        key out of a given data item.
 
         :return: list of `DataItems`.
         """
-        return [DataItem(item, cmp_key_factory(item)) for item in raw_data]
+        return [DataItem(item, cmp_key_factory(item), flags) for
+                    item, flags in raw_data]
 
 
 class _Page(scanning.Group):

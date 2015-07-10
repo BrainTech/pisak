@@ -271,6 +271,9 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         pos = self.clutter_text.get_cursor_position()
         return pos if pos >= 0 else self.get_text_length()
 
+    def set_cursor_position(self, new_pos):
+        self.clutter_text.set_cursor_position(new_pos)
+
     def check_to_resize(self, *args):
         pango_layout = self.clutter_text.get_layout()
         pango_height = pango_layout.get_size()[1] / Pango.SCALE
