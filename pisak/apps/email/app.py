@@ -1,6 +1,8 @@
 """
 Email application main module.
 """
+import textwrap
+
 from gi.repository import GObject
 
 import pisak
@@ -15,7 +17,9 @@ import pisak.libs.speller.handlers  # @UnusedImport
 import pisak.libs.speller.widgets  # @UnusedImport
 import pisak.libs.viewer.widgets  # @UnusedImport
 
+
 _LOG = logger.get_logger(__name__)
+
 
 MESSAGES = {
     "no_internet": "Brak połączenia z internetem.\nSprawdź"
@@ -195,8 +199,8 @@ def prepare_sent_view(app, window, script, data):
 
 def prepare_speller_message_body_view(app, window, script, data):
     if data and 'original_msg' in data and data['original_msg'].get('Body'):
-        body = '\n'.join(['> ' + line for line in
-                          data['original_msg']['Body'].split('\n')])
+        body = textwrap.indent(
+            data['original_msg']['Body'], '>', lambda line: True)
         window.ui.text_box.type_text(body)
 
     handlers.button_to_view(window, script, "button_exit")
@@ -209,9 +213,9 @@ def prepare_speller_message_subject_view(app, window, script, data):
         subject = data['original_msg']['Subject']
         action = data.get('action')
         if action == 'forward':
-            pre = 'Fwd: '
+            pre = 'PD: '
         elif action in ('reply', 'reply_all'):
-            pre = 'Re: '
+            pre = 'Odp: '
         else:
             pre = ''
 
@@ -453,12 +457,22 @@ def prepare_single_message_view(app, window, script, data):
             window.ui.message_body.set_text(message["Body"])
 
         def reply():
+            '''
+            Send a reply only to the sender of the original message.
+            '''
+            # pick emal address only of the main sender from the list of headers:
             app.box['new_message'].recipients = message['From'][0][1]
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'reply'})
 
         def reply_all():
-            app.box['new_message'].recipients = [msg[1] for msg in message['From']]
+            '''
+            Send a reply to the sender and all the recipients
+            of the original message.
+            '''
+            # pick email addresses of the main sender and of all the recipients:
+            app.box['new_message'].recipients = [message['From'][0][1]] +  \
+                                            [msg[1] for msg in message['To']]
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'reply_all'})
 
