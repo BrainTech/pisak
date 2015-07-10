@@ -386,10 +386,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
         _LOG.debug("Starting group {}".format(self.get_id()))
 
-        if self.is_singular():
-            esc = self._on_singular()
-            if esc:
-                return
+        if self.is_singular() and self._on_singular():
+            return
 
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
@@ -408,7 +406,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         '''
         sub_element =self.get_subgroups()[0]
         if isinstance(sub_element, Group):
-            msg = ('Group {} is singular. Starting its only subgroup.')
+            msg = 'Group {} is singular. Starting its only subgroup.'
             _LOG.debug(msg.format(self.get_id()))
             sub_element.start_cycle()
             ret = True
