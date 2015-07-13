@@ -494,7 +494,7 @@ PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:frozen {
 PisakButton.PisakBlogSpellerAboutMeButton:active,
 PisakSpellerKey.PisakBlogSpellerAboutMeKey:active,
 PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:active {
-    color: white;
+    color: rgb(60, 60, 60);
     border-image: url("white_curve.png") 35;
 }
 
@@ -564,7 +564,7 @@ PisakSpellerPrediction.PisakBlogSpellerPostPrediction:lag_hilite {
 PisakButton.PisakBlogSpellerPostButton:active,
 PisakSpellerKey.PisakBlogSpellerPostKey:active,
 PisakSpellerPrediction.PisakBlogSpellerPostPrediction:active {
-    color: white;
+    color: rgb(60, 60, 60);
     border-image: url("white_curve.png") 35;
 }
 
@@ -578,18 +578,18 @@ MxButton.PisakBlogSpellerPostPrediction:scanning {
 MxButton.PisakBlogSpellerPostButton:disabled, 
 MxButton.PisakBlogSpellerPostKey:disabled, 
 MxButton.PisakBlogSpellerPostPrediction:disabled {
-    color: grey;
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakBlogSpellerTitleHeader {
-   color: black;
+   color: rgb(60, 60, 60);
    font-size: 35px;
    font-family: Kelson Sans;
 }
 
 PisakScrolledText.PisakBlogSpellerPostText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakBlogSpellerPostText {
@@ -599,11 +599,11 @@ MxLabel.PisakBlogSpellerPostText {
 }
 
 PisakScrolledText.PisakBlogSpellerTitleText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakBlogSpellerTitleText {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 50px;
     font-family: Kelson Sans;
 }
@@ -611,7 +611,7 @@ MxLabel.PisakBlogSpellerTitleText {
 PisakButton.PisakBlogSpellerTitleButton, 
 PisakSpellerKey.PisakBlogSpellerTitleKey, 
 PisakSpellerPrediction.PisakBlogSpellerTitlePrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
@@ -641,7 +641,7 @@ PisakSpellerPrediction.PisakBlogSpellerTitlePrediction:lag_hilite {
 PisakButton.PisakBlogSpellerTitleButton:active,
 PisakSpellerKey.PisakBlogSpellerTitleKey:active,
 PisakSpellerPrediction.PisakBlogSpellerTitlePrediction:active {
-    color: white;
+    color: rgb(60, 60, 60);
     border-image: url("white_curve.png") 35;
 }
 
@@ -655,7 +655,7 @@ MxButton.PisakBlogSpellerTitlePrediction:scanning {
 MxButton.PisakBlogSpellerTitleButton:disabled, 
 MxButton.PisakBlogSpellerTitleKey:disabled, 
 MxButton.PisakBlogSpellerTitlePrediction:disabled {
-    color: grey;
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
@@ -684,21 +684,21 @@ MxProgressBarFill.PisakBlogViewerProgressBar {
 MxLabel.PisakBlogViewerProgressBar {
   font-family: Kelson Sans;
   font-size: 30pt;
-  color: white;
+  color: rgb(60, 60, 60);
 }
 
 MxProgressBar.PisakBlogProgressBar {
-  border-image: url("white_curve.png") 35;
+  border-image: url("white_curve.png") 15;
 }
 
 MxProgressBarFill.PisakBlogProgressBar {
-  border-image: url("turquoise_curve.png") 35;
+  border-image: url("turquoise_curve.png") 15;
 }
 
 MxLabel.PisakBlogProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
-  color: white;
+  font-size: 20pt;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakBlogViewerAlbumHeader {
@@ -732,14 +732,14 @@ PisakButton.PisakBlogViewerButton:lag_hilite {
 }
 
 PisakButton.PisakBlogViewerButton:disabled{
-    color: grey;
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakBlogViewerAboutMeAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 PisakButton.PisakBlogViewerAboutMeButton {
@@ -767,25 +767,25 @@ PisakButton.PisakBlogViewerAboutMeButton:frozen {
 }
 
 PisakButton.PisakBlogViewerAboutMeButton:disabled{
-    color: grey;
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakBlogAboutMeName {
   font-size: 60pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakBlogAboutMe {
   font-size: 35pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
   font-weight: lighter;
 }
 
 PisakButton.PisakBlogButton {
-  color: black;
+  color: rgb(60, 60, 60);
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
@@ -798,7 +798,7 @@ PisakButton.PisakBlogButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("red_curve.png") 35;
+  border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakBlogButton:frozen {
@@ -806,21 +806,20 @@ PisakButton.PisakBlogButton:frozen {
 }
 
 PisakButton.PisakBlogButton:lag_hilite {
-    border-image: url("red_curve.png") 35;
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakBlogButton:disabled{
-    color: grey;
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakBlogFlatButton {
-  color: white;
+  color: rgb(60, 60, 60);
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("white_curve.png") 35;
-
 }
 
 PisakButton.PisakBlogFlatButton:hover {
@@ -828,7 +827,7 @@ PisakButton.PisakBlogFlatButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("red_curve.png") 35;
+  border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakBlogFlatButton:frozen {
@@ -836,45 +835,45 @@ PisakButton.PisakBlogFlatButton:frozen {
 }
 
 PisakButton.PisakBlogFlatButton:lag_hilite {
-    border-image: url("red_curve.png") 35;
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakBlogFlatButton:disabled{
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 15;
 }
 
 MxLabel.PisakBlogTitle {
   font-size: 30pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
   font-weight: lighter;
 }
 
 MxLabel.PisakBlogAllPostsTitle {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
   font-weight: lighter;
 }
 
 MxLabel.PisakBlogSinglePostTitle {
   font-size: 30pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
   font-weight: lighter;
 }
 
 MxLabel.PisakBlogAllPostsInfo {
   font-size: 20pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakBlogPostTitle {
   font-size: 25pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 PisakScrolledText.PisakBlogPostText {
@@ -884,27 +883,27 @@ PisakScrolledText.PisakBlogPostText {
 MxLabel.PisakBlogPostText {
   font-size: 20pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 PisakFrame.PisakBlogPostTile {
-  border-image: url("white_curve.png") 35;
+  border-image: url("white_frame.png") 35;
 }
 
 MxFrame.PisakBlogPostFrame {
-  border-image: url("fence_frame.png");
+  border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakBlogPostTileTitle {
   font-size: 25pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakBlogPostTileDate {
   font-size: 20pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
   font-weight: lighter;
 }
 
@@ -915,21 +914,21 @@ PisakFrame.PisakBlogBlogTile {
 MxLabel.PisakBlogBlogTile {
   font-size: 20pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakBlogSpellerCommentHeader {
-   color: black;
+   color: rgb(60, 60, 60);
    font-size: 35px;
    font-family: Kelson Sans;
 }
 
 PisakScrolledText.PisakBlogSpellerCommentText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakBlogSpellerCommentText {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 50px;
     font-family: Kelson Sans;
 }
@@ -937,7 +936,7 @@ MxLabel.PisakBlogSpellerCommentText {
 PisakButton.PisakBlogSpellerCommentButton, 
 PisakSpellerKey.PisakBlogSpellerCommentKey, 
 PisakSpellerPrediction.PisakBlogSpellerCommentPrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
@@ -967,7 +966,7 @@ PisakSpellerPrediction.PisakBlogSpellerCommentPrediction:frozen {
 PisakButton.PisakBlogSpellerCommentButton:active,
 PisakSpellerKey.PisakBlogSpellerCommentKey:active,
 PisakSpellerPrediction.PisakBlogSpellerCommentPrediction:active {
-    color: white;
+    color: rgb(60, 60, 60);
     border-image: url("white_curve.png") 35;
 }
 
@@ -981,7 +980,7 @@ MxButton.PisakBlogSpellerCommentPrediction:scanning {
 MxButton.PisakBlogSpellerCommentButton:disabled, 
 MxButton.PisakBlogSpellerCommentKey:disabled, 
 MxButton.PisakBlogSpellerCommentPrediction:disabled {
-    color: grey;
+    color: rgb(210, 210, 210);
     border-image: url("white_curve.png") 35;
 }
 
