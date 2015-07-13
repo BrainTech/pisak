@@ -520,7 +520,7 @@ MxButton.PisakBlogSpellerAboutMePrediction:disabled {
 }
 
 MxLabel.PisakBlogSpellerPostHeader {
-   color: rgb(60, 60, 60)
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -583,7 +583,7 @@ MxButton.PisakBlogSpellerPostPrediction:disabled {
 }
 
 MxLabel.PisakBlogSpellerTitleHeader {
-   color: rgb(60, 60, 60);
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -660,35 +660,35 @@ MxButton.PisakBlogSpellerTitlePrediction:disabled {
 }
 
 MxProgressBar.PisakBlogViewerAboutMeProgressBar {
-  border-image: url("white_curve.png") 35;
+  border-image: url("white_flat.png") 15;
 }
 
 MxProgressBarFill.PisakBlogViewerAboutMeProgressBar {
-  border-image: url("turquoise_curve.png") 35;
+  border-image: url("turquoise_curve.png") 15;
 }
 
 MxLabel.PisakBlogViewerAboutMeProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 20pt;
   color: white;
 }
 
 MxProgressBar.PisakBlogViewerProgressBar {
-  border-image: url("white_curve.png") 35;
+  border-image: url("white_flat.png") 15;
 }
 
 MxProgressBarFill.PisakBlogViewerProgressBar {
-  border-image: url("turquoise_curve.png") 35;
+  border-image: url("turquoise_curve.png") 15;
 }
 
 MxLabel.PisakBlogViewerProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 20pt;
   color: rgb(60, 60, 60);
 }
 
 MxProgressBar.PisakBlogProgressBar {
-  border-image: url("white_curve.png") 15;
+  border-image: url("white_flat.png") 15;
 }
 
 MxProgressBarFill.PisakBlogProgressBar {
@@ -704,7 +704,7 @@ MxLabel.PisakBlogProgressBar {
 MxLabel.PisakBlogViewerAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(112, 166, 166);
 }
 
 PisakButton.PisakBlogViewerButton {
@@ -739,7 +739,7 @@ PisakButton.PisakBlogViewerButton:disabled{
 MxLabel.PisakBlogViewerAboutMeAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: rgb(60, 60, 60);
+  color: rgb(112, 166, 166);
 }
 
 PisakButton.PisakBlogViewerAboutMeButton {
@@ -774,7 +774,7 @@ PisakButton.PisakBlogViewerAboutMeButton:disabled{
 MxLabel.PisakBlogAboutMeName {
   font-size: 60pt;
   font-family: Kelson Sans;
-  color: rgb(60, 60, 60);
+  color: rgb(112, 166, 166);
 }
 
 MxLabel.PisakBlogAboutMe {
@@ -840,7 +840,7 @@ PisakButton.PisakBlogFlatButton:lag_hilite {
 
 PisakButton.PisakBlogFlatButton:disabled{
     color: rgb(210, 210, 210);
-    border-image: url("white_curve.png") 15;
+    border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakBlogTitle {
@@ -887,7 +887,7 @@ MxLabel.PisakBlogPostText {
 }
 
 PisakFrame.PisakBlogPostTile {
-  border-image: url("white_frame.png") 35;
+  border-image: url("white_frame.png") 15;
 }
 
 MxFrame.PisakBlogPostFrame {
@@ -908,7 +908,7 @@ MxLabel.PisakBlogPostTileDate {
 }
 
 PisakFrame.PisakBlogBlogTile {
-  border-image: url("white_curve.png") 35;
+  border-image: url("white_frame.png") 15;
 }
 
 MxLabel.PisakBlogBlogTile {
@@ -918,7 +918,7 @@ MxLabel.PisakBlogBlogTile {
 }
 
 MxLabel.PisakBlogSpellerCommentHeader {
-   color: rgb(60, 60, 60);
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -988,17 +988,17 @@ MxButton.PisakBlogSpellerCommentPrediction:disabled {
 /*Email*/
 
 PisakScrolledText.PisakEmailSpellerMessageContentText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakEmailSpellerMessageContentHeader {
-   color: black;
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
 
 MxLabel.PisakEmailSpellerMessageContentText {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 50px;
     font-family: Kelson Sans;
 }
@@ -1006,58 +1006,58 @@ MxLabel.PisakEmailSpellerMessageContentText {
 PisakButton.PisakEmailSpellerMessageContentButton, 
 PisakSpellerKey.PisakEmailSpellerMessageContentKey, 
 PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageContentButton:hover, 
 PisakSpellerKey.PisakEmailSpellerMessageContentKey:hover, 
 PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:hover {
     color: white;
-    border-image: url("purple_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageContentButton:frozen, 
 PisakSpellerKey.PisakEmailSpellerMessageContentKey:frozen, 
 PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:frozen {
     color: white;
-    border-image: url("cyan_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageContentButton:lag_hilite,
 PisakSpellerKey.PisakEmailSpellerMessageContentKey:lag_hilite,
 PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:lag_hilite {
-    border-image: url("cyan_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageContentButton:active,
 PisakSpellerKey.PisakEmailSpellerMessageContentKey:active,
 PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:active {
-    color: white;
-    border-image: url("grey_flat.png");
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerMessageContentButton:scanning, 
 MxButton.PisakEmailSpellerMessageContentKey:scanning, 
 MxButton.PisakEmailSpellerMessageContentPrediction:scanning {
     color: white;
-    border-image: url("black_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerMessageContentButton:disabled, 
 MxButton.PisakEmailSpellerMessageContentKey:disabled, 
 MxButton.PisakEmailSpellerMessageContentPrediction:disabled {
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakEmailTitle {
   font-size: 30pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(112, 166, 166);
   font-weight: lighter;
 }
 
@@ -1068,17 +1068,17 @@ MxLabel.PisakEmailAddressTile {
 }
 
 PisakScrolledText.PisakEmailSpellerMessageToText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakEmailSpellerMessageToHeader {
-   color: black;
+   color: rgb(60, 60, 60);
    font-size: 35px;
    font-family: Kelson Sans;
 }
 
 MxLabel.PisakEmailSpellerMessageToText {
-    color: black;
+    color: rgb(112, 166, 166);
     font-size: 50px;
     font-family: Kelson Sans;
 }
@@ -1086,66 +1086,66 @@ MxLabel.PisakEmailSpellerMessageToText {
 PisakButton.PisakEmailSpellerMessageToButton,
 PisakSpellerKey.PisakEmailSpellerMessageToKey,
 PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageToButton:hover,
 PisakSpellerKey.PisakEmailSpellerMessageToKey:hover,
 PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:hover {
     color: white;
-    border-image: url("purple_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageToButton:frozen,
 PisakSpellerKey.PisakEmailSpellerMessageToKey:frozen,
 PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:frozen {
     color: white;
-    border-image: url("cyan_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageToButton:lag_hilite,
 PisakSpellerKey.PisakEmailSpellerMessageToKey:lag_hilite,
 PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:lag_hilite {
-    border-image: url("cyan_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageToButton:active,
 PisakSpellerKey.PisakEmailSpellerMessageToKey:active,
 PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:active {
-    color: white;
-    border-image: url("grey_flat.png");
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerMessageToButton:scanning,
 MxButton.PisakEmailSpellerMessageToKey:scanning,
 MxButton.PisakEmailSpellerMessageToPrediction:scanning {
     color: white;
-    border-image: url("black_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerMessageToButton:disabled,
 MxButton.PisakEmailSpellerMessageToKey:disabled,
 MxButton.PisakEmailSpellerMessageToPrediction:disabled {
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 PisakScrolledText.PisakEmailSpellerMessageSubjectText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakEmailSpellerMessageSubjectHeader {
-   color: black;
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
 
 MxLabel.PisakEmailSpellerMessageSubjectText {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 50px;
     font-family: Kelson Sans;
 }
@@ -1153,107 +1153,107 @@ MxLabel.PisakEmailSpellerMessageSubjectText {
 PisakButton.PisakEmailSpellerMessageSubjectButton,
 PisakSpellerKey.PisakEmailSpellerMessageSubjectKey,
 PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageSubjectButton:hover,
 PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:hover,
 PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:hover {
     color: white;
-    border-image: url("purple_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageSubjectButton:frozen,
 PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:frozen,
 PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:frozen {
     color: white;
-    border-image: url("cyan_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageSubjectButton:lag_hilite,
 PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:lag_hilite,
 PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:lag_hilite {
-    border-image: url("cyan_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerMessageSubjectButton:active,
 PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:active,
 PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:active {
-    color: white;
-    border-image: url("grey_flat.png");
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerMessageSubjectButton:scanning,
 MxButton.PisakEmailSpellerMessageSubjectKey:scanning,
 MxButton.PisakEmailSpellerMessageSubjectPrediction:scanning {
     color: white;
-    border-image: url("black_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerMessageSubjectButton:disabled,
 MxButton.PisakEmailSpellerMessageSubjectKey:disabled,
 MxButton.PisakEmailSpellerMessageSubjectPrediction:disabled {
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 MxProgressBar.PisakEmailProgressBar {
-  border-image: url("black_flat.png");
+  border-image: url("white_flat.png");
 }
 
 MxProgressBarFill.PisakEmailProgressBar {
-  border-image: url("cyan_flat.png");
+  border-image: url("turquoise_curve.png") 15;
 }
 
 MxLabel.PisakEmailProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
-  color: white;
+  font-size: 20pt;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakEmailHeader {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: black;
+  color: rgb(112, 166, 166);
 }
 
 PisakButton.PisakEmailButton {
-   color: black;
+   color: rgb(60, 60, 60);
    font-size: 15pt;
    font-family: Kelson Sans;
    font-weight: bold;
-   border-image: url("black_frame.png") 5;
+   border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailButton:hover {
    color: white;
-   border-image: url("purple_flat.png");
+   border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailButton:lag_hilite {
-   color: black;
-   border-image: url("cyan_flat.png");
+   color: white;
+   border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailButton:toggled {
 }
 
 PisakButton.PisakEmailButton:disabled{
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 MxButton.PisakEmailButton:scanning {
-    color: white;
-    border-image: url("black_flat.png") 5;
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 PisakFrame.PisakEmailAddressTile {
-  border-image: url("black_frame.png") 5;
+  border-image: url("white_frame.png") 5;
 }
 
 MxLabel.PisakEmailInboxTile {
@@ -1263,17 +1263,17 @@ MxLabel.PisakEmailInboxTile {
 }
 
 PisakFrame.PisakEmailInboxTile {
-  border-image: url("black_frame.png") 5;
+  border-image: url("white_frame.png") 5;
 }
 
 MxLabel.PisakEmailSentTile {
   font-family: Kelson Sans;
   font-size: 20pt;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 PisakFrame.PisakEmailSentTile {
-  border-image: url("black_frame.png") 5;
+  border-image: url("white_frame.png") 5;
 }
 
 MxLabel.PisakEmailDraftsTile {
@@ -1287,11 +1287,11 @@ PisakFrame.PisakEmailDraftsTile {
 }
 
 PisakScrolledText.PisakEmailSpellerContactNameText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakEmailSpellerContactNameHeader {
-   color: black;
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -1305,60 +1305,60 @@ MxLabel.PisakEmailSpellerContactNameText {
 PisakButton.PisakEmailSpellerContactNameButton,
 PisakSpellerKey.PisakEmailSpellerContactNameKey,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactNameButton:hover,
 PisakSpellerKey.PisakEmailSpellerContactNameKey:hover,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:hover {
     color: white;
-    border-image: url("purple_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactNameButton:frozen,
 PisakSpellerKey.PisakEmailSpellerContactNameKey:frozen,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:frozen {
     color: white;
-    border-image: url("cyan_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactNameButton:lag_hilite,
 PisakSpellerKey.PisakEmailSpellerContactNameKey:lag_hilite,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:lag_hilite {
-    border-image: url("cyan_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactNameButton:active,
 PisakSpellerKey.PisakEmailSpellerContactNameKey:active,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:active {
-    color: white;
-    border-image: url("grey_flat.png");
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactNameButton:scanning,
 MxButton.PisakEmailSpellerContactNameKey:scanning,
 MxButton.PisakEmailSpellerContactNamePrediction:scanning {
     color: white;
-    border-image: url("black_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactNameButton:disabled,
 MxButton.PisakEmailSpellerContactNameKey:disabled,
 MxButton.PisakEmailSpellerContactNamePrediction:disabled {
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 PisakScrolledText.PisakEmailSpellerContactAddressText {
-    border-image: url("fence_frame.png");
+    border-image: url("shade_frame.png") 15;
 }
 
 MxLabel.PisakEmailSpellerContactAddressHeader {
-   color: black;
+   color: rgb(112, 166, 166);
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -1372,81 +1372,81 @@ MxLabel.PisakEmailSpellerContactAddressText {
 PisakButton.PisakEmailSpellerContactAddressButton,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction {
-    color: black;
+    color: rgb(60, 60, 60);
     font-size: 18pt;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactAddressButton:hover,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey:hover,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:hover {
     color: white;
-    border-image: url("purple_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactAddressButton:frozen,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey:frozen,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:frozen {
     color: white;
-    border-image: url("cyan_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactAddressButton:lag_hilite,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey:lag_hilite,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:lag_hilite {
-    border-image: url("cyan_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailSpellerContactAddressButton:active,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey:active,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:active {
-    color: white;
-    border-image: url("grey_flat.png");
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactAddressButton:scanning,
 MxButton.PisakEmailSpellerContactAddressKey:scanning,
 MxButton.PisakEmailSpellerContactAddressPrediction:scanning {
     color: white;
-    border-image: url("black_flat.png");
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactAddressButton:hover,
 MxButton.PisakEmailSpellerContactAddressKey:hover,
 MxButton.PisakEmailSpellerContactAddressPrediction:hover {
     color: white;
-    border-image: url("purple_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactAddressButton:disabled,
 MxButton.PisakEmailSpellerContactAddressKey:disabled,
 MxButton.PisakEmailSpellerContactAddressPrediction:disabled {
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 MxProgressBar.PisakEmailViewerContactProgressBar {
-  border-image: url("black_flat.png");
+  border-image: url("white_flat.png");
 }
 
 MxProgressBarFill.PisakEmailViewerContactProgressBar {
-  border-image: url("cyan_flat.png");
+  border-image: url("turquoise_curve.png") 15;
 }
 
 MxLabel.PisakEmailViewerContactProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
-  color: white;
+  font-size: 20pt;
+  color: rgb(60, 60, 60);
 }
 
 PisakButton.PisakEmailViewerContactButton {
-  color: white;
+  color: rgb(60, 60, 60);
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("black_flat.png");
+  border-image: url("white_curve.png") 35;
 }
 
 PisakButton.PisakEmailViewerContactButton:hover {
@@ -1454,26 +1454,26 @@ PisakButton.PisakEmailViewerContactButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("purple_flat.png");
+  border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailViewerContactButton:lag_hilite {
-    border-image: url("cyan_flat.png");
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailViewerContactButton:frozen {
-  border-image: url("cyan_flat.png");
+  border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakEmailViewerContactButton:disabled{
-    color: grey;
-    border-image: url("grey_frame.png") 5;
+    color: rgb(210, 210, 210);
+    border-image: url("white_curve.png") 35;
 }
 
 MxLabel.PisakEmailViewerContactAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(112, 166, 166);
 }
 
 MxLabel.PisakEmailContact {
@@ -1486,7 +1486,7 @@ MxLabel.PisakEmailContact {
 MxLabel.PisakEmailSingleMessageTitle {
   font-size: 30pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(112, 166, 166);
   font-weight: lighter;
 }
 
@@ -1497,29 +1497,29 @@ MxLabel.PisakEmailSingleMessage {
 }
 
 PisakFrame.PisakEmailDate {
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_frame.png") 5;
 }
 
 MxLabel.PisakEmailDate {
-  font-size: 20pt;
+  font-size: 16pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakEmailMessageTileDate {
-  font-size: 20pt;
+  font-size: 18pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakEmailMessageTileSubject {
   font-size: 23pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 MxLabel.PisakEmailMessageTileTo {
-  font-size: 20pt;
+  font-size: 18pt;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
@@ -1535,14 +1535,14 @@ MxLabel.PisakPopUp {
 MxLabel.PisakEmailMessageTileFrom {
   font-size: 20pt;
   font-family: Kelson Sans;
-  color: black;
+  color: rgb(60, 60, 60);
   font-weight: lighter;
 }
 
 PisakFrame.PisakEmailMessageTile {
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_frame.png") 5;
 }
 
 PisakFrame.PisakEmailSingleMessage {
-    border-image: url("black_frame.png") 5;
+    border-image: url("white_flat.png") 5;
 }
