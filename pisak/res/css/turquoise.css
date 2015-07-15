@@ -18,6 +18,10 @@ MxLabel.PisakClock {
   color: black;
 }
 
+PisakBackgroundFulfillment {
+  border-image: url("turquoise_curve.png");
+}
+
 
 /* Loading panel  */
 

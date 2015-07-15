@@ -2076,3 +2076,10 @@ class BackgroundPattern(layout.Bin):
         gradient.add_color_stop_rgba(0.9, *self.rgba)
         context.set_source(gradient)
         context.paint()
+
+class BacgroundFulfillment(Mx.Frame):
+    """
+    This is used only for the possibility to change background in css file.
+    """
+
+    __gtype_name__ = "PisakBackgroundFulfillment"
