@@ -29,7 +29,8 @@
     {
         "id": "header",
         "type": "MxLabel",
-        "style-class": "PisakMovieHeader"
+        "style-class": "PisakMovieHeader",
+        "color": "rgba(65, 139, 138, 255)"
     },
     {
         "id": "middle_box_group",
@@ -60,13 +61,14 @@
         "id": "menu_header",
         "type": "PisakMenuHeader",
         "name": "funkcjenapis",
+        "color": "rgba(65, 139, 138, 255)",
         "height": 65.28
     },
     {
         "id": "main_menu_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
-        "ratio-spacing": 0.015,
+        "ratio-spacing": 0.0013,
         "y-expand": true,
         "y-align": "end",
         "children": ["button_exit", "button_library",
@@ -79,7 +81,7 @@
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "exit"
     },
@@ -89,7 +91,7 @@
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "bib"
     },
@@ -100,7 +102,7 @@
         "style-class": "PisakMovieButton",
         "icon-size": 50,
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "back",
         "signals": [
@@ -119,7 +121,7 @@
         "disabled": true,
         "icon-size": 50,
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "ulubione",
         "signals": [
@@ -137,7 +139,7 @@
         "style-class": "PisakMovieButton",
         "icon-size": 50,
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "louder",
         "signals": [
@@ -155,7 +157,7 @@
         "style-class": "PisakMovieButton",
         "icon-size": 50,
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "quieter",
         "signals": [
@@ -172,7 +174,7 @@
         "style-class": "PisakMovieButton",
         "label": "PEŁNY EKRAN",
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "fullscreen",
         "signals": [
@@ -200,7 +202,7 @@
         "style-class": "PisakMovieButton",
         "icon-size": 50,
         "ratio-width": 0.24,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "odtwarzacz",
         "disabled_when": "scanning_off",
@@ -302,7 +304,7 @@
         "id": "movie_menu_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
-        "ratio-spacing": 0.015,
+        "ratio-spacing": 0.0013,
         "y-expand": true,
         "y-align": "end",
         "children": ["movie_button_menu", "movie_button_skip_back",
@@ -313,6 +315,7 @@
     {
         "id": "movie_header",
         "type": "PisakMenuHeader",
+        "color": "rgba(75, 149, 148, 255)",
         "name": "odtwarzacznapis",
         "height": 65.28
     },
@@ -322,7 +325,7 @@
         "style-class": "PisakMovieButton",
         "label": " ",
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "main",
         "disabled_when": "scanning_off",
@@ -340,7 +343,7 @@
         "style-class": "PisakMovieButton",
         "label": " ",
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "next_track",
         "signals": [
@@ -357,7 +360,7 @@
         "style-class": "PisakMovieButton",
         "label": " ",
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "previous_track",
         "signals": [
@@ -375,7 +378,7 @@
 	"scanning-pauser": true,
         "label": " ",
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "forth",
         "signals": [
@@ -402,7 +405,7 @@
         "label": " ",
 	"scanning-pauser": true,
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "backw",
         "signals": [
@@ -428,7 +431,7 @@
         "style-class": "PisakMovieButton",
         "label": " ",
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
         "icon-size": 50,
         "icon-name": "stop",
         "signals": [
@@ -461,7 +464,7 @@
         "label": " ",
         "icon-size": 50,
         "ratio-width": 0.06,
-        "ratio-height": 0.095,
+        "ratio-height": 0.10547,
 	"toggled-icon-name": "pauza",
         "icon-size": 50,
         "icon-name": "play",

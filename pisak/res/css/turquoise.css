@@ -104,11 +104,11 @@ MxButton.PisakSpellerButton:disabled, MxButton.PisakSpellerKey:disabled, MxButto
 /* Viewer */
 
 MxProgressBar.PisakViewerProgressBar {
-  border-image: url("turquoise_curve.png") 15;
+  border-image: url("white_curve.png") 10 20;
 }
 
 MxProgressBarFill.PisakViewerProgressBar {
-  border-image: url("white_curve.png") 15;
+  border-image: url("turquoise_curve.png") 10 20;
 }
 
 MxLabel.PisakViewerProgressBar {
@@ -120,13 +120,13 @@ MxLabel.PisakViewerProgressBar {
 MxLabel.PisakViewerPhotoTile {
   font-family: Kelson Sans;
   font-size: 20pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 MxLabel.PisakViewerAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakButton.PisakViewerButton {
