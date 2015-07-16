@@ -4,7 +4,7 @@
         "type": "PisakScanningGroup",
         "x-expand": true,
         "y-expand": true,
-	"strategy": {
+    "strategy": {
                         "id": "main_group_strategy",
                         "type": "PisakRowStrategy"
                     },
@@ -15,6 +15,9 @@
     {
         "id": "background_box",
         "type": "PisakBackgroundPattern",
+        "pattern": "gradient",
+        "rgba": "140, 188, 188, 255",
+        "background-color": "rgba(188, 236, 236, 255)",
         "x-expand": true,
         "y-expand": true
     },
@@ -34,6 +37,7 @@
         "type": "PisakBinLayout",
         "ratio-width": 0.35,
         "ratio-height": 0.2,
+        "x-expand": true,
         "children": ["pisak_logo"]
     },
     {
