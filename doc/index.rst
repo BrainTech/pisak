@@ -17,7 +17,9 @@ Guides
 .. toctree::
    :maxdepth: 2
 
-   app_dev_guide
+   dev_first_steps
+   json_layout_design
+   css_style
    useful_widgets
    switch_and_groups
    signal_handlers
@@ -28,18 +30,6 @@ Modules
    :maxdepth: 2
 
    modules
-
-JSON creation
-=============
-.. toctree::
-
-   json_creation
-
-CSS style
-=========
-.. toctree::
-
-   css_style
 
 Authors
 =======

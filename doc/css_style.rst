@@ -118,6 +118,11 @@ Properties that can be used when a class inherits from `MxWidget class
 - `'width' <http://dev.w3.org/csswg/css-box-3/#width>`_ -
   specifies the width of the box area.
 
+**Disclaimer: Since** `MxWidget <http://www.michaelwood.me.uk/mx-docs/MxWidget.html>`_
+**suffers from the lack of documentation about the properties mentioned above,
+the foregoing links lead to a complete CSS style documentation, but some features
+might not work with the CSS files in PISAK.**
+
 Style related widgets
 ---------------------
 
@@ -128,22 +133,22 @@ impressions and that can not be styled through a CSS file:
 
 :class:`pisak.widgets.BackgroudPattern`
 
-Simple widget used as a background in every Pisak application view. 
-Displays one of the avalaible, colorfull patterns.
-Adjustable style-related properties are:
+   Simple widget used as a background in every Pisak application view.
+   Displays one of the avalaible, colorfull patterns.
+   Adjustable style-related properties are:
 
-- 'pattern' - name of a pattern to be drawn as a widget content, 
-  for now there are 'fence' and 'gradient' avalaible. 'fence' is a
-  dense pattern of thin, slanted lines crossing each other with the
-  right angle and 'gradient' is a horizontal, linear gradient from
-  a foreground color on both sides to a background color in the middle;
-- 'rgba' - color of the foreground pattern parts. 
+   - ``'pattern'`` - name of a pattern to be drawn as a widget content,
+     for now there are 'fence' and 'gradient' avalaible. 'fence' is a
+     dense pattern of thin, slanted lines crossing each other with the
+     right angle and 'gradient' is a horizontal, linear gradient from
+     a foreground color on both sides to a background color in the middle;
+   - ``'rgba'`` - color of the foreground pattern parts.
 
 :class:`pisak.widgets.Aperture`
 
-Semitransparent cover used to highlight other widgets and indicate
-they have the focus.
-Style properties:
+   Semitransparent cover used to highlight other widgets and indicate
+   they have the focus.
+   Style properties:
 
-- 'cover' - specifies how narrow will be a hole left in the middle;
-- 'r', 'g', 'b' - specific bands of the cover color.
+   - ``'cover'`` - specifies how narrow will be a hole left in the middle;
+   - ``'r', 'g', 'b'`` - specific bands of the cover color.
