@@ -342,7 +342,7 @@ PisakButton.PisakAudioButton:toggled {
 }
 
 PisakButton.PisakAudioPlaylistButton {
-   color: white;
+   color: rgb(112, 166, 166);
    font-size: 20pt;
    font-family: Kelson Sans;
    font-weight: bold;
@@ -350,8 +350,8 @@ PisakButton.PisakAudioPlaylistButton {
 }
 
 PisakButton.PisakAudioPlaylistButton:hover {
-   color: rgb(60, 60, 60);
-   border-image: url("white_curve.png") 15;
+   color: white;
+   border-image: url("turquoise_curve.png") 15;
 }
 
 PisakButton.PisakAudioPlaylistButton:toggled {
