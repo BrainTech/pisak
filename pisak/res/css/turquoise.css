@@ -120,13 +120,13 @@ MxLabel.PisakViewerProgressBar {
 MxLabel.PisakViewerPhotoTile {
   font-family: Kelson Sans;
   font-size: 20pt;
-  color: white;
+  color: rgb(112, 166, 166);
 }
 
 MxLabel.PisakViewerAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: white;
+  color: rgb(112, 166, 166);
 }
 
 PisakButton.PisakViewerButton {
@@ -143,11 +143,12 @@ PisakButton.PisakViewerButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("red_curve.png") 15;
+  border-image: url("turquoise_curve.png") 15;
 }
 
 PisakButton.PisakViewerButton:lag_hilite {
-  border-image: url("red_curve.png") 15;
+  color: white;
+  border-image: url("turquoise_curve.png") 15;
 }
 
 PisakButton.PisakViewerButton:disabled{
@@ -333,7 +334,7 @@ PisakButton.PisakAudioButton:hover {
 }
 
 PisakButton.PisakAudioButton:lag_hilite {
-   color: black;
+   color: white;
    border-image: url("turquoise_curve.png") 15;
 }
 
