@@ -9,9 +9,6 @@
     {
         "id": "background_box",
         "type": "PisakBackgroundPattern",
-        "pattern": "gradient",
-        "rgba": "94, 188, 188, 255",
-        "background-color": "rgba(188, 236, 236, 255)",
         "x-expand": true,
         "y-expand": true
     },
@@ -47,7 +44,7 @@
         "id": "button_menu_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
-        "ratio-spacing": 0.0013,
+        "ratio-spacing": 0.01,
         "y-expand": true,
         "y-align": "end",
         "children": ["button_start", "button_photo", "button_11", "button_10",
@@ -61,7 +58,7 @@
         "label": "ZOOM",
 	"scanning-pauser": true,
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "icon-size": 50,
         "icon-name": "zoom",
         "signals": [
@@ -80,7 +77,7 @@
         "icon-size": 50,
         "icon-name": "obrot",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -97,7 +94,7 @@
         "icon-size": 50,
         "icon-name": "edges",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -114,7 +111,7 @@
         "icon-size": 50,
         "icon-name": "contour",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -131,7 +128,7 @@
         "icon-size": 50,
         "icon-name": "filtr",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -148,7 +145,7 @@
         "icon-size": 50,
         "icon-name": "negatyw",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -165,7 +162,7 @@
         "icon-size": 50,
         "icon-name": "mirror",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -182,7 +179,7 @@
         "icon-size": 50,
         "icon-name": "szarosc",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -200,7 +197,7 @@
         "icon-size": 50,
         "icon-name": "psycho",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -217,7 +214,7 @@
         "icon-size": 50,
         "icon-name": "jasnosc",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -234,7 +231,7 @@
         "icon-size": 50,
         "icon-name": "oryginal",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742,
+        "ratio-height": 0.065,
         "signals": [
             {
                 "name": "clicked",
@@ -251,7 +248,7 @@
         "icon-size": 50,
         "icon-name": "back",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742
+        "ratio-height": 0.065
     },
     {
         "id": "button_start",
@@ -261,7 +258,7 @@
         "icon-size": 50,
         "icon-name": "exit",
         "ratio-width": 0.24,
-        "ratio-height": 0.0742
+        "ratio-height": 0.065
     },
     {
         "id": "slide_space",
