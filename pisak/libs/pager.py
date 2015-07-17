@@ -5,6 +5,8 @@ from math import ceil
 from functools import total_ordering
 
 from gi.repository import Clutter, GObject
+
+import pisak
 from pisak import res, logger
 from pisak.libs import properties, scanning, layout, unit, configurator, unit
 
