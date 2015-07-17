@@ -9,7 +9,7 @@ import pisak
 from pisak import app_manager, res, logger, exceptions
 from pisak.libs import handlers
 from pisak.libs.viewer import model
-from pisak.libs.email import address_book, message, imap_client
+from pisak.libs.email import address_book, message, imap_client, config
 
 from pisak.libs.email import widgets  # @UnusedImport
 import pisak.libs.email.handlers  # @UnusedImport
@@ -487,9 +487,14 @@ def prepare_single_message_view(app, window, script, data):
             Send a reply to the sender and all the recipients
             of the original message.
             '''
-            # pick email addresses of the main sender and of all the recipients:
-            app.box['new_message'].recipients = [message['From'][0][1]] +  \
-                                            [msg[1] for msg in message['To']]
+            # pick email addresses of the main sender and of all
+            # the recipients except myself:
+            setup = config.Config().get_account_setup()
+            app.box['new_message'].recipients = \
+                [message['From'][0][1]] + \
+                [msg[1] for msg in message['To'] if
+                    msg[1] != '@'.join([setup['user_address'],
+                                        setup['server_address']])]
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'reply_all'})
 
