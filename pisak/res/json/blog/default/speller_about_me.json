@@ -2,7 +2,7 @@
     {
         "id": "main",
         "type": "PisakScanningGroup",
-	"strategy": {
+	    "strategy": {
                         "id": "main_group_strategy",
                         "type": "PisakRowStrategy"
                     },
@@ -13,17 +13,20 @@
     {
         "id": "background_box",
         "type": "PisakBackgroundPattern",
+        "pattern": "gradient",
+        "rgba": "94, 188, 188, 255",
+        "background-color": "rgba(188, 236, 236, 255)",
         "x-expand": true,
         "y-expand": true
     },
     {
         "id": "pop_up_scanning_group",
         "type": "PisakScanningGroup",
-        "scanning-hilite": true,
         "x-expand": true,
         "y-expand": true,
         "background-color": "rgba(0, 0, 0, 0.4)",
         "reactive": true,
+        "scanning-hilite": true,
         "strategy": {
                         "type": "PisakRowStrategy"
                     },
@@ -32,7 +35,7 @@
     {
         "id": "pop_up_background",
         "type": "PisakBackgroundPattern",
-        "background-color": "white",
+        "background-color": "rgba(216, 244, 244, 255)",
         "ratio-width": 0.8,
         "ratio-height": 0.8
     },
@@ -57,12 +60,13 @@
         "id": "pop_up_header",
         "type": "ClutterText",
         "font-name": "Kelson Sans light 30",
+        "color": "rgba(65, 139, 138, 255)",
         "line-alignment": "center"
     },
     {
         "id": "pop_up_space",
         "type": "PisakBoxLayout",
-        "ratio-spacing": 0.07,
+        "ratio-spacing": 0.01171,
         "orientation": "vertical"
     },
     {
@@ -71,10 +75,10 @@
         "x-align": "start",
         "x-expand": true,
         "y-expand": true,
-        "ratio_margin_top": 0.0136,
-        "ratio_margin_bottom": 0.0136,
-        "ratio_margin_left": 0.0211,
-        "ratio_margin_right": 0.0211,
+        "ratio_margin_top": 0.01692,
+        "ratio_margin_bottom": 0.01692,
+        "ratio_margin_left": 0.02489,
+        "ratio_margin_right": 0.02123,
         "ratio_spacing": 0.0211,
         "orientation": "horizontal",
         "children": [
@@ -95,6 +99,7 @@
     {
         "id": "menu_header",
         "type": "PisakMenuHeader",
+        "color": "rgba(75, 149, 148, 255)",
         "name": "funkcjenapis",
         "height": 65.28
     },
@@ -104,7 +109,7 @@
         "orientation": "vertical",
         "y-align": "end",
         "y-expand": true,
-        "ratio_spacing" : 0.0136,
+        "ratio_spacing" : 0.0013,
         "children": [
                         "button_exit", "button_6", "button_8",
                         "button_5", "button_save", "button_4", "button_proceed", "button_2",
@@ -117,18 +122,19 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "ZAPISZ",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "ZAPISZ",
         "icon-name": "zapisz",
+
         "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/save",
-                           "object": "pop_up_box"
-                       }
-                   ]
+			{
+				"name": "clicked",
+				"handler": "speller/save",
+				"object": "pop_up_box"
+			}
+		]
     },
     {
         "id": "button_1",
@@ -136,8 +142,8 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "KLAWIATURA",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "LITERY",
         "icon-name": "klawiatura",
@@ -156,8 +162,8 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "PREDYKCJA",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "PREDYKCJA",
         "icon-name": "predykcja",
@@ -177,18 +183,18 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "DALEJ",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "AKCEPTUJ",
         "icon-name": "ocena",
-	"signals": [
-            {
-                "name": "clicked",
+        "signals": [
+                       {
+                           "name": "clicked",
                 "handler": "blog/publish_about_me_bio",
                 "object": "text_box"
-            }
-        ]
+                       }
+                   ]
     },
     {
         "id": "button_4",
@@ -196,8 +202,8 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "WCZYTAJ",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "WCZYTAJ",
         "icon-name": "wczytaj",
@@ -205,7 +211,7 @@
                        {
                            "name": "clicked",
                            "handler": "speller/load",
-                          "object": "pop_up_box"
+			   "object": "pop_up_box"
                        }
                    ]
     },
@@ -215,8 +221,8 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "PRZECZYTAJ",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "CZYTAJ",
         "icon-name": "przeczytaj",
@@ -235,8 +241,8 @@
         "text": "WYŚLIJ",
         "x-align": "start",
         "disabled": true,
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "WYŚLIJ",
         "icon-name": "wyslij",
@@ -255,8 +261,8 @@
         "text": "DRUKUJ",
         "x-align": "start",
         "disabled": true,
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "DRUKUJ",
         "icon-name": "drukuj",
@@ -274,8 +280,8 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "NOWY DOKUMENT",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "NOWY",
         "icon-name": "nowy_dokument",
@@ -293,13 +299,12 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": "PANEL STARTOWY",
         "x-align": "start",
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
+        "ratio-width": 0.15446,
+        "ratio-height": 0.09505,
         "icon-size": 50,
         "label": "WYJŚCIE",
         "icon-name": "wyjdz"
     },
-
     {
         "id": "prediction_dictionary",
         "type": "PisakSpellerDictionary",
@@ -323,7 +328,7 @@
         "orientation": "vertical",
         "y-align": "end",
         "y-expand": true,
-        "ratio-spacing": 0.0136,
+        "ratio-spacing": 0.0013,
         "children":
         [
             "prediction_9", "prediction_8", "prediction_7","prediction_6",
@@ -334,6 +339,7 @@
     {
         "id": "prediction_header",
         "type": "PisakMenuHeader",
+        "color": "rgba(65, 139, 138, 255)",
         "name": "predykcjanapis",
         "height": 65.28
     },
@@ -344,8 +350,8 @@
         "order-num": 1,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_2",
@@ -354,8 +360,8 @@
         "order-num": 2,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_3",
@@ -364,8 +370,8 @@
         "order-num": 3,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_4",
@@ -374,8 +380,8 @@
         "order-num": 4,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_5",
@@ -384,8 +390,8 @@
         "order-num": 5,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_6",
@@ -394,8 +400,8 @@
         "order-num": 6,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_7",
@@ -404,8 +410,8 @@
         "order-num": 7,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_8",
@@ -414,8 +420,8 @@
         "order-num": 8,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "prediction_9",
@@ -424,8 +430,8 @@
         "order-num": 9,
         "dictionary": "prediction_dictionary",
         "target": "text_box",
-        "ratio-width": 0.13734,
-        "ratio-height": 0.085
+        "ratio-width": 0.12079,
+        "ratio-height": 0.09505
     },
     {
         "id": "main_panel",
@@ -442,7 +448,7 @@
         "id": "main_panel_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
-        "ratio-spacing": 0.0136,
+        "ratio-spacing": 0.0198125,
         "children": [
                          "keyboard", "cursored_text", "speller_header"
                     ]
@@ -465,14 +471,14 @@
         "type": "PisakScrolledText",
 	"style-class": "PisakBlogSpellerAboutMeText",
         "x-align": "start",
-        "ratio-width": 0.59514,
-        "ratio-height": 0.512
+        "ratio-width": 0.61818,
+        "ratio-height": 0.48598
     },
     {
         "id": "keyboard",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
-        "ratio-spacing": 0.0136,
+        "ratio-spacing": 0.0013,
         "children": ["keyboard_panel", "keyboard_menu"]
     },
     {
@@ -489,7 +495,7 @@
     {
         "id": "keyboard_menu_box",
         "type": "PisakBoxLayout",
-        "ratio_spacing": 0.0128,
+        "ratio_spacing": 0.0022,
         "children": [
                         "keyboard_menu_button_10", "keyboard_menu_button_9",
                         "keyboard_menu_button_8", "keyboard_menu_button_7",
@@ -503,8 +509,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "predykcja",
         "disabled_when": "scanning_off",
@@ -522,8 +528,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "spacja",
         "spacing": 0,
@@ -540,8 +546,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "backspace",
         "spacing": 0,
@@ -558,8 +564,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "cofnij",
         "signals": [
@@ -576,8 +582,8 @@
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
         "alternative-text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "specjalne",
         "related-object": "keyboard_panel",
@@ -594,8 +600,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "wielkie_litery",
         "spacing": 0,
@@ -612,8 +618,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "polskie",
         "related-object": "keyboard_panel",
@@ -630,8 +636,8 @@
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "enter",
         "spacing": 0,
@@ -650,16 +656,16 @@
         "default-text": "SZ",
         "special1-text": "+",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "keyboard_menu_button_10",
         "type": "PisakButton",
 	"style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "funkcje",
         "disabled_when": "scanning_off",
@@ -677,7 +683,7 @@
         "type": "PisakBoxLayout",
         "orientation": "vertical",
         "y-align": "end",
-        "ratio_spacing": 0.0136,
+        "ratio_spacing": 0.0013,
         "children": [
                         "keyboard_row_3", "keyboard_row_2", "keyboard_row_1"
                     ]
@@ -696,7 +702,7 @@
     {
         "id": "keyboard_row_1_box",
         "type": "PisakBoxLayout",
-        "ratio_spacing": 0.0128,
+        "ratio_spacing": 0.0022,
         "children": [
                         "key_1_10", "key_1_9", "key_1_8", "key_1_7",
                         "key_1_6", "key_1_5", "key_1_4", "key_1_3",
@@ -710,8 +716,8 @@
         "default-text": "Q",
         "special1-text": "1",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_2",
@@ -720,8 +726,8 @@
         "default-text": "W",
         "special1-text": "2",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_3",
@@ -731,8 +737,8 @@
         "altgr-text": "Ę",
         "special1-text": "3",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_4",
@@ -741,8 +747,8 @@
         "default-text": "R",
         "special1-text": "4",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_5",
@@ -751,8 +757,8 @@
         "default-text": "T",
         "special1-text": "5",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_6",
@@ -761,8 +767,8 @@
         "default-text": "Y",
         "special1-text": "6",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_7",
@@ -771,8 +777,8 @@
         "default-text": "U",
         "special1-text": "7",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_8",
@@ -781,8 +787,8 @@
         "default-text": "I",
         "special1-text": "8",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_9",
@@ -792,8 +798,8 @@
         "altgr-text": "Ó",
         "special1-text": "9",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_1_10",
@@ -802,8 +808,8 @@
         "default-text": "P",
         "special1-text": "0",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "keyboard_row_2",
@@ -819,7 +825,7 @@
     {
         "id": "keyboard_row_2_box",
         "type": "PisakBoxLayout",
-        "ratio_spacing": 0.0128,
+        "ratio_spacing": 0.0022,
         "children": [
                         "key_2_10", "key_2_9", "key_2_8", "key_2_7",
                         "key_2_6", "key_2_5", "key_2_4", "key_2_3",
@@ -834,8 +840,8 @@
         "altgr-text": "Ą",
         "special1-text": ",",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_2",
@@ -845,8 +851,8 @@
         "altgr-text": "Ś",
         "special1-text": ".",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_3",
@@ -855,8 +861,8 @@
         "default-text": "D",
         "special1-text": ";",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_4",
@@ -865,8 +871,8 @@
         "default-text": "F",
         "special1-text": ":",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_5",
@@ -875,8 +881,8 @@
         "default-text": "G",
         "special1-text": "\"",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_6",
@@ -885,8 +891,8 @@
         "default-text": "H",
         "special1-text": "!",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_7",
@@ -895,8 +901,8 @@
         "default-text": "J",
         "special1-text": "\\",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_8",
@@ -905,8 +911,8 @@
         "default-text": "K",
         "special1-text": "&",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_2_9",
@@ -916,16 +922,16 @@
         "altgr-text": "Ł",
         "special1-text": "?",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
 	"id": "key_2_10",
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "nav_up",
         "signals": [
@@ -950,7 +956,7 @@
     {
         "id": "keyboard_row_3_box",
         "type": "PisakBoxLayout",
-        "ratio_spacing": 0.0128,
+        "ratio_spacing": 0.0022,
         "children": [
                         "key_3_10", "key_3_9", "key_3_8", "key_3_7",
                         "key_3_6", "key_3_5", "key_3_4", "key_3_3",
@@ -965,8 +971,8 @@
         "altgr-text": "Ż",
         "special1-text": "/",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_2",
@@ -976,8 +982,8 @@
         "altgr-text": "Ź",
         "special1-text": "*",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_3",
@@ -987,8 +993,8 @@
         "altgr-text": "Ć",
         "special1-text": "%",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_4",
@@ -997,8 +1003,8 @@
         "default-text": "V",
         "special1-text": "@",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_5",
@@ -1007,8 +1013,8 @@
         "default-text": "B",
         "special1-text": "(",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_6",
@@ -1018,8 +1024,8 @@
         "altgr-text": "Ń",
         "special1-text": ")",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_7",
@@ -1028,16 +1034,16 @@
         "default-text": "M",
         "special1-text": "=",
         "target": "text_box",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505
     },
     {
         "id": "key_3_8",
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "nav_left",
         "signals": [
@@ -1053,8 +1059,8 @@
         "type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "nav_right",
         "signals": [
@@ -1070,8 +1076,8 @@
 	"type": "PisakButton",
         "style-class": "PisakBlogSpellerAboutMeButton",
         "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
+        "ratio-width": 0.06076,
+        "ratio-height": 0.09505,
         "icon-size": 30,
         "icon-name": "nav_down",
         "signals": [

@@ -9,6 +9,9 @@
     {
         "id": "background_box",
         "type": "PisakBackgroundPattern",
+        "pattern": "gradient",
+        "rgba": "94, 188, 188, 255",
+        "background-color": "rgba(188, 236, 236, 255)",
         "x-expand": true,
         "y-expand": true
     },
@@ -28,16 +31,16 @@
     {
         "id": "middle_box",
         "type": "PisakBoxLayout",
-	"x-align": "start",
+	    "x-align": "start",
         "x-expand": true,
-	"orientation": "horizontal",
+	    "orientation": "horizontal",
         "ratio-spacing": 0.001,
         "children": ["photo_widget", "left_box"]
     },
     {
         "id": "left_box",
         "type": "PisakBoxLayout",
-	"orientation": "vertical",
+	    "orientation": "vertical",
         "ratio-spacing": 0.005,
         "children": ["menu_group", "title"]
     },
