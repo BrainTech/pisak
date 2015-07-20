@@ -120,13 +120,13 @@ MxLabel.PisakViewerProgressBar {
 MxLabel.PisakViewerPhotoTile {
   font-family: Kelson Sans;
   font-size: 20pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 MxLabel.PisakViewerAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakButton.PisakViewerButton {
@@ -709,7 +709,7 @@ MxLabel.PisakBlogProgressBar {
 MxLabel.PisakBlogViewerAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakButton.PisakBlogViewerButton {
@@ -997,7 +997,7 @@ PisakScrolledText.PisakEmailSpellerMessageContentText {
 }
 
 MxLabel.PisakEmailSpellerMessageContentHeader {
-   color: rgb(112, 166, 166);
+   color: white;
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -1062,7 +1062,7 @@ MxButton.PisakEmailSpellerMessageContentPrediction:disabled {
 MxLabel.PisakEmailTitle {
   font-size: 30pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
   font-weight: lighter;
 }
 
@@ -1077,13 +1077,13 @@ PisakScrolledText.PisakEmailSpellerMessageToText {
 }
 
 MxLabel.PisakEmailSpellerMessageToHeader {
-   color: rgb(60, 60, 60);
+   color: white;
    font-size: 35px;
    font-family: Kelson Sans;
 }
 
 MxLabel.PisakEmailSpellerMessageToText {
-    color: rgb(112, 166, 166);
+    color: white;
     font-size: 50px;
     font-family: Kelson Sans;
 }
@@ -1144,7 +1144,7 @@ PisakScrolledText.PisakEmailSpellerMessageSubjectText {
 }
 
 MxLabel.PisakEmailSpellerMessageSubjectHeader {
-   color: rgb(112, 166, 166);
+   color: white;
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -1223,7 +1223,7 @@ MxLabel.PisakEmailProgressBar {
 MxLabel.PisakEmailHeader {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakButton.PisakEmailButton {
@@ -1236,12 +1236,12 @@ PisakButton.PisakEmailButton {
 
 PisakButton.PisakEmailButton:hover {
    color: white;
-   border-image: url("turquoise_curve.png") 35;
+   border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailButton:lag_hilite {
    color: white;
-   border-image: url("turquoise_curve.png") 35;
+   border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakEmailButton:toggled {
@@ -1296,7 +1296,7 @@ PisakScrolledText.PisakEmailSpellerContactNameText {
 }
 
 MxLabel.PisakEmailSpellerContactNameHeader {
-   color: rgb(112, 166, 166);
+   color: white;
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -1363,7 +1363,7 @@ PisakScrolledText.PisakEmailSpellerContactAddressText {
 }
 
 MxLabel.PisakEmailSpellerContactAddressHeader {
-   color: rgb(112, 166, 166);
+   color: white;
    font-size: 35px;
    font-family: Kelson Sans;
 }
@@ -1478,7 +1478,7 @@ PisakButton.PisakEmailViewerContactButton:disabled{
 MxLabel.PisakEmailViewerContactAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 MxLabel.PisakEmailContact {
@@ -1491,7 +1491,7 @@ MxLabel.PisakEmailContact {
 MxLabel.PisakEmailSingleMessageTitle {
   font-size: 30pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
   font-weight: lighter;
 }
 
