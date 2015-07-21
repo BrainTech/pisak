@@ -264,8 +264,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     @property
     def data(self):
         """
-        List of some arbitrary data items. Each single item should be an instance
-        of the `DataItem` class.
+        List of some arbitrary data items. Each single item should
+        be an instance of the `DataItem` class.
         """
         with self._lock:
             return self._data.copy()
@@ -620,6 +620,12 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         Take any actions neccessary for cleaning after the lazy loader.
         """
         self._lazy_loader.stop()
+
+    def get_data_ids_list(self):
+        '''
+        Get list of identifiers of all the data items.
+        '''
+        return self._ids.copy()
 
     # ----------------- END OF LAZY LOADING METHODS ------------------ #
 

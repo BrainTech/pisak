@@ -130,18 +130,22 @@ def prepare_inbox_view(app, window, script, data):
     client = app.box["imap_client"]
 
     data_source = script.get_object("data_source")
-    data_source.item_handler = lambda tile, message_preview: \
+
+    def load_single_msg(_tile, message_preview):
         window.load_view(
             "email/single_message",
             {
                 "message_uid": message_preview.content["UID"],
                 "message_source": client.get_message_from_inbox,
-                "previous_view": "inbox"
+                'msg_ids_list': data_source.get_data_ids_list(),
+                "previous_view": 'inbox'
             }
         )
 
+    data_source.item_handler = load_single_msg
+
     try:
-        inbox_count, _inbox_unseen =  client.get_inbox_status()
+        inbox_count, _inbox_unseen = client.get_inbox_status()
     except imap_client.IMAPClientError as e:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.pager)
@@ -151,7 +155,7 @@ def prepare_inbox_view(app, window, script, data):
     else:
         if inbox_count == 0:
             window.load_popup(MESSAGES["empty_mailbox"],
-                          container=window.ui.pager)
+                              container=window.ui.pager)
         else:
             data_source.lazy_loading = True
 
@@ -166,15 +170,19 @@ def prepare_sent_view(app, window, script, data):
     client = app.box["imap_client"]
 
     data_source = script.get_object("data_source")
-    data_source.item_handler = lambda tile, message_preview: \
+
+    def load_single_msg(_tile, message_preview):
         window.load_view(
             "email/single_message",
             {
                 "message_uid": message_preview.content["UID"],
                 "message_source": client.get_message_from_sent_box,
+                'msg_ids_list': data_source.get_data_ids_list(),
                 "previous_view": "sent"
             }
         )
+
+    data_source.item_handler = load_single_msg
 
     try:
         sent_box_count = client.get_sent_box_count()
@@ -187,14 +195,15 @@ def prepare_sent_view(app, window, script, data):
     else:
         if sent_box_count == 0:
             window.load_popup(MESSAGES["empty_mailbox"],
-                          container=window.ui.pager)
+                              container=window.ui.pager)
         else:
             data_source.lazy_loading = True
+
 
 def prepare_speller_message_body_view(app, window, script, data):
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
-                    "email/address_book", {"pick_recipients_mode": True})
+                        "email/address_book", {"pick_recipients_mode": True})
 
 
 def prepare_speller_message_subject_view(app, window, script, data):
@@ -301,7 +310,7 @@ def prepare_speller_contact_name_view(app, window, script, data):
         try:
             app.box["address_book"].edit_contact_name(
                 data["contact_id"], window.ui.text_box.get_text())
-        except  address_book.AddressBookError as e:
+        except address_book.AddressBookError as e:
             pass  # TODO: display warning
 
     handlers.button_to_view(window, script, "button_exit")
@@ -321,19 +330,19 @@ def prepare_speller_contact_address_view(app, window, script, data):
             address = text_box.get_text()
             if address:
                 try:
-                    res = app.box["address_book"].add_contact(
+                    resp = app.box["address_book"].add_contact(
                         {"address": address})
-                    if not res:
+                    if not resp:
                         # TODO: say that address is not unique
                         pass
                     contact = app.box["address_book"].get_contact_by_address(
                         address)
                     load = ("email/speller_contact_name", {"contact_id": contact.id})
-                except address_book.AddressBookError as e:
+                except address_book.AddressBookError as exc:
                     # TODO: notify about failure
-                    load = ("email/address_book")
+                    load = ("email/address_book",)
             else:
-                load = "email/address_book"
+                load = ("email/address_book",)
 
             window.load_view(*load)
 
@@ -405,10 +414,10 @@ def prepare_single_message_view(app, window, script, data):
 
     try:
         message = data["message_source"](data["message_uid"])
-    except imap_client.IMAPClientError as e:
+    except imap_client.IMAPClientError as exc:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.message_content)
-    except exceptions.NoInternetError as e:
+    except exceptions.NoInternetError as exc:
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.message_content)
     else:
@@ -429,6 +438,18 @@ def prepare_single_message_view(app, window, script, data):
                                 VIEWS_MAP["new_message_initial_view"])
         handlers.button_to_view(window, script, "button_forward",
                                 VIEWS_MAP["new_message_initial_view"])
+
+        def change_msg(direction):
+            ids_list = data['msg_ids_list']
+            msg_id = ids_list[(ids_list.index(data['message_uid']) +
+                               direction) % len(ids_list)]
+            data.update({'message_uid': msg_id})
+            window.load_view('email/single_message', data)
+
+        handlers.connect_button(script, "button_next_mail",
+                                change_msg, 1)
+        handlers.connect_button(script, "button_previous_mail",
+                                change_msg, -1)
 
 
 if __name__ == "__main__":
