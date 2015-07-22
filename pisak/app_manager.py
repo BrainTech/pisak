@@ -60,7 +60,7 @@ def run(descriptor):
     pisak.app = None
 
     if input_process:
-        input_process.kill()
+        input_process.terminate()
     if device_server:
         device_server.stop()
 
