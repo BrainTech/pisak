@@ -1343,7 +1343,7 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
             self.label.set_text(new_text)
 
 
-class Header(Mx.Image, properties.PropertyAdapter, configurator.Configurable,
+class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable,
              style.StylableContainer):
     """
     Widget for displaying header being a svg icon.
@@ -1367,9 +1367,24 @@ class Header(Mx.Image, properties.PropertyAdapter, configurator.Configurable,
     def __init__(self):
         super().__init__()
         self.svg = None
-        self.color = None
-        self.set_scale_mode(Mx.ImageScaleMode.FIT)
+        self._color = None
+        self._canvas = Clutter.Canvas()
+        self.set_content(self._canvas)
+        self._canvas.set_size(20, 20)
+        self._canvas.connect('draw', self._draw)
+        self._canvas.invalidate()
         self.prepare_style()
+
+    def _draw(self, canvas, context, w, h):
+        if self.svg is None:
+            return
+        if self.color is not None:
+            self.svg.change_color(self.color)
+        handle, pixbuf = self.svg.get_handle(), self.svg.get_pixbuf()
+
+        context.set_operator(cairo.OPERATOR_SOURCE)
+        context.scale(w/pixbuf.get_width(), h/pixbuf.get_height())
+        handle.render_cairo(context)
 
     @property
     def ratio_width(self):
@@ -1426,17 +1441,8 @@ class Header(Mx.Image, properties.PropertyAdapter, configurator.Configurable,
             _LOG.warning(message)
 
     def _load(self):
-        if self.svg is None:
-            return
-        if self.color is not None:
-            self.svg.change_color(self.color)
-        self.svg.change_size(self.get_width(), self.get_height())
-        pixbuf = self.svg.get_pixbuf()
-        self.set_from_data(pixbuf.get_pixels(),
-                           Cogl.PixelFormat.RGBA_8888,
-                           pixbuf.get_width(),
-                           pixbuf.get_height(),
-                           pixbuf.get_rowstride())
+        self._canvas.set_size(self.get_width(), self.get_height())
+        self._canvas.invalidate()
 
 
 class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
