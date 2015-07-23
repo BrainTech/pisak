@@ -37,7 +37,7 @@ Example of a CSS styling procedure:
     class Foo(object):
         __gtype_name__ = 'PisakFoo'
 
-- then create two instances of the class in the JSON file and assign different
+- then create two instances of the class in the JSON file (:doc:`json_layout_design`) and assign different
   ``'style-class'`` properties to them::
 	
     {
