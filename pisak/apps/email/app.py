@@ -471,7 +471,7 @@ def prepare_single_message_view(app, window, script, data):
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
         if "Body" in message:
-            window.ui.message_body.set_text(message["Body"])
+            window.ui.message_body.type_text(message["Body"])
 
         def reply():
             '''
