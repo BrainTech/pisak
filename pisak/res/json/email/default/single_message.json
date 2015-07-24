@@ -291,7 +291,14 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "nav_up"
+        "icon-name": "nav_up",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "speller/scroll_up",
+                "object": "message_body"
+            }
+        ]
     },
     {
         "id": "button_scroll_down",
@@ -301,7 +308,14 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "nav_down"
+        "icon-name": "nav_down",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "speller/scroll_down",
+                "object": "message_body"
+            }
+        ]
     },
     {
         "id": "button_forward",
@@ -339,7 +353,9 @@
     },
     {
         "id": "message_body",
-        "type": "MxLabel",
-        "style-class": "PisakEmailSingleMessage"
+        "type": "PisakScrolledText",
+        "style-class": "PisakEmailSingleMessage",
+        "ratio-width": 0.64,
+        "ratio-height": 0.65
     }
 ]

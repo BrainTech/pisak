@@ -5,6 +5,22 @@ from pisak.libs import signals
 from pisak.libs.speller import widgets, documents_manager
 
 
+@signals.registered_handler("speller/scroll_up")
+def scroll_up(text_box):
+    '''
+    Scroll the text field up.
+    '''
+    text_box.scroll_up()
+
+
+@signals.registered_handler("speller/scroll_down")
+def scroll_down(text_box):
+    '''
+    Scroll the text field down.
+    '''
+    text_box.scroll_down()
+
+
 @signals.registered_handler("speller/undo")
 def undo(text_box):
     """
