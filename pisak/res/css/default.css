@@ -1534,5 +1534,5 @@ PisakFrame.PisakEmailMessageTile {
 }
 
 PisakFrame.PisakEmailSingleMessage {
-    border-image: url("black_frame.png") 5;
+    border-image: url("black_frame_thin.png") 1;
 }
