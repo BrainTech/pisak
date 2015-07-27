@@ -45,12 +45,12 @@ PisakButton.PisakMainPanelButton {
 
 PisakButton.PisakMainPanelButton:lag_hilite {
     color: white;
-    border-image: url("turquoise_curve.png") 25;
+    border-image: url("red_curve.png") 25;
 }
 
 PisakButton.PisakMainPanelButton:hover {
     color: white;
-    border-image: url("turquoise_curve.png") 25;
+    border-image: url("red_curve.png") 25;
 }
 
 
@@ -143,12 +143,12 @@ PisakButton.PisakViewerButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("turquoise_curve.png") 15;
+  border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakViewerButton:lag_hilite {
   color: white;
-  border-image: url("turquoise_curve.png") 15;
+  border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakViewerButton:disabled{
@@ -330,12 +330,12 @@ PisakButton.PisakAudioButton {
 
 PisakButton.PisakAudioButton:hover {
    color: white;
-   border-image: url("turquoise_curve.png") 15;
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakAudioButton:lag_hilite {
    color: white;
-   border-image: url("turquoise_curve.png") 15;
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakAudioButton:toggled {
@@ -351,7 +351,7 @@ PisakButton.PisakAudioPlaylistButton {
 
 PisakButton.PisakAudioPlaylistButton:hover {
    color: white;
-   border-image: url("turquoise_curve.png") 15;
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakAudioPlaylistButton:toggled {
@@ -361,7 +361,7 @@ PisakButton.PisakAudioPlaylistButton:toggled {
 
 PisakButton.PisakAudioPlaylistButton:lag_hilite {
    color: white;
-   border-image: url("turquoise_curve.png") 15;
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakAudioButton:disabled{
@@ -412,12 +412,12 @@ PisakButton.PisakMovieButton {
 
 PisakButton.PisakMovieButton:hover {
    color: white;
-   border-image: url("turquoise_curve.png") 15;
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakMovieButton:lag_hilite {
    color: white;
-   border-image: url("turquoise_curve.png") 15;
+   border-image: url("red_curve.png") 15;
 }
 
 PisakButton.PisakMovieButton:disabled{
@@ -499,8 +499,8 @@ PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:frozen {
 PisakButton.PisakBlogSpellerAboutMeButton:active,
 PisakSpellerKey.PisakBlogSpellerAboutMeKey:active,
 PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:active {
-    color: rgb(60, 60, 60);
-    border-image: url("white_curve.png") 35;
+    color: white;
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakButton.PisakBlogSpellerAboutMeButton:lag_hilite,
@@ -803,7 +803,7 @@ PisakButton.PisakBlogButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("turquoise_curve.png") 35;
+  border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakBlogButton:frozen {
@@ -811,7 +811,7 @@ PisakButton.PisakBlogButton:frozen {
 }
 
 PisakButton.PisakBlogButton:lag_hilite {
-    border-image: url("turquoise_curve.png") 35;
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakBlogButton:disabled{
@@ -832,7 +832,7 @@ PisakButton.PisakBlogFlatButton:hover {
   font-size: 20pt;
   font-family: Kelson Sans;
   font-weight: bold;
-  border-image: url("turquoise_curve.png") 35;
+  border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakBlogFlatButton:frozen {
@@ -840,7 +840,7 @@ PisakButton.PisakBlogFlatButton:frozen {
 }
 
 PisakButton.PisakBlogFlatButton:lag_hilite {
-    border-image: url("turquoise_curve.png") 35;
+    border-image: url("red_curve.png") 35;
 }
 
 PisakButton.PisakBlogFlatButton:disabled{
@@ -1253,8 +1253,8 @@ PisakButton.PisakEmailButton:disabled{
 }
 
 MxButton.PisakEmailButton:scanning {
-    color: rgb(60, 60, 60);
-    border-image: url("white_curve.png") 35;
+    color: white;
+    border-image: url("turquoise_curve.png") 35;
 }
 
 PisakFrame.PisakEmailAddressTile {
@@ -1340,8 +1340,8 @@ PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:lag_hilite {
 PisakButton.PisakEmailSpellerContactNameButton:active,
 PisakSpellerKey.PisakEmailSpellerContactNameKey:active,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:active {
-    color: rgb(60, 60, 60);
-    border-image: url("white_curve.png") 35;
+    color: white;
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactNameButton:scanning,
@@ -1407,8 +1407,8 @@ PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:lag_hilite {
 PisakButton.PisakEmailSpellerContactAddressButton:active,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey:active,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:active {
-    color: rgb(60, 60, 60);
-    border-image: url("white_curve.png") 35;
+    color: white;
+    border-image: url("turquoise_curve.png") 35;
 }
 
 MxButton.PisakEmailSpellerContactAddressButton:scanning,
