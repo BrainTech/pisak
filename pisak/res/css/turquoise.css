@@ -1,6 +1,6 @@
 /*  general */
 
-MxButton:scanning { 
+MxButton:scanning {
     color: rgb(60, 60, 60);
     border-image: url("turquoise_curve.png") 35;
 }
@@ -251,7 +251,7 @@ PisakSlider.PisakSymbolerSlider {
 MxLabel.PisakSymbolerPhotoTileLabel {
   font-family: Kelson Sans;
   font-size: 16pt;
-  color: rgb(112, 166, 166);
+  color: black;
 }
 
 MxFrame.PisakSymbolerEntryBackground {
@@ -281,13 +281,13 @@ PisakSlider.PisakSymbolerSlider {
 MxLabel.PisakAudioHeader {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 MxLabel.PisakAudioFolderTile {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakPlaylist MxScrollBar *.vtrough {
@@ -317,7 +317,7 @@ PisakFrame.PisakAudioFolderTile {
 MxLabel.PisakAudioPlaylistInfo {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakButton.PisakAudioButton {
@@ -342,7 +342,7 @@ PisakButton.PisakAudioButton:toggled {
 }
 
 PisakButton.PisakAudioPlaylistButton {
-   color: rgb(112, 166, 166);
+   color: white;
    font-size: 20pt;
    font-family: Kelson Sans;
    font-weight: bold;
@@ -389,13 +389,13 @@ MxLabel.PisakAudioProgressBar {
 MxLabel.PisakMoviePhotoTile {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 MxLabel.PisakMovieHeader {
   font-family: Kelson Sans;
   font-size: 25pt;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakFrame.PisakMoviePhotoTile {
@@ -744,7 +744,7 @@ PisakButton.PisakBlogViewerButton:disabled{
 MxLabel.PisakBlogViewerAboutMeAlbumHeader {
   font-size: 40pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 PisakButton.PisakBlogViewerAboutMeButton {
@@ -779,7 +779,7 @@ PisakButton.PisakBlogViewerAboutMeButton:disabled{
 MxLabel.PisakBlogAboutMeName {
   font-size: 60pt;
   font-family: Kelson Sans;
-  color: rgb(112, 166, 166);
+  color: white;
 }
 
 MxLabel.PisakBlogAboutMe {
@@ -1253,8 +1253,8 @@ PisakButton.PisakEmailButton:disabled{
 }
 
 MxButton.PisakEmailButton:scanning {
-    color: white;
-    border-image: url("turquoise_curve.png") 35;
+    color: rgb(60, 60, 60);
+    border-image: url("white_curve.png") 35;
 }
 
 PisakFrame.PisakEmailAddressTile {
