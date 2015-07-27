@@ -9,8 +9,9 @@
     {
         "id": "background_box",
         "type": "PisakBackgroundPattern",
-        "background-color": "rgba(0, 0, 0, 1)",
-        "rgba": "1, 1, 1, 0.3",
+        "pattern": "gradient",
+        "rgba": "140, 188, 188, 255",
+        "background-color": "rgba(188, 236, 236, 255)",
         "x-expand": true,
         "y-expand": true
     },
