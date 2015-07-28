@@ -195,15 +195,15 @@ MxLabel.PaintLineMenu {
 }
 
 PisakButton.PisakPaintColorButton {
-    border-image: url("white_curve.png") 15;
+    border-image: url("white_frame.png") 15;
 }
 
 PisakButton.PisakPaintColorButton:lag_hilite {
-    border-image: url("red_curve.png") 15;
+    border-image: url("red_frame.png") 15;
 }
 
 PisakButton.PisakPaintColorButton:hover {
-    border-image: url("red_curve.png") 15;
+    border-image: url("red_frame.png") 15;
 }
 
 MxStack.PisakPaintEaselFrame {

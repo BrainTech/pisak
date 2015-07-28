@@ -70,7 +70,7 @@
 	    "x-align": "start",
         "x-expand": true,
         "y-align": "center",
-        "children": ["button_exit", "button_address_book", "button_drafts",
+        "children": ["button_exit", "button_address_book",
           "button_sent", "button_inbox", "button_new_message"]
     },
 	{

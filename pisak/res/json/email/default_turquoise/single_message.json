@@ -31,8 +31,8 @@
         "y-align": "center",
         "x-expand": true,
         "y-expand": true,
-        "ratio-margin-top": 0.01,
-        "ratio-margin-bottom": 0.01,
+        "ratio-margin-top": 0.001,
+        "ratio-margin-bottom": 0.001,
         "ratio-spacing": 0.02,
         "orientation": "vertical",
         "children": ["lower_box", "top_box"]
@@ -44,14 +44,14 @@
         "y-align": "center",
         "ratio-height": 0.15,
         "x-expand": true,
-        "ratio-spacing": 0.025,
+        "ratio-spacing": 0.005,
 		"children": ["date_box", "to_box", "from_box"]
     },
     {
         "id": "from_box",
         "type": "PisakBoxLayout",
 		"ratio-spacing": 0.007,
-        "ratio-width": 0.2,
+        "ratio-width": 0.23,
         "y-expand": true,
         "y-align": "center",
         "orientation": "vertical",
@@ -80,7 +80,7 @@
         "id": "to_box",
         "type": "PisakBoxLayout",
 		"ratio-spacing": 0.007,
-        "ratio-width": 0.5,
+        "ratio-width": 0.52,
          "y-expand": true,
         "y-align": "center",
         "orientation": "vertical",
@@ -128,7 +128,7 @@
         "id": "date_box",
         "type": "PisakBoxLayout",
 		"ratio-spacing": 0.007,
-        "ratio-width": 0.2,
+        "ratio-width": 0.23,
          "y-expand": true,
         "y-align": "center",
         "orientation": "vertical",
@@ -263,28 +263,28 @@
         "orientation": "vertical",
         "ratio-spacing": 0.012,
         "y-align": "center",
-        "children": ["button_remove", "button_forward", "button_response_all",
-	    "button_response", "button_scroll_up", "button_scroll_down"]
+        "children": ["button_remove", "button_forward", "button_reply_all",
+	    "button_reply", "button_scroll_up", "button_scroll_down"]
     },
     {
-        "id": "button_response",
+        "id": "button_reply",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "play"
+        "icon-name": "reply"
     },
     {
-        "id": "button_response_all",
+        "id": "button_reply_all",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "forth"
+        "icon-name": "reply_all"
     },
     {
         "id": "button_scroll_up",
@@ -294,7 +294,14 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "nav_up"
+        "icon-name": "nav_up",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "speller/scroll_up",
+                "object": "message_body"
+            }
+        ]
     },
     {
         "id": "button_scroll_down",
@@ -304,7 +311,14 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "nav_down"
+        "icon-name": "nav_down",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "speller/scroll_down",
+                "object": "message_body"
+            }
+        ]
     },
     {
         "id": "button_forward",
@@ -314,7 +328,7 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "looped"
+        "icon-name": "forward"
     },
     {
         "id": "button_remove",
@@ -324,7 +338,7 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "usun"
+        "icon-name": "bin"
     },
     {
         "id": "message_content",
@@ -332,6 +346,7 @@
         "ratio-height": 0.8,
         "ratio-width": 0.64,
         "ratio-spacing": 0.05,
+
         "orientation": "vertical",
         "children": ["message_body", "message_subject"]
     },
@@ -342,7 +357,10 @@
     },
     {
         "id": "message_body",
-        "type": "MxLabel",
-        "style-class": "PisakEmailSingleMessage"
+        "type": "PisakScrolledText",
+        "style-class": "PisakEmailSingleMessage",
+        "ratio-width": 0.64,
+        "ratio-height": 0.65,
+        "background-color": "white"
     }
 ]
