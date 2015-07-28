@@ -141,6 +141,7 @@ class Window(configurator.Configurable):
         children = self.stage.get_children()
         main_actor = self.script.get_object("main")
         if children:
+            self.input_group.stop_middleware()
             old_child = children[0]
             self.stage.replace_child(old_child, main_actor)
         else:

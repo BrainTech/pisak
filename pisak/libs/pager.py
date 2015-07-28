@@ -27,10 +27,10 @@ class DataItem:
     :param content: proper data content.
     :param cmp_key: key used for comparisions.
     """
-    def __init__(self, content, cmp_key):
+    def __init__(self, content, cmp_key, flags=None):
         self.content = content
         self.cmp_key = cmp_key
-        self.flags = {}  # extra flags that can be set on a data item
+        self.flags = flags or {}  # extra flags that can be set on a data item
 
     def _is_valid_operand(self, other):
         return isinstance(other, DataItem)
@@ -264,8 +264,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     @property
     def data(self):
         """
-        List of some arbitrary data items. Each single item should be an instance
-        of the `DataItem` class.
+        List of some arbitrary data items. Each single item should
+        be an instance of the `DataItem` class.
         """
         with self._lock:
             return self._data.copy()
@@ -470,9 +470,10 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         can be then used as the `data`. If some given raw data item is None
         then it will remain None on a target list.
 
-        :param raw_data: container with some raw data items.
-        :param cmp_key_factory: function to get some comparision
-        key out of a data item.
+        :param raw_data:container with tuples, each consisting of a
+        raw data item and dictionary of flags specific to this item.
+        :param cmp_key_factory: function to retrieve some comparison
+        key out of a given data item.
 
         :return: list of `DataItems`.
         """
@@ -620,6 +621,12 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         Take any actions neccessary for cleaning after the lazy loader.
         """
         self._lazy_loader.stop()
+
+    def get_data_ids_list(self):
+        '''
+        Get list of identifiers of all the data items.
+        '''
+        return self._ids.copy()
 
     # ----------------- END OF LAZY LOADING METHODS ------------------ #
 
