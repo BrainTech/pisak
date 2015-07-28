@@ -1,13 +1,15 @@
 """
 Email application main module.
 """
+import textwrap
+
 from gi.repository import GObject
 
 import pisak
 from pisak import app_manager, res, logger, exceptions
 from pisak.libs import handlers
 from pisak.libs.viewer import model
-from pisak.libs.email import address_book, message, imap_client
+from pisak.libs.email import address_book, message, imap_client, config
 
 from pisak.libs.email import widgets  # @UnusedImort
 import pisak.libs.email.handlers  # @UnusedImport
@@ -15,10 +17,12 @@ import pisak.libs.speller.handlers  # @UnusedImport
 import pisak.libs.speller.widgets  # @UnusedImport
 import pisak.libs.viewer.widgets  # @UnusedImport
 
+
 _LOG = logger.get_logger(__name__)
 
+
 MESSAGES = {
-    "no_internet": "Brak połączenia z internetem.\nSprawdź"
+    "no_internet": "Brak połączenia z internetem.\nSprawdź "
                    "łącze i spróbuj ponownie",
     "login_fail": "Błąd podczas logowania. Sprawdź swoje ustawienia\n"
                     "skrzynki i spróbuj ponownie.",
@@ -201,15 +205,37 @@ def prepare_sent_view(app, window, script, data):
 
 
 def prepare_speller_message_body_view(app, window, script, data):
+    if data and 'original_msg' in data and data['original_msg'].get('Body'):
+        body = '\n' + textwrap.indent(
+            data['original_msg']['Body'], '>', lambda line: True)
+        window.ui.text_box.type_text(body)
+        window.ui.text_box.set_cursor_position(0)
+    elif app.box['new_message'].body:
+        window.ui.text_box.type_text(app.box['new_message'].body)
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
                         "email/address_book", {"pick_recipients_mode": True})
 
 
 def prepare_speller_message_subject_view(app, window, script, data):
+    if data and 'original_msg' in data:
+        subject = data['original_msg']['Subject']
+        action = data.get('action')
+        if action == 'forward':
+            pre = 'PD: '
+        elif action in ('reply', 'reply_all'):
+            pre = 'Odp: '
+        else:
+            pre = ''
+
+        window.ui.text_box.type_text(pre + subject)
+    elif app.box['new_message'].subject:
+        window.ui.text_box.type_text(app.box['new_message'].subject)
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
-                            "email/speller_message_body")
+                            "email/speller_message_body", data)
 
 
 def prepare_speller_message_to_view(app, window, script, data):
@@ -259,9 +285,21 @@ def prepare_address_book_view(app, window, script, data):
         window.ui.button_specific, specific_button)
     data_source.item_handler = tile_handler
 
+    # set 'picked' flag of a given contact to True if the view is in the
+    # 'pick recipients' mode and the contact's email address has already been
+    # on the new message recipients list.
     data_source.data = sorted(data_source.produce_data(
-        contacts, lambda contact:
-        contact.name if contact.name else contact.address))
+        [
+            (
+                contact,
+                {'picked': True} if
+                (data and data.get("pick_recipients_mode")) and
+                contact.address in app.box["new_message"].recipients else
+                None
+            ) for contact in contacts
+        ],
+        lambda contact:contact.name if contact.name else contact.address)
+    )
 
 
 def prepare_contact_view(app, window, script, data):
@@ -404,11 +442,21 @@ def prepare_viewer_contact_album_view(app, window, script, data):
 
 
 def prepare_single_message_view(app, window, script, data):
+    box = data["previous_view"]
+    msg_id = data["message_uid"]
+
+    def remove_message():
+        if box == 'sent':
+            app.box['imap_client'].delete_message_from_sent_box(msg_id)
+        elif box == 'inbox':
+            app.box['imap_client'].delete_message_from_inbox(msg_id)
+
+        window.load_view('email/{}'.format(box))
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script,
-                            "button_back", "email/{}".format(data["previous_view"]))
-    handlers.button_to_view(window, script,
-                            "button_remove", "email/{}".format(data["previous_view"]))
+                            "button_back", "email/{}".format(box))
+    handlers.connect_button(script, "button_remove", remove_message)
     handlers.button_to_view(window, script, "button_new_mail",
                             VIEWS_MAP["new_message_initial_view"])
 
@@ -430,14 +478,40 @@ def prepare_single_message_view(app, window, script, data):
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
         if "Body" in message:
-            window.ui.message_body.set_text(message["Body"])
+            window.ui.message_body.type_text(message["Body"])
 
-        handlers.button_to_view(window, script, "button_response",
-                                VIEWS_MAP["new_message_initial_view"])
-        handlers.button_to_view(window, script, "button_response_all",
-                                VIEWS_MAP["new_message_initial_view"])
-        handlers.button_to_view(window, script, "button_forward",
-                                VIEWS_MAP["new_message_initial_view"])
+        def reply():
+            '''
+            Send a reply only to the sender of the original message.
+            '''
+            # pick emal address only of the main sender from the list of headers:
+            app.box['new_message'].recipients = message['From'][0][1]
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'reply'})
+
+        def reply_all():
+            '''
+            Send a reply to the sender and all the recipients
+            of the original message.
+            '''
+            # pick email addresses of the main sender and of all
+            # the recipients except myself:
+            setup = config.Config().get_account_setup()
+            app.box['new_message'].recipients = \
+                [message['From'][0][1]] + \
+                [msg[1] for msg in message['To'] if
+                    msg[1] != '@'.join([setup['user_address'],
+                                        setup['server_address']])]
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'reply_all'})
+
+        def forward():
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'forward'})
+
+        handlers.connect_button(script, "button_reply", reply)
+        handlers.connect_button(script, "button_reply_all", reply_all)
+        handlers.connect_button(script, "button_forward", forward)
 
         def change_msg(direction):
             ids_list = data['msg_ids_list']
