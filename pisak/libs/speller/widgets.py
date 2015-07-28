@@ -61,7 +61,7 @@ class CursorGroup(layout.Bin, configurator.Configurable):
         self.cursor.set_y(
             coords[2]-self.label.get_children()[1].get_adjustment().get_value() +
             y_offset)
-        
+
 class Cursor(Clutter.Actor):
     """
     Widget displaying text cursor drawn on ClutterCanvas.
@@ -217,8 +217,8 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def __init__(self):
         super().__init__()
         self.history = []
+        self._scroll_step = 50
         self._init_text()
-        self.line = 0
         self.prepare_style()
 
     def _init_text(self):
@@ -232,21 +232,17 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
-        self.clutter_text.connect("text-changed", self.check_to_resize)
-        self.clutter_text.connect("cursor-changed", self.scroll_to_view)
-        self.clutter_text.connect("text-changed", self.scroll_to_view)
+        self.clutter_text.connect("text-changed", self._check_to_resize)
+        self.clutter_text.connect("cursor-changed", self._scroll_to_view)
+        self.clutter_text.connect("text-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
         self.connect("notify::mapped", self._adjust_view)
 
-    def add_operation(self, operation):
+    def _add_operation(self, operation):
         if len(self.history) == 0 or not self.history[-1].compose(operation):
             self.history.append(operation)
         operation.apply(self)
-
-    def revert_operation(self):
-        if len(self.history) > 0:
-            self.history.pop().revert(self)
 
     def _adjust_view(self, source, event):
         self.text.set_height(self.text.get_height() - self.margin.top)
@@ -256,23 +252,26 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.clutter_text.set_line_wrap(True)
         self.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
 
-    def get_text(self):
-        """
-        Return the entire text from the text buffer
-        """
-        return self.clutter_text.get_text()
-
-    def get_text_length(self):
-        """
-        Return the number of characters in the text buffer
-        """
-        return len(self.clutter_text.get_text())
-
-    def get_cursor_position(self):
+    def _move_line(self, where):
+        layout = self.clutter_text.get_layout()
         pos = self.clutter_text.get_cursor_position()
-        return pos if pos >= 0 else self.get_text_length()
+        if pos == -1:
+            pos = self.get_text_length()
+        line_idx, _line_x = layout.index_to_line_x(pos, 0)
+        lines = layout.get_lines_readonly()
+        line_count = len(lines)
+        if where == +1 and line_idx == line_count - 1:
+            new_pos = self.get_text_length()
+        else:
+            offset = 5  # safety measure for an extra distance between lines
+            rect = self.clutter_text.get_cursor_rect()
+            x, y = rect.origin.x, rect.origin.y
+            height = rect.size.height
+            new_y = y + where * (height + offset)
+            new_pos = self.clutter_text.coords_to_position(x, new_y)
+        self.clutter_text.set_cursor_position(new_pos)
 
-    def check_to_resize(self, *args):
+    def _check_to_resize(self, *args):
         pango_layout = self.clutter_text.get_layout()
         # height of the text layout (?).
         pango_height = pango_layout.get_size()[1] / Pango.SCALE
@@ -291,16 +290,70 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             self.text.set_height(
                 self.text.get_height() - unit.h(self.ratio_height) - self.margin.top)
 
-    def scroll_to_view(self, *args):
+    def _scroll_to_view(self, *args):
         pos = self.get_cursor_position()
+        coords = self.clutter_text.position_to_coords(pos)
+        self.scroll_to(coords[2] - 0.75*self.get_height())
+
+    def _scroll(self, direction):
         scroll_bar = self.get_children()[1]
         adj = scroll_bar.get_adjustment()
-        coords = self.clutter_text.position_to_coords(pos)
+        prev_val = adj.get_value()
+        new_val = max(0, prev_val + direction * self._scroll_step)
+        self.scroll_to(new_val)
 
-        # scroll only 1/4 of the whole page.
-        adj.set_value(coords[2] - 3*unit.h(self.ratio_height)/4)
-
+    def scroll_to(self, value):
+        '''
+        Scroll the text field to some arbitrary value.
+        '''
+        scroll_bar = self.get_children()[1]
+        adj = scroll_bar.get_adjustment()
+        adj.set_value(value)
         scroll_bar.set_adjustment(adj)
+
+    def scroll_down(self):
+        '''
+        Scroll the text field one step down.
+        '''
+        self._scroll(1)
+
+    def scroll_up(self):
+        '''
+        Scroll the text field one step up.
+        '''
+        self._scroll(-1)
+
+    def revert_operation(self):
+        '''
+        Undo the previous operation.
+        '''
+        if len(self.history) > 0:
+            self.history.pop().revert(self)
+
+    def get_cursor_position(self):
+        '''
+        Get current position of the cursor in the number of chars.
+        '''
+        pos = self.clutter_text.get_cursor_position()
+        return pos if pos >= 0 else self.get_text_length()
+
+    def set_cursor_position(self, new_pos):
+        '''
+        Set new position of the cursor as the number of chars.
+        '''
+        self.clutter_text.set_cursor_position(new_pos)
+
+    def get_text(self):
+        """
+        Return the entire text from the text buffer
+        """
+        return self.clutter_text.get_text()
+
+    def get_text_length(self):
+        """
+        Return the number of characters in the text buffer
+        """
+        return len(self.clutter_text.get_text())
         
     def type_text(self, text):
         """
@@ -311,7 +364,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         """
         pos = self.get_cursor_position()
         operation = Text.Insertion(pos, text)
-        self.add_operation(operation)
+        self._add_operation(operation)
 
     def type_unicode_char(self, char):
         """
@@ -322,7 +375,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         """
         # TODO: remove
         operation = Text.Insertion(self.get_text_length(), char)
-        self.add_operation(operation)
+        self._add_operation(operation)
 
     def delete_char(self):
         """
@@ -336,7 +389,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             pos -= 1
         text = self.get_text()[pos]
         operation = Text.Deletion(pos, text)
-        self.add_operation(operation)
+        self._add_operation(operation)
 
     def delete_text(self, start_pos, end_pos):
         """
@@ -354,7 +407,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         text = self.get_text()
         if len(text) > 0:
             operation = Text.Deletion(0, self.get_text())
-            self.add_operation(operation)
+            self._add_operation(operation)
 
     def get_endmost_string(self):
         """
@@ -390,7 +443,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
                                 stripped_text.rfind("\n")) + 1
                 text_before = current_text[start_pos : -1]
                 operation = Text.Replacement(start_pos, text_before, text_after)
-                self.add_operation(operation)
+                self._add_operation(operation)
         else:
             self.type_text(text_after)
 
@@ -467,25 +520,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         Move cursor one line down.
         """
         self._move_line(+1)
-
-    def _move_line(self, where):
-        layout = self.clutter_text.get_layout()
-        pos = self.clutter_text.get_cursor_position()
-        if pos == -1:
-            pos = self.get_text_length()
-        line_idx, _line_x = layout.index_to_line_x(pos, 0)
-        lines = layout.get_lines_readonly()
-        line_count = len(lines)
-        if where == +1 and line_idx == line_count - 1:
-            new_pos = self.get_text_length()
-        else:
-            offset = 5  # safety measure for an extra distance between lines
-            rect = self.clutter_text.get_cursor_rect()
-            x, y = rect.origin.x, rect.origin.y
-            height = rect.size.height
-            new_y = y + where * (height + offset)
-            new_pos = self.clutter_text.coords_to_position(x, new_y)
-        self.clutter_text.set_cursor_position(new_pos)
 
     def move_to_new_line(self):
         """

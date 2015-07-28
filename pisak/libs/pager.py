@@ -27,10 +27,10 @@ class DataItem:
     :param content: proper data content.
     :param cmp_key: key used for comparisions.
     """
-    def __init__(self, content, cmp_key):
+    def __init__(self, content, cmp_key, flags=None):
         self.content = content
         self.cmp_key = cmp_key
-        self.flags = {}  # extra flags that can be set on a data item
+        self.flags = flags or {}  # extra flags that can be set on a data item
 
     def _is_valid_operand(self, other):
         return isinstance(other, DataItem)
@@ -75,8 +75,10 @@ class LazyWorker:
         """
         self._src._lazy_data.update(list(zip(map(str, ids),
                                                     self._src._query_portion_of_data(ids))))
-        self._src.data = self._src.produce_data(list(self._src._lazy_data.values()),
-                                      self._src._data_sorting_key)
+        self._src.data = self._src.produce_data(
+            [(val, None) for val in list(self._src._lazy_data.values())],
+            self._src._data_sorting_key
+        )
 
     @property
     def step(self):
@@ -264,8 +266,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     @property
     def data(self):
         """
-        List of some arbitrary data items. Each single item should be an instance
-        of the `DataItem` class.
+        List of some arbitrary data items. Each single item should
+        be an instance of the `DataItem` class.
         """
         with self._lock:
             return self._data.copy()
@@ -466,18 +468,19 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def produce_data(self, raw_data, cmp_key_factory):
         """
-        Generate list of `DataItems` out of some arbitrary raw data. Produced list
-        can be then used as the `data`. If some given raw data item is None
-        then it will remain None on a target list.
+        Generate list of `DataItems` out of some arbitrary raw data.
+        Produced list can be then used as the `data`. If some given
+        raw data item is None then it will remain None on a target list.
 
-        :param raw_data: container with some raw data items.
-        :param cmp_key_factory: function to get some comparision
-        key out of a data item.
+        :param raw_data: container with tuples, each consisting of a
+        raw data item and dictionary of flags specific to this item.
+        :param cmp_key_factory: function to retrieve some comparison
+        key out of a given data item.
 
         :return: list of `DataItems`.
         """
-        return [DataItem(item, cmp_key_factory(item)) if item else None for
-                item in raw_data]
+        return [DataItem(item, cmp_key_factory(item), flags) if item else
+                None for item, flags in raw_data]
 
     def clean_up(self):
         """
@@ -559,8 +562,10 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_data.update(
             [(str(ide), None) for ide in self._ids if
              str(ide) not in self._lazy_data])
-        self.data = self.produce_data(list(self._lazy_data.values()),
-                                      self._data_sorting_key)
+        self.data = self.produce_data(
+            [(val, None) for val in list(self._lazy_data.values())],
+            self._data_sorting_key
+        )
 
     def _schedule_sending_data(self, direction):
         """
@@ -582,7 +587,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         if self._has_data(direction):
             if not callable(self.on_new_data):
-                raise exceptions.PisakException('No data receiver has been declared.')
+                raise exceptions.PisakException(
+                    'No data receiver has been declared.')
             try:
                 self.on_new_data(self._generate_items_normal())
             except TypeError as exc:
@@ -620,6 +626,12 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         Take any actions neccessary for cleaning after the lazy loader.
         """
         self._lazy_loader.stop()
+
+    def get_data_ids_list(self):
+        '''
+        Get list of identifiers of all the data items.
+        '''
+        return self._ids.copy()
 
     # ----------------- END OF LAZY LOADING METHODS ------------------ #
 

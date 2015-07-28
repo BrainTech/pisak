@@ -12,13 +12,17 @@ PISAK - whoami
    
    whatisit
 
-Guides and HOW-TO's
-===================
+Guides
+======
 .. toctree::
    :maxdepth: 2
 
-   guides
-   howTOs
+   dev_first_steps
+   json_layout_design
+   css_style
+   useful_widgets
+   switch_and_groups
+   signal_handlers
 
 Modules
 =======
@@ -26,12 +30,6 @@ Modules
    :maxdepth: 2
 
    modules
-
-JSON creation
-=============
-.. toctree::
-
-   json_creation
 
 Authors
 =======

@@ -1,13 +1,15 @@
 """
 Email application main module.
 """
+import textwrap
+
 from gi.repository import GObject
 
 import pisak
 from pisak import app_manager, res, logger, exceptions
 from pisak.libs import handlers
 from pisak.libs.viewer import model
-from pisak.libs.email import address_book, message, imap_client
+from pisak.libs.email import address_book, message, imap_client, config
 
 from pisak.libs.email import widgets  # @UnusedImort
 import pisak.libs.email.handlers  # @UnusedImport
@@ -15,10 +17,12 @@ import pisak.libs.speller.handlers  # @UnusedImport
 import pisak.libs.speller.widgets  # @UnusedImport
 import pisak.libs.viewer.widgets  # @UnusedImport
 
+
 _LOG = logger.get_logger(__name__)
 
+
 MESSAGES = {
-    "no_internet": "Brak połączenia z internetem.\nSprawdź"
+    "no_internet": "Brak połączenia z internetem.\nSprawdź "
                    "łącze i spróbuj ponownie",
     "login_fail": "Błąd podczas logowania. Sprawdź swoje ustawienia\n"
                     "skrzynki i spróbuj ponownie.",
@@ -28,7 +32,7 @@ MESSAGES = {
                 "Adres powinien zawierać znak @ i kropkę w nazwie domeny.\n"
                 "Na przykład:     JanKowalski@gmail.com",
     "message_send_fail": "Wysyłanie wiadomości nie powiodło się.\n"
-                         "Sprawdź połączenie z internetem i spróbuj ponownie.",
+                    "Sprawdź połączenie z internetem i spróbuj ponownie.",
     "invalid_credentials": "Nieprawidłowa nazwa użytkownika lub hasło.",
     "unknown": "Wystąpił błąd. Spróbuj ponownie."
 }
@@ -95,7 +99,8 @@ def prepare_main_view(app, window, script, data):
                 inbox_all, inbox_unseen =  client.get_inbox_status()
                 window.ui.button_inbox.set_label(
                     window.ui.button_inbox.get_label() +
-                    counter_label.format("  /  ".join([str(inbox_unseen), str(inbox_all)]))
+                    counter_label.format("  /  ".join([str(inbox_unseen),
+                                                       str(inbox_all)]))
                 )
             except imap_client.IMAPClientError as e:
                 pass  # TODO: do something
@@ -130,18 +135,22 @@ def prepare_inbox_view(app, window, script, data):
     client = app.box["imap_client"]
 
     data_source = script.get_object("data_source")
-    data_source.item_handler = lambda tile, message_preview: \
+
+    def load_single_msg(_tile, message_preview):
         window.load_view(
             "email/single_message",
             {
                 "message_uid": message_preview.content["UID"],
                 "message_source": client.get_message_from_inbox,
-                "previous_view": "inbox"
+                'msg_ids_list': data_source.get_data_ids_list(),
+                "previous_view": 'inbox'
             }
         )
 
+    data_source.item_handler = load_single_msg
+
     try:
-        inbox_count, _inbox_unseen =  client.get_inbox_status()
+        inbox_count, _inbox_unseen = client.get_inbox_status()
     except imap_client.IMAPClientError as e:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.pager)
@@ -151,7 +160,7 @@ def prepare_inbox_view(app, window, script, data):
     else:
         if inbox_count == 0:
             window.load_popup(MESSAGES["empty_mailbox"],
-                          container=window.ui.pager)
+                              container=window.ui.pager)
         else:
             data_source.lazy_loading = True
 
@@ -166,15 +175,19 @@ def prepare_sent_view(app, window, script, data):
     client = app.box["imap_client"]
 
     data_source = script.get_object("data_source")
-    data_source.item_handler = lambda tile, message_preview: \
+
+    def load_single_msg(_tile, message_preview):
         window.load_view(
             "email/single_message",
             {
                 "message_uid": message_preview.content["UID"],
                 "message_source": client.get_message_from_sent_box,
+                'msg_ids_list': data_source.get_data_ids_list(),
                 "previous_view": "sent"
             }
         )
+
+    data_source.item_handler = load_single_msg
 
     try:
         sent_box_count = client.get_sent_box_count()
@@ -187,20 +200,43 @@ def prepare_sent_view(app, window, script, data):
     else:
         if sent_box_count == 0:
             window.load_popup(MESSAGES["empty_mailbox"],
-                          container=window.ui.pager)
+                              container=window.ui.pager)
         else:
             data_source.lazy_loading = True
 
+
 def prepare_speller_message_body_view(app, window, script, data):
+    if data and 'original_msg' in data and data['original_msg'].get('Body'):
+        body = '\n' + textwrap.indent(
+            data['original_msg']['Body'], '>', lambda line: True)
+        window.ui.text_box.type_text(body)
+        window.ui.text_box.set_cursor_position(0)
+    elif app.box['new_message'].body:
+        window.ui.text_box.type_text(app.box['new_message'].body)
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
-                    "email/address_book", {"pick_recipients_mode": True})
+                        "email/address_book", {"pick_recipients_mode": True})
 
 
 def prepare_speller_message_subject_view(app, window, script, data):
+    if data and 'original_msg' in data:
+        subject = data['original_msg']['Subject']
+        action = data.get('action')
+        if action == 'forward':
+            pre = 'PD: '
+        elif action in ('reply', 'reply_all'):
+            pre = 'Odp: '
+        else:
+            pre = ''
+
+        window.ui.text_box.type_text(pre + subject)
+    elif app.box['new_message'].subject:
+        window.ui.text_box.type_text(app.box['new_message'].subject)
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
-                            "email/speller_message_body")
+                            "email/speller_message_body", data)
 
 
 def prepare_speller_message_to_view(app, window, script, data):
@@ -225,7 +261,8 @@ def prepare_address_book_view(app, window, script, data):
         :param contact: contact dictionary
         """
         tile.toggled = contact.flags["picked"] = \
-            not  contact.flags["picked"] if "picked" in contact.flags else True
+            not  contact.flags["picked"] if "picked" in \
+            contact.flags else True
         if tile.toggled:
             app.box["new_message"].recipients = contact.content.address
         else:
@@ -244,15 +281,29 @@ def prepare_address_book_view(app, window, script, data):
         tile_handler = lambda tile, contact: window.load_view(
             "email/contact", {"contact_id": contact.content.id})
         handlers.button_to_view(
-            window, script, "button_new_contact", "email/speller_contact_address")
+            window, script, "button_new_contact",
+            "email/speller_contact_address")
 
     window.ui.button_menu_box.replace_child(
         window.ui.button_specific, specific_button)
     data_source.item_handler = tile_handler
 
+    # set 'picked' flag of a given contact to True if the view is in the
+    # 'pick recipients' mode and the contact's email address has already been
+    # on the new message recipients list.
     data_source.data = sorted(data_source.produce_data(
-        contacts, lambda contact:
-        contact.name if contact.name else contact.address))
+        [
+            (
+                contact,
+                {'picked': True} if
+                (data and data.get("pick_recipients_mode")) and
+                contact.address in app.box["new_message"].recipients else
+                None
+            ) for contact in contacts
+        ],
+        lambda contact: contact.name if contact.name else
+                        contact.address)
+    )
 
 
 def prepare_contact_view(app, window, script, data):
@@ -289,7 +340,8 @@ def prepare_contact_view(app, window, script, data):
             handlers.button_to_view(
                 window, script, "button_edit_address",
                 "email/speller_contact_address",
-                {"contact_id": contact.id, "contact_address": contact.address})
+                {"contact_id": contact.id,
+                 "contact_address": contact.address})
             handlers.button_to_view(
                 window, script, "button_edit_photo",
                 "email/viewer_contact_library",
@@ -301,7 +353,7 @@ def prepare_speller_contact_name_view(app, window, script, data):
         try:
             app.box["address_book"].edit_contact_name(
                 data["contact_id"], window.ui.text_box.get_text())
-        except  address_book.AddressBookError as e:
+        except address_book.AddressBookError as e:
             pass  # TODO: display warning
 
     handlers.button_to_view(window, script, "button_exit")
@@ -321,19 +373,20 @@ def prepare_speller_contact_address_view(app, window, script, data):
             address = text_box.get_text()
             if address:
                 try:
-                    res = app.box["address_book"].add_contact(
+                    resp = app.box["address_book"].add_contact(
                         {"address": address})
-                    if not res:
+                    if not resp:
                         # TODO: say that address is not unique
                         pass
                     contact = app.box["address_book"].get_contact_by_address(
                         address)
-                    load = ("email/speller_contact_name", {"contact_id": contact.id})
-                except address_book.AddressBookError as e:
+                    load = ("email/speller_contact_name",
+                            {"contact_id": contact.id})
+                except address_book.AddressBookError as exc:
                     # TODO: notify about failure
-                    load = ("email/address_book")
+                    load = ("email/address_book",)
             else:
-                load = "email/address_book"
+                load = ("email/address_book",)
 
             window.load_view(*load)
 
@@ -349,7 +402,8 @@ def prepare_speller_contact_address_view(app, window, script, data):
             except address_book.AddressBookError as e:
                 pass  # TODO: display warning
 
-            window.load_view("email/contact", {"contact_id": data["contact_id"]})
+            window.load_view("email/contact",
+                             {"contact_id": data["contact_id"]})
 
         button_proceed_handler = edit_contact_address
 
@@ -395,20 +449,30 @@ def prepare_viewer_contact_album_view(app, window, script, data):
 
 
 def prepare_single_message_view(app, window, script, data):
+    box = data["previous_view"]
+    msg_id = data["message_uid"]
+
+    def remove_message():
+        if box == 'sent':
+            app.box['imap_client'].delete_message_from_sent_box(msg_id)
+        elif box == 'inbox':
+            app.box['imap_client'].delete_message_from_inbox(msg_id)
+
+        window.load_view('email/{}'.format(box))
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script,
-                            "button_back", "email/{}".format(data["previous_view"]))
-    handlers.button_to_view(window, script,
-                            "button_remove", "email/{}".format(data["previous_view"]))
+                            "button_back", "email/{}".format(box))
+    handlers.connect_button(script, "button_remove", remove_message)
     handlers.button_to_view(window, script, "button_new_mail",
                             VIEWS_MAP["new_message_initial_view"])
 
     try:
         message = data["message_source"](data["message_uid"])
-    except imap_client.IMAPClientError as e:
+    except imap_client.IMAPClientError as exc:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.message_content)
-    except exceptions.NoInternetError as e:
+    except exceptions.NoInternetError as exc:
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.message_content)
     else:
@@ -421,14 +485,53 @@ def prepare_single_message_view(app, window, script, data):
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
         if "Body" in message:
-            window.ui.message_body.set_text(message["Body"])
+            window.ui.message_body.type_text(message["Body"])
 
-        handlers.button_to_view(window, script, "button_response",
-                                VIEWS_MAP["new_message_initial_view"])
-        handlers.button_to_view(window, script, "button_response_all",
-                                VIEWS_MAP["new_message_initial_view"])
-        handlers.button_to_view(window, script, "button_forward",
-                                VIEWS_MAP["new_message_initial_view"])
+        def reply():
+            '''
+            Send a reply only to the sender of the original message.
+            '''
+            # pick emal address only of the main sender from the
+            # list of headers:
+            app.box['new_message'].recipients = message['From'][0][1]
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'reply'})
+
+        def reply_all():
+            '''
+            Send a reply to the sender and all the recipients
+            of the original message.
+            '''
+            # pick email addresses of the main sender and of all
+            # the recipients except myself:
+            setup = config.Config().get_account_setup()
+            app.box['new_message'].recipients = \
+                [message['From'][0][1]] + \
+                [msg[1] for msg in message['To'] if
+                    msg[1] != '@'.join([setup['user_address'],
+                                        setup['server_address']])]
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'reply_all'})
+
+        def forward():
+            window.load_view(VIEWS_MAP["new_message_initial_view"],
+                             {'original_msg': message, 'action': 'forward'})
+
+        handlers.connect_button(script, "button_reply", reply)
+        handlers.connect_button(script, "button_reply_all", reply_all)
+        handlers.connect_button(script, "button_forward", forward)
+
+        def change_msg(direction):
+            ids_list = data['msg_ids_list']
+            msg_id = ids_list[(ids_list.index(data['message_uid']) +
+                               direction) % len(ids_list)]
+            data.update({'message_uid': msg_id})
+            window.load_view('email/single_message', data)
+
+        handlers.connect_button(script, "button_next_mail",
+                                change_msg, 1)
+        handlers.connect_button(script, "button_previous_mail",
+                                change_msg, -1)
 
 
 if __name__ == "__main__":
