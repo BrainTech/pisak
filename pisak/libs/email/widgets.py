@@ -1,5 +1,7 @@
+from datetime import datetime
 from gi.repository import Clutter, Mx, Pango, GObject
 
+import pisak
 from pisak import logger
 from pisak.libs import pager, widgets, layout, unit
 from pisak.libs.email import imap_client
@@ -53,16 +55,30 @@ class MailboxTileSource(pager.DataSource):
             str, '', '', '', GObject.PARAM_READWRITE)
     }
 
-    SPECIFIC_HEADER = {
-        'inbox':lambda message:
+    SPECIFIC_HEADERS = {
+        'inbox': lambda message:
             ('from', message['From'][0] or message['From'][1]),
         'sent_box': lambda message:
             ('to', message['To'][0] or message['To'][1])
     }
 
+    QUERY_DATA = {
+        'inbox': lambda imap_client: imap_client.get_many_previews_from_inbox,
+        'sent_box':  lambda imap_client: imap_client.get_many_previews_from_sent_box
+    }
+
+    QUERY_IDS = {
+        'inbox': lambda imap_client: imap_client.get_inbox_ids,
+        'sent_box': lambda imap_client: imap_client.get_sent_box_ids
+    }
+
     def __init__(self):
         super().__init__()
         self._mailbox = None
+        self._get_data = None
+        self._get_ids = None
+        now = datetime.now()
+        self._data_sorting_key = lambda msg: now - msg["Date"]
 
     @property
     def mailbox(self):
@@ -74,6 +90,9 @@ class MailboxTileSource(pager.DataSource):
     @mailbox.setter
     def mailbox(self, value):
         self._mailbox = value
+        imap_client = pisak.app.box["imap_client"]
+        self._get_data = self.QUERY_DATA[value](imap_client)
+        self._get_ids = self.QUERY_IDS[value](imap_client)
 
     def _produce_item(self, message_obj):
         message = message_obj.content
@@ -82,7 +101,7 @@ class MailboxTileSource(pager.DataSource):
         tile.connect('clicked', self.item_handler, message_obj)
 
         for label, value in (
-            self.SPECIFIC_HEADER[self.mailbox](message),
+            self.SPECIFIC_HEADERS[self.mailbox](message),
             ('subject', message['Subject']),
             ('date', message['Date'].strftime(DATE_FORMAT))
         ):
@@ -93,6 +112,12 @@ class MailboxTileSource(pager.DataSource):
 
         return tile
 
+    def _query_portion_of_data(self, ids):
+        return self._get_data(ids)
+
+    def _query_ids(self):
+        return self._get_ids()
+
 
 class DraftsTileSource(pager.DataSource):
     """
@@ -102,6 +127,10 @@ class DraftsTileSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
+        imap_client = pisak.app.box["imap_client"]
+        self._data_loader = imap_client.get_many_previews_from_sent_box
+        self._ids_checker = imap_client.get_sent_box_ids
+        self.lazy_loading = True
 
     def _produce_item(self, message):
         tile = widgets.PhotoTile()

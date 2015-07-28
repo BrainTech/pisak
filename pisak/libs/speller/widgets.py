@@ -10,6 +10,7 @@ from pisak import res
 from pisak.libs import unit, layout, properties, scanning, configurator, \
     style, text_tools, widgets
 from pisak.libs.speller.prediction import predictor
+from pisak import exceptions
 
 
 class CursorGroup(layout.Bin, configurator.Configurable):
@@ -548,7 +549,8 @@ class Key(widgets.Button, configurator.Configurable):
 
     * :attr:`default_text`
     * :attr:`altgr_text`
-    * :attr:`special_text`
+    * :attr:`special1_text`
+    * :attr:`special2_text`
     * :attr:`target`
     """
     __gtype_name__ = "PisakSpellerKey"
@@ -565,10 +567,16 @@ class Key(widgets.Button, configurator.Configurable):
             "altgr string appended to a text",
             "?",
             GObject.PARAM_READWRITE),
-        "special_text": (
+        "special1_text": (
             GObject.TYPE_STRING,
-            "special text",
+            "special1 text",
             "special string appended to a text",
+            "?",
+            GObject.PARAM_READWRITE),
+        "special2_text": (
+            GObject.TYPE_STRING,
+            "special2 text",
+            "another special string appended to a text",
             "?",
             GObject.PARAM_READWRITE),
         "target": (
@@ -581,6 +589,8 @@ class Key(widgets.Button, configurator.Configurable):
     def __init__(self):
         super().__init__()
         self.pre_special_text = None
+        self._special1_text = None
+        self._special2_text = None
         self.undo_chain = []
         self.allowed_undos = set()
         #self.set_size(dims.MENU_BUTTON_H_PX, dims.MENU_BUTTON_H_PX)
@@ -610,9 +620,16 @@ class Key(widgets.Button, configurator.Configurable):
     def set_default_label(self):
         self.set_label(self.default_text)
 
-    def set_special_label(self):
+    def set_special_label(self, specialmode):
         self._cache_pre_special_text(self.get_label())
-        self.set_label(self.special_text)
+        if "special1" == specialmode:
+            if self.special1_text is not None:
+                self.set_label(self.special1_text)
+        elif "special2" == specialmode:
+            if self.special2_text is not None:
+                self.set_label(self.special2_text)
+        else:
+            raise exceptions.PisakException("Invalid argument")
 
     def set_caps_label(self):
         label = self.get_label()
@@ -661,12 +678,15 @@ class Key(widgets.Button, configurator.Configurable):
         if label.isalpha():
             self.set_label(label.swapcase())
 
-    def set_swap_special_label(self):
+    def set_swap_special_label(self, specialmode):
         try:
-            if self.get_label() == self.special_text:
+            if ((self.get_label() == self.special1_text and
+                    specialmode == "special1") or
+                    (self.get_label() == self.special2_text and
+                    specialmode == "special2")):
                 self.set_pre_special_label()
             else:
-                self.set_special_label()
+                self.set_special_label(specialmode)
         except AttributeError:
             return None
 
@@ -691,12 +711,20 @@ class Key(widgets.Button, configurator.Configurable):
         self._altgr_text = str(value)
 
     @property
-    def special_text(self):
-        return self._special_text
+    def special1_text(self):
+        return self._special1_text
 
-    @special_text.setter
-    def special_text(self, value):
-        self._special_text = str(value)
+    @special1_text.setter
+    def special1_text(self, value):
+        self._special1_text = str(value)
+
+    @property
+    def special2_text(self):
+        return self._special2_text
+
+    @special2_text.setter
+    def special2_text(self, value):
+        self._special2_text = str(value)
 
     @property
     def target(self):

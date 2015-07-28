@@ -11,7 +11,7 @@ from pisak.libs import handlers
 from pisak.libs.viewer import model
 from pisak.libs.email import address_book, message, imap_client, config
 
-from pisak.libs.email import widgets  # @UnusedImport
+from pisak.libs.email import widgets  # @UnusedImort
 import pisak.libs.email.handlers  # @UnusedImport
 import pisak.libs.speller.handlers  # @UnusedImport
 import pisak.libs.speller.widgets  # @UnusedImport
@@ -130,21 +130,22 @@ def prepare_inbox_view(app, window, script, data):
         window, script, "button_new_message",
         VIEWS_MAP["new_message_initial_view"])
     handlers.button_to_view(window, script, "button_back", "email/main")
+
+    client = app.box["imap_client"]
+
     data_source = script.get_object("data_source")
     data_source.item_handler = lambda tile, message_preview: \
         window.load_view(
             "email/single_message",
             {
                 "message_uid": message_preview.content["UID"],
-                "message_source":
-                    app.box["imap_client"].get_message_from_inbox,
+                "message_source": client.get_message_from_inbox,
                 "previous_view": "inbox"
             }
         )
 
-    inbox_list = []
     try:
-        inbox_list = app.box["imap_client"].get_inbox_list()[::-1]
+        inbox_count, _inbox_unseen =  client.get_inbox_status()
     except imap_client.IMAPClientError as e:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.pager)
@@ -152,12 +153,11 @@ def prepare_inbox_view(app, window, script, data):
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.pager)
     else:
-        if len(inbox_list) == 0:
+        if inbox_count == 0:
             window.load_popup(MESSAGES["empty_mailbox"],
                           container=window.ui.pager)
         else:
-            data_source.data = data_source.produce_data(
-                [(msg, None) for msg in inbox_list], lambda msg: msg["Date"])
+            data_source.lazy_loading = True
 
 
 def prepare_sent_view(app, window, script, data):
@@ -167,21 +167,21 @@ def prepare_sent_view(app, window, script, data):
         VIEWS_MAP["new_message_initial_view"])
     handlers.button_to_view(window, script, "button_back", "email/main")
 
+    client = app.box["imap_client"]
+
     data_source = script.get_object("data_source")
     data_source.item_handler = lambda tile, message_preview: \
         window.load_view(
             "email/single_message",
             {
                 "message_uid": message_preview.content["UID"],
-                "message_source":
-                    app.box["imap_client"].get_message_from_sent_box,
+                "message_source": client.get_message_from_sent_box,
                 "previous_view": "sent"
             }
         )
 
-    sent_box_list = []
     try:
-        sent_box_list = app.box["imap_client"].get_sent_box_list()[::-1]
+        sent_box_count = client.get_sent_box_count()
     except imap_client.IMAPClientError as e:
         window.load_popup(MESSAGES["invalid_sent_box_name"],
                           container=window.ui.pager)
@@ -189,12 +189,11 @@ def prepare_sent_view(app, window, script, data):
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.pager)
     else:
-        if len(sent_box_list) == 0:
+        if sent_box_count == 0:
             window.load_popup(MESSAGES["empty_mailbox"],
                           container=window.ui.pager)
         else:
-            data_source.data = data_source.produce_data(
-                [(msg, None) for msg in sent_box_list], lambda msg: msg["Date"])
+            data_source.lazy_loading = True
 
 
 def prepare_speller_message_body_view(app, window, script, data):

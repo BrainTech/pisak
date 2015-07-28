@@ -78,7 +78,7 @@
         "ratio_spacing": 0.0211,
         "orientation": "horizontal",
         "children": [
-                        "main_panel", "prediction_panel", "speller_menu"
+                        "main_panel", "domain_panel", "speller_menu"
                     ]
     },
     {
@@ -155,19 +155,19 @@
         "id": "button_2",
         "type": "PisakButton",
         "style-class": "PisakEmailSpellerContactAddressButton",
-        "text": "PREDYKCJA",
+        "text": "DOMENA",
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
         "icon-size": 50,
-        "label": "PREDYKCJA",
-        "icon-name": "predykcja",
+        "label": "DOMENA",
+        "icon-name": "domain2",
         "disabled_when": "scanning_off",
         "signals": [
             {
                 "name": "clicked",
                 "handler": "scanning/set_pending_group",
-                "object": "prediction_panel"
+                "object": "domain_panel"
             }
         ]
     },
@@ -199,7 +199,7 @@
                        {
                            "name": "clicked",
                            "handler": "speller/load",
-			   			   "object": "pop_up_box"
+			   "object": "pop_up_box"
                        }
                    ]
     },
@@ -295,24 +295,18 @@
     },
 
     {
-        "id": "prediction_dictionary",
-        "type": "PisakSpellerDictionary",
-        "target": "text_box"
-    },
-
-    {
-        "id": "prediction_panel",
+        "id": "domain_panel",
         "type": "PisakScanningGroup",
-        "children": ["prediction_panel_box"],
+        "children": ["domain_panel_box"],
         "scanning-hilite": true,
         "strategy": {
-            "id": "prediction_group_strategy",
+            "id": "domain_group_strategy",
             "type": "PisakRowStrategy",
             "unwind-to": "main"
         }
     },
     {
-        "id": "prediction_panel_box",
+        "id": "domain_panel_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
         "y-align": "end",
@@ -320,103 +314,94 @@
         "ratio-spacing": 0.0136,
         "children":
         [
-            "prediction_9", "prediction_8", "prediction_7","prediction_6",
-            "prediction_5", "prediction_4","prediction_3", "prediction_2",
-            "prediction_1", "prediction_header"
+            "domain_9","domain_8","domain_7","domain_6",
+	    "domain_5","domain_4","domain_3","domain_2",
+	    "domain_1","domain_header"
         ]
     },
     {
-        "id": "prediction_header",
+        "id": "domain_header",
         "type": "PisakMenuHeader",
-        "name": "predykcjanapis",
+        "name": "domenanapis",
         "height": 65.28
     },
     {
-        "id": "prediction_1",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 1,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_1",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+	"default-text": "@gmail.com",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_2",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 2,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_2",
+        "type": "PisakSpellerKey",
+            "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@interia.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_3",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 3,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_3",
+        "type": "PisakSpellerKey",
+            "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@wp.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_4",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 4,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_4",
+        "type": "PisakSpellerKey",
+            "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@o2.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_5",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 5,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_5",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@hotmail.com",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_6",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 6,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_6",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@poczta.onet.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_7",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 7,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_7",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@yahoo.com",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_8",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 8,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_8",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@op.pl",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
     },
     {
-        "id": "prediction_9",
-        "type": "PisakSpellerPrediction",
-	    "style-class": "PisakEmailSpellerContactAddressPrediction",
-        "order-num": 9,
-        "dictionary": "prediction_dictionary",
+        "id": "domain_9",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@poczta.fm",
         "target": "text_box",
         "ratio-width": 0.13734,
         "ratio-height": 0.085
@@ -460,7 +445,7 @@
 	    "style-class": "PisakEmailSpellerContactAddressText",
         "x-align": "start",
         "ratio-width": 0.59514,
-        "ratio-height": 0.512
+        "ratio-height": 0.312
     },
     {
         "id": "keyboard",
@@ -500,37 +485,19 @@
         "ratio-width": 0.048,
         "ratio-height": 0.085,
         "icon-size": 30,
-        "icon-name": "predykcja",
+        "icon-name": "domain2",
         "disabled_when": "scanning_off",
         "spacing": 0,
         "signals": [
             {
                 "name": "clicked",
                 "handler": "scanning/set_pending_group",
-                "object": "prediction_panel"
+                "object": "domain_panel"
             }
         ]
     },
     {
         "id": "keyboard_menu_button_2",
-        "type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
-        "text": " ",
-        "ratio-width": 0.048,
-        "ratio-height": 0.085,
-        "icon-size": 30,
-        "icon-name": "spacja",
-        "spacing": 0,
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/space",
-                           "object": "text_box"
-                       }
-                   ]
-     },
-     {
-        "id": "keyboard_menu_button_3",
         "type": "PisakButton",
         "style-class": "PisakEmailSpellerContactAddressButton",
         "text": " ",
@@ -546,9 +513,9 @@
                            "object": "text_box"
                        }
                    ]
-    },
-    {
-        "id": "keyboard_menu_button_4",
+     },
+     {
+        "id": "keyboard_menu_button_3",
         "type": "PisakButton",
         "style-class": "PisakEmailSpellerContactAddressButton",
         "text": " ",
@@ -556,6 +523,7 @@
         "ratio-height": 0.085,
         "icon-size": 30,
         "icon-name": "cofnij",
+        "spacing": 0,
         "signals": [
                        {
                            "name": "clicked",
@@ -565,84 +533,55 @@
                    ]
     },
     {
-        "id": "keyboard_menu_button_5",
-        "type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
-        "text": " ",
-        "alternative-text": " ",
+        "id": "keyboard_menu_button_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "@",
+        "target": "text_box",
         "ratio-width": 0.048,
-        "ratio-height": 0.085,
-        "icon-size": 30,
-        "icon-name": "specjalne",
-        "related-object": "keyboard_panel",
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/swap_special_chars",
-                           "object": "keyboard"
-                       }
-                   ]
+        "ratio-height": 0.085
+    },
+    {
+        "id": "keyboard_menu_button_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
     },
     {
         "id": "keyboard_menu_button_6",
-        "type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
-        "text": " ",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "_",
+        "target": "text_box",
         "ratio-width": 0.048,
-        "ratio-height": 0.085,
-        "icon-size": 30,
-        "icon-name": "wielkie_litery",
-        "spacing": 0,
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/swap_caps_chars",
-                           "object": "keyboard"
-                       }
-                   ]
-    },
-    {
+        "ratio-height": 0.085
+     },
+     {
         "id": "keyboard_menu_button_7",
-        "type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
-        "text": " ",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "-",
+        "target": "text_box",
         "ratio-width": 0.048,
-        "ratio-height": 0.085,
-        "icon-size": 30,
-        "icon-name": "polskie",
-        "related-object": "keyboard_panel",
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/swap_altgr_chars",
-                           "object": "keyboard"
-                       }
-                   ]
-    },
-    {
-	"id": "keyboard_menu_button_8",
-        "type": "PisakButton",
-        "style-class": "PisakSpellerButton",
-        "text": " ",
+        "ratio-height": 0.085
+     },
+     {
+        "id": "keyboard_menu_button_8",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+         "default-text": "+",
+        "target": "text_box",
         "ratio-width": 0.048,
-        "ratio-height": 0.085,
-        "icon-size": 30,
-        "icon-name": "enter",
-        "spacing": 0,
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/enter",
-                           "object": "text_box"
-                       }
-                   ]
+        "ratio-height": 0.085
     },
     {
         "id": "keyboard_menu_button_9",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "SZ",
-        "special-text": "+",
+        "default-text": "*",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -673,7 +612,8 @@
         "y-align": "end",
         "ratio_spacing": 0.0136,
         "children": [
-                        "keyboard_row_3", "keyboard_row_2", "keyboard_row_1"
+            "keyboard_row_5", "keyboard_row_4", "keyboard_row_3",
+	    "keyboard_row_2", "keyboard_row_1"
                     ]
     },
     {
@@ -701,8 +641,7 @@
         "id": "key_1_1",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "Q",
-        "special-text": "1",
+        "default-text": "q",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -711,8 +650,7 @@
         "id": "key_1_2",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "W",
-        "special-text": "2",
+        "default-text": "w",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -721,9 +659,7 @@
         "id": "key_1_3",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "E",
-        "altgr-text": "Ę",
-        "special-text": "3",
+        "default-text": "e",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -732,8 +668,7 @@
         "id": "key_1_4",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "R",
-        "special-text": "4",
+        "default-text": "r",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -742,8 +677,7 @@
         "id": "key_1_5",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "T",
-        "special-text": "5",
+        "default-text": "t",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -752,8 +686,7 @@
         "id": "key_1_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "Y",
-        "special-text": "6",
+        "default-text": "y",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -762,8 +695,8 @@
         "id": "key_1_7",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "U",
-        "special-text": "7",
+        "default-text": "u",
+        "special1-text": "7",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -772,8 +705,7 @@
         "id": "key_1_8",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "I",
-        "special-text": "8",
+        "default-text": "i",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -782,9 +714,7 @@
         "id": "key_1_9",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "O",
-        "altgr-text": "Ó",
-        "special-text": "9",
+        "default-text": "o",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -793,13 +723,12 @@
         "id": "key_1_10",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "P",
-        "special-text": "0",
+        "default-text": "p",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
     },
-    {
+        {
         "id": "keyboard_row_2",
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_2_box"],
@@ -824,9 +753,7 @@
         "id": "key_2_1",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "A",
-        "altgr-text": "Ą",
-        "special-text": ",",
+        "default-text": "a",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -835,9 +762,7 @@
         "id": "key_2_2",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "S",
-        "altgr-text": "Ś",
-        "special-text": ".",
+        "default-text": "s",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -846,8 +771,7 @@
         "id": "key_2_3",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "D",
-        "special-text": ";",
+        "default-text": "d",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -856,8 +780,7 @@
         "id": "key_2_4",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "F",
-        "special-text": ":",
+        "default-text": "f",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -866,8 +789,7 @@
         "id": "key_2_5",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "G",
-        "special-text": "\"",
+        "default-text": "g",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -876,8 +798,7 @@
         "id": "key_2_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "H",
-        "special-text": "!",
+        "default-text": "h",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -886,8 +807,7 @@
         "id": "key_2_7",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "J",
-        "special-text": "\\",
+        "default-text": "j",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -896,8 +816,7 @@
         "id": "key_2_8",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "K",
-        "special-text": "&",
+        "default-text": "k",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -906,15 +825,13 @@
         "id": "key_2_9",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "L",
-        "altgr-text": "Ł",
-        "special-text": "?",
+        "default-text": "l",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
     },
     {
-	"id": "key_2_10",
+   	"id": "key_2_10",
         "type": "PisakButton",
         "style-class": "PisakEmailSpellerContactAddressButton",
         "text": " ",
@@ -955,9 +872,7 @@
         "id": "key_3_1",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "Z",
-        "altgr-text": "Ż",
-        "special-text": "/",
+        "default-text": "z",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -966,9 +881,7 @@
         "id": "key_3_2",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "X",
-        "altgr-text": "Ź",
-        "special-text": "*",
+        "default-text": "x",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -977,9 +890,7 @@
         "id": "key_3_3",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "C",
-        "altgr-text": "Ć",
-        "special-text": "%",
+        "default-text": "c",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -988,8 +899,7 @@
         "id": "key_3_4",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "V",
-        "special-text": "@",
+        "default-text": "v",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -998,8 +908,7 @@
         "id": "key_3_5",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "B",
-        "special-text": "(",
+        "default-text": "b",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1008,9 +917,7 @@
         "id": "key_3_6",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "N",
-        "altgr-text": "Ń",
-        "special-text": ")",
+        "default-text": "n",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1019,8 +926,7 @@
         "id": "key_3_7",
         "type": "PisakSpellerKey",
 	"style-class": "PisakEmailSpellerContactAddressKey",
-        "default-text": "M",
-        "special-text": "=",
+        "default-text": "m",
         "target": "text_box",
         "ratio-width": 0.048,
         "ratio-height": 0.085
@@ -1028,7 +934,7 @@
     {
         "id": "key_3_8",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
+        "style-class": "PisakSpellerButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -1045,7 +951,7 @@
     {
         "id": "key_3_9",
         "type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
+        "style-class": "PisakSpellerButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -1062,7 +968,7 @@
     {
 	"id": "key_3_10",
 	"type": "PisakButton",
-        "style-class": "PisakEmailSpellerContactAddressButton",
+        "style-class": "PisakSpellerButton",
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
@@ -1075,5 +981,181 @@
                            "object": "text_box"
                        }
                    ]
+    }
+    {
+        "id": "keyboard_row_4",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_4_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_4_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_4_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_4_10", "key_4_9", "key_4_8", "key_4_7",
+                        "key_4_6", "key_4_5", "key_4_4", "key_4_3",
+                        "key_4_2", "key_4_1"
+                    ]
+    },
+    {
+        "id": "key_4_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "1",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "2",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "3",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "4",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "5",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_6",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "6",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_7",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "7",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_8",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "8",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_9",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "9",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_10",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "0",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "keyboard_row_5",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_5_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_5_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_5_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_5_5", "key_5_4", "key_5_3",
+                        "key_5_2", "key_5_1"
+                    ]
+    },
+    {
+        "id": "key_5_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".pl",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".com",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".org",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".net",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".eu",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
     }
 ]

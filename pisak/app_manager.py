@@ -15,7 +15,7 @@ from gi.repository import GObject, Clutter, Mx
 
 import pisak
 from pisak import application, logger
-from pisak.libs import configurator, properties, widgets, arg_parser
+from pisak.libs import configurator, properties, widgets, arg_parser, inputs
 
 _LOG = logger.get_logger(__name__)
 
@@ -37,6 +37,11 @@ def run(descriptor):
      'views' - list of all the application views, each view is a tuple with
      the view name and a function responsible for the view preparation.
     """
+    input_process = None
+    device_server = None
+    if '--child' not in sys.argv:
+        input_process, device_server = inputs.run_input_process()
+
     pisak.app = None
 
     app_type = descriptor['type']
@@ -53,6 +58,11 @@ def run(descriptor):
     pisak.app.main()
 
     pisak.app = None
+
+    if input_process:
+        input_process.terminate()
+    if device_server:
+        device_server.stop()
 
 
 ### Section with management tools of PISAK applications' 'executables'. ###

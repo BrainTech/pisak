@@ -2,8 +2,9 @@
 Module with various Pisak utility functions.
 """
 import os
+import functools
+import time
 from datetime import datetime
-from time import time
 
 import json
 from lxml import etree
@@ -115,7 +116,7 @@ def _local_tz_datetime_offset():
 
     :return: datetime delta object with the offset.
     """
-    now = time()
+    now = time.time()
     return datetime.fromtimestamp(now) - datetime.utcfromtimestamp(now)
 
 
