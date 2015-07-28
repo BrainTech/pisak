@@ -232,25 +232,39 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
+        self.connect("notify::mapped", self._check_to_resize)
         self.clutter_text.connect("text-changed", self._check_to_resize)
         self.clutter_text.connect("cursor-changed", self._scroll_to_view)
         self.clutter_text.connect("text-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
-        self.connect("notify::mapped", self._adjust_view)
 
     def _add_operation(self, operation):
         if len(self.history) == 0 or not self.history[-1].compose(operation):
             self.history.append(operation)
         operation.apply(self)
 
-    def _adjust_view(self, source, event):
-        self.text.set_height(self.text.get_height() - self.margin.top)
-
     def _set_text_params(self):
         self.clutter_text.set_editable(True)
         self.clutter_text.set_line_wrap(True)
         self.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+
+    def _check_to_resize(self, *args):
+        pango_layout = self.clutter_text.get_layout()
+        pango_height = pango_layout.get_size()[1] / Pango.SCALE
+        self.text.set_height(pango_height)
+
+    def _scroll_to_view(self, *args):
+        pos = self.get_cursor_position()
+        coords = self.clutter_text.position_to_coords(pos)
+        self.scroll_to(coords[2] - 0.75*self.get_height())
+
+    def _scroll(self, direction):
+        scroll_bar = self.get_children()[1]
+        adj = scroll_bar.get_adjustment()
+        prev_val = adj.get_value()
+        new_val = max(0, prev_val + direction * self._scroll_step)
+        self.scroll_to(new_val)
 
     def _move_line(self, where):
         layout = self.clutter_text.get_layout()
@@ -270,37 +284,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             new_y = y + where * (height + offset)
             new_pos = self.clutter_text.coords_to_position(x, new_y)
         self.clutter_text.set_cursor_position(new_pos)
-
-    def _check_to_resize(self, *args):
-        pango_layout = self.clutter_text.get_layout()
-        # height of the text layout (?).
-        pango_height = pango_layout.get_size()[1] / Pango.SCALE
-        # actual height of the invisible widget that contains all the text.
-        label_height = self.text.get_size()[1]
-        font_height = re.findall(r'\d+',
-                                 self.clutter_text.get_font_name())[0]
-        # size of a font being used.
-        font_height = int(font_height)
-
-        # what exactly is going on here ?  ->
-        if label_height <= pango_height + font_height:
-            self.text.set_height(
-                self.text.get_height() + unit.h(self.ratio_height) - self.margin.top)
-        elif label_height > pango_height + unit.h(self.ratio_height) + font_height:
-            self.text.set_height(
-                self.text.get_height() - unit.h(self.ratio_height) - self.margin.top)
-
-    def _scroll_to_view(self, *args):
-        pos = self.get_cursor_position()
-        coords = self.clutter_text.position_to_coords(pos)
-        self.scroll_to(coords[2] - 0.75*self.get_height())
-
-    def _scroll(self, direction):
-        scroll_bar = self.get_children()[1]
-        adj = scroll_bar.get_adjustment()
-        prev_val = adj.get_value()
-        new_val = max(0, prev_val + direction * self._scroll_step)
-        self.scroll_to(new_val)
 
     def scroll_to(self, value):
         '''
