@@ -1410,6 +1410,13 @@ MxButton.PisakEmailSpellerContactAddressPrediction:scanning {
     border-image: url("black_flat.png");
 }
 
+MxButton.PisakEmailSpellerContactAddressButton:hover,
+MxButton.PisakEmailSpellerContactAddressKey:hover,
+MxButton.PisakEmailSpellerContactAddressPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
 MxButton.PisakEmailSpellerContactAddressButton:disabled,
 MxButton.PisakEmailSpellerContactAddressKey:disabled,
 MxButton.PisakEmailSpellerContactAddressPrediction:disabled {
@@ -1534,5 +1541,5 @@ PisakFrame.PisakEmailMessageTile {
 }
 
 PisakFrame.PisakEmailSingleMessage {
-    border-image: url("black_frame.png") 5;
+    border-image: url("black_frame_thin.png") 1;
 }

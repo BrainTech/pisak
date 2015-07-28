@@ -10,6 +10,7 @@ from pisak import res
 from pisak.libs import unit, layout, properties, scanning, configurator, \
     style, text_tools, widgets
 from pisak.libs.speller.prediction import predictor
+from pisak import exceptions
 
 
 class CursorGroup(layout.Bin, configurator.Configurable):
@@ -216,8 +217,8 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def __init__(self):
         super().__init__()
         self.history = []
+        self._scroll_step = 50
         self._init_text()
-        self.line = 0
         self.prepare_style()
 
     def _init_text(self):
@@ -231,21 +232,17 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
-        self.clutter_text.connect("text-changed", self.check_to_resize)
-        self.clutter_text.connect("cursor-changed", self.scroll_to_view)
-        self.clutter_text.connect("text-changed", self.scroll_to_view)
+        self.clutter_text.connect("text-changed", self._check_to_resize)
+        self.clutter_text.connect("cursor-changed", self._scroll_to_view)
+        self.clutter_text.connect("text-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
         self.connect("notify::mapped", self._adjust_view)
 
-    def add_operation(self, operation):
+    def _add_operation(self, operation):
         if len(self.history) == 0 or not self.history[-1].compose(operation):
             self.history.append(operation)
         operation.apply(self)
-
-    def revert_operation(self):
-        if len(self.history) > 0:
-            self.history.pop().revert(self)
 
     def _adjust_view(self, source, event):
         self.text.set_height(self.text.get_height() - self.margin.top)
@@ -254,6 +251,90 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.clutter_text.set_editable(True)
         self.clutter_text.set_line_wrap(True)
         self.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+
+    def _move_line(self, where):
+        layout = self.clutter_text.get_layout()
+        pos = self.clutter_text.get_cursor_position()
+        if pos == -1:
+            pos = self.get_text_length()
+        line_idx, _line_x = layout.index_to_line_x(pos, 0)
+        lines = layout.get_lines_readonly()
+        line_count = len(lines)
+        if where == +1 and line_idx == line_count - 1:
+            new_pos = self.get_text_length()
+        else:
+            offset = 5  # safety measure for an extra distance between lines
+            rect = self.clutter_text.get_cursor_rect()
+            x, y = rect.origin.x, rect.origin.y
+            height = rect.size.height
+            new_y = y + where * (height + offset)
+            new_pos = self.clutter_text.coords_to_position(x, new_y)
+        self.clutter_text.set_cursor_position(new_pos)
+
+    def _check_to_resize(self, *args):
+        pango_layout = self.clutter_text.get_layout()
+        pango_height = pango_layout.get_size()[1] / Pango.SCALE
+        label_height = self.text.get_size()[1]
+        font_height = re.findall(r'\d+',
+                                 self.clutter_text.get_font_name())[0]
+        font_height = int(font_height)
+        if label_height <= pango_height + font_height:
+            self.text.set_height(self.text.get_height() + unit.h(self.ratio_height))
+        elif label_height > pango_height + unit.h(self.ratio_height) + font_height:
+            self.text.set_height(self.text.get_height() - unit.h(self.ratio_height))
+
+    def _scroll_to_view(self, *args):
+        pos = self.get_cursor_position()
+        coords = self.clutter_text.position_to_coords(pos)
+        self.scroll_to(coords[2] - 0.75*self.get_height())
+
+    def _scroll(self, direction):
+        scroll_bar = self.get_children()[1]
+        adj = scroll_bar.get_adjustment()
+        prev_val = adj.get_value()
+        new_val = max(0, prev_val + direction * self._scroll_step)
+        self.scroll_to(new_val)
+
+    def scroll_to(self, value):
+        '''
+        Scroll the text field to some arbitrary value.
+        '''
+        scroll_bar = self.get_children()[1]
+        adj = scroll_bar.get_adjustment()
+        adj.set_value(value)
+        scroll_bar.set_adjustment(adj)
+
+    def scroll_down(self):
+        '''
+        Scroll the text field one step down.
+        '''
+        self._scroll(1)
+
+    def scroll_up(self):
+        '''
+        Scroll the text field one step up.
+        '''
+        self._scroll(-1)
+
+    def revert_operation(self):
+        '''
+        Undo the previous operation.
+        '''
+        if len(self.history) > 0:
+            self.history.pop().revert(self)
+
+    def get_cursor_position(self):
+        '''
+        Get current position of the cursor in the number of chars.
+        '''
+        pos = self.clutter_text.get_cursor_position()
+        return pos if pos >= 0 else self.get_text_length()
+
+    def set_cursor_position(self, new_pos):
+        '''
+        Set new position of the cursor as the number of chars.
+        '''
+        self.clutter_text.set_cursor_position(new_pos)
 
     def get_text(self):
         """
@@ -266,30 +347,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         Return the number of characters in the text buffer
         """
         return len(self.clutter_text.get_text())
-
-    def get_cursor_position(self):
-        pos = self.clutter_text.get_cursor_position()
-        return pos if pos >= 0 else self.get_text_length()
-
-    def check_to_resize(self, *args):
-        pango_layout = self.clutter_text.get_layout()
-        pango_height = pango_layout.get_size()[1] / Pango.SCALE
-        label_height = self.text.get_size()[1]
-        font_height = re.findall(r'\d+',
-                                 self.clutter_text.get_font_name())[0]
-        font_height = int(font_height)
-        if label_height <= pango_height + font_height:
-            self.text.set_height(self.text.get_height() + unit.h(self.ratio_height))
-        elif label_height > pango_height + unit.h(self.ratio_height) + font_height:
-            self.text.set_height(self.text.get_height() - unit.h(self.ratio_height))
-
-    def scroll_to_view(self, *args):
-        pos = self.get_cursor_position()
-        scroll_bar = self.get_children()[1]
-        adj = scroll_bar.get_adjustment()
-        coords = self.clutter_text.position_to_coords(pos)
-        adj.set_value(coords[2] - 3*unit.h(self.ratio_height)/4)
-        scroll_bar.set_adjustment(adj)
         
     def type_text(self, text):
         """
@@ -300,7 +357,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         """
         pos = self.get_cursor_position()
         operation = Text.Insertion(pos, text)
-        self.add_operation(operation)
+        self._add_operation(operation)
 
     def type_unicode_char(self, char):
         """
@@ -311,7 +368,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         """
         # TODO: remove
         operation = Text.Insertion(self.get_text_length(), char)
-        self.add_operation(operation)
+        self._add_operation(operation)
 
     def delete_char(self):
         """
@@ -325,7 +382,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             pos -= 1
         text = self.get_text()[pos]
         operation = Text.Deletion(pos, text)
-        self.add_operation(operation)
+        self._add_operation(operation)
 
     def delete_text(self, start_pos, end_pos):
         """
@@ -343,7 +400,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         text = self.get_text()
         if len(text) > 0:
             operation = Text.Deletion(0, self.get_text())
-            self.add_operation(operation)
+            self._add_operation(operation)
 
     def get_endmost_string(self):
         """
@@ -379,7 +436,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
                                 stripped_text.rfind("\n")) + 1
                 text_before = current_text[start_pos : -1]
                 operation = Text.Replacement(start_pos, text_before, text_after)
-                self.add_operation(operation)
+                self._add_operation(operation)
         else:
             self.type_text(text_after)
 
@@ -457,25 +514,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         """
         self._move_line(+1)
 
-    def _move_line(self, where):
-        layout = self.clutter_text.get_layout()
-        pos = self.clutter_text.get_cursor_position()
-        if pos == -1:
-            pos = self.get_text_length()
-        line_idx, _line_x = layout.index_to_line_x(pos, 0)
-        lines = layout.get_lines_readonly()
-        line_count = len(lines)
-        if where == +1 and line_idx == line_count - 1:
-            new_pos = self.get_text_length()
-        else:
-            offset = 5  # safety measure for an extra distance between lines
-            rect = self.clutter_text.get_cursor_rect()
-            x, y = rect.origin.x, rect.origin.y
-            height = rect.size.height
-            new_y = y + where * (height + offset)
-            new_pos = self.clutter_text.coords_to_position(x, new_y)
-        self.clutter_text.set_cursor_position(new_pos)
-
     def move_to_new_line(self):
         """
         Move to new line
@@ -511,7 +549,8 @@ class Key(widgets.Button, configurator.Configurable):
 
     * :attr:`default_text`
     * :attr:`altgr_text`
-    * :attr:`special_text`
+    * :attr:`special1_text`
+    * :attr:`special2_text`
     * :attr:`target`
     """
     __gtype_name__ = "PisakSpellerKey"
@@ -528,10 +567,16 @@ class Key(widgets.Button, configurator.Configurable):
             "altgr string appended to a text",
             "?",
             GObject.PARAM_READWRITE),
-        "special_text": (
+        "special1_text": (
             GObject.TYPE_STRING,
-            "special text",
+            "special1 text",
             "special string appended to a text",
+            "?",
+            GObject.PARAM_READWRITE),
+        "special2_text": (
+            GObject.TYPE_STRING,
+            "special2 text",
+            "another special string appended to a text",
             "?",
             GObject.PARAM_READWRITE),
         "target": (
@@ -544,6 +589,8 @@ class Key(widgets.Button, configurator.Configurable):
     def __init__(self):
         super().__init__()
         self.pre_special_text = None
+        self._special1_text = None
+        self._special2_text = None
         self.undo_chain = []
         self.allowed_undos = set()
         #self.set_size(dims.MENU_BUTTON_H_PX, dims.MENU_BUTTON_H_PX)
@@ -573,9 +620,16 @@ class Key(widgets.Button, configurator.Configurable):
     def set_default_label(self):
         self.set_label(self.default_text)
 
-    def set_special_label(self):
+    def set_special_label(self, specialmode):
         self._cache_pre_special_text(self.get_label())
-        self.set_label(self.special_text)
+        if "special1" == specialmode:
+            if self.special1_text is not None:
+                self.set_label(self.special1_text)
+        elif "special2" == specialmode:
+            if self.special2_text is not None:
+                self.set_label(self.special2_text)
+        else:
+            raise exceptions.PisakException("Invalid argument")
 
     def set_caps_label(self):
         label = self.get_label()
@@ -624,12 +678,15 @@ class Key(widgets.Button, configurator.Configurable):
         if label.isalpha():
             self.set_label(label.swapcase())
 
-    def set_swap_special_label(self):
+    def set_swap_special_label(self, specialmode):
         try:
-            if self.get_label() == self.special_text:
+            if ((self.get_label() == self.special1_text and
+                    specialmode == "special1") or
+                    (self.get_label() == self.special2_text and
+                    specialmode == "special2")):
                 self.set_pre_special_label()
             else:
-                self.set_special_label()
+                self.set_special_label(specialmode)
         except AttributeError:
             return None
 
@@ -654,12 +711,20 @@ class Key(widgets.Button, configurator.Configurable):
         self._altgr_text = str(value)
 
     @property
-    def special_text(self):
-        return self._special_text
+    def special1_text(self):
+        return self._special1_text
 
-    @special_text.setter
-    def special_text(self, value):
-        self._special_text = str(value)
+    @special1_text.setter
+    def special1_text(self, value):
+        self._special1_text = str(value)
+
+    @property
+    def special2_text(self):
+        return self._special2_text
+
+    @special2_text.setter
+    def special2_text(self, value):
+        self._special2_text = str(value)
 
     @property
     def target(self):

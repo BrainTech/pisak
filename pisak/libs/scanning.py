@@ -207,7 +207,6 @@ class _GroupObserver(object):
         """
         Removes handlers recursively.
         """
-
         if actor not in self._observed:
             _LOG.debug("double unobserve: " + str(actor.get_id()))
         else:
@@ -281,7 +280,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.user_action_handler = None
         self.input_handler_token = None
         super().__init__()
-        self.observer = _GroupObserver(self)
+        self.observer = None
         self.set_layout_manager(Clutter.BinLayout())
         self.apply_props()
 
@@ -389,7 +388,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         The cycle will also be stopped if the strategy's `has_next` method returns
         False.
         """
-        if self.get_stage() is None:
+        _LOG.debug("Starting group {}".format(self.get_id()))
+        self.observer = _GroupObserver(self)
+        if self.get_property("mapped") == False:
             message = \
                 "Started cycle in unmapped group: {}".format(self.get_id())
             _LOG.warning(message)

@@ -77,7 +77,7 @@ def _register_custom_print_exception():
     print_exception_old = traceback.print_exception
     def print_exception(exctype, value, traceb, limit=None, file=None, chain=True):
         _LOG.error(''.join(traceback.format_exception(
-            exctype, value, traceb, limit, file, chain)))
+            exctype, value, traceb, limit, chain)))
         print_exception_old(exctype, value, traceb, limit, file, chain)
     traceback.print_exception = print_exception
 

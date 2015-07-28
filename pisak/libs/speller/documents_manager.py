@@ -26,7 +26,7 @@ FILE_NAME_EXTENSION = ".txt"
 
 
 #: Path to database related to text documents
-DOCUMENTS_DB_PATH = os.path.join(res.PATH, "documents.db")
+DOCUMENTS_DB_PATH = dirs.HOME_TEXT_DOCUMENTS_DB
 
 
 #: String constant for sqlalchemy internal purposes

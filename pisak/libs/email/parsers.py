@@ -131,19 +131,19 @@ def parse_message(raw_message):
     return parsed_msg
 
 
-def parse_mailbox_list(uids, msg_data, headers):
+def parse_mailbox_list(ids, msg_data, headers):
     """
     Parse list of message previews.
 
-    :param uids: list of the given messages uids.
+    :param ids: list of the given messages ids.
     :param msg_data: raw messages data.
     :param headers: list of headers to be parsed.
 
     :returns: list of dictionaries containing parsed message previews.
     """
     mailbox_list = []
-    for _spec, msg in msg_data[::2]:
-        parsed_msg = {"UID": uids.pop(0)}
+    for idx, (_spec, msg) in enumerate(msg_data[::2]):
+        parsed_msg = {"UID": ids[idx]}
         str_msg = msg.decode(DEFAULT_CHARSET, "replace")
         for header_name in headers:
             parsed_header = _decode_header(str_msg[

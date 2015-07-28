@@ -1542,6 +1542,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
                      self._on_style_pseudo_class_change)
         self.connect("notify::size", lambda *args: self._rescale_icon())
         self.connect("notify::mapped", self.set_space)
+        self.connect("notify::mapped", self._change_icon_style)
         self.set_reactive(True)
 
     def _play_selection_sound(self, source):
