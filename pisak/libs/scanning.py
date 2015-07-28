@@ -390,7 +390,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         """
         _LOG.debug("Starting group {}".format(self.get_id()))
         self.observer = _GroupObserver(self)
-        if self.get_property("mapped") == False:
+        if not self.get_property("mapped"):
+            self.connect("notify::mapped", lambda *_: self.start_cycle())
             message = \
                 "Started cycle in unmapped group: {}".format(self.get_id())
             _LOG.warning(message)
