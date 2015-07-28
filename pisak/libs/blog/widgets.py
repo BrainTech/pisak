@@ -122,6 +122,7 @@ class UserPhoto(Mx.Image):
         except GObject.GError as e:
             _LOG.warning(e)
 
+
 class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
 
     __gtype_name__ = "PisakBlogPost"

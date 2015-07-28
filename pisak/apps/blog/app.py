@@ -89,6 +89,8 @@ def prepare_single_post_view(app, window, script, data):
 
     load_new_post(0)
 
+    data['previous_view'] = 'blog/single_post'
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_back", "blog/all_posts")
     handlers.button_to_view(window, script, "button_about", "blog/about_me")
@@ -96,6 +98,9 @@ def prepare_single_post_view(app, window, script, data):
                             "blog/all_posts")
     handlers.button_to_view(window, script, "button_post_edit",
                             "blog/speller_post")
+    handlers.button_to_view(
+        window, script, "button_comment", "blog/speller_comment", data)
+
     handlers.connect_button(script, "button_next_post", load_new_post, 1)
     handlers.connect_button(script, "button_previous_post", load_new_post,
                             -1)
@@ -121,12 +126,15 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
 
     load_new_post(0)
 
+    data['previous_view'] = 'blog/followed_blog_single_post'
+
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(
         window, script, "button_back", "blog/followed_blog_all_posts", data)
     handlers.button_to_view(window, script, "button_about", "blog/about_me")
     handlers.button_to_view(
         window, script, "button_comment", "blog/speller_comment", data)
+
     handlers.connect_button(script, "button_next_post", load_new_post, 1)
     handlers.connect_button(script, "button_previous_post", load_new_post,
                             -1)
@@ -254,15 +262,21 @@ def prepare_viewer_about_me_album_view(app, window, script, data):
 
 def prepare_speller_comment_view(app, window, script, data):
     def publish_comment():
-        blog = wordpress.Blog(data["blog_url"])
+        if data['previous_view'] == 'blog/single_post':
+            blog = wordpress.blog
+            post_id = data['post'].id
+        else:
+            blog = wordpress.Blog(data["blog_url"])
+            post_id = data["post"]["ID"]
+
         text_widget = script.get_object("text_box")
         text = html_parsers.apply_linebreaks(text_widget.get_text())
-        blog.add_comment(data["post"]["ID"], text)
+        blog.add_comment(post_id, text)
 
     handlers.button_to_view(window, script, "button_exit")
     handlers.connect_button(script, "button_proceed", publish_comment)
     handlers.button_to_view(
-         window, script, "button_proceed", "blog/followed_blog_single_post", data)
+         window, script, "button_proceed", data['previous_view'], data)
 
 
 if __name__ == "__main__":

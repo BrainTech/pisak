@@ -13,15 +13,6 @@
         "y-expand": true
     },
     {
-        "id": "main_box_group",
-        "type": "PisakScanningGroup",
-        "children": ["main_box"],
-        "scanning-hilite": true,
-        "strategy": {
-            "type": "PisakRowStrategy"
-        }
-    },
-    {
         "id": "main_box",
         "type": "PisakBoxLayout",
         "x-align": "center",
@@ -46,7 +37,7 @@
     {
         "id": "middle_box_group",
         "type": "PisakScanningGroup",
-         "scanning-hilite": true,
+        "scanning-hilite": true,
         "children": ["middle_box"],
         "strategy": {
             "type": "PisakRowStrategy"
@@ -110,15 +101,15 @@
         "icon-name": "exit"
     },
     {
-	"id": "photo_widget",
-	"type": "PisakBinLayout",
-	"ratio-width": 0.24,
+	    "id": "photo_widget",
+	    "type": "PisakBinLayout",
+	    "ratio-width": 0.24,
         "ratio-height": 0.18,
-	"children": ["photo"]
+	    "children": ["photo"]
     },
     {
-	"id": "photo",
-	"type": "PisakBlogUserPhoto"
+	    "id": "photo",
+	    "type": "PisakBlogUserPhoto"
     },
     {
         "id": "post_menu",
@@ -158,11 +149,11 @@
         "ratio-height": 0.09,
         "icon-size": 50,
         "icon-name": "nav_up",
-	"signals": [
+	    "signals": [
                        {
-                           "name": "clicked",
-                           "handler": "blog/scroll_post_up",
-			   "object": "post_text"
+                            "name": "clicked",
+                            "handler": "blog/scroll_post_up",
+			                "object": "post_text"
                        }
                    ]
     },
@@ -175,11 +166,11 @@
         "ratio-height": 0.09,
         "icon-size": 50,
         "icon-name": "nav_down",
-	"signals": [
+	    "signals": [
                        {
                            "name": "clicked",
                            "handler": "blog/scroll_post_down",
-			   "object": "post_text"
+			                "object": "post_text"
                        }
                    ]
     },
@@ -204,9 +195,9 @@
         "icon-name": "nav_right"
     },
     {
-	"id": "post_text",
-	"type": "PisakBlogPost",
-	"ratio-height": 0.8,
-	"ratio-width": 0.642
+	    "id": "post_text",
+	    "type": "PisakBlogPost",
+	    "ratio-height": 0.8,
+	    "ratio-width": 0.642
     }
 ]
