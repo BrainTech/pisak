@@ -338,6 +338,18 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             else:
                 to_scan.extend(current.get_children())
 
+    def is_flat(self):
+        '''
+        Test if group is flat, that is whether it contains
+        any nested subgroups.
+
+        :return: True if group has no subgroups, False otherwise.
+        '''
+        for obj in self.get_children():
+            if isinstance(obj, Group):
+                return False
+        return True
+
     def is_empty(self):
         """
         Tests if group is empty.

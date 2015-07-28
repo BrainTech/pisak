@@ -220,11 +220,31 @@ class InputGroup(object):
         next_level = []
         for obj in top_level:
             if isinstance(obj, scanning.Group):
-                return obj
+                return self._get_collapsed(obj)
             else:
                 next_level.extend(obj.get_children())
         if next_level:
             return self._get_toplevel_scanning_group(next_level)
+
+    def _get_collapsed(self, toplevel_group):
+        non_empty = None
+        non_empty_count = 0
+        for branch in toplevel_group.get_children():
+            branch_list = branch.get_children()
+            if not self._is_empty_branch(branch_list):
+                non_empty = self._get_toplevel_scanning_group(branch_list)
+                non_empty_count += 1
+        return non_empty if non_empty_count == 1 else toplevel_group
+
+    def _is_empty_branch(self, top_level):
+        next_level = []
+        for obj in top_level:
+            if (isinstance(obj, scanning.Group) and obj.is_flat() and not
+                    obj.is_empty()):
+                return False
+            else:
+                next_level.extend(obj.get_children())
+        return self._is_empty_branch(next_level) if next_level else True
 
     def launch_sprite(self):
         """
