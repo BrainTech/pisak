@@ -111,12 +111,12 @@ class Strategy(Clutter.Actor):
     def group(self, value):
         self._group = value
 
-    def select(self):
+    def select(self, element=None):
         """
         Selects currently highlighted element.
         """
         select_lag_disabled = False
-        element = self.get_current_element()
+        element = element or self.get_current_element()
         if element is None:
             _LOG.debug("There is no current element that could be frozen.")
             return
@@ -129,7 +129,7 @@ class Strategy(Clutter.Actor):
                 else:
                     self._do_select(element)
         elif hasattr(element, "enable_hilite"):
-            (self.group.stage or self.group.get_stage()).pending_group = self.unwind_to
+            pisak.app.window.pending_group = self.unwind_to
             if hasattr(element, "scanning_pauser") and element.scanning_pauser:
                 if self.group.paused:
                     select_lag_disabled = True
@@ -153,11 +153,10 @@ class Strategy(Clutter.Actor):
                 element.disable_lag_hilite()
             if not self.group.killed and not self.group.paused:
                 # launch next group
-                if self.group.stage.pending_group:
-                    self.group.stage.pending_group.start_cycle()
+                if pisak.app.window.pending_group:
+                    pisak.app.window.pending_group.start_cycle()
                 else:
-                    if self.group.get_stage():
-                        self.group.start_cycle()
+                    self.group.start_cycle()
         else:
             raise Exception("Unsupported selection")
 
@@ -274,7 +273,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self._strategy = None
         self.paused = False
         self.killed = False
-        self.stage = None
+        self.suppress_collapse_select_on_init = False
         self.parent_group = None
         self.signal_source = None
         self._scanning_hilite = False
@@ -367,20 +366,15 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         Restart group cycle that had already been startd before but went
         standby in a meantime.
         """
-        stage = self.get_stage()
-        if stage is not None:
-            stage.set_key_focus(self)
-        self.killed = False
-        if self.scanning_hilite:
-            self.enable_scan_hilite()
-        self.user_action_handler = self.strategy.select
-        self.strategy.start()
+        if self.input_handler_token is not None:
+            self.signal_source.disconnect(self.input_handler_token)
+        self.start_cycle()
 
     def start_cycle(self):
         """
-        Starts group cycle. The cycle can be stopped with stop_cycle method.
-        The cycle will alse stopped if strategy's has_next method returns
-        false.
+        Starts group cycle. The cycle can be stopped with `stop_cycle` method.
+        The cycle will also be stopped if the strategy's `has_next` method returns
+        False.
         """
         _LOG.debug("Starting group {}".format(self.get_id()))
         self.observer = _GroupObserver(self)
@@ -389,28 +383,57 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
                 "Started cycle in unmapped group: {}".format(self.get_id())
             _LOG.warning(message)
             # TODO: do something wise here
+            return
+
+        _LOG.debug("Starting group {}".format(self.get_id()))
+
+        if self.is_singular() and self._on_singular():
+            return
+
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
         self.input_handler_token = self.signal_source.connect(
             signal, lambda *args: handler(self, *args))
-        self.stage = self.get_stage()
-        if self.stage is not None:
-            self.stage.set_key_focus(self)
         self.killed = False
         if self.scanning_hilite:
             self.enable_scan_hilite()
         self.user_action_handler = self.strategy.select
+        self.set_key_focus()
         self.strategy.start()
+
+    def _on_singular(self):
+        '''
+        Do something when the group is singular.
+        '''
+        sub_element =self.get_subgroups()[0]
+        if isinstance(sub_element, Group):
+            msg = 'Group {} is singular. Starting its only subgroup.'
+            _LOG.debug(msg.format(self.get_id()))
+            sub_element.start_cycle()
+            ret = True
+        else:
+            if not self.suppress_collapse_select_on_init:
+                self.strategy.select(sub_element)
+                ret = True
+            else:
+                self.suppress_collapse_select_on_init = False
+                ret = False
+        return ret
 
     def stop_cycle(self):
         """
         Stop currently running group cycle
         """
         if self.signal_source and self.input_handler_token:
-                self.signal_source.disconnect(self.input_handler_token)
+            self.signal_source.disconnect(self.input_handler_token)
         if self.scanning_hilite:
             self.disable_scan_hilite()
         self.strategy.stop()
+
+    def set_key_focus(self):
+        stage = self.get_stage()
+        if stage is not None:
+            stage.set_key_focus(self)
 
     def key_release(self, source, event):
         if event.unicode_value == ' ':

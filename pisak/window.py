@@ -59,6 +59,9 @@ class Window(configurator.Configurable):
         # handler of the main input device:
         self.input_group = inputs.InputGroup(self.stage)
 
+        # pending scanning group:
+        self.pending_group = None
+
         self._init_layout()
         self._read_descriptor(descriptor)
 

@@ -48,7 +48,13 @@ class PisakSVG(object):
         '''
         width = ''.join([str(width), unit])
         height = ''.join([str(height), unit])
-        self.css.svg = {'width' : width, 'height' : height}
+
+        self.string = re.sub(
+            'height="(.*?)"',
+            'height="' + height + '"',
+            re.sub('width="(.*?)"', 'width="' + width + '"', self.string)
+        )
+
         self._style()
 
     def change_color(self, color):
@@ -109,8 +115,7 @@ class PisakCSS(object):
         (key of type string) and it's value(value of type string)
         '''
         try:
-            for prop_name, prop_value in props.items():
-                self.__getattribute__(node_name)[prop_name] = prop_value
+            self.__getattribute__(node_name).update(props)
         except AttributeError:
             super().__setattr__(node_name, props)
 

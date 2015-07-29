@@ -9,6 +9,8 @@ from collections import OrderedDict
 from functools import total_ordering
 
 from gi.repository import Clutter, GObject
+
+import pisak
 from pisak import res, logger, exceptions
 from pisak.libs import properties, scanning, layout, unit, configurator, unit
 
@@ -925,7 +927,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         """
         Start scanning the current page.
         """
-        self.get_stage().pending_group = self._current_page
+        pisak.app.window.pending_group = self._current_page
         self._current_page.start_cycle()
 
     def on_new_items(self, items):
