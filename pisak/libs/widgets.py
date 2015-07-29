@@ -1998,13 +1998,13 @@ class BackgroundPattern(layout.Bin):
         Color of the background pattern.
 
         :param value: color as a string, in a format of comma separated
-        four floatng point values, each corresponding to the normalized
-        amounts of, consecutively, red, green, blue and alpha channels
+        four integer values, each corresponding to the amounts of,
+        consecutively, red, green, blue and alpha channels
         in the resulting color. Given string is then converted to the list
         containing floating point values of the consecutive channels.
         """
         self._rgba = list(map(
-            lambda string: float(string.strip()), value.split(",")))
+            lambda string: float(string.strip())/255, value.split(",")))
         self.background_image.invalidate()
 
     def _draw(self, canvas, context, w, h):
@@ -2077,3 +2077,10 @@ class BackgroundPattern(layout.Bin):
         gradient.add_color_stop_rgba(0.9, *self.rgba)
         context.set_source(gradient)
         context.paint()
+
+class BacgroundFulfillment(Mx.Frame):
+    """
+    This is used only for the possibility to change background in css file.
+    """
+
+    __gtype_name__ = "PisakBackgroundFulfillment"
