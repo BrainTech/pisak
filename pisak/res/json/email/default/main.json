@@ -133,7 +133,7 @@
         "ratio-width": 0.5,
         "ratio-height": 0.10,
         "icon-size": 50,
-	    "custom-padding": "left",
+	"custom-padding": "left",
         "icon-name": "nawigator_ebook"
     },
     {
@@ -142,11 +142,12 @@
         "children": ["photo"]
     },
     {
-	    "id": "photo",
-	    "type": "PisakMenuHeader",
-        "color": "rgb(50, 100, 150)",
+	"id": "photo",
+	"type": "PisakMenuHeader",
+        "color": "rgb(0, 0, 0)",
         "ratio-width": 0.3,
         "ratio-height": 0.445,
-       "name": "wyslij"
+	"name": "wyslij",
+	"margin-left": 125
     }
 ]
