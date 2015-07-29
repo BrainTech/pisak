@@ -1383,7 +1383,16 @@ class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurabl
         handle, pixbuf = self.svg.get_handle(), self.svg.get_pixbuf()
 
         context.set_operator(cairo.OPERATOR_SOURCE)
-        context.scale(w/pixbuf.get_width(), h/pixbuf.get_height())
+
+        scale_w = w/pixbuf.get_width()
+        scale_h = h/pixbuf.get_height()
+        scale_ratio  = scale_w / scale_h
+        if scale_ratio > 1:
+            scale_w /= scale_ratio
+        elif scale_ratio < 1:
+            scale_h *= scale_ratio
+        context.scale(scale_w, scale_h)
+
         handle.render_cairo(context)
 
     @property

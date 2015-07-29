@@ -96,7 +96,8 @@
         "id": "menu_header",
         "type": "PisakMenuHeader",
         "name": "funkcjenapis",
-        "height": 65.28
+        "ratio-width": 0.1,
+        "ratio-height": 0.06
     },
     {
         "id": "speller_menu_box",
@@ -316,7 +317,8 @@
         "id": "prediction_header",
         "type": "PisakMenuHeader",
         "name": "predykcjanapis",
-        "height": 65.28
+        "ratio-width": 0.1,
+        "ratio-height": 0.06
     },
     {
         "id": "prediction_1",

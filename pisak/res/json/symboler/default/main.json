@@ -194,7 +194,7 @@
     {
         "id": "menu_header",
         "type": "PisakMenuHeader",
-        "ratio-width": 0.154098360,
+        "ratio-width": 0.09,
         "ratio-height": 0.04852941,
         "name": "funkcjenapis"
     },
