@@ -39,24 +39,6 @@ class PisakSVG(object):
         handle = self.get_handle()
         return handle.get_pixbuf()
 
-    def change_size(self, width, height, unit='px'):
-        '''Change size of SVG
-        :param width: width of SVG
-        :param height: height of SVG
-        :param unit: units in which width
-        and height are to be expressed(px(default), pt or em)
-        '''
-        width = ''.join([str(width), unit])
-        height = ''.join([str(height), unit])
-
-        self.string = re.sub(
-            'height="(.*?)"',
-            'height="' + height + '"',
-            re.sub('width="(.*?)"', 'width="' + width + '"', self.string)
-        )
-
-        self._style()
-
     def change_color(self, color):
         '''Change color of whole SVG
         :param color: should be string, you can

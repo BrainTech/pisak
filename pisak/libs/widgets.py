@@ -1833,7 +1833,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         if self.svg:
             if self.icon_size:
                 self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
-                self.svg.change_size(self.icon_size, self.icon_size)
             self.set_icon()
 
     def load_icon(self):
