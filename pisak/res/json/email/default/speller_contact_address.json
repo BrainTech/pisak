@@ -981,7 +981,7 @@
                            "object": "text_box"
                        }
                    ]
-    }
+    },
     {
         "id": "keyboard_row_4",
         "type": "PisakScanningGroup",
