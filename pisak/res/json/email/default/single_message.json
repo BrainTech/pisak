@@ -76,13 +76,13 @@
     {
         "id": "to_box",
         "type": "PisakBoxLayout",
-		"ratio-spacing": 0.007,
+        "ratio-spacing": 0.007,
         "ratio-width": 0.52,
          "y-expand": true,
         "y-align": "center",
         "orientation": "vertical",
-		"children": ["to_frame", "to_label"]
-	},
+        "children": ["to_frame", "to_label"]
+    },
     {
         "id": "to_frame",
         "type": "PisakFrame",
@@ -91,10 +91,10 @@
         "style-class": "PisakEmailSingleMessage",
         "children": ["to_content"]
     },
-	{
-		"id": "to_label",
-		"type": "MxLabel",
-		"style-class": "PisakEmailSingleMessage",
+    {
+        "id": "to_label",
+        "type": "MxLabel",
+        "style-class": "PisakEmailSingleMessage",
         "text": "ODBIORCY:"
     },
     {
@@ -105,7 +105,7 @@
     {
         "id": "cc_box",
         "type": "PisakBoxLayout",
-		"ratio-spacing": 0.01,
+        "ratio-spacing": 0.01,
         "ratio-width": 0.1,
         "y-align": "center",
         "orientation": "vertical",
@@ -124,13 +124,13 @@
     {
         "id": "date_box",
         "type": "PisakBoxLayout",
-		"ratio-spacing": 0.007,
+        "ratio-spacing": 0.007,
         "ratio-width": 0.23,
         "y-expand": true,
         "y-align": "center",
         "orientation": "vertical",
-		"children": ["date_frame", "date_label"]
-	},
+        "children": ["date_frame", "date_label"]
+    },
     {
         "id": "date_frame",
         "type": "PisakFrame",
@@ -139,17 +139,17 @@
         "style-class": "PisakEmailSingleMessage",
         "children": ["date_content"]
     },
-	{
-		"id": "date_label",
-		"type": "MxLabel",
-		"style-class": "PisakEmailSingleMessage",
+    {
+        "id": "date_label",
+        "type": "MxLabel",
+        "style-class": "PisakEmailSingleMessage",
         "text": "DATA:"
-	},
-	{
-		"id": "date_content",
-		"type": "MxLabel",
-		"style-class": "PisakEmailSingleMessage"
-	},
+    },
+    {
+        "id": "date_content",
+        "type": "MxLabel",
+        "style-class": "PisakEmailSingleMessage"
+    },
     {
         "id": "header",
         "type": "MxLabel",
@@ -261,7 +261,7 @@
         "ratio-spacing": 0.012,
         "y-align": "center",
         "children": ["button_remove", "button_forward", "button_reply_all",
-	    "button_reply", "button_scroll_up", "button_scroll_down"]
+        "button_reply", "button_scroll_up", "button_scroll_down"]
     },
     {
         "id": "button_reply",
