@@ -216,8 +216,6 @@ class InputGroup(object):
             signal_source = self.stage
         return self.action_signal, self.scanning_handler, signal_source
 
-    # --------------------- scanning util methods -----------------------
-
     def _get_toplevel_scanning_group(self, top_level):
         '''
         Get a top-level scanning group from the given object tree.
@@ -227,72 +225,11 @@ class InputGroup(object):
         next_level = []
         for obj in top_level:
             if isinstance(obj, scanning.Group):
-                return self._get_collapsed(obj)
+                return obj
             else:
                 next_level.extend(obj.get_children())
         if next_level:
             return self._get_toplevel_scanning_group(next_level)
-
-    def _get_collapsed(self, toplevel_group):
-        '''
-        Collapse the given top-level scanning group.
-        If there is only one non-empty scanning group being
-        a subgroup of the given top-level group and any of the empty
-        subgroups contains any instance of the `scanning.Scannable` or
-        a scanning group, then this non-empty group is returned.
-        Otherwise the given top-level group is returned. For the definition
-        of a group being empty :see: `pisak.libs.scanning.Group.is_empty`.
-
-        :return: scanning group.
-        '''
-        non_empty = None
-        non_empty_count = 0
-        scannables_in_empty = False
-        for branch in toplevel_group.get_children():
-            branch_list = [branch]
-            if not self._is_empty_branch(branch_list):
-                non_empty = self._get_toplevel_scanning_group(branch_list)
-                non_empty_count += 1
-            else:
-                if self._contains_scannables(branch_list):
-                    scannables_in_empty = True
-        return non_empty if (non_empty_count == 1 and
-                             scannables_in_empty) else toplevel_group
-
-    def _is_empty_branch(self, top_level):
-        '''
-        Check if the given object tree is empty from the
-        scanning point of view, that is whether there are any elements
-        that could get scanned.
-
-        :return: True or False.
-        '''
-        next_level = []
-        for obj in top_level:
-            if (isinstance(obj, scanning.Group) and obj.is_flat() and not
-                    obj.is_empty()):
-                return False
-            else:
-                next_level.extend(obj.get_children())
-        return self._is_empty_branch(next_level) if next_level else True
-
-    def _contains_scannables(self, top_level):
-        '''
-        Check if the given object tree contains any scanning groups
-        or elements that could be scanned.
-
-        :return: True or False.
-        '''
-        next_level = []
-        for obj in top_level:
-            if isinstance(obj, scanning.Group) or \
-                    isinstance(obj, scanning.Scannable):
-                return True
-            else:
-                next_level.extend(obj.get_children())
-        return self._contains_scannables(next_level) if next_level else False
-
-    # ------------------ end of scanning util methods -----------------------
 
     def launch_sprite(self):
         """

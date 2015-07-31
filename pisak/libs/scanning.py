@@ -879,3 +879,65 @@ class ArbitraryOrderStrategy(BaseStrategy):
         for s in self.subgroup_order:
             if s in unordered:
                 self._subgroups.append(unordered[s])
+
+
+def get_toplevel_scanning_group(top_level):
+    """
+    Get a top-level scanning group from the given object tree.
+
+    :return: top-level scanning group or None.
+    """
+    def get_collapsed(toplevel_group):
+        """
+        Collapse the given top-level scanning group.
+        If there is only one non-empty scanning group being
+        a subgroup of the given top-level group then such a non-empty
+        group is returned. Otherwise the given top-level group is returned.
+        For the definition of a group being empty
+        :see: `Group.is_empty`.
+
+        :return: scanning group.
+        """
+        def is_empty_branch(top_level):
+            '''
+            Check if the given object tree is empty from the
+            scanning point of view, that is whether there are any elements
+            that could get scanned.
+
+            :return: True or False.
+            '''
+            next_level = []
+            for obj in top_level:
+                if (isinstance(obj, Group) and obj.is_flat() and not
+                        obj.is_empty()):
+                    return False
+                else:
+                    next_level.extend(obj.get_children())
+            return is_empty_branch(next_level) if next_level else True
+
+        def find_branches(top_level, all_br):
+            for obj in top_level:
+                if isinstance(obj, Group):
+                    all_br.append(obj)
+                else:
+                    find_branches(obj.get_children(), all_br)
+
+        non_empty = None
+        non_empty_count = 0
+        branches = []
+        find_branches(toplevel_group.get_children(), branches)
+        for branch in branches:
+            branch_list = [branch]
+            if not is_empty_branch(branch_list):
+                non_empty = get_toplevel_scanning_group(branch_list)
+                non_empty_count += 1
+        return non_empty if non_empty_count == 1 else toplevel_group
+
+    next_level = []
+    for obj in top_level:
+        if isinstance(obj, Group):
+            return get_collapsed(obj)
+        else:
+            next_level.extend(obj.get_children())
+    if next_level:
+        return get_toplevel_scanning_group(next_level)
