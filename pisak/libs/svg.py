@@ -39,18 +39,6 @@ class PisakSVG(object):
         handle = self.get_handle()
         return handle.get_pixbuf()
 
-    def change_size(self, width, height, unit='px'):
-        '''Change size of SVG
-        :param width: width of SVG
-        :param height: height of SVG
-        :param unit: units in which width
-        and height are to be expressed(px(default), pt or em)
-        '''
-        width = ''.join([str(width), unit])
-        height = ''.join([str(height), unit])
-        self.css.svg = {'width' : width, 'height' : height}
-        self._style()
-
     def change_color(self, color):
         '''Change color of whole SVG
         :param color: should be string, you can
@@ -109,8 +97,7 @@ class PisakCSS(object):
         (key of type string) and it's value(value of type string)
         '''
         try:
-            for prop_name, prop_value in props.items():
-                self.__getattribute__(node_name)[prop_name] = prop_value
+            self.__getattribute__(node_name).update(props)
         except AttributeError:
             super().__setattr__(node_name, props)
 

@@ -32,7 +32,7 @@ MESSAGES = {
                 "Adres powinien zawierać znak @ i kropkę w nazwie domeny.\n"
                 "Na przykład:     JanKowalski@gmail.com",
     "message_send_fail": "Wysyłanie wiadomości nie powiodło się.\n"
-                         "Sprawdź połączenie z internetem i spróbuj ponownie.",
+                    "Sprawdź połączenie z internetem i spróbuj ponownie.",
     "invalid_credentials": "Nieprawidłowa nazwa użytkownika lub hasło.",
     "unknown": "Wystąpił błąd. Spróbuj ponownie."
 }
@@ -99,7 +99,8 @@ def prepare_main_view(app, window, script, data):
                 inbox_all, inbox_unseen =  client.get_inbox_status()
                 window.ui.button_inbox.set_label(
                     window.ui.button_inbox.get_label() +
-                    counter_label.format("  /  ".join([str(inbox_unseen), str(inbox_all)]))
+                    counter_label.format("  /  ".join([str(inbox_unseen),
+                                                       str(inbox_all)]))
                 )
             except imap_client.IMAPClientError as e:
                 pass  # TODO: do something
@@ -260,7 +261,8 @@ def prepare_address_book_view(app, window, script, data):
         :param contact: contact dictionary
         """
         tile.toggled = contact.flags["picked"] = \
-            not  contact.flags["picked"] if "picked" in contact.flags else True
+            not  contact.flags["picked"] if "picked" in \
+            contact.flags else True
         if tile.toggled:
             app.box["new_message"].recipients = contact.content.address
         else:
@@ -279,7 +281,8 @@ def prepare_address_book_view(app, window, script, data):
         tile_handler = lambda tile, contact: window.load_view(
             "email/contact", {"contact_id": contact.content.id})
         handlers.button_to_view(
-            window, script, "button_new_contact", "email/speller_contact_address")
+            window, script, "button_new_contact",
+            "email/speller_contact_address")
 
     window.ui.button_menu_box.replace_child(
         window.ui.button_specific, specific_button)
@@ -298,7 +301,8 @@ def prepare_address_book_view(app, window, script, data):
                 None
             ) for contact in contacts
         ],
-        lambda contact:contact.name if contact.name else contact.address)
+        lambda contact: contact.name if contact.name else
+                        contact.address)
     )
 
 
@@ -336,7 +340,8 @@ def prepare_contact_view(app, window, script, data):
             handlers.button_to_view(
                 window, script, "button_edit_address",
                 "email/speller_contact_address",
-                {"contact_id": contact.id, "contact_address": contact.address})
+                {"contact_id": contact.id,
+                 "contact_address": contact.address})
             handlers.button_to_view(
                 window, script, "button_edit_photo",
                 "email/viewer_contact_library",
@@ -375,7 +380,8 @@ def prepare_speller_contact_address_view(app, window, script, data):
                         pass
                     contact = app.box["address_book"].get_contact_by_address(
                         address)
-                    load = ("email/speller_contact_name", {"contact_id": contact.id})
+                    load = ("email/speller_contact_name",
+                            {"contact_id": contact.id})
                 except address_book.AddressBookError as exc:
                     # TODO: notify about failure
                     load = ("email/address_book",)
@@ -396,7 +402,8 @@ def prepare_speller_contact_address_view(app, window, script, data):
             except address_book.AddressBookError as e:
                 pass  # TODO: display warning
 
-            window.load_view("email/contact", {"contact_id": data["contact_id"]})
+            window.load_view("email/contact",
+                             {"contact_id": data["contact_id"]})
 
         button_proceed_handler = edit_contact_address
 
@@ -484,7 +491,8 @@ def prepare_single_message_view(app, window, script, data):
             '''
             Send a reply only to the sender of the original message.
             '''
-            # pick emal address only of the main sender from the list of headers:
+            # pick emal address only of the main sender from the
+            # list of headers:
             app.box['new_message'].recipients = message['From'][0][1]
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'reply'})

@@ -718,7 +718,7 @@
         "type": "PisakSpellerKey",
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "A",
-	"altgr-text": "Ś"
+	"altgr-text": "Ś",
         "special1-text": "1",
         "special2-text": "#",
         "target": "text_box",
@@ -730,7 +730,7 @@
         "type": "PisakSpellerKey",
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "O",
-	"altgr-text": "Ń"
+	"altgr-text": "Ń",
         "special1-text": "2",
         "special2-text": ":-)",
         "target": "text_box",

@@ -1343,7 +1343,7 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
             self.label.set_text(new_text)
 
 
-class Header(Mx.Image, properties.PropertyAdapter, configurator.Configurable,
+class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable,
              style.StylableContainer):
     """
     Widget for displaying header being a svg icon.
@@ -1367,9 +1367,33 @@ class Header(Mx.Image, properties.PropertyAdapter, configurator.Configurable,
     def __init__(self):
         super().__init__()
         self.svg = None
-        self.color = None
-        self.set_scale_mode(Mx.ImageScaleMode.FIT)
+        self._color = None
+        self._canvas = Clutter.Canvas()
+        self.set_content(self._canvas)
+        self._canvas.set_size(20, 20)
+        self._canvas.connect('draw', self._draw)
+        self._canvas.invalidate()
         self.prepare_style()
+
+    def _draw(self, canvas, context, w, h):
+        if self.svg is None:
+            return
+        if self.color is not None:
+            self.svg.change_color(self.color)
+        handle, pixbuf = self.svg.get_handle(), self.svg.get_pixbuf()
+
+        context.set_operator(cairo.OPERATOR_SOURCE)
+
+        scale_w = w/pixbuf.get_width()
+        scale_h = h/pixbuf.get_height()
+        scale_ratio  = scale_w / scale_h
+        if scale_ratio > 1:
+            scale_w /= scale_ratio
+        elif scale_ratio < 1:
+            scale_h *= scale_ratio
+        context.scale(scale_w, scale_h)
+
+        handle.render_cairo(context)
 
     @property
     def ratio_width(self):
@@ -1426,17 +1450,8 @@ class Header(Mx.Image, properties.PropertyAdapter, configurator.Configurable,
             _LOG.warning(message)
 
     def _load(self):
-        if self.svg is None:
-            return
-        if self.color is not None:
-            self.svg.change_color(self.color)
-        self.svg.change_size(self.get_width(), self.get_height())
-        pixbuf = self.svg.get_pixbuf()
-        self.set_from_data(pixbuf.get_pixels(),
-                           Cogl.PixelFormat.RGBA_8888,
-                           pixbuf.get_width(),
-                           pixbuf.get_height(),
-                           pixbuf.get_rowstride())
+        self._canvas.set_size(self.get_width(), self.get_height())
+        self._canvas.invalidate()
 
 
 class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
@@ -1827,7 +1842,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         if self.svg:
             if self.icon_size:
                 self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
-                self.svg.change_size(self.icon_size, self.icon_size)
             self.set_icon()
 
     def load_icon(self):
@@ -1999,13 +2013,13 @@ class BackgroundPattern(layout.Bin):
         Color of the background pattern.
 
         :param value: color as a string, in a format of comma separated
-        four floatng point values, each corresponding to the normalized
-        amounts of, consecutively, red, green, blue and alpha channels
+        four integer values, each corresponding to the amounts of,
+        consecutively, red, green, blue and alpha channels
         in the resulting color. Given string is then converted to the list
         containing floating point values of the consecutive channels.
         """
         self._rgba = list(map(
-            lambda string: float(string.strip()), value.split(",")))
+            lambda string: float(string.strip())/255, value.split(",")))
         self.background_image.invalidate()
 
     def _draw(self, canvas, context, w, h):
@@ -2078,3 +2092,10 @@ class BackgroundPattern(layout.Bin):
         gradient.add_color_stop_rgba(0.9, *self.rgba)
         context.set_source(gradient)
         context.paint()
+
+class BacgroundFulfillment(Mx.Frame):
+    """
+    This is used only for the possibility to change background in css file.
+    """
+
+    __gtype_name__ = "PisakBackgroundFulfillment"
