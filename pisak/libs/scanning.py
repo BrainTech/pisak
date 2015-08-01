@@ -400,6 +400,11 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
         _LOG.debug("Starting group {}".format(self.get_id()))
 
+        collapsed = get_top_level_group([self])
+        if collapsed is not self:
+            collapsed.start_cycle()
+            return
+
         if self.is_singular() and self._on_singular():
             return
 
@@ -881,13 +886,15 @@ class ArbitraryOrderStrategy(BaseStrategy):
                 self._subgroups.append(unordered[s])
 
 
-def get_toplevel_scanning_group(top_level):
+def get_top_level_group(top_level):
     """
-    Get a top-level scanning group from the given object tree.
+    Get a non-empty top-level scanning group from the given object tree.
+
+    :param top_level: list of the top-level objects from the object tree.
 
     :return: top-level scanning group or None.
     """
-    def get_collapsed(toplevel_group):
+    def get_collapsed(top_level_group):
         """
         Collapse the given top-level scanning group.
         If there is only one non-empty scanning group being
@@ -896,42 +903,55 @@ def get_toplevel_scanning_group(top_level):
         For the definition of a group being empty
         :see: `Group.is_empty`.
 
+        :param top_level_group: scanning group that should get collapsed.
+
         :return: scanning group.
         """
-        def is_empty_branch(top_level):
+        def is_empty_branch(node_list):
             '''
-            Check if the given object tree is empty from the
+            Check if the given branch is empty from the
             scanning point of view, that is whether there are any elements
             that could get scanned.
 
+            :param node_list: list of top-level objects from some object branch.
+
             :return: True or False.
             '''
-            next_level = []
-            for obj in top_level:
-                if (isinstance(obj, Group) and obj.is_flat() and not
-                        obj.is_empty()):
+            nested_nodes = []
+            for node in node_list:
+                if (isinstance(node, Group) and node.is_flat() and not
+                        node.is_empty()):
                     return False
                 else:
-                    next_level.extend(obj.get_children())
-            return is_empty_branch(next_level) if next_level else True
+                    nested_nodes.extend(node.get_children())
+            return is_empty_branch(nested_nodes) if nested_nodes else True
 
-        def find_branches(top_level, all_br):
-            for obj in top_level:
-                if isinstance(obj, Group):
-                    all_br.append(obj)
+        branches = []
+
+        def find_branches(origin_level):
+            """
+            Find all the scanning branches in the object tree, originating
+            from the given top level.
+
+            :param origin_level: list of top-level objects.
+
+            :return: None.
+            """
+            for element in origin_level:
+                if isinstance(element, Group):
+                    branches.append(element)
                 else:
-                    find_branches(obj.get_children(), all_br)
+                    find_branches(element.get_children())
 
         non_empty = None
         non_empty_count = 0
-        branches = []
-        find_branches(toplevel_group.get_children(), branches)
+        find_branches(top_level_group.get_children())
         for branch in branches:
             branch_list = [branch]
             if not is_empty_branch(branch_list):
-                non_empty = get_toplevel_scanning_group(branch_list)
+                non_empty = get_top_level_group(branch_list)
                 non_empty_count += 1
-        return non_empty if non_empty_count == 1 else toplevel_group
+        return non_empty if non_empty_count == 1 else top_level_group
 
     next_level = []
     for obj in top_level:
@@ -940,4 +960,4 @@ def get_toplevel_scanning_group(top_level):
         else:
             next_level.extend(obj.get_children())
     if next_level:
-        return get_toplevel_scanning_group(next_level)
+        return get_top_level_group(next_level)
