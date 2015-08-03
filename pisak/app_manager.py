@@ -171,12 +171,11 @@ class AppManager(Clutter.Actor,
             worker.start()
 
     def _do_run_app(self, app_exec):
-        cmd = ["python3", app_exec] + sys.argv[1:] + ["--child"]
+        cmd = [app_exec] + sys.argv[1:] + ["--child"]
         self.current_app = subprocess.Popen(cmd)
         self.current_app.wait()
         Clutter.threads_add_idle(0, self.maximize_panel, None)
         self.current_app = None
 
     def _get_exec_path(self, module_name):
-        return importlib.import_module(".".join(["pisak.apps",
-                                                 module_name])).EXEC_PATH
+        return 'pisak-' + str(module_name)
