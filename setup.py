@@ -2,9 +2,11 @@
 
 from setuptools import setup, find_packages
 
+VERSION = '1.0'
+
 setup(
-    name = 'PISAK',
-    version = '1.0',
+    name = 'pisak',
+    version = VERSION
     description = 'Polish Integrational System for Alternative Communication',
     long_description = '''PISAK is a programme for people with severe 
     problems of muscle control. It lets them operate various applications
@@ -16,6 +18,7 @@ setup(
     conventional mouse.''',
     author = 'doc.pisak.org/authors.html',
     author_email = 'contact@pisak.org',
+    keywords = 'aac disability communication assistive control computer',
     url = 'http://pisak.org/',
     packages = find_packages() 
     classifiers = [
@@ -24,10 +27,12 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
         'Operating System :: POSIX :: Linux',
-        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
         'Topic :: Communications',
     ],
     scripts = ['bin/pisak', 'bin/pisak-audio', 'bin/pisak-blog',
                'bin/pisak-email', 'bin/pisak-movie', 'bin/pisak-paint',
-               'bin/pisak-speller', 'bin/pisak-symboler', 'bin/pisak-viewer']
+               'bin/pisak-speller', 'bin/pisak-symboler', 'bin/pisak-viewer'],
+    zip_safe = False,
+    include_package_data = True
 )
