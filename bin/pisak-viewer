@@ -4,12 +4,11 @@
 Module with app-specific code for photo viewer.
 '''
 import pisak
-from pisak import app_manager
-from pisak.libs import handlers
-from pisak.libs.viewer import model
+from pisak import app_manager, handlers
+from pisak.viewer import model
 
-from pisak.libs.viewer import widgets  # @UnusedImport
-import pisak.libs.viewer.handlers  # @UnusedImport
+from pisak.viewer import widgets  # @UnusedImport
+import pisak.viewer.handlers  # @UnusedImport
 
 
 def prepare_photo_view(app, window, script, data):

@@ -4,10 +4,9 @@
 Paint application main module
 """
 import pisak
-from pisak import app_manager
-from pisak.libs import widgets
-import pisak.libs.paint.widgets  # @UnusedImport
-from pisak.libs.paint import handlers # @UnusedImport
+from pisak import app_manager, widgets
+import pisak.paint.widgets  # @UnusedImport
+from pisak.paint import handlers # @UnusedImport
 
 
 def prepare_paint_main_view(app, window, script, data):

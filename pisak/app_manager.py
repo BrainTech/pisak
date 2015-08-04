@@ -14,8 +14,8 @@ import traceback
 from gi.repository import GObject, Clutter, Mx
 
 import pisak
-from pisak import application, logger
-from pisak.libs import configurator, properties, widgets, arg_parser, inputs
+from pisak import application, logger, configurator, properties,\
+    widgets, arg_parser, inputs
 
 _LOG = logger.get_logger(__name__)
 

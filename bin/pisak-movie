@@ -7,9 +7,9 @@ from gi.repository import ClutterGst
 
 import pisak
 from pisak import app_manager
-from pisak.libs import handlers
-from pisak.libs.movie import widgets, model
-import pisak.libs.movie.handlers  # @UnusedImport
+from pisak import handlers
+from pisak.movie import widgets, model
+import pisak.movie.handlers  # @UnusedImport
 
 
 def prepare_flat_view(app, window, script, data):

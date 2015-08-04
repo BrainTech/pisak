@@ -5,11 +5,10 @@
 import sys
 
 import pisak
-from pisak import app_manager, res
-from pisak.libs import handlers
+from pisak import app_manager, res, handlers
 
-from pisak.libs.speller import widgets  # @UnusedImport
-import pisak.libs.speller.handlers  # @UnusedImport
+from pisak.speller import widgets  # @UnusedImport
+import pisak.speller.handlers  # @UnusedImport
 
 
 def prepare_main_view(app, window, script, data):

@@ -6,11 +6,11 @@ import os
 from gi.repository import Clutter, Mx
 
 from pisak import exceptions
-from pisak.libs import signals, configurator, dirs, inputs
+from pisak import signals, configurator, dirs, inputs
 
-import pisak.libs.layout  # @UnusedImport
-import pisak.libs.widgets  # @UnusedImport
-import pisak.libs.handlers  # @UnusedImport
+import pisak.layout  # @UnusedImport
+import pisak.widgets  # @UnusedImport
+import pisak.handlers  # @UnusedImport
 
 
 def prepare_popup_view(app, window, script, data):

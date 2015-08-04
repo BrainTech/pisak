@@ -9,18 +9,18 @@ from gi.repository import GtkClutter, Clutter
 
 import pisak
 from pisak import app_manager
-from pisak.libs import handlers
-from pisak.libs.blog import widgets, wordpress, config, html_parsers, rest_client
+from pisak import handlers
+from pisak.blog import widgets, wordpress, config, html_parsers, rest_client
 
-from pisak.libs.viewer import model as viewer_model
+from pisak.viewer import model as viewer_model
 
-import pisak.libs.layout  # @UnusedImport
-import pisak.libs.speller.widgets  # @UnusedImport
-import pisak.libs.speller.handlers  # @UnusedImport
-import pisak.libs.viewer.widgets  # @UnusedImport
-import pisak.libs.viewer.handlers  # @UnusedImport
-import pisak.libs.blog.widgets  # @UnusedImport
-import pisak.libs.blog.handlers  # @UnusedImport
+import pisak.layout  # @UnusedImport
+import pisak.speller.widgets  # @UnusedImport
+import pisak.speller.handlers  # @UnusedImport
+import pisak.viewer.widgets  # @UnusedImport
+import pisak.viewer.handlers  # @UnusedImport
+import pisak.blog.widgets  # @UnusedImport
+import pisak.blog.handlers  # @UnusedImport
 
 
 def prepare_main_view(app, window, script, data):

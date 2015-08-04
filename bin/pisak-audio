@@ -7,11 +7,11 @@ from gi.repository import ClutterGst
 
 import pisak
 from pisak import app_manager
-from pisak.libs import handlers
-from pisak.libs.audio import data_loader
+from pisak import handlers
+from pisak.audio import data_loader
 
-import pisak.libs.audio.handlers  # @UnusedImport
-from pisak.libs.audio import widgets  # @UnusedImport
+import pisak.audio.handlers  # @UnusedImport
+from pisak.audio import widgets  # @UnusedImport
 
 
 def prepare_folders_view(app, window, script, data):

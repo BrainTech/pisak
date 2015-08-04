@@ -8,36 +8,20 @@ import textwrap
 from gi.repository import GObject
 
 import pisak
-from pisak import app_manager, res, logger, exceptions
-from pisak.libs import handlers
-from pisak.libs.viewer import model
-from pisak.libs.email import address_book, message, imap_client, config
+from pisak import app_manager, res, logger, exceptions, handlers
+from pisak.viewer import model
+from pisak.email import address_book, message, imap_client, config, widgets
 
-from pisak.libs.email import widgets  # @UnusedImort
-import pisak.libs.email.handlers  # @UnusedImport
-import pisak.libs.speller.handlers  # @UnusedImport
-import pisak.libs.speller.widgets  # @UnusedImport
-import pisak.libs.viewer.widgets  # @UnusedImport
+import pisak.email.handlers  # @UnusedImport
+import pisak.speller.handlers  # @UnusedImport
+import pisak.speller.widgets  # @UnusedImport
+import pisak.viewer.widgets  # @UnusedImport
 
 
 _LOG = logger.get_logger(__name__)
 
 
-MESSAGES = {
-    "no_internet": "Brak połączenia z internetem.\nSprawdź "
-                   "łącze i spróbuj ponownie",
-    "login_fail": "Błąd podczas logowania. Sprawdź swoje ustawienia\n"
-                    "skrzynki i spróbuj ponownie.",
-    "empty_mailbox": "Brak wiadomości w skrzynce.",
-    "invalid_sent_box_name": "Nieprawidłowa nazwa skrzynki wysłanych.",
-    "invalid_email_address": "Podałeś błędny adres email.\n"
-                "Adres powinien zawierać znak @ i kropkę w nazwie domeny.\n"
-                "Na przykład:     JanKowalski@gmail.com",
-    "message_send_fail": "Wysyłanie wiadomości nie powiodło się.\n"
-                    "Sprawdź połączenie z internetem i spróbuj ponownie.",
-    "invalid_credentials": "Nieprawidłowa nazwa użytkownika lub hasło.",
-    "unknown": "Wystąpił błąd. Spróbuj ponownie."
-}
+MESSAGES = widgets.ERROR_MESSAGES
 
 
 ELEMENTS = {

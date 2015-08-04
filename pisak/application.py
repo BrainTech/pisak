@@ -6,8 +6,8 @@ import sys
 from gi.repository import Gtk, GObject, Clutter, Mx, ClutterGst, GtkClutter
 
 import pisak
-from pisak import res, logger, sound_effects, window
-from pisak.libs import configurator, dirs, unit, arg_parser
+from pisak import res, logger, sound_effects, window, configurator, \
+    dirs, unit, arg_parser
 
 
 _LOG = logger.get_logger(__name__)
