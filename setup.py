@@ -16,11 +16,12 @@ setup(
     according to above description.
     Applications in PISAK can be also operated using an eyetracker or a
     conventional mouse.''',
-    author = 'doc.pisak.org/authors.html',
-    author_email = 'contact@pisak.org',
+    author = 'Aleksander Kijek',
+    author_email = 'sasza@braintech.pl',
     keywords = 'aac disability communication assistive control computer',
     url = 'http://pisak.org/',
     packages = find_packages(),
+    license = 'GPLv3',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Environment :: X11 Applications',

@@ -1,5 +1,5 @@
-pisak (1.0-1) UNRELEASED; urgency=medium
+pisak (1.0-1) unstable; urgency=low
 
-  * Initial release. (Closes: #XXXXXX)
+  * source package automatically created by stdeb 0.8.2
 
- -- Aleksander Kijek <sasza@braintech.pl>  Tue, 04 Aug 2015 17:38:43 +0200
+ -- Aleksander Kijek <sasza@braintech.pl>  Tue, 04 Aug 2015 22:39:22 +0200
