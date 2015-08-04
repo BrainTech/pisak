@@ -6,7 +6,14 @@ setup(
     name = 'PISAK',
     version = '1.0',
     description = 'Polish Integrational System for Alternative Communication',
-    long_description = ''
+    long_description = '''PISAK is a programme for people with severe 
+    problems of muscle control. It lets them operate various applications
+    (speller, email, blog, audio, video, etc.- see the site for the full list)
+    using only one signal which might be send through a switch, puff, EMG. 
+    PISAK is also a library which helps to write applications that work 
+    according to above description.
+    Applications in PISAK can be also operated using an eyetracker or a
+    conventional mouse.''',
     author = 'doc.pisak.org/authors.html',
     author_email = 'contact@pisak.org',
     url = 'http://pisak.org/',
