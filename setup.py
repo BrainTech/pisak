@@ -6,7 +6,7 @@ VERSION = '1.0'
 
 setup(
     name = 'pisak',
-    version = VERSION
+    version = VERSION,
     description = 'Polish Integrational System for Alternative Communication',
     long_description = '''PISAK is a programme for people with severe 
     problems of muscle control. It lets them operate various applications
@@ -20,7 +20,7 @@ setup(
     author_email = 'contact@pisak.org',
     keywords = 'aac disability communication assistive control computer',
     url = 'http://pisak.org/',
-    packages = find_packages() 
+    packages = find_packages(),
     classifiers = [
         'Development Status :: 5 - Production/Stable',
         'Environment :: X11 Applications',
@@ -34,5 +34,7 @@ setup(
                'bin/pisak-email', 'bin/pisak-movie', 'bin/pisak-paint',
                'bin/pisak-speller', 'bin/pisak-symboler', 'bin/pisak-viewer'],
     zip_safe = False,
-    include_package_data = True
+    include_package_data = True,
+    install_requires = ['pressagio', 'pydenticon', 'ezodf',
+                        'python-wordpress-xmlrpc']
 )
