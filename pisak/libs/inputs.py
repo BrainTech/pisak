@@ -1,12 +1,14 @@
 import subprocess
 import time
 import os
+import threading
 
 import pisak
 from pisak import logger, exceptions
 from pisak.libs import cursor, scanning, handlers, dirs, tracker
 
-from gi.repository import Gdk
+from gi.repository import Gdk, GObject
+import usb.core
 
 
 _LOG = logger.get_logger(__name__)
@@ -101,6 +103,14 @@ INPUTS = {
             "activator": "InputGroup.launch_sprite",
             "deactivator": "InputGroup.stop_sprite"
         }
+    },
+    "pisak-switch": {
+        "process": None,
+        "middleware": {
+            "name": "scanning",
+            "activator": "InputGroup.launch_scanning_pisak_switch",
+            "deactivator": "InputGroup.stop_scanning"
+        }
     }
 }
 
@@ -125,6 +135,7 @@ class InputGroup(object):
         self.activator = None
         self.deactivator = None
         self.middleware = None
+        self.switch_listener = None
         try:
             self.react_on = pisak.config["scanning"].get("react_on") or "release"
         except KeyError:
@@ -135,6 +146,8 @@ class InputGroup(object):
         self.scanning_handler = None
         self.input_mode = pisak.config.get("input")
         input_spec = INPUTS.get(self.input_mode)
+        if self.input_mode == 'pisak-switch':
+            self.switch_listener = PisakSwitchListener()
         if "middleware" in input_spec.keys():
             middleware_spec = input_spec.get("middleware")
             if middleware_spec is None:
@@ -204,6 +217,18 @@ class InputGroup(object):
         self.scanning_handler = scanning.Group.button_release
         self.launch_scanning()
 
+    def launch_scanning_pisak_switch(self):
+        """
+        Decorated with 'launch_scanning' function launches scanning and
+        connects handler to the proper signal.
+
+        :returns: id of the handler connected to the key release signal
+        """
+        self.stage.hide_cursor()
+        self.action_signal = "pisak-switch"
+        self.scanning_handler = scanning.Group.button_release
+        self.launch_scanning()
+
     def get_scanning_desc(self, scanning_group):
         """
         Get description of things necessary for activating the scanning group.
@@ -212,6 +237,8 @@ class InputGroup(object):
         """
         if "key" in self.action_signal:
             signal_source = scanning_group
+        elif "pisak-switch" == self.action_signal:
+            signal_source = self.switch_listener
         else:
             signal_source = self.stage
         return self.action_signal, self.scanning_handler, signal_source
@@ -286,6 +313,63 @@ class InputGroup(object):
             _LOG.debug("No deactivator specified for the input group "
                        "with input {}.".format(self.input_mode))
 
+class PisakSwitchListener(GObject.GObject):
+
+    __gsignals__ = {
+        "pisak-switch": (
+            GObject.SIGNAL_RUN_FIRST, None, ())
+    }
+
+    def __init__(self):
+        super().__init__()
+        self.endpoint = None
+        self.device = None
+        self.signal_size = 8
+        self._communication_init()
+        _LOG.debug("Communication with pisak-switch is initialized.")
+        self._worker = threading.Thread(target=self._start_loop, daemon=True)
+
+    def _communication_init(self):
+        """
+        Initialize communication with pisak-switch device. If kernel driver
+        started to connect with the device, detach it. Writes info data
+        about device in self.device and self.endpoint
+        """
+        for dev in usb.core.find(find_all=True, bDeviceClass=3):
+            if (dev.manufacturer == "pisak.org"
+                   and dev.product == "pisak-switch"):
+                self.device = dev
+        if self.device is None:
+            msg = "Cannot connect with pisak-switch."
+            _LOG.error(msg, pisak.config)
+        dev_configuration = self.device.get_active_configuration()
+        dev_interface = dev_configuration[(0, 0)]
+        if self.device.is_kernel_driver_active(dev_interface.bInterfaceNumber):
+            self.device.detach_kernel_driver(dev_interface.bInterfaceNumber)
+        self.endpoint = usb.util.find_descriptor(dev_interface)
+        if self.endpoint is None:
+            msg = "Cannot find endpoint."
+            _LOG.error(msg, pisak.config)
+
+    def get_signal(self):
+        """
+        :return: Read data from defined endpoint.
+        """
+        return self.device.read(self.endpoint.bEndpointAddress,
+                                self.signal_size)[0]
+
+    def _start_loop(self):
+        """
+        Wait for rising slope and send signal when occurs
+        """
+        previous_state = self.get_signal()
+        while True:
+            current_state = self.get_signal()
+            if current_state > previous_state:
+                print("Click")
+                self.emit("pisak-switch")
+            previous_state = current_state
+            time.sleep(0.01)
 
 def _wait_on_eviacam_startup(process):
     while True:
@@ -293,7 +377,6 @@ def _wait_on_eviacam_startup(process):
         if "Eviacam is ready to go." in str(out):
             break
         time.sleep(0.1)
-
 
 def run_input_process():
     """
