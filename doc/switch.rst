@@ -41,6 +41,6 @@ Now, you are able to upload the .hex files to the Nanite.
 
 Pisak-switch
 ------------
-Visit https://github.com/BrainTech/pisak-switch to find a project (it's not ready yet - TODO).
+Visit https://github.com/BrainTech/pisak-switch to find a project with ready to use firmware.
 If you want to write your own firmware, check at least configuration in
 ``usbdrv/usbconfig.h``, without it the communication between the PC and the Nanite is impossible.

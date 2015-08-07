@@ -383,7 +383,6 @@ class PisakSwitchListener(GObject.GObject):
         while self.running:
             current_state = self.get_signal()
             if current_state > previous_state:
-                print("Click")
                 self.emit("pisak-switch")
             previous_state = current_state
             time.sleep(0.01)
