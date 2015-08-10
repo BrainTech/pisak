@@ -344,14 +344,16 @@ class PisakSwitchListener(GObject.GObject):
     def _communication_init(self):
         """
         Initialize communication with pisak-switch device. If kernel driver
-        connected with the device, detach it. Writes data about device in
+        has connected with the device, detach it. Writes data about device in
         self.device and self.endpoint.
         """
+        usb_manufacturer = "pisak.org"
+        usb_product = "pisak-switch"
         while self.device is None:
             for dev in usb.core.find(find_all=True, bDeviceClass=3):
                 try:
-                    if (dev.manufacturer == "pisak.org"
-                            and dev.product == "pisak-switch"):
+                    if (dev.manufacturer == usb_manufacturer
+                            and dev.product == usb_product):
                         self.device = dev
                         _LOG.debug("Connected with pisak-switch.")
                 except usb.core.USBError:
