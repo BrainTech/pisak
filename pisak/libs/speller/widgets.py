@@ -416,7 +416,10 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         if current_text:
             # if the text buffer ends in a commas, add a space before
             # adding the predicted word
-            if current_text[-1] in ['.', ',', ';', '?', '!', '(', ')', ':', '"']:
+            #exception are non-letter characters that reset the context
+            
+            exceptions = '''1 2 3 4 5 6 7 8 9 0 . , ; ? ! : ' " - = + _ ( ) [ ] < > / \ | & @ % *''' 
+            if current_text[-1] in exceptions.split():
                 self.type_text(' ' + text_after)
             elif current_text[-1] == ' ':
                 self.type_text(text_after)
@@ -734,7 +737,7 @@ class Dictionary(text_tools.Predictor):
 
     LAST_CONTEXT_SRC = """
        \s*  # greedy leading whitespace
-       ([A-Zążźćśłóęń]*?\s?)  # group of symbols which restart context
+       ([A-Zążźćśłóęń]*\s*[A-Zążźćśłóęń]*\s*[A-Zążźćśłóęń]*\s*)  # a series of none to three words
        \s*  # greedy trailing whitespace
        $  # end of text
        """
@@ -742,9 +745,16 @@ class Dictionary(text_tools.Predictor):
 
     def __init__(self):
         super().__init__()
-        self.basic_content = ['Chciałbym', 'Czy', 'Jak', 'Jestem',
-                              'Nie', 'Niestety', 'Rzeczywiście',
-                              'Super', 'Witam']  # this is subject to change, perhaps should be a class argument
+        self.automatic_space = True #subject to modification
+        if self.automatic_space:
+                self.basic_content = ['Chciałbym ', 'Czy ', 'Jak ', 'Jestem ',
+                                      'Nie ', 'Niestety ', 'Rzeczywiście ',
+                                      'Super ', 'Witam ']  # this is subject to change, perhaps should be a class argument
+        else:        
+                self.basic_content = ['Chciałbym', 'Czy', 'Jak', 'Jestem',
+                                      'Nie', 'Niestety', 'Rzeczywiście',
+                                      'Super', 'Witam']  # this is subject to change, perhaps should be a class argument
+
         self.apply_props()
 
     def do_prediction(self, text, position):
@@ -754,8 +764,9 @@ class Dictionary(text_tools.Predictor):
             self.content = self.basic_content
         else:
             self.content = predictor.get_predictions(context)
-        if len(self.content) == 1:
-            self.content[0] += ' '  # automatic space if only one suggestion
+            if self.automatic_space:
+                for i in range(len(self.content)):
+                    self.content[i] += ' '  # automatic space if enabled (default ON)
         self.notify_content_update()
 
     @staticmethod
