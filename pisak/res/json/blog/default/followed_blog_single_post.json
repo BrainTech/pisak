@@ -13,15 +13,6 @@
         "y-expand": true
     },
     {
-        "id": "main_box_group",
-        "type": "PisakScanningGroup",
-        "children": ["main_box"],
-        "scanning-hilite": true,
-        "strategy": {
-            "type": "PisakRowStrategy"
-        }
-    },
-    {
         "id": "main_box",
         "type": "PisakBoxLayout",
         "x-align": "center",
