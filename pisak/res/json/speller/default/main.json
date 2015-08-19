@@ -204,7 +204,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-	"sound": "speller_sounds/czytaj.wav",
+	"sound": "speller_sounds/przeczytaj.wav",
         "icon-size": 50,
         "label": "CZYTAJ",
         "icon-name": "przeczytaj",
