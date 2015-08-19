@@ -49,23 +49,12 @@ else
     echo "PYTHONPATH was not extended."
 fi
 
-echo "Do you want to add a shell script to ~/bin/ for easy PISAK launching?"
+echo "Do you want to extend you PATH var for easy PISAK launching?"
 read answer2
 if [[ ${answer2} = "Y" || ${answer2} = "y" ]]; then
-    if [ -d ~/bin ]; then
-        echo "Directory ~/bin exists." 
-    else
-        mkdir ~/bin
-    fi
-    echo "#!/bin/bash" > ~/bin/pisak
-    echo "cd ~/pisak" >> ~/bin/pisak
-    echo "python3 pisak/pisak_main.py \"\$@\"" >> ~/bin/pisak
-    chmod +x ~/bin/pisak
-    echo "pisak has been established in ~/bin/."
-    echo "" >> ~/.bashrc
-    echo "export PATH=\$PATH:.:~/bin" >> ~/.bashrc
+    echo "export PATH=\$PATH:.:~/pisak/bin" >> ~/.bashrc
     echo "You can run PISAK by typing 'pisak' in terminal after logging out and logging in."
     exit
 else
-    echo "You can start PISAK by going to PISAK's main dir and issuing the command 'python3 pisak/pisak_main.py'."
+    echo "Launch scripts are in pisak/bin directory, remember to add it to your PATH variable to be able to have the apps work from the main window."
 fi
