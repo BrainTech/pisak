@@ -6,10 +6,21 @@ from pisak import logger
 
 _LOG = logger.get_logger(__name__)
 
-class SoundEffectsPlayer:
-    def __init__(self, sounds_list):
-        Gst.init()
+Gst.init()
 
+class Sound(object):
+    def __init__(self, path):
+        super().__init__()
+        self._playbin = Gst.ElementFactory.make('playbin')
+        self._playbin.set_property('uri', 'file://' + str(path))
+
+    def play(self):
+        self._playbin.set_state(Gst.State.READY)
+        self._playbin.set_state(Gst.State.PLAYING)
+    
+class SoundEffectsPlayer(object):
+    def __init__(self, sounds_list):
+        super().__init__()
         self.sounds = {}
 
         CHANNELS_PER_FILE = 1
@@ -29,16 +40,13 @@ class SoundEffectsPlayer:
             # volumes[sound_name] = volume
             vec = []
             for i in range(CHANNELS_PER_FILE):
-                playbin = Gst.ElementFactory.make('playbin')
-                playbin.set_property('uri', 'file://' + config['file_name'])
-                vec.append(playbin)
+                vec.append(Sound(config['file_name']))
             self.sounds[sound_name] = tuple(vec)
             # print('xxx: ' + str(self.sounds))
 
     def play(self, sound_name):
         if sound_name in self.sounds:
-            self.sounds[sound_name][0].set_state(Gst.State.READY)
-            self.sounds[sound_name][0].set_state(Gst.State.PLAYING)
+            self.sounds[sound_name][0].play()
         else:
             _LOG.warning('Sound not found.')
 
