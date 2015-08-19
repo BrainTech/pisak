@@ -11,7 +11,7 @@ from gi.repository import Clutter, Mx, GObject, Rsvg, Cogl, GdkPixbuf, Pango
 
 import pisak
 from pisak import res, logger, unit, properties, scanning, configurator, \
-    utils, media, style, layout, svg
+    utils, media, style, layout, svg, sound_effects
 from pisak.res import colors
 
 _LOG = logger.get_logger(__name__)
