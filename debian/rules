@@ -5,3 +5,5 @@
 export PYBUILD_NAME=pisak
 %:
 	dh $@ --with python3 --buildsystem=pybuild
+
+sudo pip3 install pydenticon ezodf pressagio python-wordpress-xmlrpc
