@@ -1,13 +1,26 @@
 """
 Sound effects player.
 """
-from gi.repository import ClutterGst
+from gi.repository import Gst
+from pisak import logger
 
+_LOG = logger.get_logger(__name__)
 
-class SoundEffectsPlayerNative:
+Gst.init()
+
+class Sound(object):
+    def __init__(self, path):
+        super().__init__()
+        self._playbin = Gst.ElementFactory.make('playbin')
+        self._playbin.set_property('uri', 'file://' + str(path))
+
+    def play(self):
+        self._playbin.set_state(Gst.State.READY)
+        self._playbin.set_state(Gst.State.PLAYING)
+    
+class SoundEffectsPlayer(object):
     def __init__(self, sounds_list):
-        ClutterGst.init()
-
+        super().__init__()
         self.sounds = {}
 
         CHANNELS_PER_FILE = 1
@@ -27,24 +40,18 @@ class SoundEffectsPlayerNative:
             # volumes[sound_name] = volume
             vec = []
             for i in range(CHANNELS_PER_FILE):
-                s = ClutterGst.VideoTexture()
-                s.set_filename(config['file_name'])
-                s.set_buffering_mode(ClutterGst.BufferingMode.DOWNLOAD)  # DOWNLOAD
-                vec.append(s)
+                vec.append(Sound(config['file_name']))
             self.sounds[sound_name] = tuple(vec)
             # print('xxx: ' + str(self.sounds))
 
     def play(self, sound_name):
         if sound_name in self.sounds:
-            self.sounds[sound_name][0].set_playing(True)
+            self.sounds[sound_name][0].play()
         else:
-            print('sound not found')
+            _LOG.warning('Sound not found.')
 
     def set_volume(self, volume):
         pass
 
     def shutdown(self):
         pass
-
-
-SoundEffectsPlayer = SoundEffectsPlayerNative

@@ -206,6 +206,7 @@ class _GroupObserver(object):
         """
         Removes handlers recursively.
         """
+
         if actor not in self._observed:
             _LOG.debug("double unobserve: " + str(actor.get_id()))
         else:
@@ -279,7 +280,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.user_action_handler = None
         self.input_handler_token = None
         super().__init__()
-        self.observer = None
+        self.observer = _GroupObserver(self)
         self.set_layout_manager(Clutter.BinLayout())
         self.apply_props()
 
@@ -376,7 +377,6 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         False.
         """
         _LOG.debug("Starting group {}".format(self.get_id()))
-        self.observer = _GroupObserver(self)
         if not self.get_property("mapped"):
             self.connect('notify::mapped', lambda *_: self.start_cycle())
             message = \
@@ -384,8 +384,6 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             _LOG.warning(message)
             # TODO: do something wise here
             return
-
-        _LOG.debug("Starting group {}".format(self.get_id()))
 
         if self.is_singular() and self._on_singular():
             return
@@ -724,8 +722,12 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                 self.index = 0
 
         if self.index is not None and self.index < len(self._subgroups):
-            self._play_scanning_sound()
             selection = self._subgroups[self.index]
+            if pisak.config.as_bool("read_button") and \
+               isinstance(selection, pisak.libs.widgets.Button):
+                selection.sound.play()
+            else:
+                self._play_scanning_sound()
             if hasattr(selection, "enable_hilite"):
                 selection.enable_hilite()
             elif isinstance(selection, Group):

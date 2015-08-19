@@ -4,6 +4,7 @@ Module contains all kinds of widgets to be used by any Pisak application.
 import math
 import random
 import time
+import os
 
 import cairo
 from gi.repository import Clutter, Mx, GObject, Rsvg, Cogl, GdkPixbuf, Pango
@@ -709,7 +710,7 @@ class HiliteTool(Clutter.Actor):
     Stylable. Scannable widget should add HiliteTool instance as a descendant
     and call its methods to change highlight state.
 
-    :see: :class:`pisak.widgets.Aperture`
+    :see: :class:`pisak.libs.widgets.Aperture`
     """
 
     def turn_on(self):
@@ -1482,6 +1483,11 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             "alternative label text",
             "alternative text displayed on the button",
             "?", GObject.PARAM_READWRITE),
+        "sound": (
+            GObject.TYPE_STRING,
+            "filepath relative to config dir",
+            "relative to the config dir path to the sound file that describes it's function",
+            "scan.wav", GObject.PARAM_READWRITE),
         "icon_name": (
             GObject.TYPE_STRING, "blank",
             "name of the icon displayed on the button",
@@ -1530,6 +1536,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self.current_icon_name = None
         self.toggled_icon_name = None
         self.space = None
+        self.sound = 'scan.wav'
         self._padding = None
         self.custom_padding = None
         self.svg = None
@@ -1649,6 +1656,19 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     def alternative_text(self, value):
         self._alternative_text = str(value)
 
+    @property
+    def sound(self):
+        """
+        Relative path to the sound file that 
+        describes the function of the button.
+        """
+        return self._sound
+
+    @sound.setter
+    def sound(self, value):
+        self._sound = sound_effects.Sound(os.path.join(res.get('sounds'),
+                                                       str(value)))
+        
     @property
     def current_icon_name(self):
         """

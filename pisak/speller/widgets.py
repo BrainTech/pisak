@@ -740,9 +740,7 @@ class Dictionary(text_tools.Predictor):
 
     def __init__(self):
         super().__init__()
-        self.basic_content = ['Chciałbym', 'Czy', 'Jak', 'Jestem',
-                              'Nie', 'Niestety', 'Rzeczywiście',
-                              'Super', 'Witam']  # this is subject to change, perhaps should be a class argument
+        self.basic_content = pisak.config['prediction_words']
         self.apply_props()
 
     def do_prediction(self, text, position):
