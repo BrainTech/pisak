@@ -191,6 +191,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             self.pos = pos
             self.before = before
             self.after = after
+
             assert pos >= 0, "Invalid position"
 
         def _replace(self, text, before, after):
@@ -220,6 +221,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self._scroll_step = 50
         self._init_text()
         self.prepare_style()
+        self.automatic_space = True # the default
 
     def _init_text(self):
         self.box = Mx.BoxLayout()
@@ -410,6 +412,11 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
         :param text_after: string passed after a user's action
         """
+        if self.automatic_space:
+                text_after = text_after + ' '
+        #automatically add whitespace after predicted word
+        #this is the default in most prediction software 
+
         current_text = self.get_text()
         # if the text buffer is empty, or ends with whitespace, simply
         # add predicted words. Otherwise, replace the last word.
@@ -745,16 +752,9 @@ class Dictionary(text_tools.Predictor):
 
     def __init__(self):
         super().__init__()
-        self.automatic_space = True #subject to modification
-        if self.automatic_space:
-                self.basic_content = ['Chciałbym ', 'Czy ', 'Jak ', 'Jestem ',
-                                      'Nie ', 'Niestety ', 'Rzeczywiście ',
-                                      'Super ', 'Witam ']  # this is subject to change, perhaps should be a class argument
-        else:        
-                self.basic_content = ['Chciałbym', 'Czy', 'Jak', 'Jestem',
-                                      'Nie', 'Niestety', 'Rzeczywiście',
-                                      'Super', 'Witam']  # this is subject to change, perhaps should be a class argument
-
+        self.basic_content = ['Chciałbym ', 'Czy ', 'Jak ', 'Jestem ',
+                              'Nie ', 'Niestety ', 'Rzeczywiście ',
+                              'Super ', 'Witam ']  # this is subject to change, perhaps should be a class argument
         self.apply_props()
 
     def do_prediction(self, text, position):
@@ -764,9 +764,6 @@ class Dictionary(text_tools.Predictor):
             self.content = self.basic_content
         else:
             self.content = predictor.get_predictions(context)
-            if self.automatic_space:
-                for i in range(len(self.content)):
-                    self.content[i] += ' '  # automatic space if enabled (default ON)
         self.notify_content_update()
 
     @staticmethod
