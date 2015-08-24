@@ -1,7 +1,7 @@
 """
 Basic classes for Pisak application.
 """
-import sys
+import sys, os
 
 from gi.repository import Gtk, GObject, Clutter, Mx, ClutterGst, GtkClutter
 
@@ -86,7 +86,7 @@ class _Application(configurator.Configurable):
         self.sound_effects_volume = self.config.as_float("sound_effects_volume")
         self.style = dirs.get_css_path(self.config.get("skin"))
         for k, v in self.config.get("sound_effects").items():
-            self._sound_effects[k] = res.get(v)
+            self._sound_effects[k] = os.path.join(res.get('sounds'), v)
 
     def _initialize_style(self):
         try:
