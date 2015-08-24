@@ -724,8 +724,9 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
             if pisak.config.as_bool("read_button") and \
-               isinstance(selection, pisak.widgets.Button):
-                selection.sound.play()
+               isinstance(selection, pisak.widgets.Button) and \
+               selection.get_label() in selection.sounds.keys():
+                selection.sounds[selection.get_label()].play()
             else:
                 self._play_scanning_sound()
             if hasattr(selection, "enable_hilite"):

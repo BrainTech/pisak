@@ -559,6 +559,7 @@ class ButtonMenu(layout.Box, configurator.Configurable):
                     button.set_x_align(Clutter.ActorAlign.START)
                     button.set_style_class(desc["style_class"])
                     button.icon_size = desc["icon_size"]
+                    button.text = desc["label"]
                     button.set_label(desc["label"])
                     button.icon_name = desc["icon_name"]
                     button.connect("clicked", self.button_source.run_app, desc["exec_path"])
@@ -1483,11 +1484,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             "alternative label text",
             "alternative text displayed on the button",
             "?", GObject.PARAM_READWRITE),
-        "sound": (
-            GObject.TYPE_STRING,
-            "filepath relative to config dir",
-            "relative to the config dir path to the sound file that describes it's function",
-            "scan.wav", GObject.PARAM_READWRITE),
         "icon_name": (
             GObject.TYPE_STRING, "blank",
             "name of the icon displayed on the button",
@@ -1536,7 +1532,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self.current_icon_name = None
         self.toggled_icon_name = None
         self.space = None
-        self.sound = 'scan.wav'
+        self.sounds = {}
         self._padding = None
         self.custom_padding = None
         self.svg = None
@@ -1641,6 +1637,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @text.setter
     def text(self, value):
         self._text = str(value)
+        self.sounds[self._text] = self.get_sound(self._text)
 
     @property
     def alternative_text(self):
@@ -1655,19 +1652,18 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @alternative_text.setter
     def alternative_text(self, value):
         self._alternative_text = str(value)
-
-    @property
-    def sound(self):
-        """
-        Relative path to the sound file that 
-        describes the function of the button.
-        """
-        return self._sound
-
-    @sound.setter
-    def sound(self, value):
-        self._sound = sound_effects.Sound(os.path.join(res.get('sounds'),
-                                                       str(value)))
+        self.sounds[self._alternative_text] = self.get_sound(
+            self._alternative_text)
+        
+    def get_sound(self, name):
+        fname = name.lower().replace(' ', '_') + '.wav'
+        fpath = os.path.join(res.get('sounds'), fname)
+        if os.path.isfile(fpath):
+            sound = sound_effects.Sound(fpath)
+        else:
+            sound = sound_effects.Sound(os.path.join(res.get('sounds'),
+                                                     'scan.wav'))
+        return sound
         
     @property
     def current_icon_name(self):
