@@ -957,7 +957,7 @@ class PopUp(widgets.DialogWindow):
         row = layout.Box()
         row.spacing = self.spacing
         self.space.add_child(row)
-        button = pisak.libs.widgets.Button()
+        button = pisak.widgets.Button()
         row.add_child(button)
         button.set_style_class("PisakSpellerButton")
         button.ratio_width = self.tile_ratio_width
