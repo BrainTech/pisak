@@ -218,6 +218,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self._scroll_step = 50
         self._init_text()
         self.prepare_style()
+        self.automatic_space = True # the default
 
     def _init_text(self):
         self.box = Mx.BoxLayout()
@@ -408,13 +409,21 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
         :param text_after: string passed after a user's action
         """
+        if self.automatic_space:
+                text_after = text_after + ' '
+        #automatically add whitespace after predicted word
+        #this is the default in most prediction software 
+
         current_text = self.get_text()
         # if the text buffer is empty, or ends with whitespace, simply
         # add predicted words. Otherwise, replace the last word.
         if current_text:
             # if the text buffer ends in a commas, add a space before
             # adding the predicted word
-            if current_text[-1] in ['.', ',', ';', '?', '!', '(', ')', ':', '"']:
+            #exception are non-letter characters that reset the context
+            
+            exceptions = '''1 2 3 4 5 6 7 8 9 0 . , ; ? ! : ' " - = + _ ( ) [ ] < > / \ | & @ % *''' 
+            if current_text[-1] in exceptions.split():
                 self.type_text(' ' + text_after)
             elif current_text[-1] == ' ':
                 self.type_text(text_after)
@@ -736,7 +745,7 @@ class Dictionary(text_tools.Predictor):
 
     LAST_CONTEXT_SRC = """
        \s*  # greedy leading whitespace
-       ([A-Zążźćśłóęń]*?\s?)  # group of symbols which restart context
+       ([A-Zążźćśłóęń]*\s*[A-Zążźćśłóęń]*\s*[A-Zążźćśłóęń]*\s*)  # a series of none to three words
        \s*  # greedy trailing whitespace
        $  # end of text
        """
@@ -754,8 +763,6 @@ class Dictionary(text_tools.Predictor):
             self.content = self.basic_content
         else:
             self.content = predictor.get_predictions(context)
-        if len(self.content) == 1:
-            self.content[0] += ' '  # automatic space if only one suggestion
         self.notify_content_update()
 
     @staticmethod
