@@ -1659,7 +1659,8 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         sound = sound_effects.Sound(os.path.join(res.get('sounds'),
                                                  'scan.wav'))
         if name:
-            fname = name.lower().replace(' ', '_') + '.wav'
+            fname = name.lower()
+            fname = fname.replace(' ', '_').replace('\n', '_') + '.wav'
             fpath = os.path.join(res.get('sounds'), fname)
             if os.path.isfile(fpath):
                 sound = sound_effects.Sound(fpath)
