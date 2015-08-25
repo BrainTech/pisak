@@ -1525,6 +1525,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     def __init__(self):
         super().__init__()
         self.box = None
+        self.sounds = {}
         self._prepare_label()
         self.on_select_hilite_duration = None
         self.related_object = None
@@ -1532,7 +1533,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self.current_icon_name = None
         self.toggled_icon_name = None
         self.space = None
-        self.sounds = {}
         self._padding = None
         self.custom_padding = None
         self.svg = None
@@ -1656,13 +1656,13 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             self._alternative_text)
         
     def get_sound(self, name):
-        fname = name.lower().replace(' ', '_') + '.wav'
-        fpath = os.path.join(res.get('sounds'), fname)
-        if os.path.isfile(fpath):
-            sound = sound_effects.Sound(fpath)
-        else:
-            sound = sound_effects.Sound(os.path.join(res.get('sounds'),
-                                                     'scan.wav'))
+        sound = sound_effects.Sound(os.path.join(res.get('sounds'),
+                                                 'scan.wav'))
+        if name:
+            fname = name.lower().replace(' ', '_') + '.wav'
+            fpath = os.path.join(res.get('sounds'), fname)
+            if os.path.isfile(fpath):
+                sound = sound_effects.Sound(fpath)
         return sound
         
     @property
@@ -1694,6 +1694,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @toggled_icon_name.setter
     def toggled_icon_name(self, value):
         self._toggled_icon_name = value
+        self.sounds[value] = self.get_sound(value)
 
     @property
     def icon_name(self):
@@ -1705,6 +1706,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @icon_name.setter
     def icon_name(self, value):
         self._icon_name = value
+        self.sounds[value] = self.get_sound(value)
         self.current_icon_name = value
 
     @property
