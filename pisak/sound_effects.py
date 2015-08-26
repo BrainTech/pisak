@@ -11,7 +11,7 @@ Gst.init()
 class Sound(object):
     def __init__(self, path):
         super().__init__()
-        self._playbin = Gst.ElementFactory.make('playbin')
+        self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
         self._playbin.set_property('uri', 'file://' + str(path))
 
     def play(self):
