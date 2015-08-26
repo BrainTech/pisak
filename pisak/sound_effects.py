@@ -27,7 +27,7 @@ class Sound(object):
     def on_message(self, bus, message):
         if message.type == Gst.MessageType.EOS:
             self.free_resource()
-        elif message.type = Gst.MessageType.ERROR:
+        elif message.type == Gst.MessageType.ERROR:
             _LOG.warning("An error occured while playing file: ",
                          self._playbin.get_property('uri'))
             self.free_resource()
