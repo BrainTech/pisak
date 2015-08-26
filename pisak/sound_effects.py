@@ -1,7 +1,7 @@
 """
 Sound effects player.
 """
-import gi, time
+import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 from pisak import logger
@@ -33,8 +33,8 @@ class Sound(object):
             self.free_resource()
             
     def free_resource(self):
-        self._playbin.set_state(Gst.State.NULL)
         self._bus.remove_signal_watch()
+        self._playbin.set_state(Gst.State.NULL)
         msg = 'Resources freed from playbin with file: ' +\
               str(self._playbin.get_property('uri'))
         _LOG.debug(msg)
