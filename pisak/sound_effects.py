@@ -1,11 +1,14 @@
 """
 Sound effects player.
 """
-from gi.repository import Gst
+import gi, time
+gi.require_version('Gst', '1.0')
+from gi.repository import GObject, Gst
 from pisak import logger
 
 _LOG = logger.get_logger(__name__)
 
+GObject.threads_init()
 Gst.init()
 
 class Sound(object):
@@ -13,10 +16,23 @@ class Sound(object):
         super().__init__()
         self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
         self._playbin.set_property('uri', 'file://' + str(path))
+        self._bus = self._playbin.get_bus()
+        self._bus.add_signal_watch()
+        self._bus.connect('message', self.on_message)
 
     def play(self):
         self._playbin.set_state(Gst.State.READY)
         self._playbin.set_state(Gst.State.PLAYING)
+
+    def on_message(self, bus, message):
+        if message.type == Gst.MessageType.EOS:
+            self.free_resource()
+        elif message.type = Gst.MessageType.ERROR:
+            _LOG.warning("An error occured while playing file: ",
+                         self._playbin.get_property('uri'))
+            
+    def free_resource(self):
+        self._playbin.set_state(Gst.State.NULL)
     
 class SoundEffectsPlayer(object):
     def __init__(self, sounds_list):
