@@ -17,10 +17,10 @@ class Sound(object):
         self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
         self._playbin.set_property('uri', 'file://' + str(path))
         self._bus = self._playbin.get_bus()
-        self._bus.add_signal_watch()
         self._bus.connect('message', self.on_message)
 
     def play(self):
+        self._bus.add_signal_watch()
         self._playbin.set_state(Gst.State.READY)
         self._playbin.set_state(Gst.State.PLAYING)
 
