@@ -30,6 +30,7 @@ class Sound(object):
         elif message.type = Gst.MessageType.ERROR:
             _LOG.warning("An error occured while playing file: ",
                          self._playbin.get_property('uri'))
+            self.free_resource()
             
     def free_resource(self):
         self._playbin.set_state(Gst.State.NULL)
