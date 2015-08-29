@@ -4,10 +4,10 @@ pisak.audio package
 Submodules
 ----------
 
-pisak.audio.app module
+bin.pisak-audio module
 ----------------------
 
-.. automodule:: pisak.audio.app
+.. automodule:: bin.pisak-audio
     :members:
     :undoc-members:
     :show-inheritance:

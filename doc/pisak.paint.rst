@@ -4,10 +4,10 @@ pisak.paint package
 Submodules
 ----------
 
-pisak.paint.app module
+bin.pisak-paint module
 ----------------------
 
-.. automodule:: pisak.paint.app
+.. automodule:: bin.pisak-paint
     :members:
     :undoc-members:
     :show-inheritance:

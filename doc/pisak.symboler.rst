@@ -4,10 +4,10 @@ pisak.symboler package
 Submodules
 ----------
 
-pisak.symboler.app module
+symboler module
 -------------------------
 
-.. automodule:: pisak.symboler.app
+.. automodule:: bin.pisak-symboler
     :members:
     :undoc-members:
     :show-inheritance:

@@ -4,10 +4,10 @@ pisak.viewer package
 Submodules
 ----------
 
-pisak.viewer.app module
+viewer module
 -----------------------
 
-.. automodule:: pisak.viewer.app
+.. automodule:: bin.pisak-viewer
     :members:
     :undoc-members:
     :show-inheritance:
