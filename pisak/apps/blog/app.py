@@ -262,16 +262,15 @@ def prepare_viewer_about_me_album_view(app, window, script, data):
 
 def prepare_speller_comment_view(app, window, script, data):
     def publish_comment():
-        if data['previous_view'] == 'blog/single_post':
-            blog = wordpress.blog
-            post_id = data['post'].id
-        else:
-            blog = wordpress.Blog(data["blog_url"])
-            post_id = data["post"]["ID"]
-
         text_widget = script.get_object("text_box")
         text = html_parsers.apply_linebreaks(text_widget.get_text())
-        blog.add_comment(post_id, text)
+
+        if data['previous_view'] == 'blog/single_post':
+            own_blog = wordpress.blog
+            own_blog.add_comment(data['post'].id, text)
+        else:
+            followed_blog = wordpress.Blog(data["blog_url"])
+            followed_blog.add_comment(data["post"]["ID"], text)
 
     handlers.button_to_view(window, script, "button_exit")
     handlers.connect_button(script, "button_proceed", publish_comment)
