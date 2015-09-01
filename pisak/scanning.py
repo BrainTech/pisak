@@ -797,7 +797,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
     def _play_selection_sound(self):
         if pisak.app:
-            pisak.app.play_sound_effect('selection')
+            pisak.app.play_selection_sound('selection')
 
 
 class RowStrategy(BaseStrategy):

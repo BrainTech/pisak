@@ -12,14 +12,15 @@ GObject.threads_init()
 Gst.init()
 
 class Sound(object):
-    def __init__(self, path):
+    def __init__(self, path, player):
         super().__init__()
-        self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
-        self._playbin.set_property('uri', 'file://' + str(path))
+        self._path = path
+        self._playbin = player._playbin
         self._bus = self._playbin.get_bus()
         self._bus.connect('message', self.on_message)
 
     def play(self):
+        self._playbin.set_property('uri', 'file://' + str(self._path))
         self._bus.add_signal_watch()
         self._playbin.set_state(Gst.State.READY)
         self._playbin.set_state(Gst.State.PLAYING)
@@ -43,7 +44,7 @@ class SoundEffectsPlayer(object):
     def __init__(self, sounds_list):
         super().__init__()
         self.sounds = {}
-
+        self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
         CHANNELS_PER_FILE = 1
         DEFAULT_CONFIG = {
             'file_name': '',
@@ -61,7 +62,7 @@ class SoundEffectsPlayer(object):
             # volumes[sound_name] = volume
             vec = []
             for i in range(CHANNELS_PER_FILE):
-                vec.append(Sound(config['file_name']))
+                vec.append(Sound(config['file_name'],self))
             self.sounds[sound_name] = tuple(vec)
             # print('xxx: ' + str(self.sounds))
 
