@@ -538,6 +538,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._buttons = []
         self._unwind_to = None
         self.timeout_token = None
+        self.player = pisak.app._sound_effects_player
         self.apply_props()
 
     @property
@@ -726,10 +727,10 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
             if pisak.config.as_bool("read_button") and \
                isinstance(selection, pisak.widgets.Button):
                 if selection.get_label() in selection.sounds.keys():
-                    selection.sounds[selection.get_label()].play()
+                    self.player.play(selection.get_label(),selection.sounds)
                 elif selection.get_label() in [' ', '']:
                     icon_name = selection.current_icon_name
-                    selection.sounds[icon_name].play()
+                    self.player.play(icon_name,selection.sounds)
                 else:
                     self._play_scanning_sound()
             else:
@@ -797,7 +798,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
     def _play_selection_sound(self):
         if pisak.app:
-            pisak.app.play_selection_sound('selection')
+            pisak.app.play_sound_effect('selection')
 
 
 class RowStrategy(BaseStrategy):

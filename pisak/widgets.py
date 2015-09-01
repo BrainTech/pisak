@@ -1657,14 +1657,12 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             self._alternative_text)
         
     def get_sound(self, name):
-        player = pisak.app._sound_effects_player
         if name:
             fname = name.lower()
             fname = fname.replace(' ', '_').replace('\n', '_') + '.wav'
             fpath = os.path.join(res.get('sounds'), fname)
             if os.path.isfile(fpath):
-                sound = sound_effects.Sound(fpath,player)
-                return sound
+                return fpath
         
     @property
     def current_icon_name(self):

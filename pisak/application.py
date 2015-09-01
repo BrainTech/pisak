@@ -103,16 +103,10 @@ class _Application(configurator.Configurable):
             self._sound_effects_player = sound_effects.SoundEffectsPlayer(
                 self._sound_effects)
             self._sound_effects_player.set_volume(self.sound_effects_volume)
-            self._selection_player = sound_effects.SoundEffectsPlayer(
-                self._sound_effects)
-            self._selection_player.set_volume(self.sound_effects_volume)
-
 
     def _shutdown_sound_effects_player(self):
         if self._sound_effects_player is not None:
-            self._sound_effects_player.shutdown()        
-        if self._selection_player is not None:
-            self._selection_player.shutdown()
+            self._sound_effects_player.shutdown()
 
     def _clean_up(self):
         """
@@ -128,17 +122,7 @@ class _Application(configurator.Configurable):
         :param sound_name: name of the sound to be played
         """
         if self._sound_effects_player is not None:
-            self._sound_effects_player.play(sound_name)    
-
-    def play_selection_sound(self, sound_name):
-        """
-        Play one of the previously instantiated sound effects by the means of
-        an internal player.
-
-        :param sound_name: name of the sound to be played
-        """
-        if self._selection_player is not None:
-            self._selection_player.play(sound_name)
+            self._sound_effects_player.play(sound_name)
 
     def create_window(self, argv, descriptor):
         """
