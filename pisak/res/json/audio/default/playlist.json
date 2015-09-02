@@ -76,7 +76,7 @@
     },
     {
         "id": "button_exit",
-        "label": "PANEL STARTOWY",
+        "text": "PANEL STARTOWY",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "ratio-width": 0.24,
@@ -93,7 +93,7 @@
     },
     {
         "id": "button_return",
-        "label": "POWRÓT",
+        "text": "POWRÓT",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "icon-size": 50,
@@ -111,7 +111,7 @@
     },
     {
         "id": "button_mark",
-        "label": "OCENA",
+        "text": "OCENA",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "disabled": true,
@@ -123,7 +123,7 @@
     },
     {
         "id": "button_favs",
-        "label": "ULUBIONE",
+        "text": "ULUBIONE",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "icon-size": 50,
@@ -141,7 +141,7 @@
     },
     {
         "id": "button_louder",
-        "label": "GłOŚNIEJ",
+        "text": "GłOŚNIEJ",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "icon-size": 50,
@@ -159,7 +159,7 @@
     },
     {
         "id": "button_quieter",
-        "label": "CISZEJ",
+        "text": "CISZEJ",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "ratio-width": 0.24,
@@ -176,7 +176,7 @@
     },
     {
         "id": "button_previous_playlist",
-        "label": "POPRZEDNIA\nPLAYLISTA",
+        "text": "POPRZEDNIA\nPLAYLISTA",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "icon-size": 50,
@@ -199,7 +199,7 @@
     },
     {
         "id": "button_next_playlist",
-        "label": "NASTĘPNA\nPLAYLISTA",
+        "text": "NASTĘPNA\nPLAYLISTA",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "icon-size": 50,
@@ -223,7 +223,7 @@
     },
     {
         "id": "button_player",
-        "label": "ODTWARZACZ",
+        "text": "ODTWARZACZ",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "icon-size": 50,
