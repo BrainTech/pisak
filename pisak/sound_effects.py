@@ -43,9 +43,3 @@ class SoundEffectsPlayer(object):
         msg = 'Resources freed from playbin with file: ' +\
               str(self._playbin.get_property('uri'))
         _LOG.debug(msg)
-
-    def shutdown(self):
-        pass
-
-
-SoundEffectsPlayer = SoundEffectsPlayerNative
