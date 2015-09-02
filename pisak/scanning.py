@@ -726,7 +726,6 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
             selection = self._subgroups[self.index]
             if pisak.config.as_bool("read_button") and pisak.config.as_bool("sound_effects_enabled") and \
                isinstance(selection, pisak.widgets.Button):
-                print(selection.sounds.keys())
                 if selection.get_label() in selection.sounds.keys():
                     self.player.play(selection.sounds[selection.get_label()])
                 elif selection.get_label() in [' ', '']:
