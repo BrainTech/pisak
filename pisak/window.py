@@ -6,11 +6,11 @@ import os
 from gi.repository import Clutter, Mx
 
 from pisak import exceptions
-from pisak.libs import signals, configurator, dirs, inputs
+from pisak import signals, configurator, dirs, inputs
 
-import pisak.libs.layout  # @UnusedImport
-import pisak.libs.widgets  # @UnusedImport
-import pisak.libs.handlers  # @UnusedImport
+import pisak.layout  # @UnusedImport
+import pisak.widgets  # @UnusedImport
+import pisak.handlers  # @UnusedImport
 
 
 def prepare_popup_view(app, window, script, data):
@@ -58,6 +58,9 @@ class Window(configurator.Configurable):
 
         # handler of the main input device:
         self.input_group = inputs.InputGroup(self.stage)
+
+        # pending scanning group:
+        self.pending_group = None
 
         self._init_layout()
         self._read_descriptor(descriptor)

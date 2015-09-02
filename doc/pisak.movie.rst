@@ -4,10 +4,10 @@ pisak.movie package
 Submodules
 ----------
 
-pisak.movie.app module
+bin.pisak-movie module
 ----------------------
 
-.. automodule:: pisak.movie.app
+.. automodule:: bin.pisak-movie
     :members:
     :undoc-members:
     :show-inheritance:

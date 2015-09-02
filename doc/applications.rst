@@ -21,3 +21,11 @@ Application that allows to watch movies.
 Audio - :doc:`pisak.audio`
 --------------------------
 Application that allows to listen to music.
+
+Audio - :doc:`pisak.blog`
+--------------------------
+Application that allows to publish a blog and view other blogs.
+
+Audio - :doc:`pisak.email`
+--------------------------
+Application that allows to write and receive emails.

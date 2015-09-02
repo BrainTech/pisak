@@ -1,13 +1,13 @@
 """
 Basic classes for Pisak application.
 """
-import sys
+import sys, os
 
 from gi.repository import Gtk, GObject, Clutter, Mx, ClutterGst, GtkClutter
 
 import pisak
-from pisak import res, logger, sound_effects, window
-from pisak.libs import configurator, dirs, unit, arg_parser
+from pisak import res, logger, sound_effects, window, configurator, \
+    dirs, unit, arg_parser
 
 
 _LOG = logger.get_logger(__name__)
@@ -39,9 +39,6 @@ class _Application(configurator.Configurable):
 
         # if playing of the sound effects should be enabled:
         self.sound_effects_enabled = False
-
-        # volume of the sound effects:
-        self.sound_effects_volume = 0
 
         # indicator of the application main loop status, should be used
         # with caution as there will always be some non-zero time interval
@@ -83,10 +80,9 @@ class _Application(configurator.Configurable):
     def _configure(self):
         self.apply_props()
         self.sound_effects_enabled = self.config.as_bool("sound_effects_enabled")
-        self.sound_effects_volume = self.config.as_float("sound_effects_volume")
         self.style = dirs.get_css_path(self.config.get("skin"))
         for k, v in self.config.get("sound_effects").items():
-            self._sound_effects[k] = res.get(v)
+            self._sound_effects[k] = dirs.get_sound_path(v)
 
     def _initialize_style(self):
         try:
@@ -102,17 +98,6 @@ class _Application(configurator.Configurable):
         if self.sound_effects_enabled:
             self._sound_effects_player = sound_effects.SoundEffectsPlayer(
                 self._sound_effects)
-            self._sound_effects_player.set_volume(self.sound_effects_volume)
-
-    def _shutdown_sound_effects_player(self):
-        if self._sound_effects_player is not None:
-            self._sound_effects_player.shutdown()
-
-    def _clean_up(self):
-        """
-        Clean up before exiting the application.
-        """
-        self._shutdown_sound_effects_player()
 
     def play_sound_effect(self, sound_name):
         """
@@ -150,7 +135,6 @@ class _Application(configurator.Configurable):
             loop()
         finally:
             self.main_loop_is_running = False
-        self._clean_up()
 
     def main(self):
         """

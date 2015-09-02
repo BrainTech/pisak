@@ -1,14 +1,14 @@
 import os
 
 from pisak.hooks import init_hooks
-from pisak.libs import settings
+from pisak import settings
 
 """
 Absolute path to the package directory.
 """
 PATH = os.path.abspath(os.path.split(__file__)[0])
 
-version = 'dev'
+version = '1.0'
 
 
 """

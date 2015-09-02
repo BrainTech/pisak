@@ -2,7 +2,7 @@ import os
 import logging
 from logging import handlers
 
-from pisak.libs import arg_parser, dirs
+from pisak import arg_parser, dirs
 
 
 LEVELS = {'debug': logging.DEBUG,

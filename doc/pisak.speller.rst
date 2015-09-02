@@ -4,10 +4,10 @@ pisak.speller package
 Submodules
 ----------
 
-pisak.speller.app module
+speller module
 ------------------------
 
-.. automodule:: pisak.speller.app
+.. automodule:: bin.pisak-speller
     :members:
     :undoc-members:
     :show-inheritance:

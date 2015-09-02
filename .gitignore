@@ -12,3 +12,5 @@ qrc_*.cpp
 Makefile
 *sdk*
 n_grams.sqlite
+*pychache*
+sounds

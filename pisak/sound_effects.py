@@ -1,50 +1,48 @@
 """
 Sound effects player.
 """
-from gi.repository import ClutterGst
-
+import gi
+gi.require_version('Gst', '1.0')
+from gi.repository import GObject, Gst
 from pisak import logger
-
 
 _LOG = logger.get_logger(__name__)
 
-
-class SoundEffectsPlayerNative:
-    def __init__(self, sounds_list):
-        ClutterGst.init()
-
-        self.sounds = {}
-
-        CHANNELS_PER_FILE = 1
-        DEFAULT_CONFIG = {
-            'file_name': '',
-            'volume': 1.0,
-            'loop_count': 1
-        }
-
-        for sound_name, value in sounds_list.items():
-            config = DEFAULT_CONFIG.copy()
-            if isinstance(value, dict):
-                config.update(value)
-            else:
-                config['file_name'] = value
-            volume = float(config['volume'])
-            vec = []
-            for i in range(CHANNELS_PER_FILE):
-                s = ClutterGst.VideoTexture()
-                s.set_filename(config['file_name'])
-                s.set_buffering_mode(ClutterGst.BufferingMode.DOWNLOAD)
-                vec.append(s)
-            self.sounds[sound_name] = tuple(vec)
+GObject.threads_init()
+Gst.init()
+    
+class SoundEffectsPlayer(object):
+    def __init__(self, sounds_dict):
+        super().__init__()
+        self.sounds = sounds_dict
+        self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
+        self._bus = self._playbin.get_bus()
+        self._bus.connect('message', self.on_message)
 
     def play(self, sound_name):
+        self._playbin.set_state(Gst.State.READY)
         if sound_name in self.sounds:
-            self.sounds[sound_name][0].set_playing(True)
+            self._playbin.set_property('uri', 'file://' + self.sounds[sound_name])
         else:
-            _LOG.warning('Sound "{}" not found'.format(sound_name))
+            self._playbin.set_property('uri', 'file://' + sound_name)
+        self._bus.add_signal_watch()
+        self._playbin.set_state(Gst.State.READY)
+        self._playbin.set_state(Gst.State.PLAYING)
 
-    def set_volume(self, volume):
-        pass
+    def on_message(self, bus, message):
+        if message.type == Gst.MessageType.EOS:
+            self.free_resource()
+        elif message.type == Gst.MessageType.ERROR:
+            _LOG.warning("An error occured while playing file: " +\
+                         str(self._playbin.get_property('uri')))
+            self.free_resource()
+            
+    def free_resource(self):
+        self._bus.remove_signal_watch()
+        self._playbin.set_state(Gst.State.NULL)
+        msg = 'Resources freed from playbin with file: ' +\
+              str(self._playbin.get_property('uri'))
+        _LOG.debug(msg)
 
     def shutdown(self):
         pass

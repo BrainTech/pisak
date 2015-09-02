@@ -10,6 +10,8 @@ Subpackages
     pisak.paint
     pisak.movie
     pisak.audio
+    pisak.blog
+    pisak.email
 
 Submodules
 ==========
@@ -175,6 +177,95 @@ pisak.configurator module
 -------------------------
 
 .. automodule:: pisak.configurator
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.tracker module
+-------------------------
+
+.. automodule:: pisak.tracker
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.window module
+-------------------------
+
+.. automodule:: pisak.window
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.pager module
+-------------------------
+
+.. automodule:: pisak.pager
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.inputs module
+-------------------------
+
+.. automodule:: pisak.inputs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+pisak.cursor module
+-------------------------
+
+.. automodule:: pisak.cursor
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.arg_parser module
+-------------------------
+
+.. automodule:: pisak.arg_parser
+    :members:
+    :undoc-members:
+    :show-inheritance:
+      
+
+pisak.dirs module
+-------------------------
+
+.. automodule:: pisak.dirs
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.exceptions module
+-------------------------
+
+.. automodule:: pisak.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.settings module
+-------------------------
+
+.. automodule:: pisak.settings
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.text_tools
+---------------------
+
+.. automodule:: pisak.text_tools
     :members:
     :undoc-members:
     :show-inheritance:
