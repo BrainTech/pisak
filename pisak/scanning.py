@@ -727,10 +727,10 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
             if pisak.config.as_bool("read_button") and \
                isinstance(selection, pisak.widgets.Button):
                 if selection.get_label() in selection.sounds.keys():
-                    self.player.play(selection.get_label(),selection.sounds)
+                    self.player.play(selection.sounds[selection.get_label()])
                 elif selection.get_label() in [' ', '']:
                     icon_name = selection.current_icon_name
-                    self.player.play(icon_name,selection.sounds)
+                    self.player.play(selection.sounds[icon_name])
                 else:
                     self._play_scanning_sound()
             else:
