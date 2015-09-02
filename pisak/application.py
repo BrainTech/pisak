@@ -82,7 +82,7 @@ class _Application(configurator.Configurable):
         self.sound_effects_enabled = self.config.as_bool("sound_effects_enabled")
         self.style = dirs.get_css_path(self.config.get("skin"))
         for k, v in self.config.get("sound_effects").items():
-            self._sound_effects[k] = dirs.get_sound_path(v.split('.')[0])
+            self._sound_effects[k] = dirs.get_sound_path(v)
 
     def _initialize_style(self):
         try:

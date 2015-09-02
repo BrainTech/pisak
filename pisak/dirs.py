@@ -306,14 +306,15 @@ def get_sound_path(name):
 
     :returns: path to the icon or None if nothing was found
     """
+    default_sound = 'scan.wav'
     name = name.lower()
-    name = name.replace(' ', '_').replace('\n', '_') + '.wav'
+    name = name.replace(' ', '_').replace('\n', '_')
     sound_path = os.path.join(HOME_SOUNDS_DIR, name)
     if not os.path.isfile(sound_path):
         sound_path = os.path.join(res.get('sounds'), name)
         if not os.path.isfile(sound_path):
-            if name != 'scan.wav':
-                return get_sound_path('scan') #if no corresponding sound is present, use default
+            if name != default_sound:
+                return get_sound_path(default_sound) #if no corresponding sound is present, use default
             else:        
                 msg = "No sounds found in directory."
                 raise FileNotFoundError(msg)

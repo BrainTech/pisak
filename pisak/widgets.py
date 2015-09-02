@@ -1658,7 +1658,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         
     def get_sound(self, name):
         if name:
-            return dirs.get_sound_path(name)
+            return dirs.get_sound_path(name + '.wav')
 
     @property
     def current_icon_name(self):
