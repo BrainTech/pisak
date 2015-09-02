@@ -138,7 +138,7 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "edytuj_opis"
+        "icon-name": "komentuj_post"
     },
     {
         "id": "button_delete_post",
