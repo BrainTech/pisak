@@ -217,11 +217,11 @@ class InputGroup(object):
         return self.action_signal, self.scanning_handler, signal_source
 
     def _get_toplevel_scanning_group(self, top_level):
-        '''
+        """
         Get a top-level scanning group from the given object tree.
 
         :return: top-level scanning group or None.
-        '''
+        """
         next_level = []
         for obj in top_level:
             if isinstance(obj, scanning.Group):

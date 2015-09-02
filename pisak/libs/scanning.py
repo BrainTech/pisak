@@ -1,6 +1,6 @@
-'''
+"""
 Classes for defining scanning in JSON layouts
-'''
+"""
 import time
 
 from gi.repository import Clutter, GObject
@@ -316,9 +316,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         return self._subgroups
 
     def _gen_subgroups(self):
-        '''
+        """
         Generator of all subgroups of the group.
-        '''
+        """
         to_scan = self.get_children()
         while len(to_scan) > 0:
             current = to_scan.pop(0)
@@ -338,12 +338,12 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
                 to_scan.extend(current.get_children())
 
     def is_flat(self):
-        '''
+        """
         Test if group is flat, that is whether it contains
         any nested subgroups.
 
         :return: True if group has no subgroups, False otherwise.
-        '''
+        """
         for obj in self.get_children():
             if isinstance(obj, Group):
                 return False
@@ -420,9 +420,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.strategy.start()
 
     def _on_singular(self):
-        '''
+        """
         Do something when the group is singular.
-        '''
+        """
         sub_element =self.get_subgroups()[0]
         if isinstance(sub_element, Group):
             msg = 'Group {} is singular. Starting its only subgroup.'
@@ -908,7 +908,7 @@ def get_top_level_group(top_level):
         :return: scanning group.
         """
         def is_empty_branch(node_list):
-            '''
+            """
             Check if the given branch is empty from the
             scanning point of view, that is whether there are any elements
             that could get scanned.
@@ -916,7 +916,7 @@ def get_top_level_group(top_level):
             :param node_list: list of top-level objects from some object branch.
 
             :return: True or False.
-            '''
+            """
             nested_nodes = []
             for node in node_list:
                 if (isinstance(node, Group) and node.is_flat() and not
