@@ -85,6 +85,14 @@ extends the collection of all symbols.
 """
 HOME_SYMBOLS_DIR = os.path.join(HOME_PISAK_DIR, "symbols")
 
+
+"""
+Folder in user's home Pisak directory, that contains custom sounds which can be played
+during scanning and button selection.
+"""
+HOME_SOUNDS_DIR = os.path.join(HOME_PISAK_DIR, "sounds")
+
+
 """
 Path to the spreadsheet containing custom symbols topology for
 "symboler" application.
@@ -285,3 +293,29 @@ def get_user_dir(folder):
     :returns: path to XDG user directory
     """
     return GLib.get_user_special_dir(USER_FOLDERS[folder])
+
+
+def get_sound_path(name):
+    """
+    Get path to a sound with the given name. First look for a custom sound in
+    user home directory, if nothing found, then look for a default sound in
+    res directory. Accepted file format is wav.
+
+    :param name: name of the sound file, that is a name of the file without an extension. 
+    Accepted file format is WAV.
+
+    :returns: path to the icon or None if nothing was found
+    """
+    default_sound = 'scan.wav'
+    name = name.lower()
+    name = name.replace(' ', '_').replace('\n', '_')
+    sound_path = os.path.join(HOME_SOUNDS_DIR, name)
+    if not os.path.isfile(sound_path):
+        sound_path = os.path.join(res.get('sounds'), name)
+        if not os.path.isfile(sound_path):
+            if name != default_sound:
+                return get_sound_path(default_sound) #if no corresponding sound is present, use default
+            else:        
+                msg = "No sounds found in directory."
+                raise FileNotFoundError(msg)
+    return sound_path
