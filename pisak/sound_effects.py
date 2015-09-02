@@ -12,9 +12,9 @@ GObject.threads_init()
 Gst.init()
     
 class SoundEffectsPlayer(object):
-    def __init__(self, sounds_list):
+    def __init__(self, sounds_dict):
         super().__init__()
-        self.sounds = sounds_list
+        self.sounds = sounds_dict
         self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
         self._bus = self._playbin.get_bus()
         self._bus.connect('message', self.on_message)

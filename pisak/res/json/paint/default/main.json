@@ -437,9 +437,11 @@
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
         "related-object": "easel",
+        "label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "red",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -456,10 +458,12 @@
         "id": "color2",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "blue",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -476,10 +480,12 @@
         "id": "color3",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "green",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -496,10 +502,12 @@
         "id": "color4",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "yellow",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -516,10 +524,12 @@
         "id": "color5",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "purple",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -536,10 +546,12 @@
         "id": "color6",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "black",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -556,10 +568,12 @@
         "id": "color7",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "magenta",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -576,10 +590,12 @@
         "id": "color8",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(10, 200, 200)",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -596,10 +612,12 @@
         "id": "color9",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 200, 10)",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -616,10 +634,12 @@
         "id": "color10",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 100, 2)",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -636,10 +656,12 @@
         "id": "color11",
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
-        "related-object": "easel",
+        "related-object": "easel",        
+	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(2, 200, 100)",
+	"icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",

@@ -724,7 +724,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if pisak.config.as_bool("read_button") and \
+            if pisak.config.as_bool("read_button") and pisak.config.as_bool("sound_effects_enabled")  \
                isinstance(selection, pisak.widgets.Button):
                 print(selection.sounds.keys())
                 if selection.get_label() in selection.sounds.keys():
