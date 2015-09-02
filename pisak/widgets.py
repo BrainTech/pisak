@@ -12,7 +12,7 @@ from gi.repository import Clutter, Mx, GObject, Rsvg, Cogl, GdkPixbuf, Pango
 
 import pisak
 from pisak import res, logger, unit, properties, scanning, configurator, \
-    utils, media, style, layout, svg, sound_effects
+    utils, media, style, layout, svg, sound_effects, dirs
 from pisak.res import colors
 
 _LOG = logger.get_logger(__name__)
@@ -1067,7 +1067,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
 
     def _play_selection_sound(self, source):
         if pisak.app.window.input_group.middleware != "scanning":
-            pisak.app.play_sound_effect('selection')
+            pisak.app.play_sound_effect('select')
 
     def _toggle(self):
         for element in self.get_children():
@@ -1658,12 +1658,8 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         
     def get_sound(self, name):
         if name:
-            fname = name.lower()
-            fname = fname.replace(' ', '_').replace('\n', '_') + '.wav'
-            fpath = os.path.join(res.get('sounds'), fname)
-            if os.path.isfile(fpath):
-                return fpath
-        
+            print(dirs.get_sound_path(name))
+            return dirs.get_sound_path(name)
     @property
     def current_icon_name(self):
         """
