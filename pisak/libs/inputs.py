@@ -4,7 +4,7 @@ import os
 
 import pisak
 from pisak import logger, exceptions
-from pisak.libs import cursor, scanning, handlers, dirs, tracker
+from pisak.libs import cursor, scanning, handlers, dirs, tracker, pager
 
 from gi.repository import Gdk
 
@@ -272,6 +272,14 @@ class InputGroup(object):
             raise InputsError(message)
         else:
             if self.activator:
+                if self.middleware == 'scanning':
+                    pager = self._detect_pager([self.content])
+                    if pager:
+                        if pager.ready:
+                            self.activator(self)
+                        else:
+                            pager.connect('ready', lambda *_: self.activator(self))
+                            return
                 if self.content.get_property("mapped") or \
                                 self.activator == InputGroup.launch_sprite:
                     self.activator(self)
@@ -280,6 +288,23 @@ class InputGroup(object):
             else:
                 _LOG.debug("No activator specified for the input group "
                            "with input {}.".format(self.input_mode))
+
+    def _detect_pager(self, level):
+        """
+        Find and return pager if there is any in the current layout.
+
+        :param level: list of objects from the same level.
+
+        :return: pager instance or None.
+        """
+        next_level = []
+        for obj in level:
+            if isinstance(obj, pager.PagerWidget):
+                return obj
+            else:
+                next_level.extend(obj.get_children())
+        if next_level:
+            return self._detect_pager(next_level)
 
     def stop_middleware(self):
         """
