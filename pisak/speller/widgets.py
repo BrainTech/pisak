@@ -344,9 +344,13 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
         :param: text string passed after a user's actions
         """
+        prev_pos = self.clutter_text.get_cursor_position()
         pos = self.get_cursor_position()
         operation = Text.Insertion(pos, text)
         self._add_operation(operation)
+        new_pos = self.clutter_text.get_cursor_position()
+        if prev_pos == -1 and new_pos == 0:
+            self.set_cursor_position(-1)
 
     def type_unicode_char(self, char):
         """
