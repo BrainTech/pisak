@@ -4,13 +4,17 @@ Sound effects player.
 import gi
 gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
+
 from pisak import logger
+
 
 _LOG = logger.get_logger(__name__)
 
+
 GObject.threads_init()
 Gst.init()
-    
+
+
 class SoundEffectsPlayer(object):
     def __init__(self, sounds_dict):
         super().__init__()

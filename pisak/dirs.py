@@ -5,7 +5,10 @@ import os
 
 from gi.repository import GLib
 
-from pisak import res
+from pisak import res, logger
+
+
+_LOG = logger.get_logger(__name__)
 
 
 # ---------------------------
@@ -304,18 +307,12 @@ def get_sound_path(name):
     :param name: name of the sound file, that is a name of the file without an extension. 
     Accepted file format is WAV.
 
-    :returns: path to the icon or None if nothing was found
+    :returns: path to the icon or None if nothing was found.
     """
-    default_sound = 'scan.wav'
-    name = name.lower()
-    name = name.replace(' ', '_').replace('\n', '_')
+    name = name.lower().replace(' ', '_').replace('\n', '_')
     sound_path = os.path.join(HOME_SOUNDS_DIR, name)
     if not os.path.isfile(sound_path):
         sound_path = os.path.join(res.get('sounds'), name)
         if not os.path.isfile(sound_path):
-            if name != default_sound:
-                return get_sound_path(default_sound) #if no corresponding sound is present, use default
-            else:        
-                msg = "No sounds found in directory."
-                raise FileNotFoundError(msg)
+            _LOG.warning('No sound file found: {}.'.format(sound_path))
     return sound_path
