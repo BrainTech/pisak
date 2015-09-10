@@ -135,7 +135,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
             GObject.SIGNAL_RUN_FIRST, None, ()),
         "length-changed": (
             GObject.SIGNAL_RUN_FIRST, None,
-            (GObject.TYPE_INT64,))
+            (GObject.TYPE_INT64,)),
+        'reload': (
+            GObject.SIGNAL_RUN_FIRST, None, ())
     }
 
     __gproperties__ = {
@@ -281,6 +283,13 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
             self._length = len(value)
         self.emit('length-changed', self._length)
         self.emit("data-is-ready")
+
+    def reload(self, data):
+        """
+        Load and show some new data.
+        """
+        self.data = data
+        self.emit('reload')
 
     @property
     def length(self):
@@ -787,6 +796,8 @@ class PagerWidget(layout.Bin, configurator.Configurable):
                                 self._show_initial_page())
             value.connect('length-changed', lambda _, length:
                                 self._calculate_page_count(length))
+            value.connect('reload', lambda *_:
+                                self._reload())
 
     @property
     def rows(self):
@@ -875,11 +886,21 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         else:
             self.emit("progressed", 0, 0)
 
-    def _show_initial_page(self):
+    def _reload(self):
+        """
+        Enforce reloading.
+        """
+        if self._current_page in self.get_children():
+            self.remove_child(self._current_page)
+        self.page_index = 0
+        self._show_initial_page(True)
+
+    def _show_initial_page(self, enforce=False):
         """
         Display pager initial page.
         """
-        if not self._inited and \
+        if enforce or \
+                not self._inited and \
                 self.data_source is not None and \
                 self.data_source.data is not None and \
                 self._current_page is None:

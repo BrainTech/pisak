@@ -5,6 +5,7 @@ import os.path
 
 from gi.repository import Mx, Clutter, GObject
 
+import pisak
 from pisak import res, widgets, pager, properties, layout, configurator
 from pisak.res import colors
 from pisak.symboler import symbols_manager
@@ -160,12 +161,6 @@ class TilesSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        data = symbols_manager.get_symbols_from_spreadsheet()
-        if data:
-            self.custom_topology = True
-        else:
-            data = symbols_manager.get_all_symbols()
-        self.data = data
 
     @property
     def target(self):
@@ -175,18 +170,32 @@ class TilesSource(pager.DataSource):
     def target(self, value):
         self._target = value
 
+    def _load_category(self, category):
+        self.reload(pisak.app.box['categories_dict'][category])
+
+    def _load_main(self):
+        self.reload(pisak.app.box['flat_data'])
+
     def _produce_item(self, data_item):
-        item, text = data_item
         tile = widgets.PhotoTile()
         self._prepare_item(tile)
         tile.style_class = "PisakSymbolerPhotoTileLabel"
-        tile.label_text = text
         tile.hilite_tool = widgets.Aperture()
-        tile.connect("clicked", lambda source, item:
-                        self.target.append_many_symbols([item]), item)
         tile.set_background_color(colors.LIGHT_GREY)
-        tile.scale_mode = Mx.ImageScaleMode.FIT
-        tile.preview_path = os.path.join(symbols_manager.SYMBOLS_DIR, item)
+
+        if isinstance(data_item, list):
+            item, text = data_item
+            tile.scale_mode = Mx.ImageScaleMode.FIT
+            tile.preview_path = os.path.join(symbols_manager.SYMBOLS_DIR, item)
+            tile.connect("clicked", lambda source, item:
+                        self.target.append_many_symbols([item]), item)
+            tile.connect("clicked", lambda source: self._load_main())
+        else:
+            text = data_item
+            tile.connect("clicked", lambda source, category:
+                        self._load_category(category), text)
+
+        tile.label_text = text
         return tile
 
     def _prepare_filler(self, filler):
