@@ -319,3 +319,17 @@ def get_sound_path(name):
                 msg = "No sounds found in directory."
                 raise FileNotFoundError(msg)
     return sound_path
+
+
+def get_symbols_spreadsheet(name):
+    """
+    Get path to a spreadsheet with the given name.
+
+    :param name: name of the spreadsheet.
+
+    :return: path to the spreadsheet.
+    """
+    path = os.path.join(HOME_SYMBOLS_DIR, name + '.ods')
+    if not os.path.isfile(path):
+        raise FileNotFoundError('No symbols spreadsheet found: {}.'.format(path))
+    return path

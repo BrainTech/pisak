@@ -3,7 +3,7 @@ import configobj
 
 import ezodf
 
-from pisak import res, logger, dirs
+from pisak import res, logger, dirs, exceptions
 
 
 _LOG = logger.get_logger(__name__)
@@ -97,7 +97,15 @@ def get_symbols(symbols_list):
     return symbols
 
 
-def get_symbols_from_spreadsheet():
+def _open_odf_spreadsheet(path):
+    try:
+        return ezodf.opendoc(path)
+    except OSError as exc:
+        _LOG.error(exc)
+        raise exceptions.PisakException(exc)
+
+
+def get_symbols_from_spreadsheet(spreadsheet=dirs.HOME_SYMBOLS_SPREADSHEET):
     """
     Parse the spreadsheet and get symbols topology description.
     Order of iteration is as follows- first sheets, then rows and finally
@@ -108,19 +116,70 @@ def get_symbols_from_spreadsheet():
     :returns: topology of symbols pages, list of lists, each for one page,
     of lists, each for one row, of symbols or Nones, for an empty fields.
     """
-    spreadsheet = dirs.HOME_SYMBOLS_SPREADSHEET
-    try:
-        file = ezodf.opendoc(spreadsheet)
-    except OSError:
-        msg = "Symbols spreadsheet {} is not a valid file."
-        _LOG.warning(msg.format(spreadsheet))
-        return
+    file = _open_odf_spreadsheet(spreadsheet)
     return [[[[sheet[row, col].value + ".png", sheet[row, col].value]
                   if isinstance(sheet[row, col].value, str) and
                   get_symbol(sheet[row, col].value + ".png") else None
                       for col in range(sheet.ncols())]
                          for row in range(sheet.nrows())]
                             for sheet in file.sheets]
+
+
+def get_toc_spreadsheet():
+    """
+    Get path to a spreadsheet with the table of contents.
+
+    :return: path to the spreadsheet.
+    """
+    return dirs.get_symbols_spreadsheet('table_of_contents')
+
+
+def get_category_spreadsheet(name):
+    """
+    Get path to a spreadsheet with symbols from the given category.
+
+    :param name: name of the category.
+
+    :return: path to the spreadsheet.
+    """
+    return dirs.get_symbols_spreadsheet(name)
+
+
+def parse_from_spreadsheets():
+    """
+    Parse table of contents and all the categories and store them
+    inside a single dictionary.
+
+    :return: dictionary with the symbols from various categories;
+    table of contents structure and all the categories structures together
+    or None if no table of contents found.
+    """
+    toc_path = get_toc_spreadsheet()
+    try:
+        file = _open_odf_spreadsheet(toc_path)
+    except exceptions.PisakException as exc:
+        return
+
+    symbols = {}
+    toc = []
+    flat = []
+    for sheet in file.sheets:
+        page = []
+        toc.append(page)
+        for r in range(sheet.nrows()):
+            row = []
+            page.append(row)
+            for c in range(sheet.ncols()):
+                val = sheet[r, c].value
+                if isinstance(val, str):
+                    category = get_symbols_from_spreadsheet(
+                        get_category_spreadsheet(val))
+                    symbols[val] = category
+                    flat.extend(category)
+                    row.append(val)
+                else:
+                    row.append(None)
+    return symbols, toc, toc + flat
 
 
 def get_all_symbols():
