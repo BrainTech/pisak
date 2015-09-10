@@ -826,7 +826,7 @@
 	"style-class": "PisakBlogSpellerPostKey",
         "default-text": "Ą",
         "special1-text": "0",
-        "special2-text": "xD",
+        "special2-text": "x-D",
         "target": "text_box",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505
