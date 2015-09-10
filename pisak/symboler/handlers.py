@@ -1,7 +1,13 @@
 import subprocess
 
+import pisak
 from pisak import signals
 from pisak.symboler import symbols_manager
+
+
+@signals.registered_handler("symboler/load_main")
+def load_main(data_source):
+    data_source.reload(pisak.app.box['flat_data'])
 
 
 @signals.registered_handler("symboler/save")
