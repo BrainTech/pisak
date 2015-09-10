@@ -280,7 +280,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.user_action_handler = None
         self.input_handler_token = None
         super().__init__()
-        self.observer = _GroupObserver(self)
+        self.observer = None
         self.set_layout_manager(Clutter.BinLayout())
         self.apply_props()
 
@@ -377,6 +377,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         False.
         """
         _LOG.debug("Starting group {}".format(self.get_id()))
+        self.observer = _GroupObserver(self)
         if not self.get_property("mapped"):
             self.connect('notify::mapped', lambda *_: self.start_cycle())
             message = \
