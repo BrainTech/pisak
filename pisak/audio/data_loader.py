@@ -6,8 +6,11 @@ from collections import defaultdict
 
 import taglib
 
-from pisak import res, dirs, utils
+from pisak import res, dirs, utils, logger
 from pisak.audio import database_manager
+
+
+_LOG = logger.get_logger(__name__)
 
 
 _LIBRARY_DIR = dirs.get_user_dir("music")
@@ -26,7 +29,7 @@ _UNKNOWN_NUMERICAL_TAG = 0
 
 def load_all():
     """
-    Load informations about the music library in the filesystem and
+    Load information about the music library in the filesystem and
     insert them to the database.
     """
     database_manager.collect_garbage()
@@ -39,8 +42,8 @@ def load_all():
             scanned = [_LIBRARY_DIR] + first_level_folders
         if os.path.getmtime(current) > last_load_time and current in scanned:
             folder_name = os.path.split(current)[-1].lower()
-            cover_path = utils.find_folder_image(files, folder_name, current,
-                                          _COVER_EXTENSIONS)
+            cover_path = utils.find_folder_image(
+                files, folder_name, current, _COVER_EXTENSIONS)
             if not cover_path:
                 cover_path = os.path.join(current, _FAKE_COVER_NAME)
                 utils.produce_identicon(current, save_path=cover_path)
@@ -75,7 +78,7 @@ def _get_metadata(path, file_name):
     try:
         file_tags = taglib.File(path).tags
     except OSError:
-        print("Could not read file: {}".format(path))
+        _LOG.warning("Taglib could not read file: {}.".format(path))
         return False
     metadata = dict()
     for tag, func in _TAG_EXTRACTORS.items():

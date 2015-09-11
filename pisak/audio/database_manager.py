@@ -12,7 +12,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from pisak import res, dirs
 
 
-
 _FAVOURITES_FOLDER_ALIAS = "ULUBIONE"
 
 _MUSIC_DB_PATH = os.path.join(dirs.HOME_PISAK_DIR, "music.db")
@@ -81,6 +80,7 @@ def collect_garbage():
         for track in sess.query(Track).all():
             if not os.path.isfile(track.path):
                 sess.delete(track)
+
 
 def get_all_folders_with_covers():
     """
