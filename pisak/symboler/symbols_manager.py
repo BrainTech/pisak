@@ -25,23 +25,19 @@ def create_model():
     items = model.keys()
     if "ALL" not in items:
         model["ALL"] = {}
-    main_section_items = model["ALL"].keys()
     for current, _subdirs, files in os.walk(SYMBOLS_DIR):
         if current is not SYMBOLS_DIR:
             category = os.path.split(current)[-1]
             if category not in items:
                 model[category] = {}
-            category_section_items = model[category].keys()           
         else:
             category = None
         for file in files:
             relative_path = os.path.join(current.replace(SYMBOLS_DIR, ""), file)
             text = os.path.splitext(file)[0].replace("_", " ")
-            if relative_path not in main_section_items:
-                model["ALL"][relative_path] = text
+            model["ALL"][relative_path] = text
             if category:
-                if relative_path not in category_section_items:
-                    model[category][relative_path] = text
+                model[category][relative_path] = text
     model.write()
 
 
