@@ -19,9 +19,9 @@ _LOAD_TRACKER = os.path.join(dirs.HOME_PISAK_DIR, "music_load_tracker.ini")
 
 _FAKE_COVER_NAME = "fake_cover.png"
 
-_UNKNOW_LITERAL_TAG = "nieznane"
+_UNKNOWN_LITERAL_TAG = "nieznane"
 
-_UNKNOW_NUMERICAL_TAG = 0
+_UNKNOWN_NUMERICAL_TAG = 0
 
 
 def load_all():
@@ -36,7 +36,8 @@ def load_all():
         if current is _LIBRARY_DIR:
             first_level_folders = list(map(lambda subdir:
                             os.path.join(current, subdir), subdirs))
-        if os.path.getmtime(current) > last_load_time:
+            scanned = [_LIBRARY_DIR] + first_level_folders
+        if os.path.getmtime(current) > last_load_time and current in scanned:
             folder_name = os.path.split(current)[-1].lower()
             cover_path = utils.find_folder_image(files, folder_name, current,
                                           _COVER_EXTENSIONS)
@@ -47,11 +48,11 @@ def load_all():
                 path = os.path.join(current, file_name)
                 meta = _get_metadata(path, file_name)
                 if meta:
-                    if current in first_level_folders + [_LIBRARY_DIR]:
-                        folder_tree[folder_name].append([meta["TITLE"],
-                                    path, meta["TRACKNUMBER"], meta["DATE"],
-                                    cover_path, meta["ALBUM"], meta["ARTIST"],
-                                    meta["GENRE"]])
+                    folder_tree[folder_name].append([meta["TITLE"],
+                                path, meta["TRACKNUMBER"], meta["DATE"],
+                                cover_path, meta["ALBUM"], meta["ARTIST"],
+                                meta["GENRE"]])
+
     database_manager.insert_folder_tree(folder_tree)
     _update_last_load_time(time.time())
 
@@ -92,19 +93,19 @@ def _extract_tracknumber(tag, metadata, file_tags, file_name):
     if _extract_numerical_tag(tag, metadata, file_tags):
         return
     no = _extract_number(file_name)
-    metadata["TRACKNUMBER"] = no if no else _UNKNOW_NUMERICAL_TAG
+    metadata["TRACKNUMBER"] = no if no else _UNKNOWN_NUMERICAL_TAG
 
 
 def _extract_date(tag, metadata, file_tags, file_name):
     if _extract_numerical_tag(tag, metadata, file_tags):
         return
-    metadata["DATE"] = _UNKNOW_NUMERICAL_TAG
+    metadata["DATE"] = _UNKNOWN_NUMERICAL_TAG
 
 
 def _extract_other(tag, metadata, file_tags, file_name):
     if _extract_literal_tag(tag, metadata, file_tags):
         return
-    metadata[tag] = _UNKNOW_LITERAL_TAG
+    metadata[tag] = _UNKNOWN_LITERAL_TAG
 
 
 def _extract_literal_tag(tag, metadata, file_tags):
