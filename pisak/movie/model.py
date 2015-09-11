@@ -79,7 +79,7 @@ def _extract_single_frame(movie_path, frame_path):
     # longer than this number of seconds:
     patience_level = 2
     # time from which the frame should be taken (in seconds):
-    time = '120'
+    time = '180'
     cmd_frame = [conversing_engine,
                  "-v", "quiet",
                  "-ss", time,
@@ -92,4 +92,5 @@ def _extract_single_frame(movie_path, frame_path):
         if os.path.isfile(frame_path):
             return True
     except subprocess.TimeoutExpired:
-        return False  # assume the frame file was not created properly
+        pass  # assume the frame file was not created properly
+    return False
