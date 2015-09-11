@@ -74,32 +74,22 @@ def _find_cover(naked_movie_path, cover_extensions):
 
 
 def _extract_single_frame(movie_path, frame_path):
-    probing_engine = "avprobe"
     conversing_engine = "avconv"
     # wait for generation of frame image for no
     # longer than this number of seconds:
     patience_level = 2
-    cmd_length = [probing_engine,
-                "-v", "quiet",
-                "-show_format_entry", "duration",
-                movie_path]
-    probe = subprocess.Popen(cmd_length, stdout = subprocess.PIPE)
-    out = probe.stdout.readline()
-    if out:
-        match = re.findall("\d+.\d+", str(out))
-        if len(match) > 0:
-            time = str(float(match[0]) / 2)
-            cmd_frame = [conversing_engine,
-                    "-v", "quiet",
-                    "-ss", time,
-                    "-i", movie_path,
-                    "-t", "1",
-                    "-r", "1",
-                    frame_path]
-            try:
-                subprocess.call(cmd_frame, timeout=patience_level)
-                if os.path.isfile(frame_path):
-                    return True
-            except subprocess.TimeoutExpired:
-                pass  # assume the frame file was not created properly
-    return False
+    # time from which the frame should be taken (in seconds):
+    time = '120'
+    cmd_frame = [conversing_engine,
+                 "-v", "quiet",
+                 "-ss", time,
+                 "-i", movie_path,
+                 "-t", "1",
+                 "-r", "1",
+                 frame_path]
+    try:
+        subprocess.call(cmd_frame, timeout=patience_level)
+        if os.path.isfile(frame_path):
+            return True
+    except subprocess.TimeoutExpired:
+        return False  # assume the frame file was not created properly
