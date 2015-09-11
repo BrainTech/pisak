@@ -7,13 +7,15 @@ from pisak import logger, res, dirs, media_library, utils
 
 _LOG = logger.get_logger(__name__)
 
+
 ACCEPTED_TYPES = [
-    "video/mp4", "video/x-msvideo", "video/mpeg",
-    "video/x-matroska", "application/ogg"]
+    ".mp4", ".avi", ".mpeg", ".mkv", ".ogg"
+]
 
 
 SUBTITLE_EXTENSIONS = [
-    "txt", "srt"]
+    "txt", "srt"
+]
 
 
 LIBRARY_DIR = dirs.get_user_dir("videos")

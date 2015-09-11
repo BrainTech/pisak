@@ -3,7 +3,8 @@ from pisak import dirs, media_library
 
 
 ACCEPTED_TYPES = [
-    "image/png", "image/jpeg", "image/x-ms-bmp", "image/gif"]
+    ".png", ".jpeg", ".jpg", ".bmp", ".gif"
+]
 
 
 LIBRARY_DIR = dirs.get_user_dir("pictures")

@@ -304,8 +304,8 @@ class _Scanner(object):
             category_name = self._generate_category_name(current)
             new_category = Category(next_cat_id, category_name)
             for item_path in [os.path.join(current, name) for name in files]:
-                if not self._test_file(item_path):
-                        continue
+                if not self._test_file_ext(item_path):
+                    continue
                 new_item = Item(next_item_id, item_path, {})
                 if self.library.exec_for_all is not None:
                     self.library.exec_for_all(new_category, new_item, item_path,
@@ -327,3 +327,7 @@ class _Scanner(object):
     def _test_file(self, path):
         file_type = self.magic.file(path)
         return file_type in self.library.accepted_types
+
+    def _test_file_ext(self, path):
+        return os.path.splitext(path)[-1].lower() in self.library.accepted_types
+
