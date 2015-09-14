@@ -1,5 +1,6 @@
 import os.path
 import subprocess
+import threading
 import re
 
 from pisak import logger, res, dirs, media_library, utils
@@ -60,18 +61,49 @@ def assign_cover(folder, movie, movie_path, folder_path, folder_name, dir_files)
     naked_movie_path = os.path.splitext(movie_path)[0]
     cover_path = _find_cover(naked_movie_path, COVER_EXTENSIONS)
     if not cover_path:
-        cover_path = ".".join([naked_movie_path, COVER_EXTENSIONS[0]])
-        if not _extract_single_frame(movie_path, cover_path):
-            utils.produce_identicon(movie_path, save_path=cover_path)
-    movie.extra["cover"] = cover_path
+        cover_path = '.'.join([naked_movie_path, COVER_EXTENSIONS[0]])
+        _produce_cover(movie_path, cover_path)
+    movie.extra['cover'] = cover_path
 
 
 def _find_cover(naked_movie_path, cover_extensions):
     for ext in cover_extensions:
-        possible_covers = [".".join([naked_movie_path, ext.lower()]), ".".join([naked_movie_path, ext.upper()])]
+        possible_covers = ['.'.join([naked_movie_path, ext.lower()]),
+                           '.'.join([naked_movie_path, ext.upper()])]
         for cover in possible_covers:
             if os.path.isfile(cover):
                 return cover
+
+
+# - movie frames extraction or identicons generation in a separate thread - #
+
+lock = threading.RLock()
+
+to_be_framed = []
+
+worker = None
+
+
+def _produce_cover(movie_path, cover_path):
+    def do_work():
+        while True:
+            with lock:
+                if to_be_framed:
+                    movie_path, cover_path = to_be_framed.pop(0)
+                else:
+                    global worker
+                    worker = None
+                    break
+            if not _extract_single_frame(movie_path, cover_path):
+                utils.produce_identicon(movie_path, save_path=cover_path)
+
+    with lock:
+        to_be_framed.append((movie_path, cover_path))
+
+    global worker
+    if not worker:
+        worker = threading.Thread(target=do_work, daemon=True)
+        worker.start()
 
 
 def _extract_single_frame(movie_path, frame_path):
@@ -95,3 +127,6 @@ def _extract_single_frame(movie_path, frame_path):
     except subprocess.TimeoutExpired:
         pass  # assume the frame file was not created properly
     return False
+
+
+# ------------------------------------------------------------------------- #
