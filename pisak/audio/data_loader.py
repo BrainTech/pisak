@@ -16,7 +16,7 @@ _LOG = logger.get_logger(__name__)
 _LIBRARY_DIR = dirs.get_user_dir("music")
 
 _COVER_EXTENSIONS = [
-    "jpg", "jpeg", "png", "bmp"]
+    ".jpg", ".jpeg", ".png", ".bmp"]
 
 _LOAD_TRACKER = os.path.join(dirs.HOME_PISAK_DIR, "music_load_tracker.ini")
 
