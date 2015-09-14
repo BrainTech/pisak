@@ -297,20 +297,20 @@ class _Scanner(object):
         """
         next_cat_id = 0
         next_item_id = 0
-        path_generator = os.walk(self.library.path)
-        for current, _subdirs, files in path_generator:
-            if current.startswith("."):
+        for current, _subdirs, files in os.walk(self.library.path):
+            if current.startswith('.'):
                 continue
             category_name = self._generate_category_name(current)
             new_category = Category(next_cat_id, category_name)
-            for item_path in [os.path.join(current, name) for name in files]:
+            for file in files:
+                item_path = os.path.join(current, file)
                 if not self._test_file_ext(item_path):
                     continue
                 new_item = Item(next_item_id, item_path, {})
                 if self.library.exec_for_all is not None:
-                    self.library.exec_for_all(new_category, new_item, item_path,
-                                        current, os.path.split(current)[-1],
-                                        files)
+                    self.library.exec_for_all(
+                        new_category, new_item, item_path,
+                        current, os.path.split(current)[-1], files)
                 new_category.items.append(new_item)
                 self.library.items.append(new_item)
                 next_item_id += 1
@@ -324,7 +324,7 @@ class _Scanner(object):
         else:        
             return path.partition(self.library.path)[2][1:]
     
-    def _test_file(self, path):
+    def _test_file_magic(self, path):
         file_type = self.magic.file(path)
         return file_type in self.library.accepted_types
 

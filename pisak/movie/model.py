@@ -9,7 +9,7 @@ _LOG = logger.get_logger(__name__)
 
 
 ACCEPTED_TYPES = [
-    ".mp4", ".avi", ".mpeg", ".mkv", ".ogg"
+    ".mp4", ".avi", ".mkv", ".mpeg", ".ogg"
 ]
 
 
@@ -40,8 +40,9 @@ def get_library():
     try:
         library = _LIBRARY_STORE[LIBRARY_DIR]
     except KeyError:
-        library = media_library.Library(LIBRARY_DIR, ACCEPTED_TYPES, FAVOURITE_MOVIES_STORE,
-                          FAVOURITE_MOVIES_ALIAS, assign_cover)
+        library = media_library.Library(
+            LIBRARY_DIR, ACCEPTED_TYPES, FAVOURITE_MOVIES_STORE,
+            FAVOURITE_MOVIES_ALIAS, assign_cover)
         library.include_favs()
         _LIBRARY_STORE[LIBRARY_DIR] = library
     return library

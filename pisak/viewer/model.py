@@ -3,7 +3,7 @@ from pisak import dirs, media_library
 
 
 ACCEPTED_TYPES = [
-    ".png", ".jpeg", ".jpg", ".bmp", ".gif"
+    ".jpg", ".jpeg", ".png", ".bmp", ".gif"
 ]
 
 
