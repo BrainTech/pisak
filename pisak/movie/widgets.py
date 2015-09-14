@@ -20,7 +20,7 @@ class FlatSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data = sorted(list(model.get_library().items),
+        self.data = sorted(list(model.get_library().get_all_items()),
                            key=lambda movie: os.path.basename(movie.path))
 
     def _produce_item(self, movie):

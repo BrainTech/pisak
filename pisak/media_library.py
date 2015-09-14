@@ -25,7 +25,16 @@ class Category(object):
     def __init__(self, category_id, name):
         self.id = category_id
         self.name = name
-        self.items = []
+        self._items = []
+        self._dict_items = {}
+
+    def _do_remove_item(self, item):
+        try:
+            self._items.remove(item)
+            self._dict_items.pop(item.path)
+            self._dict_items.pop(item.id)
+        except (ValueError, KeyError):
+            _LOG.warning('No such item in the category: {}.'.format(item))
     
     def get_preview_path(self):
         """
@@ -34,8 +43,16 @@ class Category(object):
 
         :returns: path attribute of the first item or None
         """
-        if len(self.items) > 0:
-            return self.items[0].path
+        if len(self._items) > 0:
+            return self._items[0].path
+
+    def remove_item(self, item):
+        """
+        Remove the given item from the category.
+
+        :param item: item instance.
+        """
+        self._do_remove_item(item)
 
     def remove_item_by_path(self, item_path):
         """
@@ -43,9 +60,10 @@ class Category(object):
 
         :param item_path: path attribute of the item
         """
-        for item in self.items:
-            if item.path == item_path:
-                self.items.remove(item)
+        try:
+            self._do_remove_item(self._dict_items[item_path])
+        except KeyError:
+            _LOG.warning('No such item in the category: {}.'.format(item_path))
 
     def get_item_by_path(self, item_path):
         """
@@ -55,9 +73,35 @@ class Category(object):
 
         :returns: item or None
         """
-        for item in self.items:
-            if item.path == item_path:
-                return item
+        try:
+            return self._dict_items[item_path]
+        except KeyError:
+            _LOG.warning('No such item in the category: {}.'.format(item_path))
+
+    def append_item(self, item):
+        """
+        Add item to the category.
+
+        :param item: item instance.
+        """
+        self._items.append(item)
+        self._dict_items[item.path] = item
+        self._dict_items[item.id] = item
+
+    def clear(self):
+        """
+        Clear the whole category, remove all the items.
+        """
+        self._items.clear()
+        self._dict_items.clear()
+
+    def get_all_items(self):
+        """
+        Get all items from the category.
+
+        :return: list of items.
+        """
+        return self._items.copy()
 
 
 '''Single item from the media library.
@@ -157,8 +201,10 @@ class Library(object):
         self.favs_alias = favs_alias
         self.exec_for_all = exec_for_all
         self.favs_store = None
-        self.categories = []
-        self.items = []
+        self._categories = []
+        self._items = []
+        self._dict_items = {}
+        self._dict_categories = {}
         self._scan()
 
     def _scan(self):
@@ -178,14 +224,14 @@ class Library(object):
             category = self.get_category_by_id(-1)
             if not category:
                 category = Category(-1, self.favs_alias)
-                self.categories.insert(0, category)
-            category.items.clear()
+                self.insert_category(0, category)
+            category.clear()
             for item in favs:
                 item = self.get_item_by_path(item)
                 if item:
-                    category.items.append(item)
-            if len(category.items) == 0:
-                self.categories.remove(category)
+                    category.append_item(item)
+            if len(category.get_all_items()) == 0:
+                self.remove_category(category)
 
     def add_item_to_favourites(self, path):
         """
@@ -200,11 +246,11 @@ class Library(object):
         category = self.get_category_by_id(-1)
         if not category:
             category = Category(-1, self.favs_alias)
-            self.categories.insert(0, category)
+            self.insert_category(0, category)
         if not category.get_item_by_path(path):
             item = self.get_item_by_path(path)
             if item:
-                category.items.append(item)
+                category.append_item(item)
 
     def is_in_favourites(self, path):
         """
@@ -228,7 +274,7 @@ class Library(object):
         if category:
             item = category.get_item_by_path(path)
             if item:
-                category.items.remove(item)
+                category.remove_item(item)
 
     def get_category_by_id(self, category_id):
         """
@@ -238,9 +284,10 @@ class Library(object):
 
         :returns: category or None
         """
-        for category in self.categories:
-            if category.id == category_id:
-                return category
+        try:
+            return self._dict_categories[category_id]
+        except KeyError:
+            _LOG.warning('No such category in the library: {}.'.format(category_id))
 
     def get_item_by_id(self, item_id):
         """
@@ -250,9 +297,10 @@ class Library(object):
 
         :returns: item or None
         """
-        for item in self.items:
-            if item.id == item_id:
-                return item
+        try:
+            return self._dict_items[item_id]
+        except KeyError:
+            _LOG.warning('No such item in the library: {}.'.format(item_id))
 
     def get_item_by_path(self, item_path):
         """
@@ -262,19 +310,81 @@ class Library(object):
 
         :returns: item or None
         """
-        for item in self.items:
-            if item.path == item_path:
-                return item
+        try:
+            return self._dict_items[item_path]
+        except KeyError:
+            _LOG.warning('No such item in the library: {}.'.format(item_path))
 
     def remove_item_by_path(self, item_path):
         """
-        Remove item with the given index.
+        Remove item with the given path.
 
-        :param item_path: path of the item
+        :param item_path: path of the item.
         """
-        for item in self.items:
-            if item.path == item_path:
-                self.items.remove(item)
+        try:
+            item = self._dict_items[item_path]
+            self._items.remove(item)
+            self._dict_items.pop(item_path)
+            self._dict_items.pop(item.id)
+        except (ValueError, KeyError):
+            _LOG.warning('No such item in the library: {}.'.format(item_path))
+
+    def append_item(self, item):
+        """
+        Add item to the library.
+
+        :param item: item instance.
+        """
+        self._items.append(item)
+        self._dict_items[item.path] = item
+        self._dict_items[item.id] = item
+
+    def append_category(self, category):
+        """
+        Add category to the library.
+
+        :param category: category instance.
+        """
+        self._categories.append(category)
+        self._dict_categories[category.id] = category
+
+    def insert_category(self, idx, category):
+        """
+        Insert category to the library.
+
+        :param idx: index, integer.
+        :param category: category instance.
+        """
+        self._categories.insert(idx, category)
+        self._dict_categories[category.id] = category
+
+    def remove_category(self, category):
+        """
+        Remove category from the library.
+
+        :param category: category instance.
+        """
+        try:
+            self._categories.remove(category)
+            self._dict_categories.pop(category.id)
+        except (ValueError, KeyError):
+            _LOG.warning('No such category in the library: {}.'.format(category))
+
+    def get_all_items(self):
+        """
+        Get all items from the library.
+
+        :return: list of items.
+        """
+        return self._items.copy()
+
+    def get_all_categories(self):
+        """
+        Get all categories from the library.
+
+        :return: list of categories.
+        """
+        return self._categories.copy()
 
 
 class _Scanner(object):
@@ -289,7 +399,7 @@ class _Scanner(object):
 
         :returns: set with paths to all items
         """
-        return set([item.path for item in self.library.items])
+        return set([item.path for item in self.library.get_all_items()])
 
     def scan(self):
         """
@@ -311,11 +421,11 @@ class _Scanner(object):
                     self.library.exec_for_all(
                         new_category, new_item, item_path,
                         current, os.path.split(current)[-1], files)
-                new_category.items.append(new_item)
-                self.library.items.append(new_item)
+                new_category.append_item(new_item)
+                self.library.append_item(new_item)
                 next_item_id += 1
-            if len(new_category.items) > 0:
-                self.library.categories.append(new_category)
+            if len(new_category.get_all_items()) > 0:
+                self.library.append_category(new_category)
                 next_cat_id += 1
 
     def _generate_category_name(self, path):
