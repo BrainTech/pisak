@@ -101,7 +101,7 @@ class Category(object):
 
         :return: list of items.
         """
-        return self._items.copy()
+        return self._items
 
 
 '''Single item from the media library.
@@ -376,7 +376,7 @@ class Library(object):
 
         :return: list of items.
         """
-        return self._items.copy()
+        return self._items
 
     def get_all_categories(self):
         """
@@ -384,7 +384,7 @@ class Library(object):
 
         :return: list of categories.
         """
-        return self._categories.copy()
+        return self._categories
 
 
 class _Scanner(object):
