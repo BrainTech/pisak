@@ -35,11 +35,10 @@ def load_all():
     database_manager.collect_garbage()
     folder_tree = defaultdict(list)
     last_load_time = _get_last_load_time()
-    for current in [_LIBRARY_DIR] + \
-                   [os.path.join(_LIBRARY_DIR, subdir) for
-                    subdir in os.listdir(_LIBRARY_DIR) if
-                    os.path.isdir(subdir)]:
-        if os.path.getmtime(current) > last_load_time:
+    for current in [_LIBRARY_DIR] + os.listdir(_LIBRARY_DIR):
+        if current is not _LIBRARY_DIR:
+            current = os.path.join(_LIBRARY_DIR, current)
+        if os.path.isdir(current) and os.path.getmtime(current) > last_load_time:
             # use os.walk here only to find all the files in
             # the current directory:
             for _, _, files in os.walk(current):
