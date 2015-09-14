@@ -35,26 +35,29 @@ def load_all():
     database_manager.collect_garbage()
     folder_tree = defaultdict(list)
     last_load_time = _get_last_load_time()
-    for current, subdirs, files in os.walk(_LIBRARY_DIR):
-        if current is _LIBRARY_DIR:
-            first_level_folders = list(map(lambda subdir:
-                            os.path.join(current, subdir), subdirs))
-            scanned = [_LIBRARY_DIR] + first_level_folders
-        if os.path.getmtime(current) > last_load_time and current in scanned:
-            folder_name = os.path.split(current)[-1].lower()
-            cover_path = utils.find_folder_image(
-                files, folder_name, current, _COVER_EXTENSIONS)
-            if not cover_path:
-                cover_path = os.path.join(current, _FAKE_COVER_NAME)
-                utils.produce_identicon(current, save_path=cover_path)
-            for file_name in files:
-                path = os.path.join(current, file_name)
-                meta = _get_metadata(path, file_name)
-                if meta:
-                    folder_tree[folder_name].append([meta["TITLE"],
-                                path, meta["TRACKNUMBER"], meta["DATE"],
-                                cover_path, meta["ALBUM"], meta["ARTIST"],
-                                meta["GENRE"]])
+    for current in [_LIBRARY_DIR] + \
+                   [os.path.join(_LIBRARY_DIR, subdir) for
+                    subdir in os.listdir(_LIBRARY_DIR) if
+                    os.path.isdir(subdir)]:
+        if os.path.getmtime(current) > last_load_time:
+            # use os.walk here only to find all the files in
+            # the current directory:
+            for _, _, files in os.walk(current):
+                folder_name = os.path.split(current)[-1].lower()
+                cover_path = utils.find_folder_image(
+                    files, folder_name, current, _COVER_EXTENSIONS)
+                if not cover_path:
+                    cover_path = os.path.join(current, _FAKE_COVER_NAME)
+                    utils.produce_identicon(current, save_path=cover_path)
+                for file_name in files:
+                    path = os.path.join(current, file_name)
+                    meta = _get_metadata(path, file_name)
+                    if meta:
+                        folder_tree[folder_name].append([meta["TITLE"],
+                                    path, meta["TRACKNUMBER"], meta["DATE"],
+                                    cover_path, meta["ALBUM"], meta["ARTIST"],
+                                    meta["GENRE"]])
+                break
 
     database_manager.insert_folder_tree(folder_tree)
     _update_last_load_time(time.time())
@@ -64,8 +67,8 @@ def _get_last_load_time():
     if not os.path.isfile(_LOAD_TRACKER):
         return 0
     else:
-        return float(configobj.ConfigObj(_LOAD_TRACKER, encoding='UTF8').get(
-            "last_load_time"))
+        return configobj.ConfigObj(
+            _LOAD_TRACKER, encoding='UTF8').as_float("last_load_time")
 
 
 def _update_last_load_time(time):
