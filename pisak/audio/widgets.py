@@ -4,7 +4,7 @@ Module containing widgets specific to the Pisak audio player application.
 from gi.repository import Mx, GObject
 
 from pisak import res, widgets, configurator, properties, pager
-from pisak.audio import database_manager
+from pisak.audio import db_manager
 
 
 class FoldersSource(pager.DataSource):
@@ -15,17 +15,17 @@ class FoldersSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data = database_manager.get_all_folders_with_covers()
+        self.data = db_manager.get_all_folders()
 
-    def _produce_item(self, data_item):
+    def _produce_item(self, folder):
         tile = widgets.PhotoTile()
         self._prepare_item(tile)
         tile.style_class = "PisakAudioFolderTile"
         tile.hilite_tool = widgets.Aperture()
-        tile.connect("clicked", self.item_handler, data_item[0].id)
+        tile.connect("clicked", self.item_handler, folder['id'])
         tile.scale_mode = Mx.ImageScaleMode.FIT
-        tile.preview_path = data_item[1]
-        tile.label_text = data_item[0].name
+        tile.preview_path = folder['cover_path']
+        tile.label_text = folder['name']
         return tile
 
 
@@ -37,16 +37,15 @@ class PlaylistSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data_sets_count = len(
-            database_manager.get_all_folders_with_covers())
-        self.data_generator = database_manager.get_tracks_from_folder
+        self.data_sets_count = db_manager.get_folder_count()
+        self.data_generator = db_manager.get_tracks_from_folder
 
-    def _produce_item(self, data_item):
+    def _produce_item(self, track):
         button = widgets.Button()
         self._prepare_item(button)
         button.set_style_class("PisakAudioPlaylistButton")
-        button.set_label("_ ".join([str(self.data.index(data_item)+1), data_item.title]))
-        button.path = data_item.path
-        button.info = [data_item.artist, data_item.album]
-        button.visual_path = data_item.cover_path
+        button.set_label("_ ".join([str(self.data.index(track)+1), track['title']]))
+        button.path = track['path']
+        button.info = [track['artist'], track['album']]
+        button.visual_path = track['cover_path']
         return button

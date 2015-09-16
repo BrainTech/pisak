@@ -2,12 +2,11 @@ import os
 import re
 import time
 import configobj
-from collections import defaultdict
 
 import taglib
 
 from pisak import res, dirs, utils, logger
-from pisak.audio import database_manager
+from pisak.audio import db_manager
 
 
 _LOG = logger.get_logger(__name__)
@@ -32,9 +31,9 @@ def load_all():
     Load information about the music library in the filesystem and
     insert them to the database.
     """
-    database_manager.collect_garbage()
-    folder_tree = defaultdict(list)
     last_load_time = _get_last_load_time()
+    tracks = list()
+    db = db_manager.DBLoader()
     for current in [_LIBRARY_DIR] + os.listdir(_LIBRARY_DIR):
         if current is not _LIBRARY_DIR:
             current = os.path.join(_LIBRARY_DIR, current)
@@ -42,23 +41,31 @@ def load_all():
             # use os.walk here only to find all the files in
             # the current directory:
             for _, _, files in os.walk(current):
-                folder_name = os.path.split(current)[-1].lower()
-                cover_path = utils.find_folder_image(
-                    files, folder_name, current, _COVER_EXTENSIONS)
-                if not cover_path:
-                    cover_path = os.path.join(current, _FAKE_COVER_NAME)
-                    utils.produce_identicon(current, save_path=cover_path)
-                for file_name in files:
-                    path = os.path.join(current, file_name)
-                    meta = _get_metadata(path, file_name)
-                    if meta:
-                        folder_tree[folder_name].append([meta["TITLE"],
-                                    path, meta["TRACKNUMBER"], meta["DATE"],
-                                    cover_path, meta["ALBUM"], meta["ARTIST"],
-                                    meta["GENRE"]])
+                if files:
+                    folder_name = os.path.split(current)[-1]
+                    cover_path = utils.find_folder_image(
+                        files, folder_name.lower(), current, _COVER_EXTENSIONS)
+                    if not cover_path:
+                        cover_path = os.path.join(current, _FAKE_COVER_NAME)
+                        utils.produce_identicon(current, save_path=cover_path)
+                    folder_id = db.insert_folder(folder_name, cover_path)
+                    for file_name in files:
+                        path = os.path.join(current, file_name)
+                        meta = _get_metadata(path, file_name)
+                        if meta:
+                            tracks.append({
+                                'path': path,
+                                'title': meta["TITLE"],
+                                'no': meta["TRACKNUMBER"],
+                                'year': meta["DATE"],
+                                'cover_path': cover_path,
+                                'album': meta["ALBUM"],
+                                'genre': meta["GENRE"],
+                                'artist': meta["ARTIST"],
+                                'folder_id': folder_id})
                 break
-
-    database_manager.insert_folder_tree(folder_tree)
+    db.insert_many_tracks(tracks)
+    db.close()
     _update_last_load_time(time.time())
 
 
