@@ -1,7 +1,8 @@
 """
 Basic classes for Pisak application.
 """
-import sys, os
+import sys
+import os
 
 from gi.repository import Gtk, GObject, Clutter, Mx, ClutterGst, GtkClutter
 
@@ -46,7 +47,9 @@ class _Application(configurator.Configurable):
         # between actual quit of the loop and setting the flag 'False':
         self.main_loop_is_running = False
 
-        self._sound_effects_player = None
+        # player of any audio effects:
+        self.sound_effects_player = None
+
         self._sound_effects = {}
 
         self._read_descriptor(descriptor)
@@ -96,7 +99,7 @@ class _Application(configurator.Configurable):
 
     def _initialize_sound_effects_player(self):
         if self.sound_effects_enabled:
-            self._sound_effects_player = sound_effects.SoundEffectsPlayer(
+            self.sound_effects_player = sound_effects.SoundEffectsPlayer(
                 self._sound_effects)
 
     def play_sound_effect(self, sound_name):
@@ -106,8 +109,8 @@ class _Application(configurator.Configurable):
 
         :param sound_name: name of the sound to be played
         """
-        if self._sound_effects_player is not None:
-            self._sound_effects_player.play(sound_name)
+        if self.sound_effects_player is not None:
+            self.sound_effects_player.play(sound_name)
 
     def create_window(self, argv, descriptor):
         """
@@ -153,10 +156,9 @@ class _Application(configurator.Configurable):
 
 
 class ClutterApp(_Application):
-    '''
+    """
     Implementation of a Clutter-based application.
-    '''
-
+    """
     def create_window(self, argv, descriptor):
         clutter_window = window.Window(self, Clutter.Stage(), descriptor)
         clutter_window.stage.set_title('Pisak Main')
@@ -186,9 +188,9 @@ class ClutterApp(_Application):
 
 
 class GtkApp(_Application):
-    '''
+    """
     Implementation of application for JSON descriptors inside GtkWindow.
-    '''
+    """
     def __init__(self, argv, descriptor):
         Gtk.init(sys.argv)
         super().__init__(argv, descriptor)

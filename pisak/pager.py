@@ -1,9 +1,8 @@
-'''
+"""
 Basic implementation of sliding page widget.
-'''
+"""
 import threading
 import itertools
-import time
 from math import ceil
 from collections import OrderedDict
 from functools import total_ordering
@@ -27,7 +26,7 @@ class DataItem:
     Data items can be compared with each another and thus can be sorted.
 
     :param content: proper data content.
-    :param cmp_key: key used for comparisions.
+    :param cmp_key: key used for comparisons.
     """
     def __init__(self, content, cmp_key, flags=None):
         self.content = content
@@ -161,18 +160,19 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     }
 
     def __init__(self):
-        self.custom_topology = False
+        self._custom_topology = False
+        self._length = 0
+        self._data = None
+        self._data_set_id = None
+        self._target_spec = None
+        self._lazy_loading = False
+
         self.from_idx = 0
         self.to_idx = 0
         self.data_sets_count = 0
         self.data_generator = None
-        self._target_spec = None
-        self._data = None
-        self.data_set_id = None
         self.item_handler = None
         self._data_sorting_key = None
-        # data buffer length.
-        self._length = 0
         # synchronization for an access to the `data` buffer.
         self._lock = threading.RLock()
         # something to do when new data is available..
@@ -333,8 +333,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         :param part: number of subset of the set of all data items
         """
         data = self.data[part]
-        self.target_spec["columns"] = len(data[0]) # custom number of columns
-        self.target_spec["rows"] = len(data) # custom number of rows
+        self.target_spec["columns"] = len(data[0])  # custom number of columns
+        self.target_spec["rows"] = len(data)  # custom number of rows
         items = []
         for row in data:
             items_row = []
@@ -398,7 +398,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         :return: list of data items or None if in the lazy loading mode.
         """
         self.from_idx = self.to_idx % self._length if \
-                                        self._length > 0 else 0
+                            self._length > 0 else 0
         self.to_idx = min(self.from_idx + count, self._length)
 
         if self.lazy_loading:
@@ -625,14 +625,14 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def _clean_up_lazy(self):
         """
-        Take any actions neccessary for cleaning after the lazy loader.
+        Take any actions necessary for cleaning after the lazy loader.
         """
         self._lazy_loader.stop()
 
     def get_data_ids_list(self):
-        '''
+        """
         Get list of identifiers of all the data items.
-        '''
+        """
         return self._ids.copy()
 
     # ----------------- END OF LAZY LOADING METHODS ------------------ #
@@ -642,7 +642,7 @@ class _Page(scanning.Group):
     """
     Page widget supplied to pager as its content.
     """
-    def __init__(self, items, spacing, strategy, width, height):
+    def __init__(self, items, spacing, strategy):
         super().__init__()
         self.items = []  # flat container for the page content
         self.strategy = strategy
@@ -740,6 +740,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self._data_source = None
         self._inited = False
         self._page_strategy = None
+        self._idle_duration = 0
         self._page_ratio_spacing = 0
         self._rows = 3
         self._columns = 4
@@ -784,9 +785,9 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             value.on_new_data = self.on_new_items
             self.connect('destroy', lambda *_: value.clean_up)
             value.connect("data-is-ready", lambda *_:
-                                self._show_initial_page())
+                          self._show_initial_page())
             value.connect('length-changed', lambda _, length:
-                                self._calculate_page_count(length))
+                          self._calculate_page_count(length))
 
     @property
     def rows(self):
@@ -830,23 +831,20 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self.page_count = data_length
         else:
             self.page_count = ceil(data_length /
-                                            (self.rows*self.columns))
+                                   (self.rows*self.columns))
 
     def _introduce_new_page(self, items):
         """
         Method for adding and displaying new page and disposing of the old one.
         When 'direction' is 0 then adjusting the content of the new page happens
         immediately, otherwise it is performed in the `_clean_up` method when
-        any page transisions are already over.
+        any page transitions are already over.
 
         :param items: list of items to be placed on the new page.
 
         :return: None.
         """
-        _new_page = _Page(items, self.page_spacing,
-                          self.page_strategy,
-                          self.get_width(), self.get_height())
-
+        _new_page = _Page(items, self.page_spacing, self.page_strategy)
         direction = self._current_direction
         if direction == 0:
             self._current_page = _new_page
@@ -856,10 +854,10 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         else:
             self.old_page = self._current_page
             new_page_from = self.old_page.get_x() + direction * \
-                            self.old_page.get_width()
+                self.old_page.get_width()
             new_page_to = self.old_page.get_x()
             old_page_to = self.old_page.get_x() - direction * \
-                          self.old_page.get_width()
+                self.old_page.get_width()
             self._current_page = _new_page
             self._current_page.set_id(self.get_id() + "_page")
             self._current_page.set_x(new_page_from)
@@ -870,8 +868,8 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self.old_page.add_transition("x", self.old_page_transition)
             self._current_page.add_transition("x", self.new_page_transition)
         if self._page_count > 0:
-            self.emit("progressed", float(self.page_index+1) \
-                    / self._page_count, self.page_index+1)
+            self.emit("progressed", float(self.page_index+1) /
+                                    self._page_count, self.page_index+1)
         else:
             self.emit("progressed", 0, 0)
 
@@ -886,9 +884,10 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self._inited = True
             # create page specification needed for proper items adjustment
             self.data_source.target_spec = {"width": self.get_width(),
-                        "height": self.get_height(),
-                        "spacing": self.page_spacing,
-                        "rows": self.rows, "columns": self.columns}
+                                            "height": self.get_height(),
+                                            "spacing": self.page_spacing,
+                                            "rows": self.rows,
+                                            "columns": self.columns}
             self._current_direction = 0
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom(self.page_index)
@@ -899,7 +898,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             if items:
                 self._introduce_new_page(items)
 
-    def _automatic_timeout(self, data):
+    def _automatic_timeout(self, _data):
         """
         Handler function for the automatic page flipping timeout.
         """
@@ -909,7 +908,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         else:
             return False
 
-    def _clean_up(self, source, event):
+    def _clean_up(self, _source, _event):
         """
         Func used as a signal handler. Clean up after stoppage of the
         new page 'x' transition. Remove transitions and
@@ -980,7 +979,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         if self._page_count > 1:
             self.is_running = True
             Clutter.threads_add_timeout(0, self.idle_duration,
-                                    self._automatic_timeout, None)
+                                        self._automatic_timeout, None)
 
     def stop_automatic(self):
         """
@@ -998,7 +997,7 @@ class PageFlip(scanning.Group):
     """
     __gtype_name__ = "PisakPageFlip"
 
-    __gproperties__ =  {
+    __gproperties__ = {
         "target": (PagerWidget.__gtype__, "", "", GObject.PARAM_READWRITE),
     }
 
@@ -1023,6 +1022,7 @@ class PageFlip(scanning.Group):
         if self._target is not None:
             self._target.next_page()
             Clutter.threads_add_timeout(0, self._target.transition_duration,
-                                    lambda *_: self._target.scan_page(), None)
+                                        lambda *_: self._target.scan_page(),
+                                        None)
         else:
             _LOG.warning("PageFlip without target: " + self.get_id())
