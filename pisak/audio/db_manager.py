@@ -182,8 +182,8 @@ class DBLoader:
         if ret and ret.inserted_primary_key[0]:
             rowid = ret.inserted_primary_key[0]
         else:
-            rowid = self._execute(folders.select([folders.c.id]).where(
-                folders.c.name == folder['name'])).fetchone()['id']
+            rowid = self._execute(select([folders.c.id]).where(
+                folders.c.name == name)).fetchone()['id']
         return rowid
 
     def close(self):

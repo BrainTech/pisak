@@ -53,16 +53,10 @@ def load_all():
                         path = os.path.join(current, file_name)
                         meta = _get_metadata(path, file_name)
                         if meta:
-                            tracks.append({
-                                'path': path,
-                                'title': meta["TITLE"],
-                                'no': meta["TRACKNUMBER"],
-                                'year': meta["DATE"],
-                                'cover_path': cover_path,
-                                'album': meta["ALBUM"],
-                                'genre': meta["GENRE"],
-                                'artist': meta["ARTIST"],
-                                'folder_id': folder_id})
+                            meta.update({'path': path,
+                                         'cover_path': cover_path,
+                                         'folder_id': folder_id})
+                            tracks.append(meta)
                 break
     db.insert_many_tracks(tracks)
     db.close()
@@ -98,44 +92,44 @@ def _get_metadata(path, file_name):
 def _extract_title(tag, metadata, file_tags, file_name):
     if _extract_literal_tag(tag, metadata, file_tags):
         return
-    metadata["TITLE"] = os.path.splitext(file_name)[0]
+    metadata["title"] = os.path.splitext(file_name)[0]
 
 
 def _extract_tracknumber(tag, metadata, file_tags, file_name):
-    if _extract_numerical_tag(tag, metadata, file_tags):
+    if _extract_numerical_tag(tag, metadata, file_tags, 'no'):
         return
     no = _extract_number(file_name)
-    metadata["TRACKNUMBER"] = no if no else _UNKNOWN_NUMERICAL_TAG
+    metadata["no"] = no if no else _UNKNOWN_NUMERICAL_TAG
 
 
 def _extract_date(tag, metadata, file_tags, file_name):
-    if _extract_numerical_tag(tag, metadata, file_tags):
+    if _extract_numerical_tag(tag, metadata, file_tags, 'year'):
         return
-    metadata["DATE"] = _UNKNOWN_NUMERICAL_TAG
+    metadata["year"] = _UNKNOWN_NUMERICAL_TAG
 
 
 def _extract_other(tag, metadata, file_tags, file_name):
     if _extract_literal_tag(tag, metadata, file_tags):
         return
-    metadata[tag] = _UNKNOWN_LITERAL_TAG
+    metadata[tag.lower()] = _UNKNOWN_LITERAL_TAG
 
 
-def _extract_literal_tag(tag, metadata, file_tags):
-    if tag in file_tags.keys():
+def _extract_literal_tag(tag, metadata, file_tags, alias=None):
+    if tag in file_tags:
         value = file_tags[tag]
         if len(value) > 0:
-            metadata[tag] = value[0]
+            metadata[alias or tag.lower()] = value[0]
             return True
     return False
 
 
-def _extract_numerical_tag(tag, metadata, file_tags):
-    if tag in file_tags.keys():
+def _extract_numerical_tag(tag, metadata, file_tags, alias=None):
+    if tag in file_tags:
         value = file_tags[tag]
         if len(value) > 0:
             num = _extract_number(value[0])
             if num:
-                metadata[tag] = num
+                metadata[alias or tag.lower()] = num
                 return True
     return False
 
