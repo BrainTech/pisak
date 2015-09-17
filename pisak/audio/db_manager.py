@@ -1,11 +1,17 @@
 import os
 
 from sqlalchemy import Table, Column, Integer, String, Boolean, MetaData, \
-    ForeignKey, select, func, create_engine
+    ForeignKey, select, create_engine
 from sqlalchemy.exc import SQLAlchemyError
 
 from pisak import dirs, logger
 
+
+_FAVOURITES_FOLDER_ALIAS = 'ULUBIONE'
+
+_MUSIC_DB_PATH = os.path.join(dirs.HOME_PISAK_DIR, 'music.db')
+
+_ENGINE_URL = 'sqlite:///' + _MUSIC_DB_PATH
 
 _LOG = logger.get_logger(__name__)
 
@@ -31,15 +37,8 @@ tracks = Table('tracks', metadata,
         Column('genre', String, nullable=True),
         Column('artist', String, nullable=True),
         Column('favourite', Boolean, default=False),
-        Column('folder_id', Integer, ForeignKey("folders.id"), nullable=True)
+        Column('folder_id', Integer, ForeignKey('folders.id'), nullable=True)
 )
-
-
-_FAVOURITES_FOLDER_ALIAS = "ULUBIONE"
-
-_MUSIC_DB_PATH = os.path.join(dirs.HOME_PISAK_DIR, "music.db")
-
-_ENGINE_URL = "sqlite:///" + _MUSIC_DB_PATH
 
 
 engine = create_engine(_ENGINE_URL)
@@ -127,7 +126,7 @@ class DBConnector:
 
         :param track_path: path to the track
         """
-        ret = self._.execute(select([tracks.c.favourite]).where(
+        ret = self._execute(select([tracks.c.favourite]).where(
             tracks.c.path == track_path)).fetchone()['favourite']
         self._close_connection()
         return ret
