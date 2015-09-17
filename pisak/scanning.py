@@ -539,6 +539,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._unwind_to = None
         self.timeout_token = None
         self.player = pisak.app._sound_effects_player
+        self.sound_support_enabled = pisak.config.as_bool("read_button") and \
+                             pisak.config.as_bool("sound_effects_enabled")
         self.apply_props()
 
     @property
@@ -724,8 +726,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if pisak.config.as_bool("read_button") and pisak.config.as_bool("sound_effects_enabled") and \
-               isinstance(selection, pisak.widgets.Button):
+            if self.sound_support_enabled and \
+                    isinstance(selection, pisak.widgets.Button):
                 if selection.get_label() in selection.sounds.keys():
                     self.player.play(selection.sounds[selection.get_label()])
                 elif selection.get_label() in [' ', '']:
