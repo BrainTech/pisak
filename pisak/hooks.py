@@ -5,7 +5,7 @@ import sys
 import threading
 import traceback
 
-from . import logger
+from pisak import logger
 
 
 _LOG = logger.get_logger(__file__)
