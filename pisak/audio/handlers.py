@@ -10,8 +10,9 @@ def add_or_remove_from_favs(playback):
     :param playback: media playback with audio to be marked as favourite
     """
     path = playback.filename
-    if db_manager.is_track_in_favourites(path):
-        db_manager.remove_track_from_favourites(path)
+    db = db_manager.DBConnector()
+    if db.is_track_in_favourites(path):
+        db.remove_track_from_favourites(path)
     else:
-       db_manager.add_track_to_favourites(path)
-    
+        db.add_track_to_favourites(path)
+

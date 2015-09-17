@@ -2,6 +2,7 @@ import os
 
 from sqlalchemy import Table, Column, Integer, String, Boolean, MetaData, \
     ForeignKey, select, func, create_engine
+from sqlalchemy.exc import SQLAlchemyError
 
 from pisak import dirs, logger
 
@@ -46,111 +47,121 @@ engine = create_engine(_ENGINE_URL)
 metadata.create_all(engine)
 
 
-def get_folder_count():
+class DBConnector:
     """
-    Get number of folders.
-    """
-    conn = engine.connect()
-    favs = 1 if conn.execute(select([tracks]).where(tracks.c.favourite)).fetchone() else 0
-    count = len(conn.execute(select([folders])).fetchall()) + favs
-    conn.close()
-    return count
-
-
-def get_all_folders():
-    """
-    Get all available folders.
-    """
-    conn = engine.connect()
-    folders_list = conn.execute(select([folders])).fetchall()
-    for folder in folders_list:
-        if not conn.execute(select([tracks]).where(tracks.c.folder_id == folder['id'])).fetchone():
-            conn.execute(folders.delete().where(folders.c.id == folder['id']))
-            folders_list.remove(folder)
-    _include_fake_favourites_folder(conn, folders_list)
-    conn.close()
-    return folders_list
-
-
-def _include_fake_favourites_folder(conn, folders_list):
-    sample_fav = conn.execute(select([tracks.c.cover_path]).where(
-        tracks.c.favourite)).fetchone()
-    if sample_fav:
-        folders_list.append({'id': -1,
-                             'name': _FAVOURITES_FOLDER_ALIAS,
-                             'cover_path': sample_fav['cover_path']})
-
-
-def get_tracks_from_folder(folder_id):
-    """
-    Get tracks from the folder with the given index.
-
-    :param folder_id: index of the folder, -1 for the favourites folder.
-    """
-    conn = engine.connect()
-    if _is_folder(conn, folder_id):
-        ret = conn.execute(select([tracks]).where(
-            tracks.c.folder_id == folder_id).order_by(tracks.c.no)).fetchall()
-    else:
-        ret = _get_favourite_tracks(conn)
-    conn.close()
-    return ret
-
-
-def _is_folder(conn, folder_id):
-    return conn.execute(select([folders]).where(folders.c.id == folder_id)).fetchone()
-
-
-def _get_favourite_tracks(conn):
-    return conn.execute(select([tracks]).where(tracks.c.favourite)).fetchall()
-
-
-def is_track_in_favourites(track_path):
-    """
-    Check if track with the given path is in the favourites
-
-    :param path: path to the track
-    """
-    return engine.execute(select([tracks.c.favourite]).where(
-        tracks.c.path == track_path)).fetchone()['favourite']
-
-
-def remove_track_from_favourites(track_path):
-    """
-    Remove track with the given path from the favourites
-
-    :param path: path to the track
-    """
-    _toggle_favourite(track_path, False)
-
-
-def add_track_to_favourites(track_path):
-    """
-    Add track with the given path to the favourites
-
-    :param path: path to the track
-    """
-    _toggle_favourite(track_path, True)
-
-
-def _toggle_favourite(track_path, boolean):
-    engine.execute(tracks.update().where(tracks.c.path == track_path).values(favourite=boolean))
-
-
-class DBLoader:
-    """
-    Use this to update the music library.
+    Database connector.
     """
 
     def __init__(self):
-        self._conn = engine.connect()
-        self._collect_garbage()
+        self._conn = None
 
     def _execute(self, *args, **kwargs):
         try:
+            if not self._conn:
+                self._conn = engine.connect()
             return self._conn.execute(*args, **kwargs)
-        except Exception as exc:
+        except SQLAlchemyError as exc:
             _LOG.error(exc)
+
+    def _close_connection(self):
+        if self._conn:
+            try:
+                self._conn.close()
+                self._conn = None
+            except SQLAlchemyError as exc:
+                _LOG.error(exc)
+
+    def get_folder_count(self):
+        """
+        Get number of folders.
+        """
+        favs = 1 if self._execute(select([tracks]).where(tracks.c.favourite)).fetchone() else 0
+        count = len(self._execute(select([folders])).fetchall()) + favs
+        self._close_connection()
+        return count
+
+    def get_all_folders(self):
+        """
+        Get all available folders.
+        """
+        folders_list = self._execute(select([folders])).fetchall()
+        for folder in folders_list:
+            if not self._execute(select([tracks]).where(tracks.c.folder_id == folder['id'])).fetchone():
+                self._execute(folders.delete().where(folders.c.id == folder['id']))
+                folders_list.remove(folder)
+        self._include_fake_favourites_folder(folders_list)
+        self._close_connection()
+        return folders_list
+
+    def _include_fake_favourites_folder(self, folders_list):
+        sample_fav = self._execute(select([tracks.c.cover_path]).where(
+            tracks.c.favourite)).fetchone()
+        if sample_fav:
+            folders_list.append({'id': -1,
+                                 'name': _FAVOURITES_FOLDER_ALIAS,
+                                 'cover_path': sample_fav['cover_path']})
+
+    def get_tracks_from_folder(self, folder_id):
+        """
+        Get tracks from the folder with the given index.
+
+        :param folder_id: index of the folder, -1 for the favourites folder.
+        """
+        if self._is_folder(folder_id):
+            ret = self._execute(select([tracks]).where(
+                tracks.c.folder_id == folder_id).order_by(tracks.c.no)).fetchall()
+        else:
+            ret = self._get_favourite_tracks()
+        self._close_connection()
+        return ret
+
+    def _is_folder(self, folder_id):
+        return self._execute(select([folders]).where(folders.c.id == folder_id)).fetchone()
+
+    def _get_favourite_tracks(self):
+        return self._execute(select([tracks]).where(tracks.c.favourite)).fetchall()
+
+    def is_track_in_favourites(self, track_path):
+        """
+        Check if track with the given path is in the favourites
+
+        :param track_path: path to the track
+        """
+        ret = self._.execute(select([tracks.c.favourite]).where(
+            tracks.c.path == track_path)).fetchone()['favourite']
+        self._close_connection()
+        return ret
+
+    def remove_track_from_favourites(self, track_path):
+        """
+        Remove track with the given path from the favourites
+
+        :param track_path: path to the track
+        """
+        self._toggle_favourite(track_path, False)
+
+    def add_track_to_favourites(self, track_path):
+        """
+        Add track with the given path to the favourites
+
+        :param track_path: path to the track
+        """
+        self._toggle_favourite(track_path, True)
+
+    def _toggle_favourite(self, track_path, boolean):
+        self._execute(tracks.update().where(tracks.c.path == track_path).values(favourite=boolean))
+        self._close_connection()
+
+
+class DBLoader(DBConnector):
+    """
+    Use this to update the music library.
+    Use `close` method when done.
+    """
+
+    def __init__(self):
+        super().__init__()
+        self._collect_garbage()
 
     def _collect_garbage(self):
         """
@@ -190,4 +201,4 @@ class DBLoader:
         """
         Close the db loader, close any open connections.
         """
-        self._conn.close()
+        self._close_connection()

@@ -15,7 +15,7 @@ class FoldersSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data = db_manager.get_all_folders()
+        self.data = db_manager.DBConnector().get_all_folders()
 
     def _produce_item(self, folder):
         tile = widgets.PhotoTile()
@@ -37,8 +37,9 @@ class PlaylistSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data_sets_count = db_manager.get_folder_count()
-        self.data_generator = db_manager.get_tracks_from_folder
+        db = db_manager.DBConnector()
+        self.data_sets_count = db.get_folder_count()
+        self.data_generator = db.get_tracks_from_folder
 
     def _produce_item(self, track):
         button = widgets.Button()
