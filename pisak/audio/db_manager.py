@@ -73,20 +73,42 @@ class DBConnector:
     def get_folder_count(self):
         """
         Get number of folders.
+
+        :return: integer, number of folders.
         """
-        favs = 1 if self._execute(select([tracks]).where(tracks.c.favourite)).fetchone() else 0
+        favs = 1 if self._execute(select([tracks]).where(
+            tracks.c.favourite)).fetchone() else 0
         count = len(self._execute(select([folders])).fetchall()) + favs
         self._close_connection()
         return count
 
+    def get_folders_ids(self):
+        """
+        Get list of ids of all the folders from the database.
+
+        :return: list of ids of all the folders,
+        including -1 for fake favourites if there are any favourite tracks.
+        """
+        ids = [row['id'] for row in
+               self._execute(select([folders.c.id])).fetchall()]
+        if self._execute(select([tracks]).where(
+                tracks.c.favourite)).fetchone():
+            ids.insert(0, -1)  # for fake favourites folder
+        self._close_connection()
+        return ids
+
     def get_all_folders(self):
         """
         Get all available folders.
+
+        :return: list of all folders.
         """
         folders_list = self._execute(select([folders])).fetchall()
         for folder in folders_list:
-            if not self._execute(select([tracks]).where(tracks.c.folder_id == folder['id'])).fetchone():
-                self._execute(folders.delete().where(folders.c.id == folder['id']))
+            if not self._execute(select([tracks]).where(
+                    tracks.c.folder_id == folder['id'])).fetchone():
+                self._execute(folders.delete().where(
+                    folders.c.id == folder['id']))
                 folders_list.remove(folder)
         self._include_fake_favourites_folder(folders_list)
         self._close_connection()
@@ -105,6 +127,8 @@ class DBConnector:
         Get tracks from the folder with the given index.
 
         :param folder_id: index of the folder, -1 for the favourites folder.
+
+        :return: list of tracks.
         """
         if self._is_folder(folder_id):
             ret = self._execute(select([tracks]).where(
@@ -115,7 +139,8 @@ class DBConnector:
         return ret
 
     def _is_folder(self, folder_id):
-        return self._execute(select([folders]).where(folders.c.id == folder_id)).fetchone()
+        return self._execute(select([folders]).where(
+            folders.c.id == folder_id)).fetchone()
 
     def _get_favourite_tracks(self):
         return self._execute(select([tracks]).where(tracks.c.favourite)).fetchall()
@@ -124,7 +149,9 @@ class DBConnector:
         """
         Check if track with the given path is in the favourites
 
-        :param track_path: path to the track
+        :param track_path: path to the track.
+
+        :return: True or False.
         """
         ret = self._execute(select([tracks.c.favourite]).where(
             tracks.c.path == track_path)).fetchone()['favourite']
@@ -148,7 +175,8 @@ class DBConnector:
         self._toggle_favourite(track_path, True)
 
     def _toggle_favourite(self, track_path, boolean):
-        self._execute(tracks.update().where(tracks.c.path == track_path).values(favourite=boolean))
+        self._execute(tracks.update().where(
+            tracks.c.path == track_path).values(favourite=boolean))
         self._close_connection()
 
 

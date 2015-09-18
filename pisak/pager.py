@@ -168,7 +168,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.data_generator = None
         self._target_spec = None
         self._data = None
-        self.data_set_id = None
+        self._data_set_idx = None
         self.item_handler = None
         self._data_sorting_key = None
         # data buffer length.
@@ -177,6 +177,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lock = threading.RLock()
         # something to do when new data is available..
         self.on_new_data = None
+        self.data_sets_ids_list = None
 
         self._init_lazy_props()
 
@@ -255,14 +256,21 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._item_preview_ratio_width = value
 
     @property
-    def data_set_id(self):
-        return self._data_set_id
+    def data_set_idx(self):
+        return self._data_set_idx
 
-    @data_set_id.setter
-    def data_set_id(self, value):
-        self._data_set_id = value
-        if value is not None and self.data_generator is not None and \
-           value <= self.data_sets_count:
+    @data_set_idx.setter
+    def data_set_idx(self, value):
+        self._data_set_idx = value
+        if self.data_generator is not None:
+            if self.data_sets_ids_list and value <= \
+                    len(self.data_sets_ids_list):
+                value = self.data_sets_ids_list[value-1]
+            elif value <= self.data_sets_count:
+                pass
+            else:
+                return  # invalid params for the data generator
+
             self.data = self.data_generator(value)
 
     @property
@@ -432,19 +440,19 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def next_data_set(self):
         """
-        Move to the next data set if avalaible.
+        Move to the next data set if available.
         """
-        if self.data_set_id is not None:
-            self.data_set_id = self.data_set_id + 1 if \
-                               self.data_set_id < self.data_sets_count else 1
+        if self.data_set_idx is not None:
+            self.data_set_idx = self.data_set_idx + 1 if \
+                               self.data_set_idx < self.data_sets_count else 1
 
     def previous_data_set(self):
         """
         Move to the previous data set if avalaible.
         """
-        if self.data_set_id is not None:
-            self.data_set_id = self.data_set_id - 1 if \
-                               self.data_set_id > 1 else self.data_sets_count
+        if self.data_set_idx is not None:
+            self.data_set_idx = self.data_set_idx - 1 if \
+                               self.data_set_idx > 1 else self.data_sets_count
 
     def get_all_items(self):
         """
@@ -630,9 +638,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_loader.stop()
 
     def get_data_ids_list(self):
-        '''
+        """
         Get list of identifiers of all the data items.
-        '''
+        """
         return self._ids.copy()
 
     # ----------------- END OF LAZY LOADING METHODS ------------------ #

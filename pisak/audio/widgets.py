@@ -38,7 +38,8 @@ class PlaylistSource(pager.DataSource):
     def __init__(self):
         super().__init__()
         db = db_manager.DBConnector()
-        self.data_sets_count = db.get_folder_count()
+        self.data_sets_ids_list = db.get_folders_ids()
+        self.data_sets_count = len(self.data_sets_ids_list)
         self.data_generator = db.get_tracks_from_folder
 
     def _produce_item(self, track):
