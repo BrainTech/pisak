@@ -108,7 +108,7 @@ def get_symbols_from_spreadsheet():
     :returns: topology of symbols pages, list of lists, each for one page,
     of lists, each for one row, of symbols or Nones, for an empty fields.
     """
-    spreadsheet = dirs.HOME_SYMBOLS_SPREADSHEET
+    spreadsheet = os.path.join(dirs.HOME_SYMBOLS_SHEETS, "symbols_topology.ods")
     try:
         file = ezodf.opendoc(spreadsheet)
     except OSError:
