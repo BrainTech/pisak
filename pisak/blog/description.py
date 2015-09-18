@@ -275,24 +275,24 @@ def prepare_speller_comment_view(app, window, script, data):
          window, script, "button_proceed", data['previous_view'], data)
 
 
-_blog_app = {
-        "app": "blog",
-        "type": "gtk",
-        "views": [
-            ("main", prepare_main_view),
-            ("about_me", prepare_about_me_view),
-            ("all_posts", prepare_all_posts_view),
-            ("single_post", prepare_single_post_view),
-            ("followed_blogs", prepare_followed_blogs_view),
-            ("speller_post", prepare_speller_post_view),
-            ("speller_title", prepare_speller_title_view),
-            ("viewer_library", prepare_viewer_library_view),
-            ("viewer_album", prepare_viewer_album_view),
-            ("speller_about_me", prepare_speller_about_me_view),
-            ("viewer_about_me_library", prepare_viewer_about_me_library_view),
-            ("viewer_about_me_album", prepare_viewer_about_me_album_view),
-            ("followed_blog_single_post", prepare_followed_blog_single_post_view),
-            ("followed_blog_all_posts", prepare_followed_blog_all_posts_view),
-            ("speller_comment", prepare_speller_comment_view)
-        ]
+blog_app = {
+    "app": "blog",
+    "type": "gtk",
+    "views": [
+        ("main", prepare_main_view),
+        ("about_me", prepare_about_me_view),
+        ("all_posts", prepare_all_posts_view),
+        ("single_post", prepare_single_post_view),
+        ("followed_blogs", prepare_followed_blogs_view),
+        ("speller_post", prepare_speller_post_view),
+        ("speller_title", prepare_speller_title_view),
+        ("viewer_library", prepare_viewer_library_view),
+        ("viewer_album", prepare_viewer_album_view),
+        ("speller_about_me", prepare_speller_about_me_view),
+        ("viewer_about_me_library", prepare_viewer_about_me_library_view),
+        ("viewer_about_me_album", prepare_viewer_about_me_album_view),
+        ("followed_blog_single_post", prepare_followed_blog_single_post_view),
+        ("followed_blog_all_posts", prepare_followed_blog_all_posts_view),
+        ("speller_comment", prepare_speller_comment_view)
+    ]
 }

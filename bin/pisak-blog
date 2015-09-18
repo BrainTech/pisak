@@ -8,10 +8,10 @@ from gi.repository import GtkClutter
 import pisak
 from pisak import app_manager
 from pisak.blog import wordpress
-from pisak.blog.description import _blog_app
+from pisak.blog.description import blog_app
 
 if __name__ == "__main__":
     pisak.init()
     GtkClutter.init()
     wordpress.initialize_session()
-    app_manager.run(_blog_app)
+    app_manager.run(blog_app)
