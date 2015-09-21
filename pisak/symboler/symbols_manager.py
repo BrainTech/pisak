@@ -45,8 +45,8 @@ def assign_text_to_symbol(symbol, text):
     """
     Assign the text to the given symbol.
 
-    :param symbol: symbol identificator
-    :param text: text to be assigned to the symbol
+    :param symbol: symbol identifiers.
+    :param text: text to be assigned to the symbol.
     """
     model = configobj.ConfigObj(dirs.HOME_SYMBOLS_MODEL, encoding='UTF8')
     for section in model.keys():
@@ -59,8 +59,8 @@ def add_symbol_to_category(symbol, category):
     """
     Add a symbol to the given category.
 
-    :param symbol: symbol indentificator
-    :param category: name of the category
+    :param symbol: symbol identifiers.
+    :param category: name of the category.
     """
     model = configobj.ConfigObj(dirs.HOME_SYMBOLS_MODEL, encoding='UTF8')
     model[category][symbol] = model["ALL"][symbol]
@@ -71,7 +71,7 @@ def get_symbol(symbol):
     """
     Get symbol specified by the given id.
 
-    :param symbol: symbol identificator
+    :param symbol: symbol identifiers.
     """
     model = configobj.ConfigObj(dirs.HOME_SYMBOLS_MODEL, encoding='UTF8')
     if symbol in model["ALL"].keys():
@@ -82,7 +82,7 @@ def get_symbols(symbols_list):
     """
     Get all symbols specified in the given list.
 
-    :param symbols_list: list with symbols identificators
+    :param symbols_list: list with symbols identifiers.
     """
     symbols = []
     model = configobj.ConfigObj(dirs.HOME_SYMBOLS_MODEL, encoding='UTF8')
@@ -181,7 +181,7 @@ def parse_from_spreadsheets():
 
 def get_all_symbols():
     """
-    Get all avalaible symbols.
+    Get all available symbols.
     """
     return _get_symbols_from_section("ALL")
 
@@ -190,7 +190,7 @@ def get_symbols_from_category(category):
     """
     Get all symbols from the given directory.
 
-    :param category: category of symbols
+    :param category: category of symbols.
     """
     return _get_symbols_from_section(category)
 
@@ -211,8 +211,8 @@ def save_entry(name, entry):
     """
     Save the given entry.
 
-    :param entry: chain of symbols to be saved
-    :param title: title of the new entry
+    :param entry: chain of symbols to be saved.
+    :param title: title of the new entry.
     """
     entries = configobj.ConfigObj(dirs.HOME_SYMBOLS_ENTRY, encoding='UTF8')
     entries[name] = entry
