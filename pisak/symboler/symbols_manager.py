@@ -98,7 +98,6 @@ def _open_odf_spreadsheet(path):
         return ezodf.opendoc(path)
     except OSError as exc:
         _LOG.error(exc)
-        raise exceptions.PisakException(exc)
 
 
 def get_symbols_from_spreadsheet(spreadsheet=dirs.HOME_SYMBOLS_SPREADSHEET):
@@ -118,7 +117,7 @@ def get_symbols_from_spreadsheet(spreadsheet=dirs.HOME_SYMBOLS_SPREADSHEET):
                   get_symbol(sheet[row, col].value + ".png") else None
                       for col in range(sheet.ncols())]
                          for row in range(sheet.nrows())]
-                            for sheet in file.sheets]
+                            for sheet in file.sheets] if file else None
 
 
 def get_toc_spreadsheet():
@@ -151,9 +150,8 @@ def parse_from_spreadsheets():
     or None if no table of contents found.
     """
     toc_path = get_toc_spreadsheet()
-    try:
-        file = _open_odf_spreadsheet(toc_path)
-    except exceptions.PisakException as exc:
+    file = _open_odf_spreadsheet(toc_path)
+    if not file:
         return
 
     symbols = {}
@@ -170,9 +168,12 @@ def parse_from_spreadsheets():
                 if isinstance(val, str):
                     category = get_symbols_from_spreadsheet(
                         get_category_spreadsheet(val))
-                    symbols[val] = category
-                    flat.extend(category)
-                    row.append(val)
+                    if category:
+                        symbols[val] = category
+                        flat.extend(category)
+                        row.append(val)
+                    else:
+                        row.append(None)
                 else:
                     row.append(None)
     return symbols, toc, toc + flat
