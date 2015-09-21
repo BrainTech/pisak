@@ -154,7 +154,7 @@ def parse_from_spreadsheets():
     if not file:
         return
 
-    symbols = {}
+    categories_dict = {}
     toc = []
     flat = []
     for sheet in file.sheets:
@@ -169,14 +169,14 @@ def parse_from_spreadsheets():
                     category = get_symbols_from_spreadsheet(
                         get_category_spreadsheet(val))
                     if category:
-                        symbols[val] = category
+                        categories_dict[val] = category
                         flat.extend(category)
                         row.append(val)
                     else:
                         row.append(None)
                 else:
                     row.append(None)
-    return symbols, toc, toc + flat
+    return categories_dict, toc + flat
 
 
 def get_all_symbols():

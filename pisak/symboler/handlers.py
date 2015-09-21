@@ -11,7 +11,7 @@ def load_main(data_source):
     Load main content of the symboler, that is table of contents
     and then all the categories.
     """
-    data_source.reload(pisak.app.box['flat_data'])
+    data_source.reload(pisak.app.box['book'])
 
 
 @signals.registered_handler("symboler/save")

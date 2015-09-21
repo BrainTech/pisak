@@ -18,13 +18,12 @@ def prepare_symboler_view(app, window, script, data):
     handlers.button_to_view(window, script, "button_exit")
 
     data_source = script.get_object('data_source')
-    categories_dict, toc, flat_data = symbols_manager.parse_from_spreadsheets()
-    if flat_data:
+    categories_dict, book = symbols_manager.parse_from_spreadsheets()
+    if book:
         data_source.custom_topology = True
-        data = flat_data
+        data = book
         app.box['categories_dict'] = categories_dict
-        app.box['toc'] = toc
-        app.box['flat_data'] = flat_data
+        app.box['book'] = book
     else:
         data = symbols_manager.get_all_symbols()
     data_source.data = data

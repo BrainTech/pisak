@@ -174,7 +174,7 @@ class TilesSource(pager.DataSource):
         self.reload(pisak.app.box['categories_dict'][category])
 
     def _load_main(self):
-        self.reload(pisak.app.box['flat_data'])
+        self.reload(pisak.app.box['book'])
 
     def _produce_item(self, data_item):
         tile = widgets.PhotoTile()
