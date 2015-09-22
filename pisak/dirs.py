@@ -333,3 +333,20 @@ def get_symbols_spreadsheet(name):
     if not os.path.isfile(path):
         raise FileNotFoundError('No symbols spreadsheet found: {}.'.format(path))
     return path
+
+
+def get_symbol_path(name):
+    """
+    Get full path to a symbol with the given name.
+
+    :param name: name of a symbol, without any extension.
+
+    :return: path to a symbol, string.
+    """
+    full_name = name + '.png'
+    path = os.path.join(HOME_SYMBOLS_DIR, full_name)
+    if not os.path.isfile(path):
+        path = res.get(os.path.join('symbols', full_name))
+        if not os.path.isfile(path):
+            raise FileNotFoundError('No symbol file found: "{}".'.format(full_name))
+    return path
