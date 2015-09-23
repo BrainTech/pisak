@@ -1,6 +1,6 @@
-'''
+"""
 Basic implementation of sliding page widget.
-'''
+"""
 import threading
 import itertools
 import time
@@ -902,7 +902,6 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         if enforce or \
                 not self._inited and \
                 self.data_source is not None and \
-                self.data_source.data is not None and \
                 self._current_page is None:
             self._inited = True
             # create page specification needed for proper items adjustment
@@ -912,7 +911,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
                         "rows": self.rows, "columns": self.columns}
             self._current_direction = 0
             if self.data_source.custom_topology:
-                items = self.data_source.get_items_custom(self.page_index)
+                items = self.data_source.get_items_custom_next()
             else:
                 items = self.data_source.query_items_forward(
                     self.rows*self.columns)
@@ -969,7 +968,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self.page_index = (self.page_index+1) % self._page_count
             self._current_direction = 1
             if self.data_source.custom_topology:
-                items = self.data_source.get_items_custom(self.page_index)
+                items = self.data_source.get_items_custom_next()
             else:
                 items = self.data_source.query_items_forward(
                     self.rows * self.columns)
@@ -985,7 +984,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
                                     else self._page_count - 1
             self._current_direction = -1
             if self.data_source.custom_topology:
-                items = self.data_source.get_items_custom(self.page_index)
+                items = self.data_source.get_items_custom_previous()
             else:
                 items = self.data_source.query_items_backward(
                     self.columns * self.rows)

@@ -3,12 +3,17 @@ Module with widgets specific to symboler application.
 """
 import os.path
 
+import ezodf
+from collections import OrderedDict
 from gi.repository import Mx, Clutter, GObject
 
-import pisak
-from pisak import res, widgets, pager, properties, layout, configurator
+from pisak import widgets, pager, layout, configurator, \
+    dirs, logger
 from pisak.res import colors
 from pisak.symboler import symbols_manager
+
+
+_LOG = logger.get_logger(__name__)
 
 
 class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
@@ -94,7 +99,7 @@ class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
 
     def scroll_content_right(self):
         """
-        Scroll self content foreward.
+        Scroll self content forward.
         """
         endmost_symbol = self.get_last_child()
         if endmost_symbol is not None:
@@ -105,7 +110,7 @@ class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
     def append_many_symbols(self, symbols_list):
         """
         Append many symbols to the entry.
-        :param symbols_list: list of symbols identificators       
+        :param symbols_list: list of symbols identifiers
         """
         for item in symbols_list:
             text = symbols_manager.get_symbol(item)
@@ -161,6 +166,22 @@ class TilesSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
+        self._target = None
+        self._init = True
+        self._sheet_idx = None
+        self._ods_idx = None
+        self._sheets = {}  # name of a category or 'toc' is a key, list of sheets is a value
+        self._current_ods = self.get_toc_ods()
+        self._current_type = 'toc'  # 'toc' for table of contents, 'cat' for category
+        self._view = 'book'  # whole 'book' or a single 'cat'-egory
+        self._order = [('toc', )]
+        self._ods_list = [self._current_ods]
+        self.custom_topology = True
+        self.run()
+
+    def run(self):
+        self._length = 100
+        self.emit("data-is-ready")
 
     @property
     def target(self):
@@ -170,36 +191,131 @@ class TilesSource(pager.DataSource):
     def target(self, value):
         self._target = value
 
+    def get_toc_ods(self):
+        return self._open_odf_spreadsheet(
+            dirs.get_symbols_spreadsheet('table_of_contents'))
+
+    def get_cat_ods(self, name):
+        return self._open_odf_spreadsheet(
+            dirs.get_symbols_spreadsheet(name))
+
+    @staticmethod
+    def _open_odf_spreadsheet(path):
+        try:
+            return ezodf.opendoc(path)
+        except OSError as exc:
+            _LOG.error(exc)
+
+    def _generate_items_custom(self):
+        sheet = self._current_ods.sheets[self._sheet_idx]
+        self.target_spec["columns"] = sheet.ncols()  # custom number of columns
+        self.target_spec["rows"] = sheet.nrows()  # custom number of rows
+        items = []
+        for row in sheet.rows():
+            items_row = []
+            for cell in row:
+                value = cell.value
+                if value:
+                    if self._ods_idx == 0:
+                        if self._init:
+                            self._create_category(value)
+                        item = self._produce_toc_item(value)
+                    else:
+                        item = self._produce_cat_item(value)
+                else:
+                    item = Clutter.Actor()
+                    self._prepare_filler(item)
+                self._prepare_item(item)
+                items_row.append(item)
+            items.append(items_row)
+        if self._init:
+            self._init = False
+        return items
+
+    def next_page(self):
+        return self._get_page(1)
+
+    def previous_page(self):
+        return _get_page(-1)
+
     def _load_category(self, category):
-        self.reload(pisak.app.box['categories_dict'][category])
+        pass
 
     def _load_main(self):
-        self.reload(pisak.app.box['book'])
+        pass
 
-    def _produce_item(self, data_item):
+    def _create_category(self, name):
+        self._ods_list.append(self.get_cat_ods(name))
+
+    def _produce_toc_item(self, value):
+        tile = self._produce_item(value)
+        tile.connect("clicked", lambda source, category:
+                        self._load_category(category), value)
+        return tile
+
+    def _produce_cat_item(self, value):
+        tile = self._produce_item(value)
+        symbol = value + '.png'
+        tile.preview_path = dirs.get_symbol_path(value)
+        tile.connect("clicked", lambda source, symbol:
+                        self.target.append_many_symbols([symbol]), symbol)
+        tile.connect("clicked", lambda source: self._load_main())
+        return tile
+
+    def _produce_item(self, value):
         tile = widgets.PhotoTile()
         self._prepare_item(tile)
         tile.style_class = "PisakSymbolerPhotoTileLabel"
         tile.hilite_tool = widgets.Aperture()
         tile.set_background_color(colors.LIGHT_GREY)
-
-        if isinstance(data_item, list):
-            item, text = data_item
-            tile.scale_mode = Mx.ImageScaleMode.FIT
-            tile.preview_path = os.path.join(symbols_manager.SYMBOLS_DIR, item)
-            tile.connect("clicked", lambda source, item:
-                        self.target.append_many_symbols([item]), item)
-            tile.connect("clicked", lambda source: self._load_main())
-        else:
-            text = data_item
-            tile.connect("clicked", lambda source, category:
-                        self._load_category(category), text)
-
-        tile.label_text = text
+        tile.scale_mode = Mx.ImageScaleMode.FIT
+        tile.label_text = value
         return tile
 
     def _prepare_filler(self, filler):
         filler.set_background_color(Clutter.Color.new(255, 255, 255, 255))
+
+    def get_items_custom_next(self):
+        """
+        Get all items from the next portion. Method compatible with
+        custom topology mode of operation.
+
+        :returns: list of items packed into lists
+        """
+        if self._sheet_idx is None or self._ods_idx is None:
+            self._sheet_idx = 0
+            self._ods_idx = 0
+        else:
+            if self._sheet_idx < len(self._current_ods.sheets) - 1:
+                self._sheet_idx += 1
+            else:
+                self._sheet_idx = 0
+                if self._ods_idx < len(self._ods_list) - 1:
+                    self._ods_idx += 1
+                else:
+                    self._ods_idx = 0
+                self._current_ods = self._ods_list[self._ods_idx]
+
+        print(self._sheet_idx, self._ods_idx)
+        return self._generate_items_custom()
+
+    def get_items_custom_previous(self):
+        """
+        Get all items from the previous portion. Method compatible with
+        custom topology mode of operation.
+
+        :returns: list of items packed into lists
+        """
+        if self._sheet_idx > 0:
+            self._sheet_idx -= 1
+        else:
+            if self._ods_idx > 0:
+                self._ods_idx -= 1
+            else:
+                self._ods_idx = len(self._ods_list) - 1
+            self._current_ods = self._ods_list[self._ods_idx]
+            self._sheet_idx = len(self._current_ods.sheets) - 1
+        return self._generate_items_custom()
 
 
 class PopUp(widgets.DialogWindow):
