@@ -284,11 +284,10 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.emit('length-changed', self._length)
         self.emit("data-is-ready")
 
-    def reload(self, data):
+    def reload(self):
         """
-        Load and show some new data.
+        Reload.
         """
-        self.data = data
         self.emit('reload')
 
     @property
@@ -332,30 +331,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
                 item = self._produce_item(self.data[index])
                 self._prepare_item(item)
                 items.append(item)
-        return items
-
-    def _generate_items_custom(self, part):
-        """
-        Generate items from the given subset of the data.
-        Data should be already properly structured.
-
-        :param part: number of subset of the set of all data items
-        """
-        data = self.data[part]
-        self.target_spec["columns"] = len(data[0]) # custom number of columns
-        self.target_spec["rows"] = len(data) # custom number of rows
-        items = []
-        for row in data:
-            items_row = []
-            for record in row:
-                if record:
-                    item = self._produce_item(record)
-                else:
-                    item = Clutter.Actor()
-                    self._prepare_filler(item)
-                self._prepare_item(item)
-                items_row.append(item)
-            items.append(items_row)
         return items
 
     def _prepare_item(self, item):

@@ -1,16 +1,12 @@
 """
 Module with widgets specific to symboler application.
 """
-import os.path
-
 import ezodf
-from collections import OrderedDict
 from gi.repository import Mx, Clutter, GObject
 
 from pisak import widgets, pager, layout, configurator, \
     dirs, logger
 from pisak.res import colors
-from pisak.symboler import symbols_manager
 
 
 _LOG = logger.get_logger(__name__)
@@ -74,17 +70,20 @@ class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
             symbol_to_restore = self.scrolled_content_right.pop()
             self.insert_child_above(symbol_to_restore, None)
 
-    def _generate_symbol(self, path, text):
+    def _generate_symbol(self, name):
         symbol = widgets.PhotoTile()
         symbol.label.set_style_class("PisakSymbolerPhotoTileLabel")
-        symbol.label_text = text
+        symbol.label_text = name
         symbol.set_y_expand(True)
         symbol.ratio_width = self.tile_ratio_width
         symbol.ratio_spacing = self.tile_ratio_spacing
         symbol.preview_ratio_width = self.tile_preview_ratio_width
         symbol.preview_ratio_height = self.tile_preview_ratio_height
         symbol.scale_mode = Mx.ImageScaleMode.FIT
-        symbol.preview_path = os.path.join(symbols_manager.SYMBOLS_DIR, path)
+        try:
+            symbol.preview_path = dirs.get_symbol_path(name)
+        except FileNotFoundError as exc:
+            _LOG.error(exc)
         return symbol
 
     def scroll_content_left(self):
@@ -110,13 +109,13 @@ class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
     def append_many_symbols(self, symbols_list):
         """
         Append many symbols to the entry.
-        :param symbols_list: list of symbols identifiers
+
+        :param symbols_list: list of symbols names without extensions.
         """
-        for item in symbols_list:
-            text = symbols_manager.get_symbol(item)
-            self.symbols_buffer.append(item)
-            self.text_buffer.append(text)
-            symbol = self._generate_symbol(item, text)
+        for name in symbols_list:
+            self.symbols_buffer.append(name)
+            self.text_buffer.append(name)
+            symbol = self._generate_symbol(name)
             self._check_content_extent(symbol)
             self.insert_child_above(symbol, None)
 
@@ -146,8 +145,8 @@ class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
         """
         Clear the entry, delete all symbols.
         """
-        self.text_buffer = []
-        self.symbols_buffer = []
+        self.text_buffer.clear()
+        self.symbols_buffer.clear()
         self.remove_all_children()
 
 
@@ -166,21 +165,19 @@ class TilesSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self._target = None
-        self._init = True
+        self._book = []
+        self._ods_map = {}
+        self._parse_toc()
+        self._current_ods = self._book[0]
         self._sheet_idx = None
         self._ods_idx = None
-        self._sheets = {}  # name of a category or 'toc' is a key, list of sheets is a value
-        self._current_ods = self.get_toc_ods()
-        self._current_type = 'toc'  # 'toc' for table of contents, 'cat' for category
-        self._view = 'book'  # whole 'book' or a single 'cat'-egory
-        self._order = [('toc', )]
-        self._ods_list = [self._current_ods]
+        self._current_view = 'book'  # whole 'book' or a single 'cat'-egory
+        self._target = None
         self.custom_topology = True
         self.run()
 
     def run(self):
-        self._length = 100
+        self._length = 10  # TODO: solve this more wisely
         self.emit("data-is-ready")
 
     @property
@@ -191,11 +188,11 @@ class TilesSource(pager.DataSource):
     def target(self, value):
         self._target = value
 
-    def get_toc_ods(self):
+    def _get_toc_ods(self):
         return self._open_odf_spreadsheet(
             dirs.get_symbols_spreadsheet('table_of_contents'))
 
-    def get_cat_ods(self, name):
+    def _get_cat_ods(self, name):
         return self._open_odf_spreadsheet(
             dirs.get_symbols_spreadsheet(name))
 
@@ -206,19 +203,43 @@ class TilesSource(pager.DataSource):
         except OSError as exc:
             _LOG.error(exc)
 
+    def _parse_toc(self):
+        # 'pages' is dict of items out of parsed sheets
+        toc = self._get_toc_ods()
+        self._book.append({'ods': toc,
+                           'sheets': toc.sheets,
+                           'type': 'toc',
+                           'name': None,
+                           'len': len(toc.sheets)})
+        self._ods_map['toc'] = 0
+        idx = 1
+        for sheet in toc.sheets:
+            for row in sheet.rows():
+                for cell in row:
+                    value = cell.value
+                    if value and isinstance(value, str):
+                        self._book.append({'ods': None,
+                                           'sheets': None,
+                                           'type': 'cat',
+                                           'name': value,
+                                           'len': None})
+                        self._ods_map[value] = idx
+                        idx += 1
+
     def _generate_items_custom(self):
-        sheet = self._current_ods.sheets[self._sheet_idx]
+        if self._current_ods['ods'] is None:
+            self._load_category_ods(self._current_ods)
+        sheet = self._current_ods['sheets'][self._sheet_idx]
         self.target_spec["columns"] = sheet.ncols()  # custom number of columns
         self.target_spec["rows"] = sheet.nrows()  # custom number of rows
         items = []
+        ods_type = self._current_ods['type']
         for row in sheet.rows():
             items_row = []
             for cell in row:
                 value = cell.value
                 if value:
-                    if self._ods_idx == 0:
-                        if self._init:
-                            self._create_category(value)
+                    if ods_type == 'toc':
                         item = self._produce_toc_item(value)
                     else:
                         item = self._produce_cat_item(value)
@@ -228,24 +249,7 @@ class TilesSource(pager.DataSource):
                 self._prepare_item(item)
                 items_row.append(item)
             items.append(items_row)
-        if self._init:
-            self._init = False
         return items
-
-    def next_page(self):
-        return self._get_page(1)
-
-    def previous_page(self):
-        return _get_page(-1)
-
-    def _load_category(self, category):
-        pass
-
-    def _load_main(self):
-        pass
-
-    def _create_category(self, name):
-        self._ods_list.append(self.get_cat_ods(name))
 
     def _produce_toc_item(self, value):
         tile = self._produce_item(value)
@@ -255,11 +259,9 @@ class TilesSource(pager.DataSource):
 
     def _produce_cat_item(self, value):
         tile = self._produce_item(value)
-        symbol = value + '.png'
-        tile.preview_path = dirs.get_symbol_path(value)
         tile.connect("clicked", lambda source, symbol:
-                        self.target.append_many_symbols([symbol]), symbol)
-        tile.connect("clicked", lambda source: self._load_main())
+                        self.target.append_many_symbols([symbol]), value)
+        tile.connect("clicked", lambda source: self.load_main())
         return tile
 
     def _produce_item(self, value):
@@ -269,11 +271,35 @@ class TilesSource(pager.DataSource):
         tile.hilite_tool = widgets.Aperture()
         tile.set_background_color(colors.LIGHT_GREY)
         tile.scale_mode = Mx.ImageScaleMode.FIT
+        tile.preview_path = dirs.get_symbol_path(value)
         tile.label_text = value
         return tile
 
     def _prepare_filler(self, filler):
         filler.set_background_color(Clutter.Color.new(255, 255, 255, 255))
+
+    def _load_category(self, name):
+        self._current_ods = self._book[self._ods_map[name]]
+        self._sheet_idx = None
+        self._ods_idx = None
+        self._current_view = 'cat'
+        self.reload()
+
+    def load_main(self):
+        self._sheet_idx = None
+        self._ods_idx = None
+        self._current_view = 'book'
+        self._current_ods = self._book[0]
+        self.reload()
+
+    def _single_page(self):
+        return ((self._current_view == 'cat' and
+                 self._current_ods['len'] == 1 and
+                 self._sheet_idx == 0) or
+                (self._current_view == 'book' and
+                 self._current_ods['len'] == 1 and
+                 len(self._book) == 1 and
+                 self._sheet_idx == 0))
 
     def get_items_custom_next(self):
         """
@@ -282,21 +308,25 @@ class TilesSource(pager.DataSource):
 
         :returns: list of items packed into lists
         """
+        if self._single_page():
+            return
+
         if self._sheet_idx is None or self._ods_idx is None:
             self._sheet_idx = 0
             self._ods_idx = 0
         else:
-            if self._sheet_idx < len(self._current_ods.sheets) - 1:
+            if self._sheet_idx < self._current_ods['len'] - 1:
                 self._sheet_idx += 1
             else:
                 self._sheet_idx = 0
-                if self._ods_idx < len(self._ods_list) - 1:
-                    self._ods_idx += 1
-                else:
-                    self._ods_idx = 0
-                self._current_ods = self._ods_list[self._ods_idx]
-
-        print(self._sheet_idx, self._ods_idx)
+                if self._current_view == 'book':
+                    if self._ods_idx < len(self._book) - 1:
+                        self._ods_idx += 1
+                    else:
+                        self._ods_idx = 0
+                    self._current_ods = self._book[self._ods_idx]
+                    if self._current_ods['ods'] is None:
+                        self._load_category_ods(self._current_ods)
         return self._generate_items_custom()
 
     def get_items_custom_previous(self):
@@ -306,16 +336,27 @@ class TilesSource(pager.DataSource):
 
         :returns: list of items packed into lists
         """
+        if self._single_page():
+            return
+
         if self._sheet_idx > 0:
             self._sheet_idx -= 1
         else:
-            if self._ods_idx > 0:
-                self._ods_idx -= 1
-            else:
-                self._ods_idx = len(self._ods_list) - 1
-            self._current_ods = self._ods_list[self._ods_idx]
-            self._sheet_idx = len(self._current_ods.sheets) - 1
+            if self._current_view == 'book':
+                if self._ods_idx > 0:
+                    self._ods_idx -= 1
+                else:
+                    self._ods_idx = len(self._book) - 1
+                self._current_ods = self._book[self._ods_idx]
+                if self._current_ods['ods'] is None:
+                    self._load_category_ods(self._current_ods)
+            self._sheet_idx = self._current_ods['len'] - 1
         return self._generate_items_custom()
+
+    def _load_category_ods(self, book_item):
+        book_item['ods'] = self._get_cat_ods(book_item['name'])
+        book_item['sheets'] = book_item['ods'].sheets
+        book_item['len'] = len(book_item['sheets'])
 
 
 class PopUp(widgets.DialogWindow):

@@ -8,7 +8,6 @@ import sys
 
 import pisak
 from pisak import app_manager, res, handlers
-from pisak.symboler import symbols_manager
 
 import pisak.symboler.widgets  # @UnusedImport
 import pisak.symboler.handlers  # @UnusedImport
@@ -25,5 +24,4 @@ if __name__ == "__main__":
         "type": "clutter",
         "views": [("main", prepare_symboler_view)]
     }
-    symbols_manager.create_model()
     app_manager.run(_symboler_app)
