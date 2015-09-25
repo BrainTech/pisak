@@ -165,20 +165,23 @@ class TilesSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
+        self._target = None
+
+        self._item_producers = {
+            'toc': self._produce_toc_item,
+            'cat': self._produce_cat_item
+        }
+
+        self._current_ods = None
+        self._sheet_idx = None
+        self._ods_idx = None
+        self._total_len = None
+        self._current_view = 'book'  # whole 'book' or a single 'cat'-egory
         self._book = []
         self._ods_map = {}
         self._parse_toc()
-        self._current_ods = self._book[0]
-        self._sheet_idx = None
-        self._ods_idx = None
-        self._current_view = 'book'  # whole 'book' or a single 'cat'-egory
-        self._target = None
         self.custom_topology = True
-        self.run()
-
-    def run(self):
-        self._length = 10  # TODO: solve this more wisely
-        self.emit("data-is-ready")
+        self._run()
 
     @property
     def target(self):
@@ -188,6 +191,13 @@ class TilesSource(pager.DataSource):
     def target(self, value):
         self._target = value
 
+    @staticmethod
+    def _open_odf_spreadsheet(path):
+        try:
+            return ezodf.opendoc(path)
+        except OSError as exc:
+            _LOG.error(exc)
+
     def _get_toc_ods(self):
         return self._open_odf_spreadsheet(
             dirs.get_symbols_spreadsheet('table_of_contents'))
@@ -196,15 +206,7 @@ class TilesSource(pager.DataSource):
         return self._open_odf_spreadsheet(
             dirs.get_symbols_spreadsheet(name))
 
-    @staticmethod
-    def _open_odf_spreadsheet(path):
-        try:
-            return ezodf.opendoc(path)
-        except OSError as exc:
-            _LOG.error(exc)
-
     def _parse_toc(self):
-        # 'pages' is dict of items out of parsed sheets
         toc = self._get_toc_ods()
         self._book.append({'ods': toc,
                            'sheets': toc.sheets,
@@ -225,6 +227,23 @@ class TilesSource(pager.DataSource):
                                            'len': None})
                         self._ods_map[value] = idx
                         idx += 1
+        self._current_ods = self._book[0]
+        self._total_len = self._current_ods['len']
+        self._update_length()
+
+    def _run(self):
+        self.emit("data-is-ready")
+
+    def _get_book_len(self):
+        return max(len(self._book), self._total_len)
+
+    def _update_length(self):
+        if self._current_view == 'book':
+            self._length = self._get_book_len()
+        elif self._current_view == 'cat':
+            self._length = self._current_ods['len'] if \
+                self._current_ods['len'] is not None else 1
+        self.emit('length-changed', self._length)
 
     def _generate_items_custom(self):
         if self._current_ods['ods'] is None:
@@ -239,10 +258,7 @@ class TilesSource(pager.DataSource):
             for cell in row:
                 value = cell.value
                 if value:
-                    if ods_type == 'toc':
-                        item = self._produce_toc_item(value)
-                    else:
-                        item = self._produce_cat_item(value)
+                    item = self._item_producers[ods_type](value)
                 else:
                     item = Clutter.Actor()
                     self._prepare_filler(item)
@@ -254,14 +270,14 @@ class TilesSource(pager.DataSource):
     def _produce_toc_item(self, value):
         tile = self._produce_item(value)
         tile.connect("clicked", lambda source, category:
-                        self._load_category(category), value)
+                     self._load_category_view(category), value)
         return tile
 
     def _produce_cat_item(self, value):
         tile = self._produce_item(value)
         tile.connect("clicked", lambda source, symbol:
-                        self.target.append_many_symbols([symbol]), value)
-        tile.connect("clicked", lambda source: self.load_main())
+                     self.target.append_many_symbols([symbol]), value)
+        tile.connect("clicked", lambda source: self.load_main_view())
         return tile
 
     def _produce_item(self, value):
@@ -278,18 +294,23 @@ class TilesSource(pager.DataSource):
     def _prepare_filler(self, filler):
         filler.set_background_color(Clutter.Color.new(255, 255, 255, 255))
 
-    def _load_category(self, name):
-        self._current_ods = self._book[self._ods_map[name]]
-        self._sheet_idx = None
-        self._ods_idx = None
-        self._current_view = 'cat'
-        self.reload()
+    def _load_category_view(self, name):
+        self._update_view(self._book[self._ods_map[name]], 'cat')
 
-    def load_main(self):
+    def load_main_view(self):
+        """
+        Load view of the whole book of symbols.
+
+        :return: None.
+        """
+        self._update_view(self._book[0], 'book')
+
+    def _update_view(self, new_ods, new_view_type):
+        self._current_ods = new_ods
         self._sheet_idx = None
         self._ods_idx = None
-        self._current_view = 'book'
-        self._current_ods = self._book[0]
+        self._current_view = new_view_type
+        self._update_length()
         self.reload()
 
     def _single_page(self):
@@ -306,7 +327,7 @@ class TilesSource(pager.DataSource):
         Get all items from the next portion. Method compatible with
         custom topology mode of operation.
 
-        :returns: list of items packed into lists
+        :return: list of items packed into lists.
         """
         if self._single_page():
             return
@@ -334,7 +355,7 @@ class TilesSource(pager.DataSource):
         Get all items from the previous portion. Method compatible with
         custom topology mode of operation.
 
-        :returns: list of items packed into lists
+        :return: list of items packed into lists.
         """
         if self._single_page():
             return
@@ -357,6 +378,8 @@ class TilesSource(pager.DataSource):
         book_item['ods'] = self._get_cat_ods(book_item['name'])
         book_item['sheets'] = book_item['ods'].sheets
         book_item['len'] = len(book_item['sheets'])
+        self._total_len += book_item['len']
+        self._update_length()
 
 
 class PopUp(widgets.DialogWindow):

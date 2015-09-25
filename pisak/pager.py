@@ -816,7 +816,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self.page_count = data_length
         else:
             self.page_count = ceil(data_length /
-                                            (self.rows*self.columns))
+                                   (self.rows*self.columns))
 
     def _introduce_new_page(self, items):
         """

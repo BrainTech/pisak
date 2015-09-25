@@ -11,7 +11,7 @@ def load_main(data_source):
     Load main content of the symboler, that is table of contents
     and then all the categories.
     """
-    data_source.load_main()
+    data_source.load_main_view()
 
 
 def _get_saved_entries():
