@@ -440,19 +440,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.to_idx = self._length
         return self._generate_items_flat()
 
-    def get_items_custom(self, part):
-        """
-        Get all items from the given page. Method compatible with
-        custom topology mode of operation.
-
-        :param part: which part of all items (e.g items from which page)
-        should be returned. Usually items that belong to the same part are
-        packed into a single list. 
-
-        :returns: list of items packed into lists
-        """
-        return self._generate_items_custom(part)
-
     def produce_data(self, raw_data, cmp_key_factory):
         """
         Generate list of `DataItems` out of some arbitrary raw data.
