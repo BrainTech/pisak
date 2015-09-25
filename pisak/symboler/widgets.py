@@ -180,7 +180,10 @@ class TilesSource(pager.DataSource):
         self._book = []
         self._ods_map = {}
         self._parse_toc()
+
         self.custom_topology = True
+        self.page_idx = 0
+
         self._run()
 
     @property
@@ -322,6 +325,15 @@ class TilesSource(pager.DataSource):
                  len(self._book) == 1 and
                  self._sheet_idx == 0))
 
+    def _update_page_idx(self):
+        if self._current_view == 'cat' or self._ods_idx == 0:
+            self.page_idx = self._sheet_idx
+        elif self._current_view == 'book':
+            prev = 0
+            for item in self._book[: self._ods_idx+1]:
+                prev += item['len'] if item['len'] is not None else 1
+            self.page_idx = prev + self._sheet_idx
+
     def get_items_custom_next(self):
         """
         Get all items from the next portion. Method compatible with
@@ -348,6 +360,7 @@ class TilesSource(pager.DataSource):
                     self._current_ods = self._book[self._ods_idx]
                     if self._current_ods['ods'] is None:
                         self._load_category_ods(self._current_ods)
+        self._update_page_idx()
         return self._generate_items_custom()
 
     def get_items_custom_previous(self):
@@ -372,6 +385,7 @@ class TilesSource(pager.DataSource):
                 if self._current_ods['ods'] is None:
                     self._load_category_ods(self._current_ods)
             self._sheet_idx = self._current_ods['len'] - 1
+        self._update_page_idx()
         return self._generate_items_custom()
 
     def _load_category_ods(self, book_item):

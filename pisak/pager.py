@@ -163,6 +163,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     }
 
     def __init__(self):
+        self.page_idx = None
         self.custom_topology = False
         self.from_idx = 0
         self.to_idx = 0
@@ -940,7 +941,9 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         Move to the next page.
         """
         if self.old_page is None and self._page_count > 1:
-            self.page_index = (self.page_index+1) % self._page_count
+            self.page_index = self.data_source.page_idx if \
+                self.data_source.page_idx is not None else \
+                (self.page_index+1) % self._page_count
             self._current_direction = 1
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom_next()
@@ -955,8 +958,10 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         Move to the previous page.
         """
         if self.old_page is None and self._page_count > 1:
-            self.page_index = self.page_index - 1 if self.page_index >= 1 \
-                                    else self._page_count - 1
+            self.page_index = self.data_source.page_idx if \
+                self.data_source.page_idx is not None else (
+                    self.page_index - 1 if self.page_index >= 1 \
+                    else self._page_count - 1)
             self._current_direction = -1
             if self.data_source.custom_topology:
                 items = self.data_source.get_items_custom_previous()
