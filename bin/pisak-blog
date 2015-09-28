@@ -82,18 +82,22 @@ def prepare_single_post_view(app, window, script, data):
     blog_title = script.get_object("header")
     blog_title.set_text(title)
 
-    def load_new_post(direction):
-        nonlocal post
+    def load_new_post(direction, arbitrary_post=None):
+        if arbitrary_post:
+            post_to_load = arbitrary_post
+        else:
+            nonlocal post
 
-        index = posts.index(post)
-        index += direction
-        if index == len(posts):
-            index = 0
-        post = posts[index]
-        wordpress.blog.pending_post = post
-        content.load_html(wordpress.blog.compose_post_view(post))
+            index = posts.index(post)
+            index += direction
+            if index == len(posts):
+                index = 0
+            post_to_load = posts[index]
 
-    load_new_post(0)
+        wordpress.blog.pending_post = post_to_load
+        content.load_html(wordpress.blog.compose_post_view(post_to_load))
+
+    load_new_post(0, post)
 
     data['previous_view'] = 'blog/single_post'
 
@@ -120,18 +124,20 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
     blog_name = script.get_object("header")
     blog_name.set_text(data["blog_name"])
 
-    def load_new_post(direction):
-        nonlocal post
+    def load_new_post(direction, arbitrary_post=None):
+        if arbitrary_post:
+            post_to_load = arbitrary_post
+        else:
+            nonlocal post
 
+            index = posts.index(post)
+            index += direction
+            if index == len(posts):
+                index = 0
+            post_to_load = posts[index]
+        content.load_html(data["blog"].compose_post_view(post_to_load))
 
-        index = posts.index(post)
-        index += direction
-        if index == len(posts):
-            index = 0
-        post = posts[index]
-        content.load_html(data["blog"].compose_post_view(post))
-
-    load_new_post(0)
+    load_new_post(0, post)
 
     data['previous_view'] = 'blog/followed_blog_single_post'
 
