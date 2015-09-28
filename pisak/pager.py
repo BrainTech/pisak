@@ -48,7 +48,7 @@ class LazyWorker:
     def __init__(self, src):
         self._src = src
 
-        self._step = 5
+        self._step = 10
 
         self._worker = None
         self._running = True
@@ -60,27 +60,46 @@ class LazyWorker:
         portion of elements with identifiers from the front
         of the ids list and one portion from the back, in turns.
         """
-        flat = list(range(0, len(self._src._ids), self._step))
-        half_len = int(len(flat)/2)
-        mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
-            flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
-        for idx in mixed:
-            if not self._running:
-                break
-            self._load_portion(self._src._ids[idx : idx+self._step])
+        if self._src.lazy_offset is not None:
+            while True:
+                any_left = self._load_portion_by_number(
+                    self._src.lazy_offset, self._step)
+                if not any_left or not self._running:
+                    break
+                self._src.lazy_offset += self._step
+        else:
+            flat = list(range(0, len(self._src._ids), self._step))
+            half_len = int(len(flat)/2)
+            mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
+                flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
+            for idx in mixed:
+                if not self._running:
+                    break
+                self._load_portion_by_ids(ids=self._src._ids[idx : idx+self._step])
 
-    def _load_portion(self, ids):
+    def _load_portion_by_ids(self, ids):
         """
         Load some portion of data items with the given identifiers.
 
         :param ids: list of ids specifying which data items should be loaded.
         """
         self._src._lazy_data.update(list(zip(map(str, ids),
-                                                    self._src._query_portion_of_data(ids))))
+                                    self._src._query_portion_of_data(ids))))
         self._src.data = self._src.produce_data(
             [(val, None) for val in list(self._src._lazy_data.values())],
             self._src._data_sorting_key
         )
+
+    def _load_portion_by_number(self, offset, number):
+        data = self._src._query_portion_of_data_by_number(offset, number)
+        if data:
+            ids = list(range(offset, offset + len(data)))
+            self._src._lazy_data.update(list(zip(map(str, ids), data)))
+            self._src.data = self._src.produce_data(
+                [(val, None) for val in list(self._src._lazy_data.values())],
+                self._src._data_sorting_key
+            )
+        return data
 
     @property
     def step(self):
@@ -167,7 +186,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.data_sets_count = 0
         self.data_generator = None
         self._target_spec = None
-        self._data = None
+        self._data = []
         self.data_set_id = None
         self.item_handler = None
         self._data_sorting_key = None
@@ -503,6 +522,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_data = OrderedDict()
         # list of data identifiers, specific for a given data supplier.
         self._ids = []
+        # offset for lazy data
+        self.lazy_offset = None
 
         # main lazy loading worker.
         self._lazy_loader = LazyWorker(self)
@@ -534,6 +555,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
         :return: list of data items.
         """
+        raise NotImplementedError
+
+    def _query_portion_of_data_by_number(self):
         raise NotImplementedError
 
     def _query_ids(self):

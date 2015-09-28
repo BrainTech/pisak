@@ -36,6 +36,19 @@ class Blog(object):
         return self._get(
             "/posts/?number={}".format(str(self.max_posts)))["posts"]
 
+    def get_many_posts(self, offset, number):
+        """
+        Retrieve many posts.
+
+        :param offset: offset from which posts should be taken.
+        :param number: number of posts to retrieve.
+
+        :return: list of posts.
+        """
+        return self._get(
+            "/posts/?offset={}?number={}".format(
+                str(offset), str(number)))["posts"]
+
     def get_post(self, ide):
         """
         Get single post from the blog.

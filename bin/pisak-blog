@@ -56,15 +56,19 @@ def prepare_all_posts_view(app, window, script, data):
     handlers.button_to_view(
         window, script, "button_new_post", "blog/speller_post")
     posts_data = script.get_object("posts_data")
-    posts_data.item_handler = lambda tile, post: window.load_view(
-        "blog/single_post", {"post": post, "posts": posts_data.data})
-    posts_data.data = wordpress.blog.get_all_posts()
+
+    def load_view(tile, post):
+        window.load_view("blog/single_post",
+                         {"post": post, "posts": posts_data.data})
+
+    posts_data.item_handler = load_view
     title = config.get_blog_config()["title"]
     blog_title = script.get_object("header")
     blog_title.set_text(title)
     date_widget = script.get_object("date")
     today = "DATA:   " + time.strftime("%d-%m-%Y")
     date_widget.set_text(today)
+    posts_data.lazy_loading = True
 
 
 def prepare_single_post_view(app, window, script, data):
@@ -119,6 +123,7 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
     def load_new_post(direction):
         nonlocal post
 
+
         index = posts.index(post)
         index += direction
         if index == len(posts):
@@ -149,19 +154,23 @@ def prepare_followed_blog_all_posts_view(app, window, script, data):
     blog_url = data["blog_url"]
     blog_name = data["blog_name"]
     blog = rest_client.Blog(blog_url)
+    app.box['followed_blog'] = blog
     posts_data = script.get_object("posts_data")
 
-    posts_data.item_handler = lambda tile, post: window.load_view(
-        "blog/followed_blog_single_post", {"blog": blog , "post": post,
-                                           "blog_name": blog_name,
-                                           "blog_url": blog_url,
-                                           "posts": posts_data.data})
-    posts_data.data = blog.get_all_posts()
+    def load_view(tile, post):
+        window.load_view("blog/followed_blog_single_post",
+                         {"blog": blog , "post": post,
+                          "blog_name": blog_name,
+                          "blog_url": blog_url,
+                          "posts": posts_data.data})
+
+    posts_data.item_handler = load_view
     blog_name_widget = script.get_object("header")
     blog_name_widget.set_text(blog_name)
     date_widget = script.get_object("date")
     today = "DATA:   " + time.strftime("%d-%m-%Y")
     date_widget.set_text(today)
+    posts_data.lazy_loading = True
 
 
 def prepare_followed_blogs_view(app, window, script, data):
