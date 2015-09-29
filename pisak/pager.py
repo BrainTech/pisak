@@ -667,7 +667,9 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             (GObject.TYPE_FLOAT, GObject.TYPE_INT64)),
         "limit-declared": (
             GObject.SIGNAL_RUN_FIRST, None,
-            (GObject.TYPE_INT64,))
+            (GObject.TYPE_INT64,)),
+        "ready": (
+            GObject.SIGNAL_RUN_FIRST, None, ())
     }
     __gproperties__ = {
         "data-source": (
@@ -713,6 +715,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self._inited = False
         self._page_strategy = None
         self._page_ratio_spacing = 0
+        self._ready = False
         self._rows = 3
         self._columns = 4
         self._current_page = None
@@ -795,6 +798,16 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.new_page_transition.set_duration(value)
         self.old_page_transition.set_duration(value)
 
+    @property
+    def ready(self):
+        return self._ready
+
+    @ready.setter
+    def ready(self, value):
+        self._ready = value
+        if value:
+            self.emit('ready')
+
     def _calculate_page_count(self, data_length):
         """
         Calculate the total number of pages in the pager, based on the
@@ -811,7 +824,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         Method for adding and displaying new page and disposing of the old one.
         When 'direction' is 0 then adjusting the content of the new page happens
         immediately, otherwise it is performed in the `_clean_up` method when
-        any page transisions are already over.
+        any page transitions are already over.
 
         :param items: list of items to be placed on the new page.
 
@@ -881,6 +894,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             self._calculate_page_count(self.data_source.length)
             if items:
                 self._introduce_new_page(items)
+            self.ready = True
 
     def _automatic_timeout(self, data):
         """

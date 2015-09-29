@@ -206,7 +206,6 @@ class _GroupObserver(object):
         """
         Removes handlers recursively.
         """
-
         if actor not in self._observed:
             _LOG.debug("double unobserve: " + str(actor.get_id()))
         else:
@@ -316,9 +315,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         return self._subgroups
 
     def _gen_subgroups(self):
-        '''
+        """
         Generator of all subgroups of the group.
-        '''
+        """
         to_scan = self.get_children()
         while len(to_scan) > 0:
             current = to_scan.pop(0)
@@ -336,6 +335,18 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
                     pass
             else:
                 to_scan.extend(current.get_children())
+
+    def is_flat(self):
+        """
+        Test if group is flat, that is whether it contains
+        any nested subgroups.
+
+        :return: True if group has no subgroups, False otherwise.
+        """
+        for obj in self.get_children():
+            if isinstance(obj, Group):
+                return False
+        return True
 
     def is_empty(self):
         """
@@ -377,6 +388,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         False.
         """
         _LOG.debug("Starting group {}".format(self.get_id()))
+        self.observer = _GroupObserver(self)
         if not self.get_property("mapped"):
             self.connect('notify::mapped', lambda *_: self.start_cycle())
             message = \
@@ -385,13 +397,21 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             # TODO: do something wise here
             return
 
+        _LOG.debug("Starting group {}".format(self.get_id()))
+
+        collapsed = get_top_level_group([self])
+        if collapsed is not self:
+            collapsed.start_cycle()
+            return
+
         if self.is_singular() and self._on_singular():
             return
 
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
         self.input_handler_token = self.signal_source.connect(
-            signal, lambda *args: handler(self, *args))
+            signal, lambda *args: Clutter.threads_add_idle(100, handler,
+                                                           self, *args))
         self.killed = False
         if self.scanning_hilite:
             self.enable_scan_hilite()
@@ -400,9 +420,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.strategy.start()
 
     def _on_singular(self):
-        '''
+        """
         Do something when the group is singular.
-        '''
+        """
         sub_element =self.get_subgroups()[0]
         if isinstance(sub_element, Group):
             msg = 'Group {} is singular. Starting its only subgroup.'
@@ -438,7 +458,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             self.user_action_handler()
         return True
 
-    def button_release(self, source, event):
+    def button_release(self, source, event=None):
         self.user_action_handler()
         return False
 
@@ -539,6 +559,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._unwind_to = None
         self.timeout_token = None
         self.player = pisak.app._sound_effects_player
+        self.sound_support_enabled = pisak.config.as_bool("read_button") and \
+                             pisak.config.as_bool("sound_effects_enabled")
         self.apply_props()
 
     @property
@@ -724,8 +746,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if pisak.config.as_bool("read_button") and pisak.config.as_bool("sound_effects_enabled") and \
-               isinstance(selection, pisak.widgets.Button):
+            if self.sound_support_enabled and \
+                    isinstance(selection, pisak.widgets.Button):
                 if selection.get_label() in selection.sounds.keys():
                     self.player.play(selection.sounds[selection.get_label()])
                 elif selection.get_label() in [' ', '']:
@@ -875,3 +897,80 @@ class ArbitraryOrderStrategy(BaseStrategy):
         for s in self.subgroup_order:
             if s in unordered:
                 self._subgroups.append(unordered[s])
+
+
+def get_top_level_group(top_level):
+    """
+    Get a non-empty top-level scanning group from the given object tree.
+
+    :param top_level: list of the top-level objects from the object tree.
+
+    :return: top-level scanning group or None.
+    """
+    def get_collapsed(top_level_group):
+        """
+        Collapse the given top-level scanning group.
+        If there is only one non-empty scanning group being
+        a subgroup of the given top-level group then such a non-empty
+        group is returned. Otherwise the given top-level group is returned.
+        For the definition of a group being empty
+        :see: `Group.is_empty`.
+
+        :param top_level_group: scanning group that should get collapsed.
+
+        :return: scanning group.
+        """
+        def is_empty_branch(node_list):
+            """
+            Check if the given branch is empty from the
+            scanning point of view, that is whether there are any elements
+            that could get scanned.
+
+            :param node_list: list of top-level objects from some object branch.
+
+            :return: True or False.
+            """
+            nested_nodes = []
+            for node in node_list:
+                if (isinstance(node, Group) and node.is_flat() and not
+                        node.is_empty()):
+                    return False
+                else:
+                    nested_nodes.extend(node.get_children())
+            return is_empty_branch(nested_nodes) if nested_nodes else True
+
+        branches = []
+
+        def find_branches(origin_level):
+            """
+            Find all the scanning branches in the object tree, originating
+            from the given top level.
+
+            :param origin_level: list of top-level objects.
+
+            :return: None.
+            """
+            for element in origin_level:
+                if isinstance(element, Group):
+                    branches.append(element)
+                else:
+                    find_branches(element.get_children())
+
+        non_empty = None
+        non_empty_count = 0
+        find_branches(top_level_group.get_children())
+        for branch in branches:
+            branch_list = [branch]
+            if not is_empty_branch(branch_list):
+                non_empty = get_top_level_group(branch_list)
+                non_empty_count += 1
+        return non_empty if non_empty_count == 1 else top_level_group
+
+    next_level = []
+    for obj in top_level:
+        if isinstance(obj, Group):
+            return get_collapsed(obj)
+        else:
+            next_level.extend(obj.get_children())
+    if next_level:
+        return get_top_level_group(next_level)

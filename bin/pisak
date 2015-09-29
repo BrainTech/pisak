@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
 """
-Entry point for the whole PISAK program. Declares descriptor for an application
-launched on the PISAK start and, if executed directly, launches the application.
+Entry point for the whole PISAK program.
 """
+
 import pisak
 from pisak import app_manager, logger
-
+from pisak.description import main_app
 
 if __name__ == '__main__':
     pisak.init()
@@ -15,12 +15,7 @@ if __name__ == '__main__':
     message = "PISAK was launched."
     _std_log.info(message)
     _event_log.info(message)
-    _main_app = {
-        "app": "main_panel",
-        "type": "clutter",
-        "views": [("main", None)]  # no preparator needed so far
-    }
-    app_manager.run(_main_app)
+    app_manager.run(main_app)
     message = "PISAK was closed."
     _std_log.info(message)
     _event_log.info(message)

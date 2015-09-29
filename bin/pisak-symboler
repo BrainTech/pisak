@@ -1,27 +1,13 @@
 #!/usr/bin/env python3
 
 """
-Main module of the symboler application. Launching and managing all the
-application's views takes place here.
+Script to run Symboler application.
 """
-import sys
 
 import pisak
-from pisak import app_manager, res, handlers
-
-import pisak.symboler.widgets  # @UnusedImport
-import pisak.symboler.handlers  # @UnusedImport
-
-
-def prepare_symboler_view(app, window, script, data):
-    handlers.button_to_view(window, script, "button_exit")
-
+from pisak import app_manager
+from pisak.symboler.description import symboler_app
 
 if __name__ == "__main__":
     pisak.init()
-    _symboler_app = {
-        "app": "symboler",
-        "type": "clutter",
-        "views": [("main", prepare_symboler_view)]
-    }
-    app_manager.run(_symboler_app)
+    app_manager.run(symboler_app)
