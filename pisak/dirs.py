@@ -343,7 +343,7 @@ def get_symbols_spreadsheet(name):
 
     :return: path to the spreadsheet.
     """
-    path = os.path.join(HOME_SYMBOLS_DIR, name + '.ods')
+    path = os.path.join(HOME_SYMBOLS_SHEETS, name + '.ods')
     if not os.path.isfile(path):
         raise FileNotFoundError('No symbols spreadsheet found: {}.'.format(path))
     return path
