@@ -200,8 +200,6 @@ class _GroupObserver(object):
     """
     def __init__(self, group):
         self.group = group
-        self._observed = {}
-        self._unobserved = set()
         self._init_connections()
 
     def _observe(self, actor):
@@ -210,22 +208,8 @@ class _GroupObserver(object):
         """
         add_handler = actor.connect("actor-added", self._add_actor)
         remove_handler = actor.connect("actor-removed", self._remove_actor)
-        self._observed[actor] = add_handler, remove_handler
         for child in actor.get_children():
             self._observe(child)
-
-    def _unobserve(self, actor):
-        """
-        Removes handlers recursively.
-        """
-
-        if actor not in self._observed:
-            _LOG.debug("double unobserve: " + str(actor.get_id()))
-        else:
-            self._unobserved.add(actor)
-            actor.disconnect(self._observed[actor][0])
-            actor.disconnect(self._observed[actor][1])
-            del self._observed[actor]
 
     def _init_connections(self):
         # observe group children
@@ -252,8 +236,6 @@ class _GroupObserver(object):
             # rescan: a scannable was removed
             self.group.schedule_update()
         else:
-            # disconnect handlers from an actor
-            self._unobserve(descendant)
             for child in descendant.get_children():
                 self._remove_actor(descendant, child)
 
@@ -292,7 +274,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.user_action_handler = None
         self.input_handler_token = None
         super().__init__()
-        self.observer = None
+        self.observer = _GroupObserver(self)
         self.set_layout_manager(Clutter.BinLayout())
         self.apply_props()
 
@@ -389,7 +371,6 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         False.
         """
         _LOG.debug("Starting group {}".format(self.get_id()))
-        self.observer = _GroupObserver(self)
         if not self.get_property("mapped"):
             self.connect('notify::mapped', lambda *_: self.start_cycle())
             message = \
