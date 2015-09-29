@@ -58,8 +58,10 @@ def prepare_all_posts_view(app, window, script, data):
     posts_data = script.get_object("posts_data")
 
     def load_view(tile, post):
+        posts_data.clean_up()
         window.load_view("blog/single_post",
-                         {"post": post, "posts": posts_data.data})
+                         {"post": post.content, "posts": posts_data.data,
+                          "post_item": post})
 
     posts_data.item_handler = load_view
     title = config.get_blog_config()["title"]
@@ -74,9 +76,10 @@ def prepare_all_posts_view(app, window, script, data):
 def prepare_single_post_view(app, window, script, data):
 
     post = data["post"]
+    post_item = data["post_item"]
     posts = data["posts"]
 
-    content = script.get_object("post_text")
+    content_box = script.get_object("post_text")
 
     title = config.get_blog_config()["title"]
     blog_title = script.get_object("header")
@@ -86,18 +89,19 @@ def prepare_single_post_view(app, window, script, data):
         if arbitrary_post:
             post_to_load = arbitrary_post
         else:
-            nonlocal post
+            nonlocal post_item
 
-            index = posts.index(post)
+            index = posts.index(post_item)
             index += direction
             if index == len(posts):
                 index = 0
             post_to_load = posts[index]
 
-        wordpress.blog.pending_post = post_to_load
-        content.load_html(wordpress.blog.compose_post_view(post_to_load))
+        content = post_to_load.content
+        wordpress.blog.pending_post = content
+        content_box.load_html(wordpress.blog.compose_post_view(content))
 
-    load_new_post(0, post)
+    load_new_post(0, post_item)
 
     data['previous_view'] = 'blog/single_post'
 
@@ -118,6 +122,7 @@ def prepare_single_post_view(app, window, script, data):
 
 def prepare_followed_blog_single_post_view(app, window, script, data):
     post = data["post"]
+    post_item = data['post_item']
     posts = data["posts"]
     content = script.get_object("post_text")
 
@@ -128,16 +133,16 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
         if arbitrary_post:
             post_to_load = arbitrary_post
         else:
-            nonlocal post
+            nonlocal post_item
 
-            index = posts.index(post)
+            index = posts.index(post_item)
             index += direction
             if index == len(posts):
                 index = 0
             post_to_load = posts[index]
-        content.load_html(data["blog"].compose_post_view(post_to_load))
+        content.load_html(data["blog"].compose_post_view(post_to_load.content))
 
-    load_new_post(0, post)
+    load_new_post(0, post_item)
 
     data['previous_view'] = 'blog/followed_blog_single_post'
 
@@ -164,8 +169,10 @@ def prepare_followed_blog_all_posts_view(app, window, script, data):
     posts_data = script.get_object("posts_data")
 
     def load_view(tile, post):
+        posts_data.clean_up()
         window.load_view("blog/followed_blog_single_post",
-                         {"blog": blog , "post": post,
+                         {"blog": blog , "post": post.content,
+                          "post_item": post,
                           "blog_name": blog_name,
                           "blog_url": blog_url,
                           "posts": posts_data.data})

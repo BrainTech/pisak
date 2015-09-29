@@ -215,6 +215,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         if self.lazy_loading:
             self._lazy_loader.step = ceil((value['columns'] * value['rows'])/2)
             self._lazy_loader.start()
+            self.emit('data-is-ready')
 
     @property
     def custom_topology(self):

@@ -59,7 +59,7 @@ class PostTileSource(pager.DataSource):
         frame = widgets.Frame()
         frame.set_style_class("PisakBlogPostTile")
         tile.add_child(frame)
-        tile.connect("clicked", self.item_handler, post)
+        tile.connect("clicked", self.item_handler, post_item)
         tile.hilite_tool = widgets.Aperture()
         if isinstance(post, dict):
             post_title = post["title"]
