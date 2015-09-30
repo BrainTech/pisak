@@ -241,7 +241,7 @@ def prepare_viewer_album_view(app, window, script, data):
     album_data = script.get_object("album_data")
     album_data.item_handler = lambda tile, photo_id, album_id: \
         attach_photo(tile)
-    album_data.data_set_id = album_id
+    album_data.data_set_idx = album_id
 
 
 def prepare_speller_about_me_view(app, window, script, data):
@@ -276,7 +276,7 @@ def prepare_viewer_about_me_album_view(app, window, script, data):
     header.set_text(library.get_category_by_id(album_id).name)
     album_data = script.get_object("album_data")
     album_data.item_handler = lambda tile, photo_id, album_id: pick_photo(tile)
-    album_data.data_set_id = album_id
+    album_data.data_set_idx = album_id
 
 
 def prepare_speller_comment_view(app, window, script, data):

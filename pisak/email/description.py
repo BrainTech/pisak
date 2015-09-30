@@ -425,7 +425,7 @@ def prepare_viewer_contact_album_view(app, window, script, data):
         window.load_view("email/contact", {"contact_id": contact_id})
 
     data_source.item_handler = photo_tile_handler
-    data_source.data_set_id = album_id
+    data_source.data_set_idx = album_id
 
 
 def prepare_single_message_view(app, window, script, data):

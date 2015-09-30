@@ -371,7 +371,7 @@ class AlbumTilesSource(pager.DataSource):
         self._prepare_item(tile)
         tile.hilite_tool = widgets.Aperture()
         tile.connect("clicked", self.item_handler,
-                        data_item.id, self.data_set_id)
+                        data_item.id, self.data_set_idx)
         tile.scale_mode = Mx.ImageScaleMode.FIT
         tile.preview_path = data_item.path
         return tile
