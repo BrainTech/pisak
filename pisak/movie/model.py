@@ -22,7 +22,7 @@ SUBTITLE_EXTENSIONS = [
 LIBRARY_DIR = dirs.get_user_dir("videos")
 
 
-FAVOURITE_MOVIES_STORE = os.path.join(dirs.HOME_PISAK_DIR, "favourite_movies.ini")
+FAVOURITE_MOVIES_STORE = os.path.join(dirs.HOME_PISAK_FAVOURITES, "favourite_movies.ini")
 
 
 FAVOURITE_MOVIES_ALIAS = "ULUBIONE"

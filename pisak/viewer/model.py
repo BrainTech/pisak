@@ -10,7 +10,7 @@ ACCEPTED_TYPES = [
 LIBRARY_DIR = dirs.get_user_dir("pictures")
 
 
-FAVOURITE_PHOTOS_STORE = os.path.join(dirs.HOME_PISAK_DIR, "favourite_photos.ini")
+FAVOURITE_PHOTOS_STORE = os.path.join(dirs.HOME_PISAK_FAVOURITES, "favourite_photos.ini")
 
 
 FAVOURITE_PHOTOS_ALIAS = "ULUBIONE"

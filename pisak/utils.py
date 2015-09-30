@@ -173,7 +173,7 @@ def date_to_when(date):
         when = str(date)
     elif years == 1:
         when = "rok " + ago
-    elif years < 1 and 1 <= months:
+    elif years < 1 <= months :
         if 5 <= months:
             month = "miesięcy"
         elif 2 <= months < 5:

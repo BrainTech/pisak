@@ -23,6 +23,7 @@ Guides
    useful_widgets
    switch_and_groups
    signal_handlers
+   switch
 
 Modules
 =======

@@ -414,7 +414,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         :param text_after: string passed after a user's action
         """
         if self.automatic_space:
-                text_after = text_after + ' '
+                text_after += ' '
         #automatically add whitespace after predicted word
         #this is the default in most prediction software 
 
