@@ -1,6 +1,6 @@
-'''
+"""
 Classes for defining scanning in JSON layouts
-'''
+"""
 import time
 
 from gi.repository import Clutter, GObject
@@ -89,6 +89,18 @@ class StylableScannable(Scannable):
     def disable_lag_hilite(self):
         self.style_pseudo_class_remove("lag_hilite")
 
+    def activate(self):
+        """
+        Performs widgets action.
+        """
+        raise NotImplementedError()
+
+    def is_disabled(self):
+        """
+        Checks whether element is disabled from activation.
+        """
+        raise NotImplementedError()
+
 
 class Strategy(Clutter.Actor):
     """
@@ -97,7 +109,7 @@ class Strategy(Clutter.Actor):
 
     def __init__(self):
         super().__init__()
-        self.group = None
+        self._group = None
 
     @property
     def group(self):
@@ -119,7 +131,7 @@ class Strategy(Clutter.Actor):
         if element is None:
             _LOG.debug("There is no current element that could be frozen.")
             return
-        self._play_selection_sound()
+        self.play_selection_sound()
         if isinstance(element, Group):
             if not self.group.paused:
                 self.group.stop_cycle()
@@ -188,8 +200,6 @@ class _GroupObserver(object):
     """
     def __init__(self, group):
         self.group = group
-        self._observed = {}
-        self._unobserved = set()
         self._init_connections()
 
     def _observe(self, actor):
@@ -198,27 +208,14 @@ class _GroupObserver(object):
         """
         add_handler = actor.connect("actor-added", self._add_actor)
         remove_handler = actor.connect("actor-removed", self._remove_actor)
-        self._observed[actor] = add_handler, remove_handler
         for child in actor.get_children():
             self._observe(child)
-
-    def _unobserve(self, actor):
-        """
-        Removes handlers recursively.
-        """
-        if actor not in self._observed:
-            _LOG.debug("double unobserve: " + str(actor.get_id()))
-        else:
-            self._unobserved.add(actor)
-            actor.disconnect(self._observed[actor][0])
-            actor.disconnect(self._observed[actor][1])
-            del self._observed[actor]
 
     def _init_connections(self):
         # observe group children
         self._observe(self.group)
 
-    def _add_actor(self, parent, descendant):
+    def _add_actor(self, _parent, descendant):
         if isinstance(descendant, Group):
             # rescan: a new group was added
             self.group.schedule_update()
@@ -231,16 +228,14 @@ class _GroupObserver(object):
                 self._add_actor(descendant, child)
             self._observe(descendant)
 
-    def _remove_actor(self, parent, descendant):
+    def _remove_actor(self, _parent, descendant):
         if isinstance(descendant, Group):
             # rescan: a group was removed
             self.group.schedule_update()
         elif hasattr(descendant, "enable_hilite"):
-            # recan: a scannable was removed
+            # rescan: a scannable was removed
             self.group.schedule_update()
         else:
-            # disconnect handlers from an actor
-            self._unobserve(descendant)
             for child in descendant.get_children():
                 self._remove_actor(descendant, child)
 
@@ -303,7 +298,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     def scanning_hilite(self, value):
         self._scanning_hilite = value
         if not value:
-            self.disable_scan_hilite("scanning")
+            self.disable_scan_hilite()
 
     def schedule_update(self):
         self.fresh_subgroups = False
@@ -423,7 +418,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         """
         Do something when the group is singular.
         """
-        sub_element =self.get_subgroups()[0]
+        sub_element = self.get_subgroups()[0]
         if isinstance(sub_element, Group):
             msg = 'Group {} is singular. Starting its only subgroup.'
             _LOG.debug(msg.format(self.get_id()))
@@ -453,7 +448,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         if stage is not None:
             stage.set_key_focus(self)
 
-    def key_release(self, source, event):
+    def key_release(self, _source, event):
         if event.unicode_value == ' ':
             self.user_action_handler()
         return True
@@ -549,16 +544,16 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._subgroups = []
         self.index = None
         super().__init__()
-        self.select_lag = 1000
-        self.start_up_lag = 0
-        self.interval = 1000
-        self.lag_hilite_mode = "blink"
+        self._select_lag = 1000
+        self._start_up_lag = 0
+        self._interval = 1000
+        self._lag_hilite_mode = "blink"
         self.blinking_freq = 100
         self._max_cycle_count = 2
         self._buttons = []
         self._unwind_to = None
         self.timeout_token = None
-        self.player = pisak.app._sound_effects_player
+        self.player = pisak.app.sound_effects_player
         self.sound_support_enabled = pisak.config.as_bool("read_button") and \
                              pisak.config.as_bool("sound_effects_enabled")
         self.apply_props()
@@ -577,7 +572,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
     @property
     def lag_hilite_mode(self):
         """
-        Type of starting lag hilite. Avalaible are 'blink'
+        Type of starting lag hilite. Available are 'blink'
         and 'still'.
         """
         return self._lag_hilite_mode
@@ -650,12 +645,12 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
     def _on_lag(self, lag_type, element_to_hilite, lag_duration):
         """
         Stops ('lags') the scanning proccess for the given amount of time
-        and performes all the previously ordered actions, i.e. highlights
+        and performs all the previously ordered actions, i.e. highlights
         the current element. In the end schedules an adequate closure.
 
         :param lag_type: type of lag to be performed. Currently there are
         only two of them: 'start_up' that can happen before the scanning
-        proccess starts and 'select', after selection of an element.
+        process starts and 'select', after selection of an element.
         :param element_to_hilite: element that has scanning focus during the
         lag and that should be highlighted.
         :param lag_duration: duration of the lag in miliseconds.
@@ -704,7 +699,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self.timeout_token = None
         self._stop_cycle()
 
-    def _do_start(self, source=None):
+    def _do_start(self, *_source):
         self.index = None
         self._cycle_count = 0
         self._expose_next(enforced=True)
@@ -754,9 +749,9 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                     icon_name = selection.current_icon_name
                     self.player.play(selection.sounds[icon_name])
                 else:
-                    self._play_scanning_sound()
+                    self.play_scanning_sound()
             else:
-                self._play_scanning_sound()
+                self.play_scanning_sound()
             if hasattr(selection, "enable_hilite"):
                 selection.enable_hilite()
             elif isinstance(selection, Group):
@@ -814,11 +809,13 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
             msg = "There is no current element being a subgroup of group {}."
             _LOG.warning(msg.format(self.group.get_id()))
 
-    def _play_scanning_sound(self):
+    @staticmethod
+    def play_scanning_sound():
         if pisak.app:
             pisak.app.play_sound_effect('scanning')
 
-    def _play_selection_sound(self):
+    @staticmethod
+    def play_selection_sound():
         if pisak.app:
             pisak.app.play_sound_effect('selection')
 
@@ -846,7 +843,7 @@ class RowStrategy(BaseStrategy):
             self._allocation_slot = \
                 self.group.connect("allocation-changed", self.update_rows)
 
-    def update_rows(self, *args):
+    def update_rows(self, *_args):
         _LOG.debug("Row layout allocation changed")
         if self.index is not None:
             if self.index < len(self._subgroups):

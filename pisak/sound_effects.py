@@ -3,6 +3,7 @@ Sound effects player.
 """
 import gi
 gi.require_version('Gst', '1.0')
+
 from gi.repository import GObject, Gst
 
 from pisak import logger
@@ -33,7 +34,7 @@ class SoundEffectsPlayer(object):
         self._playbin.set_state(Gst.State.READY)
         self._playbin.set_state(Gst.State.PLAYING)
 
-    def on_message(self, bus, message):
+    def on_message(self, _bus, message):
         if message.type == Gst.MessageType.EOS:
             self.free_resource()
         elif message.type == Gst.MessageType.ERROR:
