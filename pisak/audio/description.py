@@ -17,7 +17,8 @@ def prepare_folders_view(app, window, script, data):
 
 
 def prepare_playlist_view(app, window, script, data):
-    script.get_object("data_source").data_set_id = data["playlist_id"]
+    ds = script.get_object("data_source")
+    ds.data_set_idx = ds.data_sets_ids_list.index(data["playlist_id"]) + 1
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_return", "audio/main")
 
