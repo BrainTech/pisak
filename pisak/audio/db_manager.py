@@ -9,7 +9,7 @@ from pisak import dirs, logger
 
 _FAVOURITES_FOLDER_ALIAS = 'ULUBIONE'
 
-_MUSIC_DB_PATH = os.path.join(dirs.HOME_PISAK_DIR, 'music.db')
+_MUSIC_DB_PATH = os.path.join(dirs.HOME_PISAK_DATABASES, 'music.db')
 
 _ENGINE_URL = 'sqlite:///' + _MUSIC_DB_PATH
 
