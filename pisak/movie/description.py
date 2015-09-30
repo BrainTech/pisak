@@ -24,9 +24,6 @@ def prepare_player_view(app, window, script, data):
     movie_path = movie.path
     playback = script.get_object("playback")
     playback.filename = movie_path
-    subs = model.find_subtitles(movie_path)
-    if subs:
-        playback.set_subtitle_from_file(subs)
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_library", "movie/main")
 
