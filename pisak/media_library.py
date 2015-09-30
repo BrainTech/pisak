@@ -10,8 +10,9 @@ from collections import namedtuple
 import magic
 import configobj
 
-from pisak import res, exceptions
+from pisak import res, exceptions, logger
 
+_LOG = logger.get_logger(__name__)
 
 class LibraryException(exceptions.PisakException):
     pass
