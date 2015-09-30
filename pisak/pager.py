@@ -134,7 +134,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
             GObject.SIGNAL_RUN_FIRST, None, ()),
         "length-changed": (
             GObject.SIGNAL_RUN_FIRST, None,
-            (GObject.TYPE_INT64,))
+            (GObject.TYPE_INT64,)),
+        'reload': (
+            GObject.SIGNAL_RUN_FIRST, None, ())
     }
 
     __gproperties__ = {
@@ -160,13 +162,13 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     }
 
     def __init__(self):
-        self._custom_topology = False
         self._length = 0
         self._data = None
         self._data_set_id = None
         self._target_spec = None
         self._lazy_loading = False
-
+        self.page_idx = None
+        self.custom_topology = False
         self.from_idx = 0
         self.to_idx = 0
         self.data_sets_count = 0
@@ -282,6 +284,12 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.emit('length-changed', self._length)
         self.emit("data-is-ready")
 
+    def reload(self):
+        """
+        Reload.
+        """
+        self.emit('reload')
+
     @property
     def length(self):
         """
@@ -323,30 +331,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
                 item = self._produce_item(self.data[index])
                 self._prepare_item(item)
                 items.append(item)
-        return items
-
-    def _generate_items_custom(self, part):
-        """
-        Generate items from the given subset of the data.
-        Data should be already properly structured.
-
-        :param part: number of subset of the set of all data items
-        """
-        data = self.data[part]
-        self.target_spec["columns"] = len(data[0])  # custom number of columns
-        self.target_spec["rows"] = len(data)  # custom number of rows
-        items = []
-        for row in data:
-            items_row = []
-            for record in row:
-                if record:
-                    item = self._produce_item(record)
-                else:
-                    item = Clutter.Actor()
-                    self._prepare_filler(item)
-                self._prepare_item(item)
-                items_row.append(item)
-            items.append(items_row)
         return items
 
     def _prepare_item(self, item):
@@ -454,19 +438,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.from_idx = 0
         self.to_idx = self._length
         return self._generate_items_flat()
-
-    def get_items_custom(self, part):
-        """
-        Get all items from the given page. Method compatible with
-        custom topology mode of operation.
-
-        :param part: which part of all items (e.g items from which page)
-        should be returned. Usually items that belong to the same part are
-        packed into a single list. 
-
-        :returns: list of items packed into lists
-        """
-        return self._generate_items_custom(part)
 
     def produce_data(self, raw_data, cmp_key_factory):
         """
@@ -695,7 +666,9 @@ class PagerWidget(layout.Bin, configurator.Configurable):
             (GObject.TYPE_FLOAT, GObject.TYPE_INT64)),
         "limit-declared": (
             GObject.SIGNAL_RUN_FIRST, None,
-            (GObject.TYPE_INT64,))
+            (GObject.TYPE_INT64,)),
+        "ready": (
+            GObject.SIGNAL_RUN_FIRST, None, ())
     }
     __gproperties__ = {
         "data-source": (
@@ -742,6 +715,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self._page_strategy = None
         self._idle_duration = 0
         self._page_ratio_spacing = 0
+        self._ready = False
         self._rows = 3
         self._columns = 4
         self._current_page = None
@@ -788,6 +762,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
                           self._show_initial_page())
             value.connect('length-changed', lambda _, length:
                           self._calculate_page_count(length))
+            value.connect('reload', lambda *_: self._reload())
 
     @property
     def rows(self):
@@ -821,6 +796,16 @@ class PagerWidget(layout.Bin, configurator.Configurable):
     def transition_duration(self, value):
         self.new_page_transition.set_duration(value)
         self.old_page_transition.set_duration(value)
+
+    @property
+    def ready(self):
+        return self._ready
+
+    @ready.setter
+    def ready(self, value):
+        self._ready = value
+        if value:
+            self.emit('ready')
 
     def _calculate_page_count(self, data_length):
         """
@@ -873,13 +858,22 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         else:
             self.emit("progressed", 0, 0)
 
-    def _show_initial_page(self):
+    def _reload(self):
+        """
+        Enforce reloading.
+        """
+        if self._current_page in self.get_children():
+            self.remove_child(self._current_page)
+        self.page_index = 0
+        self._show_initial_page(True)
+
+    def _show_initial_page(self, enforce=False):
         """
         Display pager initial page.
         """
-        if not self._inited and \
+        if enforce or \
+                not self._inited and \
                 self.data_source is not None and \
-                self.data_source.data is not None and \
                 self._current_page is None:
             self._inited = True
             # create page specification needed for proper items adjustment
@@ -890,13 +884,14 @@ class PagerWidget(layout.Bin, configurator.Configurable):
                                             "columns": self.columns}
             self._current_direction = 0
             if self.data_source.custom_topology:
-                items = self.data_source.get_items_custom(self.page_index)
+                items = self.data_source.get_items_custom_next()
             else:
                 items = self.data_source.query_items_forward(
                     self.rows*self.columns)
             self._calculate_page_count(self.data_source.length)
             if items:
                 self._introduce_new_page(items)
+            self.ready = True
 
     def _automatic_timeout(self, _data):
         """
@@ -944,10 +939,12 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         Move to the next page.
         """
         if self.old_page is None and self._page_count > 1:
-            self.page_index = (self.page_index+1) % self._page_count
+            self.page_index = self.data_source.page_idx if \
+                self.data_source.page_idx is not None else \
+                (self.page_index+1) % self._page_count
             self._current_direction = 1
             if self.data_source.custom_topology:
-                items = self.data_source.get_items_custom(self.page_index)
+                items = self.data_source.get_items_custom_next()
             else:
                 items = self.data_source.query_items_forward(
                     self.rows * self.columns)
@@ -959,11 +956,13 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         Move to the previous page.
         """
         if self.old_page is None and self._page_count > 1:
-            self.page_index = self.page_index - 1 if self.page_index >= 1 \
-                                    else self._page_count - 1
+            self.page_index = self.data_source.page_idx if \
+                self.data_source.page_idx is not None else (
+                    self.page_index - 1 if self.page_index >= 1 \
+                    else self._page_count - 1)
             self._current_direction = -1
             if self.data_source.custom_topology:
-                items = self.data_source.get_items_custom(self.page_index)
+                items = self.data_source.get_items_custom_previous()
             else:
                 items = self.data_source.query_items_backward(
                     self.columns * self.rows)

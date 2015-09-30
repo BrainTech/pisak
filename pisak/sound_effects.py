@@ -8,7 +8,9 @@ from gi.repository import GObject, Gst
 
 from pisak import logger
 
+
 _LOG = logger.get_logger(__name__)
+
 
 GObject.threads_init()
 Gst.init()

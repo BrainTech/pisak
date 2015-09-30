@@ -521,13 +521,19 @@
         "id": "pager_button_5",
         "type": "PisakButton",
         "style-class": "PisakSymbolerButton",
-        "disabled": true,
         "x-align": "start",
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
         "icon-size": 37,
-        "icon-name": "cofnij"
+        "icon-name": "house",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/load_main",
+                           "object": "data_source"
+                       }
+                    ]
     },
     {
         "id": "pager_button_6",

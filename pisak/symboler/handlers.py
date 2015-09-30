@@ -1,7 +1,36 @@
 import subprocess
+import configobj
 
-from pisak import signals
-from pisak.symboler import symbols_manager
+import pisak
+from pisak import signals, dirs
+
+
+@signals.registered_handler("symboler/load_main")
+def load_main(data_source):
+    """
+    Load main content of the symboler, that is table of contents
+    and then all the categories.
+    """
+    data_source.load_main_view()
+
+
+def _get_saved_entries():
+    """
+    Get all previously saved symbols entries.
+    """
+    return configobj.ConfigObj(dirs.HOME_SYMBOLS_ENTRY, encoding='UTF8')
+
+
+def _save_entry(name, entry):
+    """
+    Save the given entry.
+
+    :param name: title of the new entry.
+    :param entry: chain of symbols to be saved.
+    """
+    entries = configobj.ConfigObj(dirs.HOME_SYMBOLS_ENTRY, encoding='UTF8')
+    entries[name] = entry
+    entries.write()
 
 
 @signals.registered_handler("symboler/save")
@@ -22,7 +51,7 @@ def save(pop_up):
     entries_limit = 9
     pop_up.mode = "save"
     entry_box = pop_up.target
-    entries = symbols_manager.get_saved_entries()
+    entries = _get_saved_entries()
     symbols = entry_box.symbols_buffer
     if symbols:
         if len(entries) < entries_limit:
@@ -49,7 +78,7 @@ def load(pop_up):
     entries_present_message = "WYBIERZ PLIK"
     no_entries_present_message = "BRAK PLIKÓW DO WCZYTANIA"
     pop_up.mode = "load"
-    entries = symbols_manager.get_saved_entries()
+    entries = _get_saved_entries()
     if entries:
         pop_up.on_screen(entries_present_message, entries)
     else:

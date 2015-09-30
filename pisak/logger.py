@@ -2,7 +2,11 @@ import os
 import logging
 from logging import handlers
 
-from pisak import arg_parser, dirs
+from pisak import arg_parser
+
+HOME = os.path.expanduser("~")
+HOME_PISAK_DIR = os.path.join(HOME, ".pisak")
+HOME_LOGS_DIR = os.path.join(HOME_PISAK_DIR, "logs")
 
 
 LEVELS = {'debug': logging.DEBUG,
@@ -57,7 +61,7 @@ def get_event_logger():
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(console_formatter)
     filename = "events.log"
-    file = os.path.join(dirs.HOME_LOGS_DIR, filename)
+    file = os.path.join(HOME_LOGS_DIR, filename)
     file_format = '%(asctime)s - %(message)s'
     file_formatter = logging.Formatter(file_format)
     file_handler = handlers.RotatingFileHandler(file,
