@@ -19,7 +19,7 @@ class Config:
     """
 
     # path to the config file.
-    PATH = dirs.HOME_EMAIL_SETUP
+    PATH = dirs.HOME_EMAIL_CONFIG
 
     # default sent box names for different providers of the email service.
     DEFAULT_SENT_BOX = {

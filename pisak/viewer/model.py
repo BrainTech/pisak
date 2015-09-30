@@ -3,13 +3,14 @@ from pisak import dirs, media_library
 
 
 ACCEPTED_TYPES = [
-    "image/png", "image/jpeg", "image/x-ms-bmp", "image/gif"]
+    ".jpg", ".jpeg", ".png", ".bmp", ".gif"
+]
 
 
 LIBRARY_DIR = dirs.get_user_dir("pictures")
 
 
-FAVOURITE_PHOTOS_STORE = os.path.join(dirs.HOME_PISAK_DIR, "favourite_photos.ini")
+FAVOURITE_PHOTOS_STORE = os.path.join(dirs.HOME_PISAK_FAVOURITES, "favourite_photos.ini")
 
 
 FAVOURITE_PHOTOS_ALIAS = "ULUBIONE"

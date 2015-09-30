@@ -173,7 +173,7 @@ def date_to_when(date):
         when = str(date)
     elif years == 1:
         when = "rok " + ago
-    elif years < 1 and 1 <= months:
+    elif years < 1 <= months :
         if 5 <= months:
             month = "miesięcy"
         elif 2 <= months < 5:
@@ -209,12 +209,14 @@ def find_folder_image(dir_files, folder_name, folder_path, image_extensions):
     """
     for file in dir_files:
         file_name, ext = os.path.splitext(file.lower())
-        if ext.lstrip(".") in image_extensions and ("cov" in file_name or
-                            "fold" in file_name or file_name in folder_name):
+        if ext in image_extensions and (
+                "cov" in file_name or "fold" in file_name or
+                file_name in folder_name):
             return os.path.join(folder_path, file)
 
 
-def produce_identicon(string, bins_count=(10, 10), size=(600, 600), save_path=None, image_format="png",
+def produce_identicon(string, bins_count=(10, 10), size=(600, 600),
+                      save_path=None, image_format="png",
                       background="rgb(230, 230, 230)", foreground=None):
     """
     Generate identicon picture from hashtag corresponding to the given string.

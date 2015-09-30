@@ -33,8 +33,8 @@ fi
 
 cd ~/.pisak
 echo > configuration.ini
-mkdir css json music movies symbols icons documents logs
-cd ~/.pisak/symbols
+mkdir css json symbols icons logs
+cd ~/.pisak/symboler_sheets/
 echo -n > "symbols_topology.ods"
 
 echo "Do you want the PYTHONPATH var to be extended with PISAK dir? (Y/N)."
