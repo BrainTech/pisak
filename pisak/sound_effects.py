@@ -7,13 +7,13 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GObject, Gst
 
 from pisak import logger
-
+from pisak import arg_parser
 
 _LOG = logger.get_logger(__name__)
 
 
 GObject.threads_init()
-Gst.init()
+Gst.init(arg_parser.get_args().args)
 
 
 class SoundEffectsPlayer(object):
