@@ -14,6 +14,7 @@ def prepare_folders_view(app, window, script, data):
     data_source = script.get_object("data_source")
     data_source.item_handler = _folder_tile_handler
     handlers.button_to_view(window, script, "button_exit")
+    data_source.emit('data-is-ready')
 
 
 def prepare_playlist_view(app, window, script, data):

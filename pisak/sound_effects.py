@@ -13,7 +13,7 @@ _LOG = logger.get_logger(__name__)
 
 
 GObject.threads_init()
-Gst.init()
+Gst.init([])
 
 
 class SoundEffectsPlayer(object):
