@@ -60,11 +60,10 @@ class LazyWorker:
         of the ids list and one portion from the back, in turns.
         """
         if self._src.lazy_offset is not None:
-            while True:
+            any_left = True
+            while any_left and self._running:
                 any_left = self._load_portion_by_number(
                     self._src.lazy_offset, self._step)
-                if not any_left or not self._running:
-                    break
                 self._src.lazy_offset += self._step
         else:
             flat = list(range(0, len(self._src._ids), self._step))
@@ -126,6 +125,7 @@ class LazyWorker:
         """
         Start the loader.
         """
+        self._running = True
         if not self._worker:
             self._worker = threading.Thread(target=self._lazy_work,
                                                         daemon=True)
