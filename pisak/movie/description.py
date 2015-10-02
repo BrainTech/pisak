@@ -15,6 +15,7 @@ def prepare_flat_view(app, window, script, data):
     data_source = script.get_object("library_data")
     data_source.item_handler = movie_tile_handler
     handlers.button_to_view(window, script, "button_start")
+    data_source.emit('data-is-ready')
 
 
 def prepare_player_view(app, window, script, data):
