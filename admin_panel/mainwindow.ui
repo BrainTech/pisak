@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>599</width>
-    <height>395</height>
+    <height>669</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,43 +18,507 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>-10</y>
       <width>581</width>
-      <height>311</height>
+      <height>591</height>
      </rect>
     </property>
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Wybór aplikacji</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>50</y>
+        <width>221</width>
+        <height>245</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>12</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Dostępne aplikacje</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_5">
+         <property name="text">
+          <string>komunikator symboliczny</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>odtwarzacz filmów</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_4">
+         <property name="text">
+          <string>odtwarzacz muzyki</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_9">
+         <property name="text">
+          <string>przeglądarka zdjęć</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_10">
+         <property name="text">
+          <string>edytor tekstu</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_6">
+         <property name="text">
+          <string>poczta email</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_8">
+         <property name="text">
+          <string>rysowanie</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_7">
+         <property name="text">
+          <string>blog</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Ogólne</string>
+      <string>Funkcje ogólne</string>
      </attribute>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QWidget" name="verticalLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>70</y>
-        <width>158</width>
-        <height>22</height>
+        <x>5</x>
+        <y>3</y>
+        <width>786</width>
+        <height>541</height>
        </rect>
       </property>
-      <property name="text">
-       <string>dźwięki aplikacji</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>30</y>
-        <width>251</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>wsparcie dźwiękowe przycisków</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QComboBox" name="comboBox_2">
+           <item>
+            <property name="text">
+             <string>mouse-switch</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>pisak-switch</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>eyetracker</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>tobii</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>eviacam</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>mouse</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>eyetracker-no-correction</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>eyetracker-mockup</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>keyboard</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>urządzenie wejściowe</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QComboBox" name="comboBox">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <property name="currentText">
+            <string>default</string>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <item>
+            <property name="text">
+             <string>default</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>turquoise</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>skórka</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>odtwarzanie dźwięków</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>wsparcie dźwiękowe dla przycisków</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QSlider" name="horizontalSlider">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TicksBelow</enum>
+           </property>
+           <property name="tickInterval">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>głośność dźwięków</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QSpinBox" name="spinBox">
+           <property name="minimum">
+            <number>-1</number>
+           </property>
+           <property name="maximum">
+            <number>999999999</number>
+           </property>
+           <property name="value">
+            <number>-1</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>liczba cykli skanowania</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox">
+           <property name="value">
+            <double>1.000000000000000</double>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>interwał skanowania (sek)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_7">
+           <property name="text">
+            <string>opóźnienie startu skanowania (sek)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_8">
+           <property name="text">
+            <string>opóźnienie wykonania czynności po kliknięciu (sek)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <item>
+          <widget class="QComboBox" name="comboBox_3">
+           <item>
+            <property name="text">
+             <string>press</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>release</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>przycisk reaguje na</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QComboBox" name="comboBox_4">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>selection.wav</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton_2">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="text">
+            <string>dźwięk wyboru</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <widget class="QComboBox" name="comboBox_5">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>scan.wav</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>dźwięk skanowania</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_11">
+         <property name="text">
+          <string>litery drukowane</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>opóźnienie działania kursora (sek)</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QLineEdit" name="lineEdit_7">
+           <property name="text">
+            <string>Chciałbym</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit">
+           <property name="text">
+            <string>Czy</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_8">
+           <property name="text">
+            <string>Jak</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_2">
+           <property name="text">
+            <string>Jestem</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_3">
+           <property name="text">
+            <string>Nie</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_4">
+           <property name="text">
+            <string>Niestety</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_5">
+           <property name="text">
+            <string>Rzeczywiście</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_6">
+           <property name="text">
+            <string>Super</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_9">
+           <property name="text">
+            <string>Witam</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>domyślna lista słów predykcji</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
@@ -64,7 +528,7 @@
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
-      <string>Email</string>
+      <string>Poczta email</string>
      </attribute>
     </widget>
    </widget>
