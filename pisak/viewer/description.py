@@ -48,6 +48,7 @@ def prepare_album_view(app, window, script, data):
 
     data_source.item_handler = photo_tile_handler
     data_source.data_set_idx = album_id
+    data_source.emit('data-is-ready')
 
 
 def prepare_library_view(app, window, script, data):
@@ -55,6 +56,7 @@ def prepare_library_view(app, window, script, data):
     library_data.item_handler = lambda tile, album: window.load_view(
         "viewer/album", {"album_id": album})
     handlers.button_to_view(window, script, "button_start")
+    library_data.emit('data-is-ready')
 
 
 def prepare_photo_editing_view(app, window, script, data):
