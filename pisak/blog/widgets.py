@@ -84,6 +84,7 @@ class PostTileSource(pager.DataSource):
                 offset, number)
 
     def _check_ids_range(self):
+        self._length = 100
         return list(map(str, range(0, 100)))
 
 

@@ -2,6 +2,7 @@
 Basic implementation of sliding page widget.
 """
 import threading
+import time
 import itertools
 from math import ceil
 from collections import OrderedDict
@@ -64,6 +65,7 @@ class LazyWorker:
             while any_left and self._running:
                 any_left = self._load_portion_by_number(
                     self._src.lazy_offset, self._step)
+                time.sleep(1)
                 self._src.lazy_offset += self._step
         else:
             flat = list(range(0, len(self._src._ids), self._step))
@@ -216,9 +218,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._target_spec = value
 
         if self.lazy_loading:
-            self._lazy_loader.step = ceil((value['columns'] * value['rows'])/2)
+            self._lazy_loader.step = value['columns'] * value['rows']
             self._lazy_loader.start()
-            self.emit('data-is-ready')
 
     @property
     def custom_topology(self):
@@ -551,7 +552,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def _set_up_lazy_loading(self):
         """
-        Initialize all the neccessary things and set up the lazy loader.
+        Initialize all the necessary things and set up the lazy loader.
         Should be always called on the lazy loader init.
         """
         self._check_ids_range()
@@ -568,10 +569,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_data.update(
             [(str(ide), None) for ide in self._ids if
              str(ide) not in self._lazy_data])
-        self.data = self.produce_data(
-            [(val, None) for val in list(self._lazy_data.values())],
-            self._data_sorting_key
-        )
+        self.data = [None for _ in self._lazy_data]
 
     def _schedule_sending_data(self, direction):
         """
