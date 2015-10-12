@@ -1,16 +1,76 @@
 """
 Entry point for the PISAK admin panel application.
 """
+import os
+
+import configobj
+
 from panel import Ui_MainWindow
+
+
+CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.pisak', 'configs')
+
+if not os.path.isdir(CONFIG_DIR):
+    os.makedirs(CONFIG_DIR)
+
+CONFIG_PATH = os.path.join(CONFIG_DIR, 'main_config.ini')
 
 
 class Panel(Ui_MainWindow):
 
-    def setupUi(self, MainWindow):
-        super().setupUi(MainWindow)
-        self._connectAllSignals()
+    def __init__(self):
+        super().__init__()
+        self._cache = {}
+        self._config = None
 
-    def _connectAllSignals(self):
+    def _apply_changes(self):
+        self._config.update(self._cache)
+        self._config.write()
+
+    def _abort_changes(self):
+        self._cache.clear()
+
+    def _close(self):
+        self.app.exit()
+
+    def _load_config(self):
+        self._config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF-8')
+        self._cache = self._config.copy()
+        return self._config
+
+    def _fill_in_forms(self):
+        config = self._load_config()
+
+        self.comboBox_input.setCurrentText(config['input'])
+        self.comboBox_skin.setCurrentText(config['skin'])
+        self.comboBox_reactOn.setCurrentText(config['scanning']['react_on'])
+        self.horizontalSlider_volume.setValue(config.as_int('sound_effects_volume'))
+        self.checkBox_sounds.setChecked(config.as_bool('sound_effects_enabled'))
+        self.checkBox_buttonSoundSupport.setChecked(config.as_bool('read_button'))
+
+        blog = config['blog']
+        self.lineEdit_blogUsername.setText(blog['user_name'])
+        self.lineEdit_blogPassword.setText(blog['password'])
+        self.lineEdit_blogURL.setText(blog['address'])
+        self.lineEdit_blogTitle.setText(blog['title'])
+
+        email = config['email']
+        self.lineEdit_emailAddress.setText(email['address'])
+        self.lineEdit_emailPassword.setText(email['password'])
+        self.lineEdit_emailSentFolder.setText(email['sent_folder'])
+        self.lineEdit_emailIMAPServer.setText(email['IMAP_server'])
+        self.lineEdit_emailSMTPServer.setText(email['SMTP_server'])
+        self.comboBox_emailPortIMAP.setCurrentText(email['IMAP_port'])
+        self.comboBox_emailPortSMTP.setCurrentText(email['SMTP_port'])
+
+    def setupUi(self, MainWindow, app):
+        super().setupUi(MainWindow)
+        self.app = app
+        self.mainWindow = MainWindow
+        self._connect_all_signals()
+        self._fill_in_forms()
+
+    def _connect_all_signals(self):
         self.checkBox_blog.toggled.connect(self.onCheckBox_blogToggled)
         self.checkBox_viewer.toggled.connect(self.onCheckBox_viewerToggled)
         self.checkBox_speller.toggled.connect(self.onCheckBox_spellerToggled)
@@ -63,46 +123,46 @@ class Panel(Ui_MainWindow):
         self.pushButton_ok.clicked.connect(self.onPushButton_okClicked)
 
     def onCheckBox_blogToggled(self, checked):
-        pass
+        self._cache['available_apps']['blog'] = checked
 
     def onCheckBox_viewerToggled(self, checked):
-        pass
+        self._cache['available_apps']['viewer'] = checked
 
     def onCheckBox_spellerToggled(self, checked):
-        pass
+        self._cache['available_apps']['speller'] = checked
 
     def onCheckBox_symbolerToggled(self, checked):
-        pass
+        self._cache['available_apps']['symboler'] = checked
 
     def onCheckBox_movieToggled(self, checked):
-        pass
+        self._cache['available_apps']['movie'] = checked
 
     def onCheckBox_audioToggled(self, checked):
-        pass
+        self._cache['available_apps']['audio'] = checked
 
     def onCheckBox_paintToggled(self, checked):
-        pass
+        self._cache['available_apps']['paint'] = checked
 
     def onCheckBox_emailToggled(self, checked):
-        pass
+        self._cache['available_apps']['email'] = checked
 
     def onComboBox_inputCurrentIndexChanged(self, input_name):
-        pass
+        self._cache['input'] = input_name
 
     def onComboBox_skinCurrentIndexChanged(self, skin):
-        pass
+        self._cache['skin'] = skin
 
     def onHorizontalSlider_volumeValueChanged(self, value):
-        pass
+        self._cache['sound_effects_volume'] = value
 
     def onCheckBox_soundsToggled(self, checked):
-        pass
+        self._cache['sound_effects_enabled'] = checked
 
     def onCheckBox_buttonSoundSupportToggled(self, checked):
-        pass
+        self._cache['read_button'] = checked
 
     def onCheckBox_textCaseToggled(self, checked):
-        pass
+        self._cache['upper_case'] = checked
 
     def onHorizontalSlider_cycleCountValueChanged(self, value):
         pass
@@ -156,16 +216,16 @@ class Panel(Ui_MainWindow):
         pass
 
     def onLineEdit_blogUsernameTextChanged(self, username):
-        pass
+        self._cache['blog']['user_name'] = username
 
     def onLineEdit_blogPasswordTextChanged(self, password):
-        pass
+        self._cache['blog']['password'] = password
 
     def onLineEdit_blogURLTextChanged(self, url):
-        pass
+        self._cache['blog']['address'] = url
 
     def onLineEdit_blogTitleTextChanged(self, title):
-        pass
+        self._cache['blog']['title'] = title
 
     def onPushButton_blogTestClicked(self):
         pass
@@ -177,37 +237,39 @@ class Panel(Ui_MainWindow):
         pass
 
     def onLineEdit_emailAddressTextChanged(self, address):
-        pass
+        self._cache['email']['address'] = address
 
     def onLineEdit_emailPasswordTextChanged(self, password):
-        pass
+        self._cache['email']['password'] = password
 
     def onLineEdit_emailSentFolderTextChanged(self, folder):
-        pass
+        self._cache['email']['sent_folder'] = folder
 
     def onLineEdit_emailIMAPServerTextChanged(self, server):
-        pass
+        self._cache['email']['IMAP_server'] = server
 
     def onLineEdit_emailSMTPServerTextChanged(self, server):
-        pass
+        self._cache['email']['SMTP_server'] = server
 
     def onComboBox_emailPortIMAPCurrentTextChanged(self, port):
-        pass
+        self._cache['email']['IMAP_port'] = port
 
     def onComboBox_emailPortSMTPCurrentTextChanged(self, port):
-        pass
+        self._cache['email']['SMTP_port'] = port
 
     def onComboBox_spellerLayoutCurrentIndexChanged(self, layout):
         pass
 
     def onPushButton_abortClicked(self):
-        pass
+        self._abort_changes()
+        self._close()
 
     def onPushButton_applyClicked(self):
-        pass
+        self._apply_changes()
 
     def onPushButton_okClicked(self):
-        pass
+        self._apply_changes()
+        self._close()
 
 
 if __name__ == '__main__':
@@ -217,7 +279,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = QMainWindow()
     ui = Panel()
-    ui.setupUi(window)
+    ui.setupUi(window, app)
 
     window.show()
     sys.exit(app.exec_())
