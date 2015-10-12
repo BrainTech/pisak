@@ -205,6 +205,13 @@ class EmailButton(widgets.Button):
     def __init__(self):
         super().__init__()
         self._extra_label = None
+        self._pure_label = None
+
+    def get_label(self):
+        if self._extra_label is not None and self._pure_label is not None:
+            return self._pure_label
+        else:
+            return super().get_label()
 
     @property
     def extra_label(self):
@@ -218,6 +225,7 @@ class EmailButton(widgets.Button):
     def extra_label(self, value):
         assert isinstance(value, str), "`extra_label` must be string"
         self._extra_label = value
+        self._pure_label = self.clutter_text.get_text()
         self._add_extra_label(value)
 
     def _add_extra_label(self, value):
