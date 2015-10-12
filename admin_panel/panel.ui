@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>905</width>
-    <height>708</height>
+    <height>722</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>-10</y>
+      <x>10</x>
+      <y>0</y>
       <width>851</width>
-      <height>601</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -30,7 +30,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_selectApps">
      <attribute name="title">
@@ -135,7 +135,7 @@
         <x>0</x>
         <y>0</y>
         <width>831</width>
-        <height>562</height>
+        <height>381</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -283,177 +283,7 @@
              </property>
             </widget>
            </item>
-           <item row="7" column="1">
-            <widget class="QLabel" name="label_cycleCount">
-             <property name="text">
-              <string>Liczba cykli skanowania</string>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QLabel" name="label_interval">
-             <property name="text">
-              <string>Interwał skanowania (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1">
-            <widget class="QLabel" name="label_startUpLag">
-             <property name="text">
-              <string>Opóźnienie startu skanowania (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1">
-            <widget class="QLabel" name="label_selectLag">
-             <property name="text">
-              <string>Opóźnienie wykonania czynności po kliknięciu (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
-            <widget class="QLabel" name="label_spriteTimeout">
-             <property name="text">
-              <string>Opóźnienie działania kursora (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="0">
-            <widget class="QComboBox" name="comboBox_reactOn">
-             <item>
-              <property name="text">
-               <string>wciśnięcie</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>odpuszczenie</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="12" column="1">
-            <widget class="QLabel" name="label_reactOn">
-             <property name="text">
-              <string>Reakcja przycisku na</string>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="0">
-            <widget class="QComboBox" name="comboBox_selectSound">
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>selection.wav</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="13" column="1">
-            <widget class="QLabel" name="label_selectSound">
-             <property name="text">
-              <string>Dźwięk wyboru</string>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QComboBox" name="comboBox_scanSound">
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>scan.wav</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="14" column="1">
-            <widget class="QLabel" name="label_scanSound">
-             <property name="text">
-              <string>Dźwięk skanowania</string>
-             </property>
-            </widget>
-           </item>
            <item row="7" column="0">
-            <widget class="QSlider" name="horizontalSlider_cycleCount">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QSlider" name="horizontalSlider_interval">
-             <property name="minimum">
-              <number>500</number>
-             </property>
-             <property name="maximum">
-              <number>5000</number>
-             </property>
-             <property name="singleStep">
-              <number>500</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QSlider" name="horizontalSlider_selectLag">
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="singleStep">
-              <number>1</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QSlider" name="horizontalSlider_startUpLag">
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
             <widget class="QSlider" name="horizontalSlider_spriteTimeout">
              <property name="minimum">
               <number>500</number>
@@ -472,6 +302,32 @@
              </property>
              <property name="tickInterval">
               <number>500</number>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_spriteTimeout">
+             <property name="text">
+              <string>Opóźnienie działania kursora (sek)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QComboBox" name="comboBox_selectSound">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>selection.wav</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLabel" name="label_selectSound">
+             <property name="text">
+              <string>Dźwięk wyboru</string>
              </property>
             </widget>
            </item>
@@ -556,6 +412,170 @@
       </layout>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Skanowanie</string>
+     </attribute>
+     <widget class="QWidget" name="formLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>70</y>
+        <width>491</width>
+        <height>222</height>
+       </rect>
+      </property>
+      <layout class="QFormLayout" name="formLayout_5">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <item row="0" column="0">
+        <widget class="QSlider" name="horizontalSlider_cycleCount">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>5</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+         <property name="tickInterval">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_cycleCount">
+         <property name="text">
+          <string>Liczba cykli skanowania</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSlider" name="horizontalSlider_interval">
+         <property name="minimum">
+          <number>500</number>
+         </property>
+         <property name="maximum">
+          <number>5000</number>
+         </property>
+         <property name="singleStep">
+          <number>500</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+         <property name="tickInterval">
+          <number>500</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_interval">
+         <property name="text">
+          <string>Interwał skanowania (sek)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QSlider" name="horizontalSlider_startUpLag">
+         <property name="maximum">
+          <number>5</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+         <property name="tickInterval">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_startUpLag">
+         <property name="text">
+          <string>Opóźnienie startu skanowania (sek)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QSlider" name="horizontalSlider_selectLag">
+         <property name="maximum">
+          <number>5</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+         <property name="tickInterval">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_selectLag">
+         <property name="text">
+          <string>Opóźnienie wykonania czynności po wyborze (sek)</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QComboBox" name="comboBox_reactOn">
+         <item>
+          <property name="text">
+           <string>wciśnięcie</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>odpuszczenie</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_reactOn">
+         <property name="text">
+          <string>Reakcja przycisku na</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QComboBox" name="comboBox_scanSound">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>scan.wav</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_scanSound">
+         <property name="text">
+          <string>Dźwięk skanowania</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
     <widget class="QWidget" name="tab_blogSettings">
      <attribute name="title">
       <string>Blog</string>
@@ -565,110 +585,66 @@
        <rect>
         <x>10</x>
         <y>20</y>
-        <width>741</width>
+        <width>461</width>
         <height>311</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <layout class="QFormLayout" name="formLayout_2">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogUsername"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_blogUsername">
-             <property name="text">
-              <string>Nazwa użytkownika</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogPassword">
-             <property name="echoMode">
-              <enum>QLineEdit::Password</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_blogPassword">
-             <property name="text">
-              <string>Hasło</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogURL"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_blogURL">
-             <property name="text">
-              <string>Adres URL bloga</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogTitle"/>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_blogTitle">
-             <property name="text">
-              <string>Tytuł bloga</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QPushButton" name="pushButton_blogTest">
-             <property name="text">
-              <string>Testuj połączenie</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+        <layout class="QFormLayout" name="formLayout_2">
+         <property name="fieldGrowthPolicy">
+          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         </property>
+         <item row="0" column="0">
+          <widget class="QLineEdit" name="lineEdit_blogUsername"/>
          </item>
-         <item>
-          <widget class="Line" name="line_2">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_blogUsername">
+           <property name="text">
+            <string>Nazwa użytkownika</string>
            </property>
           </widget>
          </item>
-         <item>
-          <layout class="QFormLayout" name="formLayout_10">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+         <item row="1" column="0">
+          <widget class="QLineEdit" name="lineEdit_blogPassword">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
            </property>
-           <item row="1" column="0">
-            <widget class="QComboBox" name="comboBox_blogLayout">
-             <item>
-              <property name="text">
-               <string>default</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>alphabetical</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>frequency</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_blogLayout">
-             <property name="text">
-              <string>Układ elementów aplikacji</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="label_blogPassword">
+           <property name="text">
+            <string>Hasło</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLineEdit" name="lineEdit_blogURL"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="label_blogURL">
+           <property name="text">
+            <string>Adres URL bloga</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLineEdit" name="lineEdit_blogTitle"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="label_blogTitle">
+           <property name="text">
+            <string>Tytuł bloga</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QPushButton" name="pushButton_blogTest">
+           <property name="text">
+            <string>Testuj połączenie</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -696,186 +672,141 @@
        <item>
         <widget class="QLineEdit" name="lineEdit_followedBlog1"/>
        </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_5"/>
-       </item>
       </layout>
      </widget>
+     <zorder>verticalLayoutWidget_3</zorder>
+     <zorder></zorder>
     </widget>
     <widget class="QWidget" name="tab_emailSettings">
      <attribute name="title">
       <string>Poczta e-mail</string>
      </attribute>
-     <widget class="QWidget" name="horizontalLayoutWidget_2">
+     <widget class="QWidget" name="">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>90</y>
-        <width>821</width>
-        <height>285</height>
+        <x>20</x>
+        <y>10</y>
+        <width>421</width>
+        <height>289</height>
        </rect>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <layout class="QFormLayout" name="formLayout_3">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailAddress"/>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_emailAddress">
-           <property name="text">
-            <string>Adres e-mail</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailPassword">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_emailPassword">
-           <property name="text">
-            <string>Hasło</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QComboBox" name="comboBox_emailPortSMTP">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>465</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>587</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>25</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QLabel" name="label_emailPortSMTP">
-           <property name="text">
-            <string>Port serwera SMTP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QPushButton" name="pushButton_emailTest">
-           <property name="text">
-            <string>Testuj połączenie</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_emailSentFolder">
-           <property name="text">
-            <string>Folder wysłanych</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailSentFolder"/>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Adres serwera IMAP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Adres serwera SMTP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailIMAPServer"/>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailSMTPServer"/>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_emailPortIMAP">
-           <property name="text">
-            <string>Port serwera IMAP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QComboBox" name="comboBox_emailPortIMAP">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>993</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>143</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
+      <layout class="QFormLayout" name="formLayout_3">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
+       <item row="0" column="0">
+        <widget class="QLineEdit" name="lineEdit_emailAddress"/>
        </item>
-       <item>
-        <widget class="Line" name="line_3">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="lineEdit_emailPassword">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
          </property>
         </widget>
        </item>
-       <item>
-        <layout class="QFormLayout" name="formLayout_11">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_emailPassword">
+         <property name="text">
+          <string>Hasło</string>
          </property>
-         <item row="1" column="0">
-          <widget class="QComboBox" name="comboBox_emailLayout">
-           <item>
-            <property name="text">
-             <string>default</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>alphabetical</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>frequency</string>
-            </property>
-           </item>
-          </widget>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLineEdit" name="lineEdit_emailSentFolder"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="label_emailSentFolder">
+         <property name="text">
+          <string>Folder wysłanych</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLineEdit" name="lineEdit_emailIMAPServer"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Adres serwera IMAP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QComboBox" name="comboBox_emailPortIMAP">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>993</string>
+          </property>
          </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_emailLayout">
-           <property name="text">
-            <string>Układ elementów aplikacji</string>
-           </property>
-          </widget>
+         <item>
+          <property name="text">
+           <string>143</string>
+          </property>
          </item>
-        </layout>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label_emailPortIMAP">
+         <property name="text">
+          <string>Port serwera IMAP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLineEdit" name="lineEdit_emailSMTPServer"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Adres serwera SMTP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QComboBox" name="comboBox_emailPortSMTP">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>465</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>587</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>25</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLabel" name="label_emailPortSMTP">
+         <property name="text">
+          <string>Port serwera SMTP</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1">
+        <widget class="QPushButton" name="pushButton_emailTest">
+         <property name="text">
+          <string>Testuj połączenie</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_emailAddress">
+         <property name="text">
+          <string>Adres e-mail</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -926,192 +857,12 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_symbolerSettings">
-     <attribute name="title">
-      <string>Komunikator symboliczny</string>
-     </attribute>
-     <widget class="QWidget" name="formLayoutWidget_5">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>50</y>
-        <width>381</width>
-        <height>118</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_5">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox_symbolerLayout">
-         <item>
-          <property name="text">
-           <string>default</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_symbolerLayout">
-         <property name="text">
-          <string>Układ elementów aplikacji</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_audioSettings">
-     <attribute name="title">
-      <string>Odtwarzacz muzyki</string>
-     </attribute>
-     <widget class="QWidget" name="formLayoutWidget_6">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>70</y>
-        <width>372</width>
-        <height>118</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_6">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox_audioLayout">
-         <item>
-          <property name="text">
-           <string>default</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_audioLayout">
-         <property name="text">
-          <string>Układ elementów aplikacji</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_movieSettings">
-     <attribute name="title">
-      <string>Odtwarzacz filmów</string>
-     </attribute>
-     <widget class="QWidget" name="formLayoutWidget_7">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>40</y>
-        <width>372</width>
-        <height>118</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_7">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox_movieLayout">
-         <item>
-          <property name="text">
-           <string>default</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_movieLayout">
-         <property name="text">
-          <string>Układ elementów aplikacji</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_viewerSettings">
-     <attribute name="title">
-      <string>Przeglądarka zdjęć</string>
-     </attribute>
-     <widget class="QWidget" name="formLayoutWidget_8">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>60</y>
-        <width>372</width>
-        <height>118</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_8">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox_viewerLayout">
-         <item>
-          <property name="text">
-           <string>default</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_viewerLayout">
-         <property name="text">
-          <string>Układ elementów aplikacji</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="tab_paintSettings">
-     <attribute name="title">
-      <string>Rysowanie</string>
-     </attribute>
-     <widget class="QWidget" name="formLayoutWidget_9">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>60</y>
-        <width>372</width>
-        <height>118</height>
-       </rect>
-      </property>
-      <layout class="QFormLayout" name="formLayout_9">
-       <property name="fieldGrowthPolicy">
-        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-       </property>
-       <item row="1" column="0">
-        <widget class="QComboBox" name="comboBox_paintLayout">
-         <item>
-          <property name="text">
-           <string>default</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_paintLayout">
-         <property name="text">
-          <string>Układ elementów aplikacji</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_Abort">
+   <widget class="QPushButton" name="pushButton_abort">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>620</y>
+      <x>530</x>
+      <y>500</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -1120,11 +871,11 @@
      <string>Anuluj</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_Apply">
+   <widget class="QPushButton" name="pushButton_apply">
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>620</y>
+      <y>500</y>
       <width>99</width>
       <height>27</height>
      </rect>
@@ -1133,11 +884,11 @@
      <string>Zastosuj</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_Ok">
+   <widget class="QPushButton" name="pushButton_ok">
     <property name="geometry">
      <rect>
-      <x>740</x>
-      <y>620</y>
+      <x>750</x>
+      <y>500</y>
       <width>99</width>
       <height>27</height>
      </rect>
