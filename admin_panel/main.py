@@ -47,6 +47,7 @@ class Panel(Ui_MainWindow):
         self.horizontalSlider_volume.setValue(config.as_int('sound_effects_volume'))
         self.checkBox_sounds.setChecked(config.as_bool('sound_effects_enabled'))
         self.checkBox_buttonSoundSupport.setChecked(config.as_bool('read_button'))
+        self.horizontalSlider_spriteTimeout.setValue(config['PisakSprite'].as_int('timeout'))
 
         blog = config['blog']
         self.lineEdit_blogUsername.setText(blog['user_name'])
@@ -62,6 +63,26 @@ class Panel(Ui_MainWindow):
         self.lineEdit_emailSMTPServer.setText(email['SMTP_server'])
         self.comboBox_emailPortIMAP.setCurrentText(email['IMAP_port'])
         self.comboBox_emailPortSMTP.setCurrentText(email['SMTP_port'])
+
+        available_apps = config['available_apps']
+        self.checkBox_speller.setChecked(available_apps.as_bool('speller'))
+        self.checkBox_symboler.setChecked(available_apps.as_bool('symboler'))
+        self.checkBox_viewer.setChecked(available_apps.as_bool('viewer'))
+        self.checkBox_audio.setChecked(available_apps.as_bool('audio'))
+        self.checkBox_movie.setChecked(available_apps.as_bool('movie'))
+        self.checkBox_paint.setChecked(available_apps.as_bool('paint'))
+        self.checkBox_blog.setChecked(available_apps.as_bool('blog'))
+        self.checkBox_email.setChecked(available_apps.as_bool('email'))
+
+        scanning = config['PisakRowStrategy']
+        self.horizontalSlider_cycleCount.setValue(scanning.as_int('max_cycle_count'))
+        self.horizontalSlider_interval.setValue(scanning.as_int('interval'))
+        self.horizontalSlider_startUpLag.setValue(scanning.as_int('start_up_lag'))
+        self.horizontalSlider_selectLag.setValue(scanning.as_int('select_lag'))
+
+        sound_effects = config['sound_effects']
+        self.comboBox_scanSound.setCurrentText(sound_effects['scanning'])
+        self.comboBox_selectSound.setCurrentText(sound_effects['selection'])
 
     def setupUi(self, MainWindow, app):
         super().setupUi(MainWindow)
@@ -165,28 +186,28 @@ class Panel(Ui_MainWindow):
         self._cache['upper_case'] = checked
 
     def onHorizontalSlider_cycleCountValueChanged(self, value):
-        pass
+        self._cache['PisakRowStrategy']['max_cycle_count'] = value
 
     def onHorizontalSlider_intervalValueChanged(self, value):
-        pass
+        self._cache['PisakRowStrategy']['interval'] = value
 
     def onHorizontalSlider_startUpLagValueChanged(self, value):
-        pass
+        self._cache['PisakRowStrategy']['start_up_lag'] = value
 
     def onHorizontalSlider_selectLagValueChanged(self, value):
-        pass
+        self._cache['PisakRowStrategy']['select_lag'] = value
 
     def onHorizontalSlider_spriteTimeoutValueChanged(self, value):
-        pass
+        self._cache['PisakSprite']['timeout'] = value
 
     def onComboBox_reactOnCurrentIndexChanged(self, react_on):
-        pass
+        self._cache['scanning']['react_on'] = react_on
 
     def onComboBox_selectSoundCurrentIndexChanged(self, select_sound):
-        pass
+        self._cache['sound_effects']['selection'] = select_sound
 
     def onComboBox_scanSoundCurrentIndexChanged(self, scan_sound):
-        pass
+        self._cache['sound_effects']['scanning'] = scan_sound
 
     def onLineEdit_prediction1TextChanged(self, text):
         pass
