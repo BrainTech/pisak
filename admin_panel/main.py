@@ -195,6 +195,7 @@ class Panel(Ui_MainWindow):
 
     def onHorizontalSlider_volumeValueChanged(self, value):
         self._cache['sound_effects_volume'] = value
+        self.label_volumeCounter.setText(str(value))
 
     def onCheckBox_soundsToggled(self, checked):
         self._cache['sound_effects_enabled'] = checked
@@ -207,18 +208,23 @@ class Panel(Ui_MainWindow):
 
     def onHorizontalSlider_cycleCountValueChanged(self, value):
         self._cache['PisakRowStrategy']['max_cycle_count'] = value
+        self.label_cycleCountCounter.setText(str(value))
 
     def onHorizontalSlider_intervalValueChanged(self, value):
         self._cache['PisakRowStrategy']['interval'] = value
+        self.label_intervalCounter.setText(str(round(value/1000, 2)))
 
     def onHorizontalSlider_startUpLagValueChanged(self, value):
         self._cache['PisakRowStrategy']['start_up_lag'] = value
+        self.label_startUpLagCounter.setText(str(round(value/1000, 2)))
 
     def onHorizontalSlider_selectLagValueChanged(self, value):
         self._cache['PisakRowStrategy']['select_lag'] = value
+        self.label_selectLagCounter.setText(str(round(value/1000, 2)))
 
     def onHorizontalSlider_spriteTimeoutValueChanged(self, value):
         self._cache['PisakSprite']['timeout'] = value
+        self.label_spriteTimeoutCounter.setText(str(round(value/1000, 2)))
 
     def onComboBox_reactOnCurrentIndexChanged(self, react_on):
         self._cache['scanning']['react_on'] = react_on
