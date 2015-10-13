@@ -26,7 +26,6 @@ class CursorGroup(layout.Bin, configurator.Configurable):
     def init_content(self, *args):
         self.label = [i for i in self.get_children()
                      if type(i) == Text][0]
-        self.label.clutter_text.connect('text-changed', self.move_cursor)
         self.label.clutter_text.connect('cursor-changed', self.move_cursor)
 
     def init_cursor(self):
