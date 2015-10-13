@@ -27,6 +27,7 @@ ERROR_MESSAGES = {
     "unknown": "Wystąpił błąd. Spróbuj ponownie."
 }
 
+
 class AddressTileSource(pager.DataSource):
     """
     Data source that provides tiles representing different addresses
@@ -205,48 +206,14 @@ class EmailButton(widgets.Button):
     def __init__(self):
         super().__init__()
         self._extra_label = None
-        self._pure_label = None
+
+    def set_extra_label(self, extra):
+        self.set_label(self.get_label() + extra)
+        self._extra_label = extra
 
     def get_label(self):
-        if self._extra_label is not None and self._pure_label is not None:
-            return self._pure_label
+        if self._extra_label:
+            label = self.clutter_text.get_text()
+            return label[: label.rfind(self._extra_label)].strip()
         else:
             return super().get_label()
-
-    @property
-    def extra_label(self):
-        """
-        Extra label added to the default label with some extra
-        spacing between. Type of the property is string.
-        """
-        return self._extra_label
-
-    @extra_label.setter
-    def extra_label(self, value):
-        assert isinstance(value, str), "`extra_label` must be string"
-        self._extra_label = value
-        self._pure_label = self.clutter_text.get_text()
-        self._add_extra_label(value)
-
-    def _add_extra_label(self, value):
-        from_padd = 0.5
-        from_avalaible = 0.3
-        padding_width = self._padding.get_width() if self._padding else 0
-        content_width  = \
-            self.content_offset + padding_width + \
-            self.image.get_width() + self.clutter_text.get_width() + \
-            (self.space.get_width() if self.space else 0)
-        avalaible_width = \
-            self.get_width() - content_width + from_padd*padding_width
-        if padding_width:
-            self._padding.set_width((1 - from_padd) * padding_width)
-        else:
-            avalaible_width *= from_avalaible
-        extra_space = Clutter.Text()
-        max_iter = 100
-        it = 0
-        while extra_space.get_width() < avalaible_width and it < max_iter:
-            extra_space.set_text(extra_space.get_text() + " ")
-            it += 1
-        self.clutter_text.set_text(
-            value + extra_space.get_text() + self.clutter_text.get_text())

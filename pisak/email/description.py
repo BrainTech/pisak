@@ -59,8 +59,7 @@ def prepare_main_view(app, window, script, data):
 
     try:
         contact_count = app.box["address_book"].get_count()
-        window.ui.button_address_book.set_label(
-            window.ui.button_address_book.get_label() +
+        window.ui.button_address_book.set_extra_label(
             counter_label.format(str(contact_count))
         )
     except address_book.AddressBookError as e:
@@ -77,8 +76,7 @@ def prepare_main_view(app, window, script, data):
         else:
             try:
                 inbox_all, inbox_unseen =  client.get_inbox_status()
-                window.ui.button_inbox.set_label(
-                    window.ui.button_inbox.get_label() +
+                window.ui.button_inbox.set_extra_label(
                     counter_label.format("  /  ".join([str(inbox_unseen),
                                                        str(inbox_all)]))
                 )
@@ -87,8 +85,7 @@ def prepare_main_view(app, window, script, data):
 
             try:
                 sent_box_count = client.get_sent_box_count()
-                window.ui.button_sent.set_label(
-                    window.ui.button_sent.get_label() +
+                window.ui.button_sent.set_extra_label(
                     counter_label.format(str(sent_box_count))
                 )
             except imap_client.IMAPClientError as e:
