@@ -252,13 +252,13 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         pango_lines = pango_layout.get_lines()
         add_line = sum((int(line.index_to_x(line.length, 1) / Pango.SCALE / self.get_width()) for line in pango_lines))
         add_line += 2
-        cursor_size = self.clutter_text.get_cursor_size()
+        cursor_size = self.clutter_text.get_cursor_size() + 2
         self.text.set_height(pango_height + add_line*cursor_size)
 
     def _scroll_to_view(self, *args):
         pos = self.get_cursor_position()
         coords = self.clutter_text.position_to_coords(pos)
-        self.scroll_to(coords[2] - 0.75*self.get_height())
+        self.scroll_to(coords[2])
 
     def _scroll(self, direction):
         scroll_bar = self.get_children()[1]
