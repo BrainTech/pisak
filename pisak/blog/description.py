@@ -51,40 +51,52 @@ def prepare_all_posts_view(app, window, script, data):
     handlers.button_to_view(
         window, script, "button_new_post", "blog/speller_post")
     posts_data = script.get_object("posts_data")
-    posts_data.item_handler = lambda tile, post: window.load_view(
-        "blog/single_post", {"post": post, "posts": posts_data.data})
-    posts_data.data = wordpress.blog.get_all_posts()
+
+    def load_view(tile, post):
+        posts_data.clean_up()
+        window.load_view("blog/single_post",
+                         {"post": post.content, "posts": posts_data.data,
+                          "post_item": post})
+
+    posts_data.item_handler = load_view
     title = config.get_blog_config()["title"]
     blog_title = script.get_object("header")
     blog_title.set_text(title)
     date_widget = script.get_object("date")
     today = "DATA:   " + time.strftime("%d-%m-%Y")
     date_widget.set_text(today)
+    posts_data.lazy_loading = True
 
 
 def prepare_single_post_view(app, window, script, data):
 
     post = data["post"]
+    post_item = data["post_item"]
     posts = data["posts"]
 
-    content = script.get_object("post_text")
+    content_box = script.get_object("post_text")
 
     title = config.get_blog_config()["title"]
     blog_title = script.get_object("header")
     blog_title.set_text(title)
 
-    def load_new_post(direction):
-        nonlocal post
+    def load_new_post(direction, arbitrary_post=None):
+        if arbitrary_post:
+            post_to_load = arbitrary_post
+        else:
+            nonlocal post_item
 
-        index = posts.index(post)
-        index += direction
-        if index == len(posts):
-            index = 0
-        post = posts[index]
-        wordpress.blog.pending_post = post
-        content.load_html(wordpress.blog.compose_post_view(post))
+            index = posts.index(post_item)
+            index += direction
+            if index == len(posts):
+                index = 0
+            post_to_load = posts[index]
 
-    load_new_post(0)
+        content = post_to_load.content
+        wordpress.blog.pending_post = content
+        content_box.load_html(wordpress.blog.compose_post_view(content))
+
+    load_new_post(0, post_item)
 
     data['previous_view'] = 'blog/single_post'
 
@@ -105,23 +117,27 @@ def prepare_single_post_view(app, window, script, data):
 
 def prepare_followed_blog_single_post_view(app, window, script, data):
     post = data["post"]
+    post_item = data['post_item']
     posts = data["posts"]
     content = script.get_object("post_text")
 
     blog_name = script.get_object("header")
     blog_name.set_text(data["blog_name"])
 
-    def load_new_post(direction):
-        nonlocal post
+    def load_new_post(direction, arbitrary_post=None):
+        if arbitrary_post:
+            post_to_load = arbitrary_post
+        else:
+            nonlocal post_item
 
-        index = posts.index(post)
-        index += direction
-        if index == len(posts):
-            index = 0
-        post = posts[index]
-        content.load_html(data["blog"].compose_post_view(post))
+            index = posts.index(post_item)
+            index += direction
+            if index == len(posts):
+                index = 0
+            post_to_load = posts[index]
+        content.load_html(data["blog"].compose_post_view(post_to_load.content))
 
-    load_new_post(0)
+    load_new_post(0, post_item)
 
     data['previous_view'] = 'blog/followed_blog_single_post'
 
@@ -144,19 +160,25 @@ def prepare_followed_blog_all_posts_view(app, window, script, data):
     blog_url = data["blog_url"]
     blog_name = data["blog_name"]
     blog = rest_client.Blog(blog_url)
+    app.box['followed_blog'] = blog
     posts_data = script.get_object("posts_data")
 
-    posts_data.item_handler = lambda tile, post: window.load_view(
-        "blog/followed_blog_single_post", {"blog": blog , "post": post,
-                                           "blog_name": blog_name,
-                                           "blog_url": blog_url,
-                                           "posts": posts_data.data})
-    posts_data.data = blog.get_all_posts()
+    def load_view(tile, post):
+        posts_data.clean_up()
+        window.load_view("blog/followed_blog_single_post",
+                         {"blog": blog , "post": post.content,
+                          "post_item": post,
+                          "blog_name": blog_name,
+                          "blog_url": blog_url,
+                          "posts": posts_data.data})
+
+    posts_data.item_handler = load_view
     blog_name_widget = script.get_object("header")
     blog_name_widget.set_text(blog_name)
     date_widget = script.get_object("date")
     today = "DATA:   " + time.strftime("%d-%m-%Y")
     date_widget.set_text(today)
+    posts_data.lazy_loading = True
 
 
 def prepare_followed_blogs_view(app, window, script, data):
@@ -219,7 +241,7 @@ def prepare_viewer_album_view(app, window, script, data):
     album_data = script.get_object("album_data")
     album_data.item_handler = lambda tile, photo_id, album_id: \
         attach_photo(tile)
-    album_data.data_set_id = album_id
+    album_data.data_set_idx = album_id
 
 
 def prepare_speller_about_me_view(app, window, script, data):
@@ -254,7 +276,7 @@ def prepare_viewer_about_me_album_view(app, window, script, data):
     header.set_text(library.get_category_by_id(album_id).name)
     album_data = script.get_object("album_data")
     album_data.item_handler = lambda tile, photo_id, album_id: pick_photo(tile)
-    album_data.data_set_id = album_id
+    album_data.data_set_idx = album_id
 
 
 def prepare_speller_comment_view(app, window, script, data):

@@ -979,7 +979,8 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
             height = self.preview_loading_height
         try:
             self.preview.set_from_file_at_size(value, width, height)
-        except GObject.GError:
+        except GObject.GError as exc:
+            _LOG.error(exc)
             self.preview.clear()
 
     @property
