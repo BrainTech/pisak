@@ -8,12 +8,14 @@ import configobj
 from panel import Ui_MainWindow
 
 
-CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.pisak', 'configs')
+HOME_CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.pisak', 'configs')
 
-if not os.path.isdir(CONFIG_DIR):
-    os.makedirs(CONFIG_DIR)
+if not os.path.isdir(HOME_CONFIG_DIR):
+    os.makedirs(HOME_CONFIG_DIR)
 
-CONFIG_PATH = os.path.join(CONFIG_DIR, 'main_config.ini')
+HOME_CONFIG_PATH = os.path.join(HOME_CONFIG_DIR, 'main_config.ini')
+
+RES_CONFIG_PATH = os.path.join(os.path.expanduser('~'), 'pisak', 'pisak', 'res', 'configs', 'default_config.ini')
 
 
 class Panel(Ui_MainWindow):
@@ -25,7 +27,8 @@ class Panel(Ui_MainWindow):
 
     def _apply_changes(self):
         self._config.update(self._cache)
-        self._config.write()
+        with open(HOME_CONFIG_PATH, 'wb') as file:
+            self._config.write(file)
 
     def _abort_changes(self):
         self._cache.clear()
@@ -34,7 +37,9 @@ class Panel(Ui_MainWindow):
         self.app.exit()
 
     def _load_config(self):
-        self._config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF-8')
+        self._config = configobj.ConfigObj(RES_CONFIG_PATH, encoding='UTF-8')
+        home_config = configobj.ConfigObj(HOME_CONFIG_PATH, encoding='UTF-8')
+        self._config.merge(home_config)
         self._cache = self._config.copy()
         return self._config
 
@@ -48,6 +53,7 @@ class Panel(Ui_MainWindow):
         self.checkBox_sounds.setChecked(config.as_bool('sound_effects_enabled'))
         self.checkBox_buttonSoundSupport.setChecked(config.as_bool('read_button'))
         self.horizontalSlider_spriteTimeout.setValue(config['PisakSprite'].as_int('timeout'))
+        self.comboBox_spellerLayout.setCurrentText(config['PisakAppManager']['apps']['speller']['layout'])
 
         blog = config['blog']
         self.lineEdit_blogUsername.setText(blog['user_name'])
@@ -83,6 +89,20 @@ class Panel(Ui_MainWindow):
         sound_effects = config['sound_effects']
         self.comboBox_scanSound.setCurrentText(sound_effects['scanning'])
         self.comboBox_selectSound.setCurrentText(sound_effects['selection'])
+
+        prediction = config['prediction']
+        self.lineEdit_prediction1.setText(prediction['first'])
+        self.lineEdit_prediction2.setText(prediction['second'])
+        self.lineEdit_prediction3.setText(prediction['third'])
+        self.lineEdit_prediction4.setText(prediction['fourth'])
+        self.lineEdit_prediction5.setText(prediction['fifth'])
+        self.lineEdit_prediction6.setText(prediction['sixth'])
+        self.lineEdit_prediction7.setText(prediction['seventh'])
+        self.lineEdit_prediction8.setText(prediction['eighth'])
+        self.lineEdit_prediction9.setText(prediction['ninth'])
+
+        followed_blogs = config['followed_blogs']
+        self.lineEdit_followedBlog1.setText(followed_blogs['blog1'])
 
     def setupUi(self, MainWindow, app):
         super().setupUi(MainWindow)
@@ -210,31 +230,31 @@ class Panel(Ui_MainWindow):
         self._cache['sound_effects']['scanning'] = scan_sound
 
     def onLineEdit_prediction1TextChanged(self, text):
-        pass
+        self._cache['prediction']['first'] = text
 
     def onLineEdit_prediction2TextChanged(self, text):
-        pass
+        self._cache['prediction']['second'] = text
 
     def onLineEdit_prediction3TextChanged(self, text):
-        pass
+        self._cache['prediction']['third'] = text
 
     def onLineEdit_prediction4TextChanged(self, text):
-        pass
+        self._cache['prediction']['fourth'] = text
 
     def onLineEdit_prediction5TextChanged(self, text):
-        pass
+        self._cache['prediction']['fifth'] = text
 
     def onLineEdit_prediction6TextChanged(self, text):
-        pass
+        self._cache['prediction']['sixth'] = text
 
     def onLineEdit_prediction7TextChanged(self, text):
-        pass
+        self._cache['prediction']['seventh'] = text
 
     def onLineEdit_prediction8TextChanged(self, text):
-        pass
+        self._cache['prediction']['eighth'] = text
 
     def onLineEdit_prediction9TextChanged(self, text):
-        pass
+        self._cache['prediction']['ninth'] = text
 
     def onLineEdit_blogUsernameTextChanged(self, username):
         self._cache['blog']['user_name'] = username
@@ -252,7 +272,7 @@ class Panel(Ui_MainWindow):
         pass
 
     def onLineEdit_followedBlog1TextChanged(self, blog):
-        pass
+        self._cache['followed_blogs']['blog1'] = blog
 
     def onPushButton_emailTestClicked(self):
         pass
@@ -279,7 +299,7 @@ class Panel(Ui_MainWindow):
         self._cache['email']['SMTP_port'] = port
 
     def onComboBox_spellerLayoutCurrentIndexChanged(self, layout):
-        pass
+        self._cache['PisakAppManager']['apps']['speller']['layout'] = layout
 
     def onPushButton_abortClicked(self):
         self._abort_changes()
