@@ -553,7 +553,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._unwind_to = None
         self.timeout_token = None
         self.player = pisak.app.sound_effects_player
-        self.sound_support_enabled = pisak.config.as_bool("read_button") and \
+        self.sound_support_enabled = pisak.config.as_bool("sound_support_enabled") and \
                              pisak.config.as_bool("sound_effects_enabled")
         self.apply_props()
 
