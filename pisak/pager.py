@@ -42,6 +42,9 @@ class DataItem:
             return NotImplementedError
         return self.cmp_key < other.cmp_key
 
+    def __bool__(self):
+        return bool(self.content)
+
 
 class LazyWorker:
 
@@ -87,8 +90,7 @@ class LazyWorker:
                                     self._src._query_portion_of_data(ids))))
         self._src.data = self._src.produce_data(
             [(val, None) for val in list(self._src._lazy_data.values())],
-            self._src._data_sorting_key
-        )
+            self._src._data_sorting_key)
 
     def _load_portion_by_number(self, offset, number):
         data = self._src._query_portion_of_data_by_number(offset, number)
@@ -330,6 +332,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         Generate items and structure them into a nested list.
         """
+        data = self.data
         rows, cols = self.target_spec["rows"], self.target_spec["columns"]
         to = self.to_idx
         if self.from_idx + rows*cols >= self._length:
@@ -342,7 +345,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
                 items.append(row)
             idx += 1
             if index < self._length and index < self.to_idx:
-                item = self._produce_item(self.data[index])
+                item = self._produce_item(data[index])
             elif index > self._length or index >= self.to_idx:
                 item = Clutter.Actor()
                 self._prepare_filler(item)
@@ -481,8 +484,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
         :return: list of `DataItems`.
         """
-        return [DataItem(item, cmp_key_factory(item), flags) if item else
-                None for item, flags in raw_data]
+        return sorted([DataItem(item, cmp_key_factory(item), flags) for
+                       item, flags in raw_data])
 
     def clean_up(self):
         """
