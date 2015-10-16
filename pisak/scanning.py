@@ -131,7 +131,8 @@ class Strategy(Clutter.Actor):
         if element is None:
             _LOG.debug("There is no current element that could be frozen.")
             return
-        self.play_selection_sound()
+        if self.select_sound_enabled:
+            self.play_selection_sound()
         if isinstance(element, Group):
             if not self.group.paused:
                 self.group.stop_cycle()
@@ -553,8 +554,13 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._unwind_to = None
         self.timeout_token = None
         self.player = pisak.app.sound_effects_player
-        self.sound_support_enabled = pisak.config.as_bool("sound_support_enabled") and \
-                             pisak.config.as_bool("sound_effects_enabled")
+        self.sounds_enabled = pisak.config.as_bool("sound_effects_enabled")
+        self.button_sound_support_enabled = self.sounds_enabled and \
+                                            pisak.config.as_bool("sound_support_enabled")
+        self.scan_sound_enabled = self.sounds_enabled and \
+                                  pisak.config.as_bool('scan_sound_enabled')
+        self.select_sound_enabled = self.sounds_enabled and \
+                                    pisak.config.as_bool('select_sound_enabled')
         self.apply_props()
 
     @property
@@ -740,7 +746,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if self.sound_support_enabled and \
+            if self.button_sound_support_enabled and \
                     isinstance(selection, pisak.widgets.Button):
                 if selection.get_label() in selection.sounds.keys():
                     self.player.play(selection.sounds[selection.get_label()])
@@ -750,7 +756,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                 else:
                     self.play_scanning_sound()
             else:
-                self.play_scanning_sound()
+                if self.scan_sound_enabled:
+                    self.play_scanning_sound()
             if hasattr(selection, "enable_hilite"):
                 selection.enable_hilite()
             elif isinstance(selection, Group):
