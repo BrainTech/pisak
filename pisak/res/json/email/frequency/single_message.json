@@ -170,7 +170,6 @@
         "type": "PisakScanningGroup",
         "children": ["main_menu_box"],
         "strategy": {
-            "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
         }
     },
@@ -250,7 +249,6 @@
         "type": "PisakScanningGroup",
         "children": ["message_menu_box"],
         "strategy": {
-            "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
         }
     },
