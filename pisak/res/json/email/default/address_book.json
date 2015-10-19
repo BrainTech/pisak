@@ -103,7 +103,7 @@
     },
     {
         "id": "button_send_message",
-        "label": "WYŚLIJ WIADOMOŚĆ",
+        "text": "WYŚLIJ WIADOMOŚĆ",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
@@ -119,7 +119,7 @@
     },
     {
         "id": "button_new_contact",
-        "label": "NOWY KONTAKT",
+        "text": "NOWY KONTAKT",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
@@ -129,7 +129,7 @@
     },
     {
         "id": "button_back",
-        "label": "EKRAN GŁÓWNY",
+        "text": "EKRAN GŁÓWNY",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
@@ -139,7 +139,7 @@
     },
     {
         "id": "button_exit",
-        "label": "PANEL STARTOWY",
+        "text": "PANEL STARTOWY",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
@@ -149,7 +149,7 @@
     },
     {
         "id": "button_scan_page",
-        "label": "WYBIERZ ADRESATA",
+        "text": "WYBIERZ ADRESATA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "icon-size": 50,
@@ -168,7 +168,7 @@
     },
     {
         "id": "button_previous_page",
-        "label": "POPRZEDNIA STRONA",
+        "text": "POPRZEDNIA STRONA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "icon-size": 50,
@@ -186,7 +186,7 @@
     },
     {
         "id": "button_next_page",
-        "label": "NASTĘPNA STRONA",
+        "text": "NASTĘPNA STRONA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
         "icon-size": 50,
@@ -204,7 +204,7 @@
     },
     {
         "id": "button_automatic",
-        "label": "AUTOMAT",
+        "text": "AUTOMAT",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
 	"scanning-pauser": true,

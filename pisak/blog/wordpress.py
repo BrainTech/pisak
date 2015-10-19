@@ -266,6 +266,19 @@ class _OwnBlog(Blog):
                 {'number': self.max_posts,  'orderby': 'post_date',
                  'order': 'DESC'}))
 
+    def get_many_posts(self, offset, number):
+        """
+        Retrieve many posts.
+
+        :param offset: offset from which posts should be taken.
+        :param number: number of posts to retrieve.
+
+        :return: list of posts.
+        """
+        return self._call(wordpress_xmlrpc.methods.posts.GetPosts(
+                {'offset': offset, 'number': number, 'orderby': 'post_date',
+                 'order': 'DESC'}))
+
     def get_all_comments_for_post(self, post_id):
         """
         Get all comments for the given post.

@@ -11,6 +11,12 @@ from pisak import res, logger
 _LOG = logger.get_logger(__name__)
 
 
+def ensure_dir(dirpath):
+    if not os.path.exists(dirpath):
+        os.makedirs(dirpath)
+    return dirpath
+
+
 # ---------------------------
 
 # HOME general specification
@@ -28,7 +34,7 @@ added and wants them to be available inside of some of the Pisak applications
 or files that user has access to and can modify them in order to achieve some
 kind of different behaviour or look of some of the Pisak applications.
 """
-HOME_PISAK_DIR = os.path.join(HOME, ".pisak")
+HOME_PISAK_DIR = ensure_dir(os.path.join(HOME, ".pisak"))
 
 
 # ------------------------------
@@ -39,37 +45,29 @@ HOME_PISAK_DIR = os.path.join(HOME, ".pisak")
 """
 Path to the configurations directory.
 """
-HOME_PISAK_CONFIGS = os.path.join(HOME_PISAK_DIR, "configs")
-
+HOME_PISAK_CONFIGS = ensure_dir(os.path.join(HOME_PISAK_DIR, "configs"))
 
 """
 Path to the favouritess directory.
 """
-HOME_PISAK_FAVOURITES = os.path.join(HOME_PISAK_DIR, "favourites")
-
+HOME_PISAK_FAVOURITES = ensure_dir(os.path.join(HOME_PISAK_DIR, "favourites"))
 
 """
 Path to the databases directory.
 """
-HOME_PISAK_DATABASES = os.path.join(HOME_PISAK_DIR, "databases")
-
-
-"""
-Path to the main configuration file avalaible for the user.
-"""
-HOME_MAIN_CONFIG = os.path.join(HOME_PISAK_CONFIGS, "main_config.ini")
+HOME_PISAK_DATABASES = ensure_dir(os.path.join(HOME_PISAK_DIR, "databases"))
 
 """
 Directory with logging files.
 """
-HOME_LOGS_DIR = os.path.join(HOME_PISAK_DIR, "logs")
+HOME_LOGS_DIR = ensure_dir(os.path.join(HOME_PISAK_DIR, "logs"))
 
 """
 Directory that contains custom icons created by the user. Each icon's name has
 to correspond to the name of an generic icon that it is supposed to replace.
 Accepted format of an icon file is SVG.
 """
-HOME_ICONS_DIR = os.path.join(HOME_PISAK_DIR, "icons")
+HOME_ICONS_DIR = ensure_dir(os.path.join(HOME_PISAK_DIR, "icons"))
 
 """
 Path to a subdirectory in user's home Pisak directory. Contains files in
@@ -79,7 +77,7 @@ contains subfolders, each for every application, named as the related
 application name, then each of these subfolders contains one or more json
 files, each file with the same name as of the related view and 'json' extension.
 """
-HOME_JSON_DIR = os.path.join(HOME_PISAK_DIR, "json")
+HOME_JSON_DIR = ensure_dir(os.path.join(HOME_PISAK_DIR, "json"))
 
 """
 Path to a subdirectory in user's home Pisak directory. Contains files in
@@ -89,13 +87,7 @@ the Pisak applications. Files structure: in this folder there can be one
 css file for every application, name of each file must be the same as the
 application name with 'css' extension.
 """
-HOME_STYLE_DIR = os.path.join(HOME_PISAK_DIR, "css")
-
-"""
-Path to the css file that styles the blog post for
-"blog" application.
-"""
-HOME_BLOG_STYLE = os.path.join(HOME_STYLE_DIR, "blog_style.css")
+HOME_STYLE_DIR = ensure_dir(os.path.join(HOME_PISAK_DIR, "css"))
 
 """
 Folder in user's home Pisak directory, that contains custom made symbols
@@ -103,21 +95,31 @@ to be used within the 'symboler' application.
 Each custom made symbol replaces a default one or, if there is no default,
 extends the collection of all symbols.
 """
-HOME_SYMBOLS_DIR = os.path.join(HOME_PISAK_DIR, "symbols")
-
+HOME_SYMBOLS_DIR = ensure_dir(os.path.join(HOME_PISAK_DIR, "symbols"))
 
 """
 Folder in user's home Pisak directory, that contains custom sounds which can be played
 during scanning and button selection.
 """
-HOME_SOUNDS_DIR = os.path.join(HOME_PISAK_DIR, "sounds")
-
+HOME_SOUNDS_DIR = ensure_dir(os.path.join(HOME_PISAK_DIR, "sounds"))
 
 """
 Path to the spreadsheet containing custom symbols topology for
 "symboler" application.
 """
-HOME_SYMBOLS_SHEETS = os.path.join(HOME_PISAK_DIR, "symboler_sheets")
+HOME_SYMBOLS_SHEETS = ensure_dir(os.path.join(HOME_PISAK_DIR, "symboler_sheets"))
+
+
+"""
+Path to the main configuration file avalaible for the user.
+"""
+HOME_MAIN_CONFIG = os.path.join(HOME_PISAK_CONFIGS, "main_config.ini")
+
+"""
+Path to the css file that styles the blog post for
+"blog" application.
+"""
+HOME_BLOG_STYLE = os.path.join(HOME_STYLE_DIR, "blog_style.css")
 
 """
 Path to the symbols model for "symboler" application.
