@@ -62,97 +62,118 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="tab_selectApps">
        <attribute name="title">
         <string>Wybór aplikacji</string>
        </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget">
+       <widget class="QWidget" name="horizontalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>220</x>
-          <y>50</y>
-          <width>221</width>
-          <height>245</height>
+          <x>10</x>
+          <y>40</y>
+          <width>653</width>
+          <height>247</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
-          <widget class="QLabel" name="label_availableApps">
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
+          <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>Dostępne aplikacje</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tutaj możesz wybrać aplikacje, które będą dostępne z poziomu menu głównego.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBox_symboler">
-           <property name="text">
-            <string>komunikator symboliczny</string>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBox_movie">
-           <property name="text">
-            <string>odtwarzacz filmów</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_audio">
-           <property name="text">
-            <string>odtwarzacz muzyki</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_viewer">
-           <property name="text">
-            <string>przeglądarka zdjęć</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_speller">
-           <property name="text">
-            <string>edytor tekstu</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_email">
-           <property name="text">
-            <string>poczta e-mail</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_paint">
-           <property name="text">
-            <string>rysowanie</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_blog">
-           <property name="text">
-            <string>blog</string>
-           </property>
-          </widget>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_availableApps">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string>Dostępne aplikacje</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_symboler">
+             <property name="text">
+              <string>komunikator symboliczny</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_movie">
+             <property name="text">
+              <string>odtwarzacz filmów</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_audio">
+             <property name="text">
+              <string>odtwarzacz muzyki</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_viewer">
+             <property name="text">
+              <string>przeglądarka zdjęć</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_speller">
+             <property name="text">
+              <string>edytor tekstu</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_email">
+             <property name="text">
+              <string>poczta e-mail</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_paint">
+             <property name="text">
+              <string>rysowanie</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_blog">
+             <property name="text">
+              <string>blog</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -464,215 +485,262 @@
        <attribute name="title">
         <string>Skanowanie</string>
        </attribute>
-       <widget class="QWidget" name="formLayoutWidget">
+       <widget class="QWidget" name="verticalLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>120</x>
-          <y>70</y>
-          <width>491</width>
-          <height>230</height>
+          <x>20</x>
+          <y>10</y>
+          <width>701</width>
+          <height>251</height>
          </rect>
         </property>
-        <layout class="QFormLayout" name="formLayout_5">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-         </property>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_cycleCount">
-           <property name="text">
-            <string>Liczba cykli skanowania</string>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <layout class="QFormLayout" name="formLayout_5">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_interval">
-           <property name="text">
-            <string>Interwał skanowania (sek)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_startUpLag">
-           <property name="text">
-            <string>Opóźnienie startu skanowania (sek)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_selectLag">
-           <property name="text">
-            <string>Opóźnienie wykonania czynności po wyborze (sek)</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QComboBox" name="comboBox_reactOn">
-           <item>
-            <property name="text">
-             <string>wciśnięcie</string>
-            </property>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_cycleCount">
+             <property name="text">
+              <string>Liczba cykli skanowania</string>
+             </property>
+            </widget>
            </item>
-           <item>
-            <property name="text">
-             <string>odpuszczenie</string>
-            </property>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_interval">
+             <property name="text">
+              <string>Interwał skanowania (sek)</string>
+             </property>
+            </widget>
            </item>
-          </widget>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_startUpLag">
+             <property name="text">
+              <string>Opóźnienie startu skanowania (sek)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_selectLag">
+             <property name="text">
+              <string>Opóźnienie wykonania czynności po wyborze (sek)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QComboBox" name="comboBox_reactOn">
+             <item>
+              <property name="text">
+               <string>wciśnięcie</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>odpuszczenie</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_reactOn">
+             <property name="text">
+              <string>Reakcja przycisku na</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QComboBox" name="comboBox_scanSound">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>scan.wav</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_scanSound">
+             <property name="text">
+              <string>Dźwięk skanowania</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QSlider" name="horizontalSlider_cycleCount">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>5</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval">
+                <number>1</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_cycleCountCounter">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QSlider" name="horizontalSlider_interval">
+               <property name="minimum">
+                <number>500</number>
+               </property>
+               <property name="maximum">
+                <number>5000</number>
+               </property>
+               <property name="singleStep">
+                <number>500</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval">
+                <number>500</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_intervalCounter">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="2" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QSlider" name="horizontalSlider_startUpLag">
+               <property name="maximum">
+                <number>5000</number>
+               </property>
+               <property name="singleStep">
+                <number>500</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval">
+                <number>500</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_startUpLagCounter">
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="3" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QSlider" name="horizontalSlider_selectLag">
+               <property name="maximum">
+                <number>5000</number>
+               </property>
+               <property name="singleStep">
+                <number>500</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="tickPosition">
+                <enum>QSlider::TicksBelow</enum>
+               </property>
+               <property name="tickInterval">
+                <number>500</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_selectLagCounter">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>0</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_reactOn">
-           <property name="text">
-            <string>Reakcja przycisku na</string>
+         <item>
+          <spacer name="verticalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="Line" name="line_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
-          <widget class="QComboBox" name="comboBox_scanSound">
-           <property name="editable">
+         <item>
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tutaj możesz dostosować parametry skanowania. Ustawienia odniosą efekt tylko w przypadku gdy włączony zostanie tryb obsługi progamu za pomocą skanowania.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
             <bool>true</bool>
            </property>
-           <item>
-            <property name="text">
-             <string>scan.wav</string>
-            </property>
-           </item>
           </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLabel" name="label_scanSound">
-           <property name="text">
-            <string>Dźwięk skanowania</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <item>
-            <widget class="QSlider" name="horizontalSlider_cycleCount">
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>1</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_cycleCountCounter">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="1" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
-           <item>
-            <widget class="QSlider" name="horizontalSlider_interval">
-             <property name="minimum">
-              <number>500</number>
-             </property>
-             <property name="maximum">
-              <number>5000</number>
-             </property>
-             <property name="singleStep">
-              <number>500</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_intervalCounter">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="2" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QSlider" name="horizontalSlider_startUpLag">
-             <property name="maximum">
-              <number>5000</number>
-             </property>
-             <property name="singleStep">
-              <number>500</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_startUpLagCounter">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item row="3" column="0">
-          <layout class="QHBoxLayout" name="horizontalLayout_6">
-           <item>
-            <widget class="QSlider" name="horizontalSlider_selectLag">
-             <property name="maximum">
-              <number>5000</number>
-             </property>
-             <property name="singleStep">
-              <number>500</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="tickPosition">
-              <enum>QSlider::TicksBelow</enum>
-             </property>
-             <property name="tickInterval">
-              <number>500</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_selectLagCounter">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </item>
         </layout>
        </widget>
@@ -681,97 +749,144 @@
        <attribute name="title">
         <string>Blog</string>
        </attribute>
-       <widget class="QWidget" name="verticalLayoutWidget_3">
+       <widget class="QWidget" name="horizontalLayoutWidget_3">
         <property name="geometry">
          <rect>
-          <x>10</x>
-          <y>20</y>
-          <width>461</width>
-          <height>311</height>
+          <x>20</x>
+          <y>10</y>
+          <width>681</width>
+          <height>331</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_4">
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
          <item>
-          <layout class="QFormLayout" name="formLayout_2">
-           <property name="fieldGrowthPolicy">
-            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-           </property>
-           <item row="0" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogUsername"/>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <layout class="QFormLayout" name="formLayout_2">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+             </property>
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="lineEdit_blogUsername"/>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_blogUsername">
+               <property name="text">
+                <string>Nazwa użytkownika</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLineEdit" name="lineEdit_blogPassword">
+               <property name="echoMode">
+                <enum>QLineEdit::Password</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="label_blogPassword">
+               <property name="text">
+                <string>Hasło</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLineEdit" name="lineEdit_blogURL"/>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="label_blogURL">
+               <property name="text">
+                <string>Adres URL bloga</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLineEdit" name="lineEdit_blogTitle"/>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="label_blogTitle">
+               <property name="text">
+                <string>Tytuł bloga</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QPushButton" name="pushButton_blogTest">
+               <property name="text">
+                <string>Testuj połączenie</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_blogUsername">
+           <item>
+            <widget class="Line" name="line_4">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
              <property name="text">
-              <string>Nazwa użytkownika</string>
+              <string>Śledzone blogi:</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogPassword">
-             <property name="echoMode">
-              <enum>QLineEdit::Password</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_blogPassword">
-             <property name="text">
-              <string>Hasło</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogURL"/>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_blogURL">
-             <property name="text">
-              <string>Adres URL bloga</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLineEdit" name="lineEdit_blogTitle"/>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_blogTitle">
-             <property name="text">
-              <string>Tytuł bloga</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QPushButton" name="pushButton_blogTest">
-             <property name="text">
-              <string>Testuj połączenie</string>
-             </property>
-            </widget>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_followedBlog1"/>
            </item>
           </layout>
          </item>
          <item>
-          <widget class="Line" name="line_4">
+          <spacer name="horizontalSpacer_5">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="Line" name="line_7">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label">
-           <property name="font">
-            <font>
-             <pointsize>12</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>Śledzone blogi:</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Podaj ustawienia swojego bloga, a następnie wciśnij przycisk &amp;quot;Testuj połączenie&amp;quot; aby sprawdzić poprawność wpisanych danych i stan połączenia z serwerem.&lt;/p&gt;&lt;p&gt;Jeśli nie masz jeszcze swojego bloga, a chciałbyś go założyć, skontaktuj się z obsługą techniczną pod adresem kontakt@pisak.org.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_followedBlog1"/>
          </item>
         </layout>
        </widget>
@@ -780,130 +895,177 @@
        <attribute name="title">
         <string>Poczta e-mail</string>
        </attribute>
-       <widget class="QWidget" name="layoutWidget">
+       <widget class="QWidget" name="horizontalLayoutWidget_2">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>10</y>
-          <width>421</width>
-          <height>289</height>
+          <y>20</y>
+          <width>593</width>
+          <height>294</height>
          </rect>
         </property>
-        <layout class="QFormLayout" name="formLayout_3">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-         </property>
-         <item row="0" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailAddress"/>
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <layout class="QFormLayout" name="formLayout_3">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+           </property>
+           <item row="0" column="0">
+            <widget class="QLineEdit" name="lineEdit_emailAddress"/>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_emailAddress">
+             <property name="text">
+              <string>Adres e-mail</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLineEdit" name="lineEdit_emailPassword">
+             <property name="echoMode">
+              <enum>QLineEdit::Password</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_emailPassword">
+             <property name="text">
+              <string>Hasło</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="lineEdit_emailSentFolder"/>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_emailSentFolder">
+             <property name="text">
+              <string>Folder wysłanych</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="lineEdit_emailIMAPServer"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>Adres serwera IMAP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QComboBox" name="comboBox_emailPortIMAP">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>993</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>143</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_emailPortIMAP">
+             <property name="text">
+              <string>Port serwera IMAP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLineEdit" name="lineEdit_emailSMTPServer"/>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Adres serwera SMTP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QComboBox" name="comboBox_emailPortSMTP">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string>465</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>587</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>25</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_emailPortSMTP">
+             <property name="text">
+              <string>Port serwera SMTP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QPushButton" name="pushButton_emailTest">
+             <property name="text">
+              <string>Testuj połączenie</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
-         <item row="1" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailPassword">
-           <property name="echoMode">
-            <enum>QLineEdit::Password</enum>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="Line" name="line_6">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_emailPassword">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_7">
            <property name="text">
-            <string>Hasło</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wypełnij ustawienia skrzynki e-mail, a następnie wciśnij przycisk &amp;quot;Testuj połączenie&amp;quot; aby nawiązać połączenie z serwerem pocztowym i sprawdzić podaną konfigurację.&lt;/p&gt;&lt;p&gt;Serwer IMAP to serwer poczty przychodzącej, a serwer SMTP to serwer poczty wychodzącej.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailSentFolder"/>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_emailSentFolder">
-           <property name="text">
-            <string>Folder wysłanych</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailIMAPServer"/>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>Adres serwera IMAP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QComboBox" name="comboBox_emailPortIMAP">
-           <property name="editable">
+           <property name="wordWrap">
             <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>993</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>143</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_emailPortIMAP">
-           <property name="text">
-            <string>Port serwera IMAP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLineEdit" name="lineEdit_emailSMTPServer"/>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Adres serwera SMTP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QComboBox" name="comboBox_emailPortSMTP">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>465</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>587</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>25</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QLabel" name="label_emailPortSMTP">
-           <property name="text">
-            <string>Port serwera SMTP</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QPushButton" name="pushButton_emailTest">
-           <property name="text">
-            <string>Testuj połączenie</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_emailAddress">
-           <property name="text">
-            <string>Adres e-mail</string>
            </property>
           </widget>
          </item>
@@ -914,44 +1076,91 @@
        <attribute name="title">
         <string>Edytor tekstu</string>
        </attribute>
-       <widget class="QWidget" name="formLayoutWidget_4">
+       <widget class="QWidget" name="verticalLayoutWidget_4">
         <property name="geometry">
          <rect>
-          <x>130</x>
-          <y>50</y>
-          <width>372</width>
-          <height>118</height>
+          <x>40</x>
+          <y>20</y>
+          <width>521</width>
+          <height>271</height>
          </rect>
         </property>
-        <layout class="QFormLayout" name="formLayout_4">
-         <property name="fieldGrowthPolicy">
-          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-         </property>
-         <item row="1" column="0">
-          <widget class="QComboBox" name="comboBox_spellerLayout">
-           <item>
-            <property name="text">
-             <string>default</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>alphabetical</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>frequency</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_spellerLayout">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
+         <item>
+          <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Układ elementów aplikacji</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Domyślny układ klawiatury (&amp;quot;default&amp;quot;) to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.&lt;/p&gt;&lt;p&gt;W przypadku układu alfabetycznego (&amp;quot;alphabetical&amp;quot;) klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &amp;quot;a&amp;quot; jest najkrótszy, a do pola z literą &amp;quot;z&amp;quot; najdłuższy.&lt;/p&gt;&lt;p&gt;Układ częstotliwościowy (&amp;quot;frequency&amp;quot;) segreguje litery zgodnie z częstością ich występowania w języku polskim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
            </property>
           </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="Line" name="line_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <layout class="QFormLayout" name="formLayout_4">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+           </property>
+           <item row="1" column="0">
+            <widget class="QComboBox" name="comboBox_spellerLayout">
+             <item>
+              <property name="text">
+               <string>default</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>alphabetical</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>frequency</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_spellerLayout">
+             <property name="text">
+              <string>Układ klawiatury</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
