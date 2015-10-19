@@ -1655,8 +1655,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self._alternative_text = str(value)
         self.sounds[self._alternative_text] = self.get_sound(
             self._alternative_text)
-        
-    def get_sound(self, name):
+
+    @staticmethod
+    def get_sound(name):
         if name:
             return dirs.get_sound_path(name + '.wav')
 
