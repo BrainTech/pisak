@@ -313,7 +313,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     @sound.setter
     def sound(self, name):
         if isinstance(name, str):
-            self._sound = dirs.get_sound_path(name + '.wav') or self.sound
+            self._sound = dirs.get_sound_path(name + '.wav') or self._sound
 
     def schedule_update(self):
         self.fresh_subgroups = False
