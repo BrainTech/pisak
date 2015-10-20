@@ -234,7 +234,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.connect("notify::mapped", self._check_to_resize)
         self.clutter_text.connect("text-changed", self._check_to_resize)
         self.clutter_text.connect("cursor-changed", self._scroll_to_view)
-        self.clutter_text.connect("text-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
 
@@ -246,13 +245,14 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def _set_text_params(self):
         self.clutter_text.set_editable(True)
         self.clutter_text.set_line_wrap(True)
-        self.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+        self.clutter_text.set_line_wrap_mode(Pango.WrapMode.CHAR)
 
     def _check_to_resize(self, *args):
         pango_layout = self.clutter_text.get_layout()
         pango_height = pango_layout.get_size()[1] / Pango.SCALE
-        add_line = int(self.clutter_text.get_size()[0] / self.get_width())
-        add_line += 1
+        pango_lines = pango_layout.get_lines()
+        add_line = sum((int(line.index_to_x(line.length, 1) / Pango.SCALE / self.get_width()) for line in pango_lines))
+        add_line += 2
         cursor_size = self.clutter_text.get_cursor_size()
         self.text.set_height(pango_height + add_line*cursor_size)
 

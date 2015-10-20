@@ -979,7 +979,8 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
             height = self.preview_loading_height
         try:
             self.preview.set_from_file_at_size(value, width, height)
-        except GObject.GError:
+        except GObject.GError as exc:
+            _LOG.error(exc)
             self.preview.clear()
 
     @property
@@ -1655,8 +1656,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self._alternative_text = str(value)
         self.sounds[self._alternative_text] = self.get_sound(
             self._alternative_text)
-        
-    def get_sound(self, name):
+
+    @staticmethod
+    def get_sound(name):
         if name:
             return dirs.get_sound_path(name + '.wav')
 

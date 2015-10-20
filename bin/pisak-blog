@@ -10,6 +10,7 @@ from pisak import app_manager
 from pisak.blog import wordpress
 from pisak.blog.description import blog_app
 
+
 if __name__ == "__main__":
     pisak.init()
     GtkClutter.init()
