@@ -313,7 +313,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     @sound.setter
     def sound(self, name):
         if name:
-            self._sound = self.get_sound(name)
+            sound = self.get_sound(name)
+            self._sound = sound if sound else self.get_sound('scan')
+                
 
     @staticmethod
     def get_sound(name):
