@@ -326,7 +326,7 @@ def get_sound_path(name):
     :param name: name of the sound file, that is a name of the file without an extension. 
     Accepted file format is WAV.
 
-    :returns: path to the icon or None if nothing was found.
+    :returns: path to the sound or None if nothing was found.
     """
     name = name.lower().replace(' ', '_').replace('\n', '_')
     sound_path = os.path.join(HOME_SOUNDS_DIR, name)
@@ -334,6 +334,7 @@ def get_sound_path(name):
         sound_path = os.path.join(res.get('sounds'), name)
         if not os.path.isfile(sound_path):
             _LOG.warning('No sound file found: {}.'.format(sound_path))
+            sound_path = None
     return sound_path
 
 
