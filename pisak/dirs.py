@@ -329,11 +329,12 @@ def get_sound_path(name):
     :returns: path to the icon or None if nothing was found.
     """
     name = name.lower().replace(' ', '_').replace('\n', '_')
-    sound_path = os.path.join(HOME_SOUNDS_DIR, name)
-    if not os.path.isfile(sound_path):
-        sound_path = os.path.join(res.get('sounds'), name)
-        if not os.path.isfile(sound_path):
-            _LOG.warning('No sound file found: {}.'.format(sound_path))
+    sound_path = sound_path1 = os.path.join(HOME_SOUNDS_DIR, name)
+    if not os.path.isfile(sound_path1):
+        sound_path = sound_path2 = os.path.join(res.get('sounds'), name)
+        if not os.path.isfile(sound_path2):
+            _LOG.warning('No such sound file as:\n{}\nnor as:\n{}.'.format(sound_path1, sound_path2))
+            sound_path = None
     return sound_path
 
 
@@ -345,9 +346,12 @@ def get_symbols_spreadsheet(name):
 
     :return: path to the spreadsheet.
     """
-    path = os.path.join(HOME_SYMBOLS_SHEETS, name + '.ods')
-    if not os.path.isfile(path):
-        raise FileNotFoundError('No symbols spreadsheet found: {}.'.format(path))
+    full_name = name + '.ods'
+    path = path1 = os.path.join(HOME_SYMBOLS_SHEETS, full_name)
+    if not os.path.isfile(path1):
+        path = path2 = res.get(os.path.join('symboler_sheets', full_name))
+        if not os.path.isfile(path2):
+            raise FileNotFoundError('No such spreadsheet found as:\n{}\nnor as:\n{}.'.format(path1, path2))
     return path
 
 
@@ -360,9 +364,9 @@ def get_symbol_path(name):
     :return: path to a symbol, string.
     """
     full_name = name + '.png'
-    path = os.path.join(HOME_SYMBOLS_DIR, full_name)
-    if not os.path.isfile(path):
-        path = res.get(os.path.join('symbols', full_name))
-        if not os.path.isfile(path):
-            raise FileNotFoundError('No symbol file found: "{}".'.format(full_name))
+    path = path1 = os.path.join(HOME_SYMBOLS_DIR, full_name)
+    if not os.path.isfile(path1):
+        path = path2 = res.get(os.path.join('symbols', full_name))
+        if not os.path.isfile(path2):
+            raise FileNotFoundError('No such file as:\n{}\nnor as:\n{}.'.format(path1, path2))
     return path
