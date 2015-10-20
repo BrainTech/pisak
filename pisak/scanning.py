@@ -270,7 +270,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self._scanned = []
         self._lag_hilited = []
         self._strategy = None
-        self.sound = 'scan'
+        self._sound = self.get_sound('scan')
         self.paused = False
         self.killed = False
         self.suppress_collapse_select_on_init = False
@@ -313,13 +313,11 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     @sound.setter
     def sound(self, name):
         if name:
-            sound = self.get_sound(name)
-            self._sound = sound if sound else self.get_sound('scan')
-                
+            self._sound = self.get_sound(name) or self.sound
 
     @staticmethod
     def get_sound(name):
-        if name:
+        if isinstance(name, str):
             return dirs.get_sound_path(name + '.wav')
 
     def schedule_update(self):
