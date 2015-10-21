@@ -116,12 +116,6 @@ Path to the main configuration file avalaible for the user.
 HOME_MAIN_CONFIG = os.path.join(HOME_PISAK_CONFIGS, "main_config.ini")
 
 """
-Path to the css file that styles the blog post for
-"blog" application.
-"""
-HOME_BLOG_STYLE = os.path.join(HOME_STYLE_DIR, "blog_style.css")
-
-"""
 Path to the symbols model for "symboler" application.
 """
 HOME_SYMBOLS_MODEL = os.path.join(HOME_PISAK_DIR, "symbols_model.ini")
@@ -187,6 +181,33 @@ USER_FOLDERS = {
 
 # ----------------------------------------------------
 
+def find_path(folder1, folder2, file_name, with_raise=False,
+              custom_msg=''):
+    """
+    Helper function to check if the file is in one folder or the other.
+
+    :param folder1: str, full path to user folder to check
+    :param folder2: str, name of folder in PISAK res folder in which to check
+    :param file_name: str, name of the file
+    :param with_raise: bool, whether to raise an error or log a warning
+    :param custom_msg: str, custom_msg for the error, should contain two '{}'
+    specifying the places for the file paths
+
+    :returns: path to the found file or None
+    """
+    msg = custom_msg or 'No such file found as {} or {}.'
+    path = path1 = os.path.join(folder1, file_name)
+    if not os.path.isfile(path1):
+        path = path2 = os.path.join(res.get(folder2), file_name)
+        if not os.path.isfile(path2):
+            msg = msg.format(path1, path2)
+            path = None
+            if with_raise:
+                raise FileNotFoundError(msg)
+            else:
+                _LOG.warning(msg)
+    return path
+
 def get_general_configs():
     """
     Get paths to files with general configuration.
@@ -217,12 +238,10 @@ def get_icon_path(name):
 
     :returns: path to the icon or None if nothing was found
     """
-    icon_path = os.path.join(HOME_ICONS_DIR, name) + ".svg"
-    if not os.path.isfile(icon_path):
-        icon_path = os.path.join(res.get('icons'), name) + ".svg"
-        if not os.path.isfile(icon_path):
-            msg = "Default icon for '{}' not found in the res directory."
-            raise FileNotFoundError(msg.format(name))
+    full_name = name + '.svg'
+    icon_path = find_path(HOME_ICONS_DIR, 'icons', full_name,
+                          with_raise=True,
+                          custom_msg='No such icon found as {} or {}.')
     return icon_path
 
 
@@ -241,15 +260,9 @@ def get_css_path(skin='default'):
 
     :returns: path to css file
     """
-    css_path = os.path.join(HOME_STYLE_DIR, skin) + ".css"
-    if not os.path.isfile(css_path):
-        style_dir = res.get("css")
-        css_path = os.path.join(style_dir, skin) + ".css"
-        if not os.path.isfile(css_path) and skin is not "default":
-            css_path = os.path.join(style_dir, "default") + ".css"
-    if not os.path.isfile(css_path):
-        msg = "Default css not found in the res directory."
-        raise FileNotFoundError(msg)
+    full_name = skin + '.css'
+    css_path = find_path(HOME_STYLE_DIR, 'css', full_name, with_raise=True,
+                         custom_msg="Css not found in {} or {}.")
     return css_path
 
 
@@ -257,13 +270,9 @@ def get_blog_css_path():
     """
     Get css file to style Blog posts.
     """
-    css_path = HOME_BLOG_STYLE
-    if not os.path.isfile(css_path):
-        css_path = os.path.join(res.get('css'),
-                                os.path.split(HOME_BLOG_STYLE)[1])
-        if not os.path.isfile(css_path):
-            msg = "CSS style file for blog post was not found."
-            raise FileNotFoundError(msg)
+    full_name = 'blog_style.css'
+    css_path = find_path(HOME_STYLE_DIR, 'css', full_name, with_raise=True,
+                         custom_msg='CSS file not found as {} or {}.')
     return css_path
 
 
@@ -316,7 +325,6 @@ def get_user_dir(folder):
     """
     return GLib.get_user_special_dir(USER_FOLDERS[folder])
 
-
 def get_sound_path(name):
     """
     Get path to a sound with the given name. First look for a custom sound in
@@ -329,11 +337,8 @@ def get_sound_path(name):
     :returns: path to the icon or None if nothing was found.
     """
     name = name.lower().replace(' ', '_').replace('\n', '_')
-    sound_path = os.path.join(HOME_SOUNDS_DIR, name)
-    if not os.path.isfile(sound_path):
-        sound_path = os.path.join(res.get('sounds'), name)
-        if not os.path.isfile(sound_path):
-            _LOG.warning('No sound file found: {}.'.format(sound_path))
+    sound_path = find_path(HOME_SOUNDS_DIR, 'sounds', name,
+                           custom_msg='No sound file found as {} or {}.')
     return sound_path
 
 
@@ -345,9 +350,10 @@ def get_symbols_spreadsheet(name):
 
     :return: path to the spreadsheet.
     """
-    path = os.path.join(HOME_SYMBOLS_SHEETS, name + '.ods')
-    if not os.path.isfile(path):
-        raise FileNotFoundError('No symbols spreadsheet found: {}.'.format(path))
+    full_name = name + '.ods'
+    path = find_path(HOME_SYMBOLS_SHEETS, 'symboler_sheets', full_name,
+                     with_raise=True,
+                     custom_msg='No such spreadsheet found as {} or {}.')
     return path
 
 
@@ -360,9 +366,6 @@ def get_symbol_path(name):
     :return: path to a symbol, string.
     """
     full_name = name + '.png'
-    path = os.path.join(HOME_SYMBOLS_DIR, full_name)
-    if not os.path.isfile(path):
-        path = res.get(os.path.join('symbols', full_name))
-        if not os.path.isfile(path):
-            raise FileNotFoundError('No symbol file found: "{}".'.format(full_name))
+    path = find_path(HOME_SYMBOLS_DIR, 'symbols', full_name,
+                     with_raise=True)
     return path
