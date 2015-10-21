@@ -105,8 +105,7 @@ class Panel(Ui_MainWindow):
 
         followed_blogs = config['followed_blogs']
         for idx, blog in enumerate(followed_blogs.values()):
-            if blog:
-                self._add_followed_blog(idx, blog)
+            self._add_followed_blog(idx, blog)
 
     def _add_followed_blog(self, idx, blog=''):
         line_edit = QtWidgets.QLineEdit(blog)
