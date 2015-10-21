@@ -16,6 +16,7 @@
         "id": "main_box_group",
         "type": "PisakScanningGroup",
         "children": ["main_box"],
+	"sound": "wybierz zdjęcie",
         "scanning-hilite": true,
         "strategy": {
             "type": "PisakRowStrategy"
@@ -52,6 +53,7 @@
         "id": "button_menu",
         "type": "PisakScanningGroup",
         "children": ["button_menu_box"],
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
