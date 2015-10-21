@@ -4,6 +4,7 @@ Entry point for the PISAK admin panel application.
 import os
 
 import configobj
+from PyQt5 import QtWidgets
 
 from panel import Ui_MainWindow
 
@@ -24,6 +25,7 @@ class Panel(Ui_MainWindow):
         super().__init__()
         self._cache = {}
         self._config = None
+        self._followed_blogs = []
 
     def _apply_changes(self):
         self._config.update(self._cache)
@@ -102,7 +104,18 @@ class Panel(Ui_MainWindow):
         self.lineEdit_prediction9.setText(prediction['ninth'])
 
         followed_blogs = config['followed_blogs']
-        self.lineEdit_followedBlog1.setText(followed_blogs['blog1'])
+        for idx, blog in enumerate(followed_blogs.values()):
+            if blog:
+                self._add_followed_blog(idx, blog)
+
+    def _add_followed_blog(self, idx, blog=''):
+        line_edit = QtWidgets.QLineEdit(blog)
+        line_edit.alias = 'blog' + str(idx)
+        attr_name = 'lineEdit_followedBlog' + str(idx)
+        setattr(self, attr_name, line_edit)
+        self._followed_blogs.append(line_edit)
+        self.gridLayout_followedBlogs.addWidget(line_edit)
+        return line_edit
 
     def setupUi(self, MainWindow, app):
         super().setupUi(MainWindow)
@@ -148,7 +161,11 @@ class Panel(Ui_MainWindow):
         self.lineEdit_blogURL.textChanged.connect(self.onLineEdit_blogURLTextChanged)
         self.lineEdit_blogTitle.textChanged.connect(self.onLineEdit_blogTitleTextChanged)
         self.pushButton_blogTest.clicked.connect(self.onPushButton_blogTestClicked)
-        self.lineEdit_followedBlog1.textChanged.connect(self.onLineEdit_followedBlog1TextChanged)
+
+        for line_edit in self._followed_blogs:
+            line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
+        self.pushButton_addFollowedBlog.clicked.connect(self.onPushButton_addFollowedBlogClicked)
+
         self.pushButton_emailTest.clicked.connect(self.onPushButton_emailTestClicked)
         self.lineEdit_emailAddress.textChanged.connect(self.onLineEdit_emailAddressTextChanged)
         self.lineEdit_emailSentFolder.textChanged.connect(self.onLineEdit_emailSentFolderTextChanged)
@@ -277,8 +294,13 @@ class Panel(Ui_MainWindow):
     def onPushButton_blogTestClicked(self):
         pass
 
-    def onLineEdit_followedBlog1TextChanged(self, blog):
-        self._cache['followed_blogs']['blog1'] = blog
+    def onLineEdit_followedBlogTextChanged(self, line_edit, blog):
+        self._cache['followed_blogs'][line_edit.alias] = blog
+
+    def onPushButton_addFollowedBlogClicked(self):
+        idx = len(self._followed_blogs)
+        line_edit = self._add_followed_blog(idx)
+        line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
 
     def onPushButton_emailTestClicked(self):
         pass
