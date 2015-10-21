@@ -1,13 +1,19 @@
 pisak.movie package
 ===================
 
-Submodules
-----------
-
 bin.pisak-movie module
 ----------------------
 
 .. automodule:: bin.pisak-movie
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.movie.description module
+---------------------------------
+
+.. automodule:: pisak.movie.description
     :members:
     :undoc-members:
     :show-inheritance:

@@ -1,16 +1,23 @@
 pisak.paint package
 ===================
 
-Submodules
-----------
-
-bin.pisak-paint module
-----------------------
+Run script for paint app
+------------------------
 
 .. automodule:: bin.pisak-paint
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+pisak.paint.description module
+---------------------------------
+
+.. automodule:: pisak.paint.description
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 pisak.paint.handlers module
 ---------------------------
@@ -20,6 +27,7 @@ pisak.paint.handlers module
     :undoc-members:
     :show-inheritance:
 
+       
 pisak.paint.widgets module
 --------------------------
 
@@ -29,6 +37,7 @@ pisak.paint.widgets module
     :show-inheritance:
     :special-members: __gtype_name__
 
+		      
 Module contents
 ---------------
 

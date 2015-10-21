@@ -1,13 +1,19 @@
 pisak.blog package
 ======================
 
-Submodules
-----------
-
-bin.pisak-blog module
--------------------------
+Run script for blog app
+-----------------------
 
 .. automodule:: bin.pisak-blog
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.blog.description module
+---------------------------------
+
+.. automodule:: pisak.blog.description
     :members:
     :undoc-members:
     :show-inheritance:

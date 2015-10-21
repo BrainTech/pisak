@@ -1,17 +1,23 @@
 pisak.audio package
 ===================
 
-Submodules
-----------
-
-bin.pisak-audio module
-----------------------
+Run script for audio app
+------------------------
 
 .. automodule:: bin.pisak-audio
     :members:
     :undoc-members:
     :show-inheritance:
 
+
+pisak.audio.description module
+---------------------------------
+
+.. automodule:: pisak.audio.description
+    :members:
+    :undoc-members:
+    :show-inheritance:
+      
 
 pisak.audio.handlers module
 ---------------------------
@@ -32,14 +38,22 @@ pisak.audio.widgets module
     :special-members: __gtype_name__
 
 
-pisak.audio.database_manager module
+pisak.audio.data_loader module
 -----------------------------------
 
-.. automodule:: pisak.audio.database_manager
+.. automodule:: pisak.audio.data_loader
     :members:
     :undoc-members:
     :show-inheritance:
-    :special-members: __gtype_name__
+
+		     
+pisak.audio.db_manager module
+-----------------------------------
+
+.. automodule:: pisak.audio.db_manager
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 		
 Module contents

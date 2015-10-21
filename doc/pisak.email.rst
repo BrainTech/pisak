@@ -1,13 +1,19 @@
 pisak.email package
 ======================
 
-Submodules
-----------
-
-email module
--------------------------
+Script to run email app
+-----------------------
 
 .. automodule:: bin.pisak-email
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+pisak.email.description module
+---------------------------------
+
+.. automodule:: pisak.email.description
     :members:
     :undoc-members:
     :show-inheritance:

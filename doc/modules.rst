@@ -31,6 +31,7 @@ pisak.app_manager module
     :members:
     :undoc-members:
     :show-inheritance:
+    :special-membets: __gtype_name__
 
 pisak.arg_parser module
 -----------------------
@@ -56,6 +57,16 @@ pisak.handlers module
     :undoc-members:
     :show-inheritance:
 
+
+pisak.hooks module
+-------------------------
+
+.. automodule:: pisak.hooks
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 pisak.properties module
 -----------------------
 
@@ -64,13 +75,6 @@ pisak.properties module
     :undoc-members:
     :show-inheritance:
 
-pisak.launcher module
----------------------
-
-.. automodule:: pisak.launcher
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 pisak.layout module
 -------------------
@@ -200,6 +204,17 @@ pisak.window module
     :show-inheritance:
 
 
+pisak.widgets module
+--------------------
+
+.. automodule:: pisak.widgets
+    :members:
+    :undoc-members:
+    :show-inheritance:
+    :special-members: __gtype_name__
+		   
+
+
 pisak.pager module
 -------------------------
 
@@ -224,6 +239,16 @@ pisak.cursor module
     :members:
     :undoc-members:
     :show-inheritance:
+
+
+pisak.description module
+-------------------------
+
+.. automodule:: pisak.description
+    :members:
+    :undoc-members:
+    :show-inheritance:
+      
 
 
 pisak.arg_parser module

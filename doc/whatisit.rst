@@ -16,7 +16,7 @@ Architecture
 
 As the group of disabled people is very heterogenous PISAK is made as customisable as possible, we try to utilise this rule on macroscale(you are able to choose which applications to launch through the config) and microscale(every application is configurable through the config files, corresponding jsons and a css file).
 
-Each application can be run separately by invoking/running it's `app.py` (see :doc:`app_dev_guide`).
+Each application can be run separately by invoking/running it's `app.py` (see :doc:`dev_first_steps`).
 
 An application is build through stacking together different `widgets` in a json file by their `gtype_name's` and defining their `properties`.
 
@@ -52,7 +52,7 @@ Dictionary
 ----------
 * :doc:`widgets` - building blocks of an app
 * jsons - where you define how an app looks like, which widgets it uses,how are the placed and which signals they use
-* app.py - python description of relations between views and container of App descriptor (see :doc:`app_dev_guide`)
+* app.py - python description of relations between views and container of App descriptor (see :doc:`dev_first_steps`)
 * configs - config files where section names are `gtype_name's`, keys are `property` names
 * :doc:`handlers` - handlers for specified signals, invoking functions
 * properties - characteristics of an object(width, height, source etc.)

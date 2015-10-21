@@ -1,11 +1,8 @@
 pisak.symboler package
 ======================
 
-Submodules
-----------
-
-symboler module
--------------------------
+Run script for symboler
+-----------------------
 
 .. automodule:: bin.pisak-symboler
     :members:
@@ -13,10 +10,10 @@ symboler module
     :show-inheritance:
 
 
-pisak.symboler.database_manager module
---------------------------------------
+pisak.symboler.description module
+---------------------------------
 
-.. automodule:: pisak.symboler.symbols_manager
+.. automodule:: pisak.symboler.description
     :members:
     :undoc-members:
     :show-inheritance:
@@ -29,7 +26,7 @@ pisak.symboler.handlers module
     :members:
     :undoc-members:
     :show-inheritance:
-
+       
 
 pisak.symboler.widgets module
 -----------------------------
