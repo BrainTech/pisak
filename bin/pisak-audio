@@ -10,6 +10,7 @@ from pisak import app_manager
 from pisak.audio import data_loader
 from pisak.audio.description import audio_app
 
+
 if __name__ == "__main__":
     pisak.init()
     ClutterGst.init()

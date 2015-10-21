@@ -20,7 +20,7 @@ class FlatSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data = sorted(list(model.get_library().items),
+        self.data = sorted(list(model.get_library().get_all_items()),
                            key=lambda movie: os.path.basename(movie.path))
 
     def _produce_item(self, movie):
@@ -30,10 +30,27 @@ class FlatSource(pager.DataSource):
         tile.connect("clicked", self.item_handler, movie.id)
         tile.hilite_tool = widgets.Aperture()
         tile.scale_mode = Mx.ImageScaleMode.FIT
-        tile.preview_path = movie.extra.get("cover")
+        self._set_preview(tile, movie.extra.get("cover"))
         tile.label_text = os.path.splitext(
             os.path.split(movie.path)[-1])[0]
         return tile
+
+    def _set_preview(self, tile, preview_path):
+        if not os.path.isfile(preview_path):
+            self._schedule_set_preview(tile, preview_path)
+        else:
+            self._do_set_preview(tile, preview_path)
+
+    def _schedule_set_preview(self, tile, preview_path):
+        Clutter.threads_add_timeout(
+                0, 1000, self._do_set_preview, tile, preview_path)
+
+    def _do_set_preview(self, tile, preview_path):
+        if os.path.isfile(preview_path):
+            tile.preview_path = preview_path
+            return False
+        else:
+            return True
 
 
 class MovieFullscreen(layout.Bin):

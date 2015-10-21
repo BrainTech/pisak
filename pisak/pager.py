@@ -2,6 +2,7 @@
 Basic implementation of sliding page widget.
 """
 import threading
+import time
 import itertools
 from math import ceil
 from collections import OrderedDict
@@ -47,7 +48,7 @@ class LazyWorker:
     def __init__(self, src):
         self._src = src
 
-        self._step = 5
+        self._step = 10
 
         self._worker = None
         self._running = True
@@ -59,27 +60,46 @@ class LazyWorker:
         portion of elements with identifiers from the front
         of the ids list and one portion from the back, in turns.
         """
-        flat = list(range(0, len(self._src._ids), self._step))
-        half_len = int(len(flat)/2)
-        mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
-            flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
-        for idx in mixed:
-            if not self._running:
-                break
-            self._load_portion(self._src._ids[idx : idx+self._step])
+        if self._src.lazy_offset is not None:
+            any_left = True
+            while any_left and self._running:
+                any_left = self._load_portion_by_number(
+                    self._src.lazy_offset, self._step)
+                time.sleep(1)
+                self._src.lazy_offset += self._step
+        else:
+            flat = list(range(0, len(self._src._ids), self._step))
+            half_len = int(len(flat)/2)
+            mixed = [idx for idx in itertools.chain(*itertools.zip_longest(
+                flat[ :half_len], reversed(flat[half_len: ]))) if idx is not None]
+            for idx in mixed:
+                if not self._running:
+                    break
+                self._load_portion_by_ids(ids=self._src._ids[idx : idx+self._step])
 
-    def _load_portion(self, ids):
+    def _load_portion_by_ids(self, ids):
         """
         Load some portion of data items with the given identifiers.
 
         :param ids: list of ids specifying which data items should be loaded.
         """
         self._src._lazy_data.update(list(zip(map(str, ids),
-                                                    self._src._query_portion_of_data(ids))))
+                                    self._src._query_portion_of_data(ids))))
         self._src.data = self._src.produce_data(
             [(val, None) for val in list(self._src._lazy_data.values())],
             self._src._data_sorting_key
         )
+
+    def _load_portion_by_number(self, offset, number):
+        data = self._src._query_portion_of_data_by_number(offset, number)
+        if data:
+            ids = list(range(offset, offset + len(data)))
+            self._src._lazy_data.update(list(zip(map(str, ids), data)))
+            self._src.data = self._src.produce_data(
+                [(val, None) for val in list(self._src._lazy_data.values())],
+                self._src._data_sorting_key
+            )
+        return data
 
     @property
     def step(self):
@@ -107,6 +127,7 @@ class LazyWorker:
         """
         Start the loader.
         """
+        self._running = True
         if not self._worker:
             self._worker = threading.Thread(target=self._lazy_work,
                                                         daemon=True)
@@ -163,9 +184,6 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def __init__(self):
         self._length = 0
-        self._data = None
-        self._data_set_id = None
-        self._target_spec = None
         self._lazy_loading = False
         self.page_idx = None
         self.custom_topology = False
@@ -173,12 +191,16 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self.to_idx = 0
         self.data_sets_count = 0
         self.data_generator = None
+        self._target_spec = None
+        self._data = []
+        self._data_set_idx = None
         self.item_handler = None
         self._data_sorting_key = None
         # synchronization for an access to the `data` buffer.
         self._lock = threading.RLock()
         # something to do when new data is available..
         self.on_new_data = None
+        self.data_sets_ids_list = None
 
         self._init_lazy_props()
 
@@ -196,7 +218,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._target_spec = value
 
         if self.lazy_loading:
-            self._lazy_loader.step = ceil((value['columns'] * value['rows'])/2)
+            self._lazy_loader.step = value['columns'] * value['rows']
             self._lazy_loader.start()
 
     @property
@@ -257,14 +279,21 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._item_preview_ratio_width = value
 
     @property
-    def data_set_id(self):
-        return self._data_set_id
+    def data_set_idx(self):
+        return self._data_set_idx
 
-    @data_set_id.setter
-    def data_set_id(self, value):
-        self._data_set_id = value
-        if value is not None and self.data_generator is not None and \
-           value <= self.data_sets_count:
+    @data_set_idx.setter
+    def data_set_idx(self, value):
+        self._data_set_idx = value
+        if self.data_generator is not None:
+            if self.data_sets_ids_list and value <= \
+                    len(self.data_sets_ids_list):
+                value = self.data_sets_ids_list[value-1]
+            elif value <= self.data_sets_count:
+                pass
+            else:
+                return  # invalid params for the data generator
+
             self.data = self.data_generator(value)
 
     @property
@@ -416,19 +445,19 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def next_data_set(self):
         """
-        Move to the next data set if avalaible.
+        Move to the next data set if available.
         """
-        if self.data_set_id is not None:
-            self.data_set_id = self.data_set_id + 1 if \
-                               self.data_set_id < self.data_sets_count else 1
+        if self.data_set_idx is not None:
+            self.data_set_idx = self.data_set_idx + 1 if \
+                               self.data_set_idx < self.data_sets_count else 1
 
     def previous_data_set(self):
         """
         Move to the previous data set if avalaible.
         """
-        if self.data_set_id is not None:
-            self.data_set_id = self.data_set_id - 1 if \
-                               self.data_set_id > 1 else self.data_sets_count
+        if self.data_set_idx is not None:
+            self.data_set_idx = self.data_set_idx - 1 if \
+                               self.data_set_idx > 1 else self.data_sets_count
 
     def get_all_items(self):
         """
@@ -474,6 +503,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_data = OrderedDict()
         # list of data identifiers, specific for a given data supplier.
         self._ids = []
+        # offset for lazy data
+        self.lazy_offset = None
 
         # main lazy loading worker.
         self._lazy_loader = LazyWorker(self)
@@ -507,6 +538,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         raise NotImplementedError
 
+    def _query_portion_of_data_by_number(self):
+        raise NotImplementedError
+
     def _query_ids(self):
         """
         Query the data provider for a list of all the available data ids.
@@ -518,7 +552,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     def _set_up_lazy_loading(self):
         """
-        Initialize all the neccessary things and set up the lazy loader.
+        Initialize all the necessary things and set up the lazy loader.
         Should be always called on the lazy loader init.
         """
         self._check_ids_range()
@@ -535,10 +569,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         self._lazy_data.update(
             [(str(ide), None) for ide in self._ids if
              str(ide) not in self._lazy_data])
-        self.data = self.produce_data(
-            [(val, None) for val in list(self._lazy_data.values())],
-            self._data_sorting_key
-        )
+        self.data = [None for _ in self._lazy_data]
 
     def _schedule_sending_data(self, direction):
         """
