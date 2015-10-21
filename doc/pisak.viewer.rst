@@ -1,18 +1,6 @@
 pisak.viewer package
 ====================
 
-Submodules
-**********
-
-Run script for viewer app
--------------------------
-
-.. automodule:: bin.pisak-viewer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 pisak.viewer.description module
 ---------------------------------
 

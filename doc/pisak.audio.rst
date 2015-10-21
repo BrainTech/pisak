@@ -1,14 +1,6 @@
 pisak.audio package
 ===================
 
-Run script for audio app
-------------------------
-
-.. automodule:: bin.pisak-audio
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 pisak.audio.description module
 ---------------------------------

@@ -1,14 +1,6 @@
 pisak.speller package
 =====================
 
-Run script for speller app
---------------------------
-
-.. automodule:: bin.pisak-speller
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 pisak.speller.description module
 ---------------------------------
 

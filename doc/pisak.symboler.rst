@@ -1,15 +1,6 @@
 pisak.symboler package
 ======================
 
-Run script for symboler
------------------------
-
-.. automodule:: bin.pisak-symboler
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 pisak.symboler.description module
 ---------------------------------
 

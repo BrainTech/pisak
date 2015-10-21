@@ -1,15 +1,6 @@
 pisak.paint package
 ===================
 
-Run script for paint app
-------------------------
-
-.. automodule:: bin.pisak-paint
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 pisak.paint.description module
 ---------------------------------
 
