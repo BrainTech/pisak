@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>905</width>
-    <height>529</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,7 +62,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_selectApps">
        <attribute name="title">
@@ -203,17 +203,17 @@
                <widget class="QComboBox" name="comboBox_input">
                 <item>
                  <property name="text">
-                  <string>mouse-switch</string>
+                  <string>przycisk</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>pisak-switch</string>
+                  <string>przycisk PISAK</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>eyetracker</string>
+                  <string>okulograf</string>
                  </property>
                 </item>
                 <item>
@@ -228,22 +228,22 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>mouse</string>
+                  <string>myszka</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>eyetracker-no-correction</string>
+                  <string>okulograf bez korekcji</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>eyetracker-mockup</string>
+                  <string>okulograf testowy</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>keyboard</string>
+                  <string>klawiatura (spacja)</string>
                  </property>
                 </item>
                </widget>
@@ -261,19 +261,19 @@
                  <bool>false</bool>
                 </property>
                 <property name="currentText">
-                 <string>default</string>
+                 <string>domyślna</string>
                 </property>
                 <property name="currentIndex">
                  <number>0</number>
                 </property>
                 <item>
                  <property name="text">
-                  <string>default</string>
+                  <string>domyślna</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>turquoise</string>
+                  <string>turkusowa</string>
                  </property>
                 </item>
                </widget>
@@ -1141,7 +1141,7 @@
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Domyślny układ klawiatury (&amp;quot;default&amp;quot;) to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.&lt;/p&gt;&lt;p&gt;W przypadku układu alfabetycznego (&amp;quot;alphabetical&amp;quot;) klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &amp;quot;a&amp;quot; jest najkrótszy, a do pola z literą &amp;quot;z&amp;quot; najdłuższy.&lt;/p&gt;&lt;p&gt;Układ częstotliwościowy (&amp;quot;frequency&amp;quot;) segreguje litery zgodnie z częstością ich występowania w języku polskim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.&lt;/p&gt;&lt;p&gt;W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &amp;quot;a&amp;quot; jest najkrótszy, a do pola z literą &amp;quot;z&amp;quot; najdłuższy.&lt;/p&gt;&lt;p&gt;Układ częstotliwościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>
@@ -1190,17 +1190,17 @@
             <widget class="QComboBox" name="comboBox_spellerLayout">
              <item>
               <property name="text">
-               <string>default</string>
+               <string>domyślny</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>alphabetical</string>
+               <string>alfabetyczny</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>frequency</string>
+               <string>częstotliwościowy</string>
               </property>
              </item>
             </widget>

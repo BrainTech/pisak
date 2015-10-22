@@ -760,7 +760,7 @@ class Dictionary(text_tools.Predictor):
 
     def __init__(self):
         super().__init__()
-        self.basic_content = pisak.config['prediction_default']
+        self.basic_content = list(pisak.config['prediction'].values())
         self.apply_props()
 
     def do_prediction(self, text, position):

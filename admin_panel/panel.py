@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'panel.ui'
 #
-# Created: Wed Oct 21 13:19:09 2015
+# Created: Thu Oct 22 12:30:36 2015
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(905, 529)
+        MainWindow.resize(905, 532)
         self.centralWidget = QtWidgets.QWidget(MainWindow)
         self.centralWidget.setObjectName("centralWidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralWidget)
@@ -559,7 +559,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(1)
         self.comboBox_skin.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -580,19 +580,19 @@ class Ui_MainWindow(object):
         self.checkBox_paint.setText(_translate("MainWindow", "rysowanie"))
         self.checkBox_blog.setText(_translate("MainWindow", "blog"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_selectApps), _translate("MainWindow", "Wybór aplikacji"))
-        self.comboBox_input.setItemText(0, _translate("MainWindow", "mouse-switch"))
-        self.comboBox_input.setItemText(1, _translate("MainWindow", "pisak-switch"))
-        self.comboBox_input.setItemText(2, _translate("MainWindow", "eyetracker"))
+        self.comboBox_input.setItemText(0, _translate("MainWindow", "przycisk"))
+        self.comboBox_input.setItemText(1, _translate("MainWindow", "przycisk PISAK"))
+        self.comboBox_input.setItemText(2, _translate("MainWindow", "okulograf"))
         self.comboBox_input.setItemText(3, _translate("MainWindow", "tobii"))
         self.comboBox_input.setItemText(4, _translate("MainWindow", "eviacam"))
-        self.comboBox_input.setItemText(5, _translate("MainWindow", "mouse"))
-        self.comboBox_input.setItemText(6, _translate("MainWindow", "eyetracker-no-correction"))
-        self.comboBox_input.setItemText(7, _translate("MainWindow", "eyetracker-mockup"))
-        self.comboBox_input.setItemText(8, _translate("MainWindow", "keyboard"))
+        self.comboBox_input.setItemText(5, _translate("MainWindow", "myszka"))
+        self.comboBox_input.setItemText(6, _translate("MainWindow", "okulograf bez korekcji"))
+        self.comboBox_input.setItemText(7, _translate("MainWindow", "okulograf testowy"))
+        self.comboBox_input.setItemText(8, _translate("MainWindow", "klawiatura (spacja)"))
         self.label_input.setText(_translate("MainWindow", "Urządzenie wejściowe"))
-        self.comboBox_skin.setCurrentText(_translate("MainWindow", "default"))
-        self.comboBox_skin.setItemText(0, _translate("MainWindow", "default"))
-        self.comboBox_skin.setItemText(1, _translate("MainWindow", "turquoise"))
+        self.comboBox_skin.setCurrentText(_translate("MainWindow", "domyślna"))
+        self.comboBox_skin.setItemText(0, _translate("MainWindow", "domyślna"))
+        self.comboBox_skin.setItemText(1, _translate("MainWindow", "turkusowa"))
         self.label_skin.setText(_translate("MainWindow", "Skórka"))
         self.label_volumeCounter.setText(_translate("MainWindow", "0"))
         self.label_volume.setText(_translate("MainWindow", "Głośność dźwięków (%)"))
@@ -653,10 +653,10 @@ class Ui_MainWindow(object):
         self.label_emailPortSMTP.setText(_translate("MainWindow", "Port serwera SMTP"))
         self.pushButton_emailTest.setText(_translate("MainWindow", "Testuj połączenie"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_emailSettings), _translate("MainWindow", "Poczta e-mail"))
-        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Domyślny układ klawiatury (&quot;default&quot;) to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.</p><p>W przypadku układu alfabetycznego (&quot;alphabetical&quot;) klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &quot;a&quot; jest najkrótszy, a do pola z literą &quot;z&quot; najdłuższy.</p><p>Układ częstotliwościowy (&quot;frequency&quot;) segreguje litery zgodnie z częstością ich występowania w języku polskim.</p></body></html>"))
-        self.comboBox_spellerLayout.setItemText(0, _translate("MainWindow", "default"))
-        self.comboBox_spellerLayout.setItemText(1, _translate("MainWindow", "alphabetical"))
-        self.comboBox_spellerLayout.setItemText(2, _translate("MainWindow", "frequency"))
+        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.</p><p>W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &quot;a&quot; jest najkrótszy, a do pola z literą &quot;z&quot; najdłuższy.</p><p>Układ częstotliwościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.</p></body></html>"))
+        self.comboBox_spellerLayout.setItemText(0, _translate("MainWindow", "domyślny"))
+        self.comboBox_spellerLayout.setItemText(1, _translate("MainWindow", "alfabetyczny"))
+        self.comboBox_spellerLayout.setItemText(2, _translate("MainWindow", "częstotliwościowy"))
         self.label_spellerLayout.setText(_translate("MainWindow", "Układ klawiatury"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_spellerSettings), _translate("MainWindow", "Edytor tekstu"))
 
