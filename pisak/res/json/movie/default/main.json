@@ -53,6 +53,7 @@
         "type": "PisakScanningGroup",
         "children": ["button_menu_box"],
         "scanning-hilite": true,
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
