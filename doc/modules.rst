@@ -31,7 +31,7 @@ pisak.app_manager module
     :members:
     :undoc-members:
     :show-inheritance:
-    :special-membets: __gtype_name__
+    :special-members: __gtype_name__
 
 pisak.arg_parser module
 -----------------------
@@ -212,16 +212,6 @@ pisak.widgets module
     :undoc-members:
     :show-inheritance:
     :special-members: __gtype_name__
-		   
-
-
-pisak.pager module
--------------------------
-
-.. automodule:: pisak.pager
-    :members:
-    :undoc-members:
-    :show-inheritance:
 
 
 pisak.inputs module
@@ -247,26 +237,7 @@ pisak.description module
 .. automodule:: pisak.description
     :members:
     :undoc-members:
-    :show-inheritance:
-      
-
-
-pisak.arg_parser module
--------------------------
-
-.. automodule:: pisak.arg_parser
-    :members:
-    :undoc-members:
-    :show-inheritance:
-      
-
-pisak.dirs module
--------------------------
-
-.. automodule:: pisak.dirs
-    :members:
-    :undoc-members:
-    :show-inheritance:
+    :show-inheritance:      
 
 
 pisak.exceptions module

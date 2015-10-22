@@ -56,16 +56,6 @@ pisak.email.widgets module
     :special-members: __gtype_name__
 
 
-pisak.email.widgets module
------------------------------
-
-.. automodule:: pisak.email.widgets
-    :members:
-    :undoc-members:
-    :show-inheritance:
-    :special-members: __gtype_name__
-
-
 pisak.email.message module
 -----------------------------
 

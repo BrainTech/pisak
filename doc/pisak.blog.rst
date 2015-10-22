@@ -49,7 +49,7 @@ pisak.blog.exceptions module
 
 
 pisak.blog.html_parsers module
------------------------------
+--------------------------------
 
 .. automodule:: pisak.blog.html_parsers
     :members:
