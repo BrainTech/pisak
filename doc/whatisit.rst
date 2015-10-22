@@ -14,9 +14,9 @@ Architecture
 .. image:: images/Struktura_PISAKa.png
    :width: 500pt
 
-As the group of disabled people is very heterogenous PISAK is made as customisable as possible, we try to utilise this rule on macroscale(you are able to choose which applications to launch through the config) and microscale(every application is configurable through the config files, corresponding jsons and a css file).
+As the group of disabled people is very heterogenous PISAK is made as customisable as possible, we try to utilise this rule on macroscale (you are able to choose which applications to launch through the config) and microscale (every application is configurable through the config files, corresponding jsons and a css file).
 
-Each application can be run separately by invoking/running it's `app.py` (see :doc:`dev_first_steps`).
+Each application can be run separately by invoking/running `pisak-appName` e.g. `pisak-speller` (see :doc:`dev_first_steps`).
 
 An application is build through stacking together different `widgets` in a json file by their `gtype_name's` and defining their `properties`.
 
@@ -37,22 +37,29 @@ The scanning group is a container that can contain many scannable elements or fu
 
 - interval - period of time the highlight hold on to the current element before moving to the next one; different intervals suits different users, one prefers to examine all the avalaible elements right at a beginning and then just waits for the scanning proccess to reach the desired one, another, maybe when the scanning order is unclear, inspects each element just when it is highlighted and therefore has to have time for deciding on the correct one;
 - highlight - if the the whole group whose elements are currently scanned should be highlighted with another color; it can help to distinct the whole group of elements that will be avalaible within the current scanning cycle;
-- starting lag - period of time after selection of one of the scanning subgroups and before starting of its scanning cycle; one can comfortably watch the options that will be avalaible within the forthcoming cycle and properly prepare to make a call;
-- sounds - sounds played at every scanning cycle step or after user selection; they help when user is not looking at the screen or has problem with distinction of scanned elements or when he picks something by accident and is not really aware of that fact, they also give such a rythm useful to some users and help to count the elements; 
+- start_up_lag - period of time after selection of one of the scanning subgroups and before starting of its scanning cycle; one can comfortably watch the options that will be avalaible within the forthcoming cycle and properly prepare to make a call;
+- select_lag - period of time that passes after selecting/clicking certain widget before the action is performed;
 - strategy - order in which the elements of a group will be scanned; enables an application designer to introduce different scanning patterns, i.e row or column pattern, appropriate for different users and different graphical layouts;
-- number of max cycles - number of cycles of scanning the same group with no user activity after which it should exit the group; it depends how fast a user is in making decisions;
-- where to go back - which group should be scanned after exiting the current one without any user action; sometimes it should always go back to the most top group, no matter from where, to keep things in order, sometimes it should go back to some particular group of a higher importance and sometimes it should go back to different groups from different places, according to some specific design;
-- selector - input device that the group is reactive to(the implementation is very easy so if you are adapting PISAK for a user that already has an input that she/he uses then it is better to implement it than using one done by us - here is a :ref:`HOWTO-implement-input` do it from PISAK's side)
-    
-  - mouse-switch - where a mouse left-click is taken as input and the cursor is hidden
-  - switch - as above but the cursor is not hidden
-  - keyboard - spacebar is taken as input
+- max_cycle_count - number of cycles of scanning the same group with no user activity after which it should exit the group; it depends how fast a user is in making decisions;
+- unwind_to - which group should be scanned after exiting the current one without any user action; sometimes it should always go back to the most top group, no matter from where, to keep things in order, sometimes it should go back to some particular group of a higher importance and sometimes it should go back to different groups from different places, according to some specific design;
+- input - input device that the group is reactive to(the implementation is very easy so if you are adapting PISAK for a user that already has an input that she/he uses then it is better to implement it than using one done by us - here is a :ref:`HOWTO-implement-input` do it from PISAK's side);
+
+Possible inputs:
+  - mouse-switch - where a mouse left-click is taken as input and the cursor is hidden with the scanning ON
+  - mouse - you can use PISAK using the mouse and clicking the buttons
+  - keyboard - switch-like mode where spacebar is taken as input with the scanning ON
+  - pisak-switch - switch made specificaly for PISAK based on Wattuino85
+  - eviacam - you can operate PISAK with head movements and with the click performed on specified timeout
+  - tobii - you can operate PISAK with a tobii eyetracker (REX) with the click prerformed on specified timeout
+  - eyetracker - a PISAK eyetracker solution with the click performed on the timeout
+  - eyetracker-no-correction - same as above but without the head-movement correction
+  - eyetracker-mockup - a test set for eyetracking where the mouse cursor's position is fed to the PISAK cursor
 
 Dictionary
 ----------
 * :doc:`widgets` - building blocks of an app
 * jsons - where you define how an app looks like, which widgets it uses,how are the placed and which signals they use
-* app.py - python description of relations between views and container of App descriptor (see :doc:`dev_first_steps`)
+* description.py - python description of relations between views and container of App descriptor (see :doc:`dev_first_steps`)
 * configs - config files where section names are `gtype_name's`, keys are `property` names
 * :doc:`handlers` - handlers for specified signals, invoking functions
 * properties - characteristics of an object(width, height, source etc.)
