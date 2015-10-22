@@ -644,10 +644,11 @@ class _Page(scanning.Group):
     """
     Page widget supplied to pager as its content.
     """
-    def __init__(self, items, spacing, strategy):
+    def __init__(self, items, spacing, strategy, sound):
         super().__init__()
         self.items = []  # flat container for the page content
         self.strategy = strategy
+        self.sound = sound
         self.layout = Clutter.BoxLayout()
         self.layout.set_spacing(spacing)
         self.layout.set_orientation(Clutter.Orientation.VERTICAL)
@@ -717,6 +718,10 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         "page_ratio_spacing": (
             GObject.TYPE_FLOAT, None, None, 0, 1., 0,
             GObject.PARAM_READWRITE),
+        "sound": (
+            GObject.TYPE_STRING,
+            "", "", "scan",
+            GObject.PARAM_READWRITE),
         "idle-duration": (
             GObject.TYPE_INT64, "idle duration",
             "duration of one page exposition", 0,
@@ -739,6 +744,7 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.new_page_transition = Clutter.PropertyTransition.new("x")
         self.new_page_transition.connect("stopped", self._clean_up)
         self.connect("notify::mapped", lambda *_: self._show_initial_page())
+        self._sound = 'scan'
         self.idle_duration = 3000
         self.transition_duration = 1000
         self._data_source = None
@@ -761,6 +767,14 @@ class PagerWidget(layout.Bin, configurator.Configurable):
     def page_count(self, value):
         self._page_count = value
         self.emit('limit-declared', value)
+
+    @property
+    def sound(self):
+        return self._sound
+
+    @sound.setter
+    def sound(self, value):
+        self._sound = value
 
     @property
     def page_strategy(self):
@@ -860,7 +874,8 @@ class PagerWidget(layout.Bin, configurator.Configurable):
 
         :return: None.
         """
-        _new_page = _Page(items, self.page_spacing, self.page_strategy)
+        _new_page = _Page(items, self.page_spacing, self.page_strategy,
+                          self.sound)
         direction = self._current_direction
         if direction == 0:
             self._current_page = _new_page
