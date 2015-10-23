@@ -136,13 +136,13 @@
         "transition-duration": 1000,
         "idle-duration": 3000,
         "page-ratio-spacing": 0.015,
-	"sound": "wybierz_album",
         "ratio-height": 0.75,
         "ratio-width": 0.71,
         "y-align": "start",
         "x-align": "center",
         "rows": 3,
         "columns": 3,
+	"sound": "wybierz_album",
         "page-strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "button_menu"
