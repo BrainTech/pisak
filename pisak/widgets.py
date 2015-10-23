@@ -1702,7 +1702,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
 
     @icon_name.setter
     def icon_name(self, value):
-        self._icon_name = str(value)
+        self._icon_name = value
         self._assign_sound(self._icon_name)
         self.current_icon_name = self._icon_name
 
