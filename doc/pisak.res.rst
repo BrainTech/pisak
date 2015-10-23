@@ -1,9 +1,6 @@
 pisak.res package
 =================
 
-Submodules
-----------
-
 pisak.res.colors module
 -----------------------
 

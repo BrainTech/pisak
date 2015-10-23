@@ -705,7 +705,7 @@ class Key(widgets.Button, configurator.Configurable):
     @default_text.setter
     def default_text(self, value):
         self._default_text = str(value)
-        self.sounds[self._default_text] = self.get_sound(self.default_text)
+        self._assign_sound(self._default_text)
 
     @property
     def altgr_text(self):
@@ -714,7 +714,7 @@ class Key(widgets.Button, configurator.Configurable):
     @altgr_text.setter
     def altgr_text(self, value):
         self._altgr_text = str(value)
-        self.sounds[self._altgr_text] = self.get_sound(self.altgr_text)
+        self._assign_sound(self._altgr_text)
 
     @property
     def special1_text(self):
@@ -723,7 +723,7 @@ class Key(widgets.Button, configurator.Configurable):
     @special1_text.setter
     def special1_text(self, value):
         self._special1_text = str(value)
-        self.sounds[self._special1_text] = self.get_sound(self.special1_text)
+        self._assign_sound(self._special1_text)
 
     @property
     def special2_text(self):
@@ -732,7 +732,7 @@ class Key(widgets.Button, configurator.Configurable):
     @special2_text.setter
     def special2_text(self, value):
         self._special2_text = str(value)
-        self.sounds[self._special2_text] = self.get_sound(self.special2_text)
+        self._assign_sound(self._special2_text)
 
     @property
     def target(self):
