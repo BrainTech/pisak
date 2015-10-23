@@ -1,13 +1,10 @@
 pisak.blog package
 ======================
 
-Submodules
-----------
+pisak.blog.description module
+---------------------------------
 
-bin.pisak-blog module
--------------------------
-
-.. automodule:: bin.pisak-blog
+.. automodule:: pisak.blog.description
     :members:
     :undoc-members:
     :show-inheritance:
@@ -52,7 +49,7 @@ pisak.blog.exceptions module
 
 
 pisak.blog.html_parsers module
------------------------------
+--------------------------------
 
 .. automodule:: pisak.blog.html_parsers
     :members:
