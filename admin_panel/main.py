@@ -6,17 +6,13 @@ import os
 import configobj
 from PyQt5 import QtWidgets
 
+from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
+
 from panel import Ui_MainWindow
 
 
-HOME_CONFIG_DIR = os.path.join(os.path.expanduser('~'), '.pisak', 'configs')
-
-if not os.path.isdir(HOME_CONFIG_DIR):
-    os.makedirs(HOME_CONFIG_DIR)
-
-HOME_CONFIG_PATH = os.path.join(HOME_CONFIG_DIR, 'main_config.ini')
-
-RES_CONFIG_PATH = os.path.join(os.path.expanduser('~'), 'pisak', 'pisak', 'res', 'configs', 'default_config.ini')
+if not os.path.isdir(HOME_PISAK_CONFIGS):
+    os.makedirs(HOME_PISAK_CONFIGS)
 
 
 class Panel(Ui_MainWindow):
@@ -68,7 +64,7 @@ class Panel(Ui_MainWindow):
 
     def _apply_changes(self):
         self._config.update(self._cache)
-        with open(HOME_CONFIG_PATH, 'wb') as file:
+        with open(HOME_MAIN_CONFIG, 'wb') as file:
             self._config.write(file)
 
     def _abort_changes(self):
@@ -78,8 +74,8 @@ class Panel(Ui_MainWindow):
         self.app.exit()
 
     def _load_config(self):
-        self._config = configobj.ConfigObj(RES_CONFIG_PATH, encoding='UTF-8')
-        home_config = configobj.ConfigObj(HOME_CONFIG_PATH, encoding='UTF-8')
+        self._config = configobj.ConfigObj(RES_MAIN_CONFIG, encoding='UTF-8')
+        home_config = configobj.ConfigObj(HOME_MAIN_CONFIG, encoding='UTF-8')
         self._config.merge(home_config)
         self._cache = self._config.copy()
         return self._config
