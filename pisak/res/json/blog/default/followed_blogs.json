@@ -171,6 +171,7 @@
         "y-align": "start",
         "rows": 3,
         "columns": 3,
+	"sound": "wybierz_blog",
         "page-strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "button_menu"
