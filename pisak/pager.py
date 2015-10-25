@@ -664,7 +664,7 @@ class _Page(scanning.Group):
             try:
                 group.sound = self.row_sounds[index]
             except IndexError:
-                group.sound = 'scan'
+                group.sound = str(index + 1) if index + 1 < 10 else 'scan'
             group.strategy.unwind_to = self.strategy.unwind_to or self
             group.strategy.max_cycle_count = self.strategy.max_cycle_count
             group.strategy.interval = self.strategy.interval
