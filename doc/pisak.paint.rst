@@ -1,16 +1,14 @@
 pisak.paint package
 ===================
 
-Submodules
-----------
+pisak.paint.description module
+---------------------------------
 
-bin.pisak-paint module
-----------------------
-
-.. automodule:: bin.pisak-paint
+.. automodule:: pisak.paint.description
     :members:
     :undoc-members:
     :show-inheritance:
+
 
 pisak.paint.handlers module
 ---------------------------
@@ -20,6 +18,7 @@ pisak.paint.handlers module
     :undoc-members:
     :show-inheritance:
 
+       
 pisak.paint.widgets module
 --------------------------
 
@@ -29,6 +28,7 @@ pisak.paint.widgets module
     :show-inheritance:
     :special-members: __gtype_name__
 
+		      
 Module contents
 ---------------
 
