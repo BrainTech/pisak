@@ -419,7 +419,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         if self.automatic_space:
                 text_after += ' '
         #automatically add whitespace after predicted word
-        #this is the default in most prediction software 
+        #this is the default in most prediction software
 
         current_text = self.get_text()
         # if the text buffer is empty, or ends with whitespace, simply
@@ -443,6 +443,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
                 self._add_operation(operation)
         else:
             self.type_text(text_after)
+        self.set_cursor_position(-1)
 
     def move_cursor_forward(self):
         """
