@@ -282,9 +282,11 @@ class Panel(Ui_MainWindow):
 
     def onComboBox_selectSoundCurrentIndexChanged(self, select_sound):
         self._cache['sound_effects']['selection'] = select_sound
+        self._cache['select_sound_enabled'] = bool(select_sound)
 
     def onComboBox_scanSoundCurrentIndexChanged(self, scan_sound):
         self._cache['sound_effects']['scanning'] = scan_sound
+        self._cache['scan_sound_enabled'] = bool(scan_sound)
 
     def onLineEdit_prediction1TextChanged(self, text):
         self._cache['prediction']['first'] = text

@@ -366,6 +366,11 @@
                 </property>
                 <item>
                  <property name="text">
+                  <string/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
                   <string>selection.wav</string>
                  </property>
                 </item>
@@ -498,7 +503,7 @@
           <x>20</x>
           <y>10</y>
           <width>701</width>
-          <height>255</height>
+          <height>299</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -550,74 +555,6 @@
            <property name="fieldGrowthPolicy">
             <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
            </property>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_cycleCount">
-             <property name="text">
-              <string>Liczba cykli skanowania</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="label_interval">
-             <property name="text">
-              <string>Interwał skanowania (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLabel" name="label_startUpLag">
-             <property name="text">
-              <string>Opóźnienie startu skanowania (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLabel" name="label_selectLag">
-             <property name="text">
-              <string>Opóźnienie wykonania czynności po wyborze (sek)</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QComboBox" name="comboBox_reactOn">
-             <item>
-              <property name="text">
-               <string>wciśnięcie</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string>odpuszczenie</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QLabel" name="label_reactOn">
-             <property name="text">
-              <string>Reakcja przycisku na</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QComboBox" name="comboBox_scanSound">
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-             <item>
-              <property name="text">
-               <string>scan.wav</string>
-              </property>
-             </item>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QLabel" name="label_scanSound">
-             <property name="text">
-              <string>Dźwięk skanowania</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
@@ -647,6 +584,13 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_cycleCount">
+             <property name="text">
+              <string>Liczba cykli skanowania</string>
+             </property>
+            </widget>
            </item>
            <item row="1" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -681,6 +625,13 @@
              </item>
             </layout>
            </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_interval">
+             <property name="text">
+              <string>Interwał skanowania (sek)</string>
+             </property>
+            </widget>
+           </item>
            <item row="2" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <item>
@@ -710,6 +661,13 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_startUpLag">
+             <property name="text">
+              <string>Opóźnienie startu skanowania (sek)</string>
+             </property>
+            </widget>
            </item>
            <item row="3" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -746,6 +704,58 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_selectLag">
+             <property name="text">
+              <string>Opóźnienie wykonania czynności po wyborze (sek)</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QComboBox" name="comboBox_reactOn">
+             <item>
+              <property name="text">
+               <string>wciśnięcie</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>odpuszczenie</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_reactOn">
+             <property name="text">
+              <string>Reakcja przycisku na</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QComboBox" name="comboBox_scanSound">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>scan.wav</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_scanSound">
+             <property name="text">
+              <string>Dźwięk skanowania</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
