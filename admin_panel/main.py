@@ -9,6 +9,7 @@ from PyQt5 import QtWidgets
 from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
 
 from panel import Ui_MainWindow
+from loc import MAPS
 
 
 if not os.path.isdir(HOME_PISAK_CONFIGS):
@@ -17,50 +18,11 @@ if not os.path.isdir(HOME_PISAK_CONFIGS):
 
 class Panel(Ui_MainWindow):
 
-    # all the mappings below will be bidirectional, check method '_invert_maps'.
-    SKIN_MAP = {
-        'default': 'domyślna',
-        'turquoise': 'turkusowa'
-    }
-
-    INPUT_MAP = {
-        'mouse-switch': 'przycisk',
-        'pisak-switch': 'przycisk PISAK',
-        'mouse': 'myszka',
-        'keyboard': 'klawiatura (spacja)',
-        'eyetracker': 'okulograf',
-        'tobii': 'tobii',
-        'eviacam': 'eviacam',
-        'eyetracker-no-correction': 'okulograf bez korekcji',
-        'eyetracker-mockup': 'okulograf testowy'
-    }
-
-    REACT_ON_MAP = {
-        'press': 'wciśnięcie',
-        'release': 'odpuszczenie'
-    }
-
-    SPELLER_LAYOUT_MAP = {
-        'default': 'domyślny',
-        'alphabetical': 'alfabetyczny',
-        'frequency': 'częstotliwościowy'
-    }
-
     def __init__(self):
-        self._invert_maps()
         super().__init__()
         self._cache = {}
         self._config = None
         self._followed_blogs = []
-
-    def _invert_maps(self):
-        """
-        Make the mappings bidirectional.
-        """
-        for dic in [self.SKIN_MAP, self.INPUT_MAP,
-                    self.SPELLER_LAYOUT_MAP, self.REACT_ON_MAP]:
-            for key, value in list(dic.items()):
-                dic[value] = key
 
     def _apply_changes(self):
         self._config.update(self._cache)
@@ -83,14 +45,14 @@ class Panel(Ui_MainWindow):
     def _fill_in_forms(self):
         config = self._load_config()
 
-        self.comboBox_input.setCurrentText(self.INPUT_MAP[config['input']])
-        self.comboBox_skin.setCurrentText(self.SKIN_MAP[config['skin']])
-        self.comboBox_reactOn.setCurrentText(self.REACT_ON_MAP[config['scanning']['react_on']])
+        self.comboBox_input.setCurrentText(MAPS['INPUT'][config['input']])
+        self.comboBox_skin.setCurrentText(MAPS['SKIN'][config['skin']])
+        self.comboBox_reactOn.setCurrentText(MAPS['REACT_ON'][config['scanning']['react_on']])
         self.horizontalSlider_volume.setValue(config.as_int('sound_effects_volume'))
         self.checkBox_sounds.setChecked(config.as_bool('sound_effects_enabled'))
         self.checkBox_buttonSoundSupport.setChecked(config.as_bool('sound_support_enabled'))
         self.horizontalSlider_spriteTimeout.setValue(config['PisakSprite'].as_int('timeout'))
-        self.comboBox_spellerLayout.setCurrentText(self.SPELLER_LAYOUT_MAP[config['speller']['layout']])
+        self.comboBox_spellerLayout.setCurrentText(MAPS['SPELLER_LAYOUT'][config['speller']['layout']])
 
         blog = config['blog']
         self.lineEdit_blogUsername.setText(blog['user_name'])
@@ -239,10 +201,10 @@ class Panel(Ui_MainWindow):
         self._cache['available_apps']['email'] = checked
 
     def onComboBox_inputCurrentIndexChanged(self, input_name):
-        self._cache['input'] = self.INPUT_MAP[input_name]
+        self._cache['input'] = MAPS['INPUT'][input_name]
 
     def onComboBox_skinCurrentIndexChanged(self, skin):
-        self._cache['skin'] = self.SKIN_MAP[skin]
+        self._cache['skin'] = MAPS['SKIN'][skin]
 
     def onHorizontalSlider_volumeValueChanged(self, value):
         self._cache['sound_effects_volume'] = value
@@ -278,13 +240,15 @@ class Panel(Ui_MainWindow):
         self.label_spriteTimeoutCounter.setText(str(round(value/1000, 2)))
 
     def onComboBox_reactOnCurrentIndexChanged(self, react_on):
-        self._cache['scanning']['react_on'] = self.REACT_ON_MAP[react_on]
+        self._cache['scanning']['react_on'] = MAPS['REACT_ON'][react_on]
 
     def onComboBox_selectSoundCurrentIndexChanged(self, select_sound):
         self._cache['sound_effects']['selection'] = select_sound
+        self._cache['select_sound_enabled'] = bool(select_sound)
 
     def onComboBox_scanSoundCurrentIndexChanged(self, scan_sound):
         self._cache['sound_effects']['scanning'] = scan_sound
+        self._cache['scan_sound_enabled'] = bool(scan_sound)
 
     def onLineEdit_prediction1TextChanged(self, text):
         self._cache['prediction']['first'] = text
@@ -361,7 +325,7 @@ class Panel(Ui_MainWindow):
         self._cache['email']['SMTP_port'] = port
 
     def onComboBox_spellerLayoutCurrentIndexChanged(self, layout):
-        self._cache['speller']['layout'] = self.SPELLER_LAYOUT_MAP[layout]
+        self._cache['speller']['layout'] = MAPS['SPELLER_LAYOUT'][layout]
 
     def onPushButton_abortClicked(self):
         self._abort_changes()
