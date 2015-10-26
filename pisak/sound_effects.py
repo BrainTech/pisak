@@ -6,6 +6,7 @@ gi.require_version('Gst', '1.0')
 
 from gi.repository import GObject, Gst
 
+import pisak
 from pisak import arg_parser
 from pisak import logger
 
@@ -21,10 +22,14 @@ class SoundEffectsPlayer(object):
         super().__init__()
         self.sounds = sounds_dict
         self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
+        self._playbin.set_property("volume",
+                                   pisak.config.as_int('sound_effects_volume') / 100)
         self._bus = self._playbin.get_bus()
         self._bus.connect('message', self.on_message)
 
     def play(self, sound_name):
+        self._playbin.set_property("volume",
+                                   pisak.config.as_int('sound_effects_volume') / 100)
         self._playbin.set_state(Gst.State.READY)
         if sound_name in self.sounds:
             self._playbin.set_property('uri', 'file://' + self.sounds[sound_name])
