@@ -2,7 +2,6 @@
 Sound effects player.
 """
 import subprocess
-import threading
 
 import gi
 gi.require_version('Gst', '1.0')
