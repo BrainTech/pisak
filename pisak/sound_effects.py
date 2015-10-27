@@ -57,6 +57,13 @@ class SoundEffectsPlayer(object):
               str(self._playbin.get_property('uri'))
         _LOG.debug(msg)
 
+def sec_converter(seconds):
+    seconds = int(seconds)
+
+    minutes = seconds // 60
+    seconds = seconds - (minutes*60)
+
+    return "{0:02d}:{1:02d}".format(minutes, seconds)
 
 class Synthezator(object):
     def __init__(self, text):
@@ -65,18 +72,9 @@ class Synthezator(object):
 
     def read(self, timeout=None):
         if timeout is None or timeout <= 0:
-            subprocess.Popen(["milena_say", self.text])
+            process = subprocess.Popen(["milena_say", self.text])
+            process.wait()
         else:
-            def target():
-                self.process = subprocess.Popen(["milena_say", self.text])
-                try:
-                    self.status = self.process.wait(timeout)
-                except subprocess.TimeoutExpired:
-                    self.process.send_signal(subprocess.signal.SIGINT)
-                    self.process.kill()
-
-            thread = threading.Thread(target=target, daemon=True)
-            thread.start()
-
-            #thread.join(timeout=timeout)
-
+            scan_time = sec_converter(timeout)
+            call = 'milena_say "-S trim 0 {}" {}'.format(scan_time, self.text)
+            self.process = subprocess.Popen([call], shell=True)
