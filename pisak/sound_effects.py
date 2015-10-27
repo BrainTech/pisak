@@ -1,6 +1,9 @@
 """
 Sound effects player.
 """
+import subprocess
+import threading
+
 import gi
 gi.require_version('Gst', '1.0')
 
@@ -53,3 +56,27 @@ class SoundEffectsPlayer(object):
         msg = 'Resources freed from playbin with file: ' +\
               str(self._playbin.get_property('uri'))
         _LOG.debug(msg)
+
+
+class Synthezator(object):
+    def __init__(self, text):
+        self.text = text
+        self.process = None
+
+    def read(self, timeout=None):
+        if timeout is None or timeout <= 0:
+            subprocess.Popen(["milena_say", self.text])
+        else:
+            def target():
+                self.process = subprocess.Popen(["milena_say", self.text])
+                try:
+                    self.status = self.process.wait(timeout)
+                except subprocess.TimeoutExpired:
+                    self.process.send_signal(subprocess.signal.SIGINT)
+                    self.process.kill()
+
+            thread = threading.Thread(target=target, daemon=True)
+            thread.start()
+
+            #thread.join(timeout=timeout)
+

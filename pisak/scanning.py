@@ -7,7 +7,7 @@ from gi.repository import Clutter, GObject
 
 import pisak
 from pisak import logger, exceptions, properties, configurator
-
+from pisak.sound_effects import Synthezator
 
 _LOG = logger.get_logger(__name__)
 
@@ -740,25 +740,32 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if self.sound_support_enabled and \
-                    isinstance(selection, pisak.widgets.Button):
-                label = selection.get_label()
-                if label in selection.sounds:
-                    self.player.play(selection.sounds[label])
-                elif label in [' ', '']:
-                    icon_name = selection.current_icon_name
-                    self.player.play(selection.sounds[icon_name])
-                else:
-                    self.play_scanning_sound()
-            else:
-                self.play_scanning_sound()
             if hasattr(selection, "enable_hilite"):
                 selection.enable_hilite()
             elif isinstance(selection, Group):
                 selection.enable_hilite()
+            if self.sound_support_enabled:
+                if isinstance(selection, pisak.widgets.Button):
+                    label = selection.get_label()
+                    if label in selection.sounds:
+                        self.player.play(selection.sounds[label])
+                    elif label in [' ', '']:
+                        icon_name = selection.current_icon_name
+                        self.player.play(selection.sounds[icon_name])
+                    else:
+                        self.play_scanning_sound()
+                if isinstance(selection, pisak.widgets.PhotoTile):
+                    if pisak.config.as_bool('speech_synthesis'):
+                        scan_time = pisak.config['PisakRowStrategy'].as_int('interval') / 1000
+                        synthezator = Synthezator(selection.label_text)
+                        synthezator.read(scan_time)
+                    else:
+                        self.play_scanning_sound()
+            else:
+                self.play_scanning_sound()
         if self.index == len(self._subgroups) - 1:
             self._cycle_count += 1
-
+        
     def _has_next(self):
         if len(self._subgroups) == 0:
             return False
