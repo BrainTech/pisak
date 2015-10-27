@@ -1,13 +1,10 @@
 pisak.email package
 ======================
 
-Submodules
-----------
+pisak.email.description module
+---------------------------------
 
-email module
--------------------------
-
-.. automodule:: bin.pisak-email
+.. automodule:: pisak.email.description
     :members:
     :undoc-members:
     :show-inheritance:
@@ -47,16 +44,6 @@ pisak.email.handlers module
     :members:
     :undoc-members:
     :show-inheritance:
-
-
-pisak.email.widgets module
------------------------------
-
-.. automodule:: pisak.email.widgets
-    :members:
-    :undoc-members:
-    :show-inheritance:
-    :special-members: __gtype_name__
 
 
 pisak.email.widgets module

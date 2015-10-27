@@ -1,18 +1,15 @@
 pisak.speller package
 =====================
 
-Submodules
-----------
+pisak.speller.description module
+---------------------------------
 
-speller module
-------------------------
-
-.. automodule:: bin.pisak-speller
+.. automodule:: pisak.speller.description
     :members:
     :undoc-members:
     :show-inheritance:
 
-
+       
 pisak.speller.documents_manager module
 --------------------------------------
 

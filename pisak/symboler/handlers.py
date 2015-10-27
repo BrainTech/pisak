@@ -42,7 +42,7 @@ def save(pop_up):
     :param pop_up: dialog window
     """
     def do_save(entry, symbols):
-        symbols_manager.save_entry(entry, symbols)
+        _save_entry(entry, symbols)
 
     entry_overwrite_message = "WYBIERZ PLIK DO NADPISANIA"
     empty_entry_box_message = "BRAK SYMBOLI DO ZAPISANIA"

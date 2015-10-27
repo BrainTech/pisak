@@ -1067,8 +1067,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
         self.box.add_child(self.label)
 
     def _play_selection_sound(self, source):
-        if pisak.app.window.input_group.middleware != "scanning":
-            pisak.app.play_sound_effect('select')
+        pisak.app.play_sound_effect('selection')
 
     def _toggle(self):
         for element in self.get_children():
@@ -1629,6 +1628,12 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self._ratio_height = float(value)
         self.set_height(unit.h(self._ratio_height))
 
+    def _assign_sound(self, name):
+        if name:
+            sound = dirs.get_sound_path(name + '.wav')
+            if sound:
+                self.sounds[name] = sound
+
     @property
     def text(self):
         """
@@ -1639,7 +1644,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @text.setter
     def text(self, value):
         self._text = str(value)
-        self.sounds[self._text] = self.get_sound(self._text)
+        self._assign_sound(self._text)
 
     @property
     def alternative_text(self):
@@ -1654,12 +1659,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @alternative_text.setter
     def alternative_text(self, value):
         self._alternative_text = str(value)
-        self.sounds[self._alternative_text] = self.get_sound(
-            self._alternative_text)
-        
-    def get_sound(self, name):
-        if name:
-            return dirs.get_sound_path(name + '.wav')
+        self._assign_sound(self._alternative_text)
 
     @property
     def current_icon_name(self):
@@ -1690,8 +1690,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @toggled_icon_name.setter
     def toggled_icon_name(self, value):
         self._toggled_icon_name = str(value)
-        self.sounds[self._toggled_icon_name] = self.get_sound(
-            self._toggled_icon_name)
+        self._assign_sound(self._toggled_icon_name)
 
     @property
     def icon_name(self):
@@ -1703,7 +1702,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @icon_name.setter
     def icon_name(self, value):
         self._icon_name = value
-        self.sounds[str(self._icon_name)] = self.get_sound(self._icon_name)
+        self._assign_sound(self._icon_name)
         self.current_icon_name = self._icon_name
 
     @property

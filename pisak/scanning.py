@@ -742,9 +742,10 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
             selection = self._subgroups[self.index]
             if self.sound_support_enabled and \
                     isinstance(selection, pisak.widgets.Button):
-                if selection.get_label() in selection.sounds.keys():
-                    self.player.play(selection.sounds[selection.get_label()])
-                elif selection.get_label() in [' ', '']:
+                label = selection.get_label()
+                if label in selection.sounds:
+                    self.player.play(selection.sounds[label])
+                elif label in [' ', '']:
                     icon_name = selection.current_icon_name
                     self.player.play(selection.sounds[icon_name])
                 else:
