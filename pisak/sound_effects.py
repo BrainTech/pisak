@@ -21,14 +21,28 @@ class SoundEffectsPlayer(object):
     def __init__(self, sounds_dict):
         super().__init__()
         self.sounds = sounds_dict
-        self.volume = pisak.config.as_int('sound_effects_volume') / 100
+        self._volume = pisak.config.as_int('sound_effects_volume') / 100
         self._playbin = Gst.ElementFactory.make('playbin', 'button_sound')
         self._playbin.set_property("volume", self.volume)
         self._bus = self._playbin.get_bus()
         self._bus.connect('message', self.on_message)
 
+    @property
+    def volume(self):
+        return self._volume
+
+    @volume.setter
+    def volume(self, value):
+        vol = float(value)
+        if 0 <= vol <= 1:
+            self._volume = vol
+            self._playbin.set_property("volume", vol)
+        else:
+            msg = "Provided value must be between 0 and 1. Received {}."
+            _LOG.error(msg.format(vol))
+        
     def play(self, sound_name):
-        self._playbin.set_property("volume", self.volume)
+        self.volume = self.volume
         self._playbin.set_state(Gst.State.READY)
         if sound_name in self.sounds:
             self._playbin.set_property('uri', 'file://' + self.sounds[sound_name])
