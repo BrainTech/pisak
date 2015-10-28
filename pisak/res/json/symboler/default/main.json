@@ -203,6 +203,7 @@
         "type": "PisakScanningGroup",
         "children": ["symboler_menu_box"],
         "scanning-hilite": true,
+	"sound": "funkcje",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"
@@ -402,6 +403,7 @@
         "ratio-height": 0.6795,
         "ratio-width": 0.714754,
         "y-align": "start",
+	"sound": "tablica",
         "page-strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"
@@ -420,6 +422,7 @@
         "type": "PisakScanningGroup",
         "children": ["pager_menu_box"],
         "scanning-hilite": true,
+	"sound": "pisanie",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"

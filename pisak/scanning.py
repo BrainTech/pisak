@@ -6,7 +6,7 @@ import time
 from gi.repository import Clutter, GObject
 
 import pisak
-from pisak import logger, exceptions, properties, configurator
+from pisak import logger, exceptions, properties, configurator, dirs
 from pisak.sound_effects import Synthezator
 
 _LOG = logger.get_logger(__name__)
@@ -255,7 +255,12 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         "scanning-hilite": (
             GObject.TYPE_BOOLEAN,
             "", "", False,
-            GObject.PARAM_READWRITE)
+            GObject.PARAM_READWRITE),
+        "sound": (
+            GObject.TYPE_STRING,
+            "", "", "scan",
+            GObject.PARAM_READWRITE
+        )
     }
 
     def __init__(self):
@@ -265,6 +270,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self._scanned = []
         self._lag_hilited = []
         self._strategy = None
+        self._sound = dirs.get_sound_path('scan.wav')
         self.paused = False
         self.killed = False
         self.suppress_collapse_select_on_init = False
@@ -299,6 +305,15 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self._scanning_hilite = value
         if not value:
             self.disable_scan_hilite()
+
+    @property
+    def sound(self):
+        return self._sound
+
+    @sound.setter
+    def sound(self, name):
+        if isinstance(name, str):
+            self._sound = dirs.get_sound_path(name + '.wav') or self._sound
 
     def schedule_update(self):
         self.fresh_subgroups = False
@@ -740,10 +755,6 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if hasattr(selection, "enable_hilite"):
-                selection.enable_hilite()
-            elif isinstance(selection, Group):
-                selection.enable_hilite()
             if self.sound_support_enabled:
                 if isinstance(selection, pisak.widgets.Button):
                     label = selection.get_label()
@@ -752,20 +763,26 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                     elif label in [' ', '']:
                         icon_name = selection.current_icon_name
                         self.player.play(selection.sounds[icon_name])
-                    else:
-                        self.play_scanning_sound()
-                if isinstance(selection, pisak.widgets.PhotoTile):
+                elif isinstance(selection, Group):
+                    self.player.play(selection.sound)
+		elif isinstance(selection, pisak.widgets.PhotoTile):
                     if pisak.config.as_bool('speech_synthesis'):
                         scan_time = pisak.config['PisakRowStrategy'].as_int('interval') / 1000
                         synthezator = Synthezator(selection.label_text)
                         synthezator.read(scan_time)
                     else:
                         self.play_scanning_sound()
+                else:
+                    self.play_scanning_sound()
             else:
                 self.play_scanning_sound()
+            if hasattr(selection, "enable_hilite"):
+                selection.enable_hilite()
+            elif isinstance(selection, Group):
+                selection.enable_hilite()
         if self.index == len(self._subgroups) - 1:
             self._cycle_count += 1
-        
+
     def _has_next(self):
         if len(self._subgroups) == 0:
             return False

@@ -49,6 +49,7 @@
     {
         "id": "main_menu",
         "type": "PisakScanningGroup",
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_menu_strategy",
             "type": "PisakRowStrategy",
@@ -293,6 +294,7 @@
         "id": "movie_menu",
         "type": "PisakScanningGroup",
         "children": ["movie_menu_box"],
+	"sound": "odtwarzacz",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "middle_box_group"
