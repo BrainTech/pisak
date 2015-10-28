@@ -2,6 +2,7 @@
 Sound effects player.
 """
 import subprocess
+import threading
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -70,9 +71,18 @@ class Synthezator(object):
 
     def read(self, timeout=None):
         if timeout is None or timeout <= 0:
-            process = subprocess.Popen(["milena_say", self.text])
-            process.wait()
+            self.process = subprocess.Popen(["milena_say", self.text])
         else:
-            scan_time = sec_converter(timeout)
-            call = 'milena_say "-S trim 0 {}" {}'.format(scan_time, self.text)
+            timeout = sec_converter(timeout)
+            call = 'milena_say "-S trim 0 {}" {}'.format(timeout, self.text)
             self.process = subprocess.Popen([call], shell=True)
+
+
+    def read_and_call(self, func_to_call, timeout=None):
+        def worker():
+            self.read(timeout)
+            self.process.wait()
+            func_to_call()
+            
+        thread = threading.Thread(target=worker, daemon=True)
+        thread.start()

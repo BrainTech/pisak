@@ -208,12 +208,17 @@
         "label": "CZYTAJ",
         "icon-name": "przeczytaj",
         "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/text_to_speech",
-                           "object": "text_box"
-                       }
-                   ]
+	    {
+		"name": "clicked",
+		"handler": "general/kill_group",
+		"object": "speller_menu"
+	    },
+            {
+                "name": "clicked",
+                "handler": "speller/text_to_speech",
+                "object": "text_box"
+            }
+        ]
     },
     {
         "id": "button_6",
