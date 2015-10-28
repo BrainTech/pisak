@@ -765,9 +765,10 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                         self.player.play(selection.sounds[icon_name])
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
-		elif isinstance(selection, pisak.widgets.PhotoTile):
+                elif isinstance(selection, pisak.widgets.PhotoTile):
                     if pisak.config.as_bool('speech_synthesis'):
-                        scan_time = pisak.config['PisakRowStrategy'].as_int('interval') / 1000
+                        strateg_conf = pisak.config['PisakRowStrategy']
+                        scan_time = strateg_conf.as_int('interval') / 1000
                         synthezator = Synthezator(selection.label_text)
                         synthezator.read(scan_time)
                     else:
