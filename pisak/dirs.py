@@ -337,6 +337,7 @@ def get_user_dir(folder):
     """
     return GLib.get_user_special_dir(USER_FOLDERS[folder])
 
+
 def get_sound_path(name):
     """
     Get path to a sound with the given name. First look for a custom sound in
@@ -346,7 +347,7 @@ def get_sound_path(name):
     :param name: name of the sound file, that is a name of the file without an extension. 
     Accepted file format is WAV.
 
-    :returns: path to the icon or None if nothing was found.
+    :returns: path to the sound or None if nothing was found.
     """
     name = name.lower().replace(' ', '_').replace('\n', '_')
     sound_path = find_path(HOME_SOUNDS_DIR, 'sounds', name,

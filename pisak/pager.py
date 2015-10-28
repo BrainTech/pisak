@@ -644,10 +644,12 @@ class _Page(scanning.Group):
     """
     Page widget supplied to pager as its content.
     """
-    def __init__(self, items, spacing, strategy):
+    def __init__(self, items, spacing, strategy, sound, row_sounds):
         super().__init__()
         self.items = []  # flat container for the page content
         self.strategy = strategy
+        self.sound = sound
+        self.row_sounds = row_sounds
         self.layout = Clutter.BoxLayout()
         self.layout.set_spacing(spacing)
         self.layout.set_orientation(Clutter.Orientation.VERTICAL)
@@ -656,9 +658,13 @@ class _Page(scanning.Group):
         self._add_items(items, spacing)
 
     def _add_items(self, items, spacing):
-        for row in items:
+        for index, row in enumerate(items):
             group = scanning.Group()
             group.strategy = scanning.RowStrategy()
+            try:
+                group.sound = self.row_sounds[index]
+            except IndexError:
+                group.sound = str(index + 1) if index + 1 < 10 else 'scan'
             group.strategy.unwind_to = self.strategy.unwind_to or self
             group.strategy.max_cycle_count = self.strategy.max_cycle_count
             group.strategy.interval = self.strategy.interval
@@ -684,7 +690,8 @@ class _Page(scanning.Group):
                 item.adjust()
 
 
-class PagerWidget(layout.Bin, configurator.Configurable):
+class PagerWidget(layout.Bin, properties.PropertyAdapter,
+                  configurator.Configurable):
     """
     Pisak generic pager widget.
     Display elements placed on pages.
@@ -717,6 +724,14 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         "page_ratio_spacing": (
             GObject.TYPE_FLOAT, None, None, 0, 1., 0,
             GObject.PARAM_READWRITE),
+        "sound": (
+            GObject.TYPE_STRING,
+            "", "", "scan",
+            GObject.PARAM_READWRITE),
+        "row-sounds": (
+            GObject.TYPE_STRING, None, None, '',
+            GObject.PARAM_READWRITE
+        ),
         "idle-duration": (
             GObject.TYPE_INT64, "idle duration",
             "duration of one page exposition", 0,
@@ -739,6 +754,8 @@ class PagerWidget(layout.Bin, configurator.Configurable):
         self.new_page_transition = Clutter.PropertyTransition.new("x")
         self.new_page_transition.connect("stopped", self._clean_up)
         self.connect("notify::mapped", lambda *_: self._show_initial_page())
+        self._sound = 'scan'
+        self._row_sounds = ''
         self.idle_duration = 3000
         self.transition_duration = 1000
         self._data_source = None
@@ -761,6 +778,22 @@ class PagerWidget(layout.Bin, configurator.Configurable):
     def page_count(self, value):
         self._page_count = value
         self.emit('limit-declared', value)
+
+    @property
+    def sound(self):
+        return self._sound
+
+    @sound.setter
+    def sound(self, value):
+        self._sound = value
+
+    @property
+    def row_sounds(self):
+        return self._row_sounds
+
+    @row_sounds.setter
+    def row_sounds(self, value):
+        self._row_sounds = [sound.strip() for sound in value.split(',')]
 
     @property
     def page_strategy(self):
@@ -860,7 +893,8 @@ class PagerWidget(layout.Bin, configurator.Configurable):
 
         :return: None.
         """
-        _new_page = _Page(items, self.page_spacing, self.page_strategy)
+        _new_page = _Page(items, self.page_spacing, self.page_strategy,
+                          self.sound, self.row_sounds)
         direction = self._current_direction
         if direction == 0:
             self._current_page = _new_page

@@ -78,6 +78,7 @@
         "type": "PisakScanningGroup",
         "children": ["button_menu_box"],
         "scanning-hilite": true,
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
@@ -233,6 +234,7 @@
         "x-align": "center",
         "rows": 3,
         "columns": 3,
+	"sound": "wybierz_adresata",
         "page-strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "button_menu"
