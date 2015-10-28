@@ -169,6 +169,7 @@
         "id": "main_menu",
         "type": "PisakScanningGroup",
         "children": ["main_menu_box"],
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
@@ -249,6 +250,7 @@
         "id": "message_menu",
         "type": "PisakScanningGroup",
         "children": ["message_menu_box"],
+	"sound": "edycja",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
