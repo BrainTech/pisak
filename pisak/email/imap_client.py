@@ -67,12 +67,12 @@ class IMAPClient(object):
         self._positive_response_code = "OK"
         self._config_obj = config.Config()
         self._setup = self._config_obj.get_account_setup()
-        self._sent_box_name = self._setup["sent_box_name"]
+        self._sent_box_name = self._setup["sent_folder"]
 
     @_imap_errors_handler(IMAPClientError)
     def login(self):
-        server_in = "imap.{}".format(self._setup["server_address"])
-        port_in = self._setup["port_in"]
+        server_in = self._setup["IMAP_server"]
+        port_in = self._setup["IMAP_port"]
         if port_in == "993":
             self._conn = imaplib.IMAP4_SSL(
                 server_in, port=port_in,
@@ -90,7 +90,7 @@ class IMAPClient(object):
 
     @_imap_errors_handler(InvalidCredentials)
     def _do_login(self):
-        self._conn.login(self._setup["user_address"],
+        self._conn.login(self._setup["address"],
                          self._config_obj.decrypt_password(self._setup["password"]))
 
     @_imap_errors_handler(IMAPClientError)

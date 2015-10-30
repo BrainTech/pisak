@@ -8,6 +8,7 @@ from PyQt5 import QtWidgets
 
 from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
 from pisak.blog import config as blog_utils
+from pisak.email.config import Config as email_utils
 
 from panel import Ui_MainWindow
 from loc import MAPS
@@ -63,7 +64,7 @@ class Panel(Ui_MainWindow):
 
         email = config['email']
         self.lineEdit_emailAddress.setText(email['address'])
-        self.lineEdit_emailPassword.setText(email['password'])
+        self.lineEdit_emailPassword.setText(email_utils.decrypt_password(email['password']))
         self.lineEdit_emailSentFolder.setText(email['sent_folder'])
         self.lineEdit_emailIMAPServer.setText(email['IMAP_server'])
         self.lineEdit_emailSMTPServer.setText(email['SMTP_server'])
@@ -307,7 +308,7 @@ class Panel(Ui_MainWindow):
         self._cache['email']['address'] = address
 
     def onLineEdit_emailPasswordTextChanged(self, password):
-        self._cache['email']['password'] = password
+        self._cache['email']['password'] = email_utils.encrypt_password(password)
 
     def onLineEdit_emailSentFolderTextChanged(self, folder):
         self._cache['email']['sent_folder'] = folder

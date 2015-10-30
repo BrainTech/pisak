@@ -31,25 +31,6 @@ def get_blog_config():
             # decrypt_password(config['password'])
 
 
-def save_blog_config(address, user_name, title, password=None):
-    """
-    Save all the blog configurations.
-
-    :param address: URI with the blog address
-    :param user_name: user login
-    :param title: blog title
-    :param password: user password
-    """
-    config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF8')
-    blog_config = config['blog']
-    blog_config["address"] = address
-    blog_config["user_name"] = user_name
-    blog_config["title"] = title
-    if password:
-        blog_config["password"] = encrypt_password(password)
-    config.write()
-
-
 def decrypt_password(encrypted):
     """
     Decrypt the given encrypted password.

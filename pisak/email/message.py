@@ -111,8 +111,8 @@ class SimpleMessage(object):
         msg = self._compose_message()
         config_obj = config.Config()
         setup = config_obj.get_account_setup()
-        server_out = "smtp.{}:{}".format(
-                setup["server_address"], setup["port_out"])
+        server_out = "{}:{}".format(
+                setup["SMTP_server"], setup["SMTP_port"])
         try:
             server = smtplib.SMTP(server_out)
             server.ehlo_or_helo_if_needed()
@@ -122,9 +122,9 @@ class SimpleMessage(object):
             else:
                 _LOG.warning("Server does not support STARTTLS.")
             server.ehlo_or_helo_if_needed()
-            server.login(setup["user_address"],
+            server.login(setup["address"],
                          config_obj.decrypt_password(setup["password"]))
-            server.sendmail(setup["user_address"],
+            server.sendmail(setup["address"],
                             self.recipients, msg.as_string())
             server.quit()
             _LOG.debug("Email was sent successfully.")
