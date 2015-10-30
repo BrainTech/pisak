@@ -1,15 +1,35 @@
-def test():
+def test(config):
     """
     Test provided email settings or server connection.
     """
-    from pisak.email.message import SimpleMessage
-    from pisak.email.imap_client import IMAPClient
+    import time
 
-    ERRORS = {
-        0: 'Brak połączenia z internetem. Sprawdź swoje łącze internetowe i spróbuj jeszcze raz.',
-        1: 'Nieprawidłowe hasło.',
-        2: 'Nieprawidłowy adres email.'
+    from pisak import exceptions
+    from pisak.email.message import SimpleMessage
+    from pisak.email.imap_client import IMAPClient, InvalidCredentialsError
+
+    MESSAGES = {
+        'no_internet': 'Brak połączenia z internetem.\nSprawdź swoje łącze i spróbuj ponownie.',
+        'invalid_credentials': 'Nieprawidłowe dane uwierzytelniające.\n'
+                               'Sprawdź wpisany adres e-mail i hasło i spróbuj ponownie.',
+        'unknown': 'Błąd weryfikacji.\nSprawdź wszystkie wprowadzone dane '
+                   'i spróbuj ponownie.',
+        'success': 'Wszystko OK.\nWprowadzone dane są prawidłowe.'
     }
 
-    dummy_msg = SimpleMessage()
-    dummy_client = IMAPClient()
+    try:
+        dummy_client = IMAPClient(config)
+        dummy_client.login()
+        dummy_client.logout()
+
+        dummy_msg = SimpleMessage()
+        dummy_msg.test(config)
+    except exceptions.NoInternetError:
+        ret = False, MESSAGES['no_internet']
+    except InvalidCredentialsError:
+        ret = False, MESSAGES['invalid_credentials']
+    except Exception:
+        ret = False, MESSAGES['unknown']
+    else:
+        ret = True, MESSAGES['success']
+    return ret

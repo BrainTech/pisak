@@ -27,7 +27,7 @@ class MailboxNotFoundError(IMAPClientError):
     ...
 
 
-class InvalidCredentials(IMAPClientError):
+class InvalidCredentialsError(IMAPClientError):
     ...
 
 
@@ -62,11 +62,10 @@ class IMAPClient(object):
     Class representing an email account connection.
     Used access protocol - IMAP.
     """
-    def __init__(self):
+    def __init__(self, custom_config=None):
         self._conn = None
         self._positive_response_code = "OK"
-        self._config_obj = config.Config()
-        self._setup = self._config_obj.get_account_setup()
+        self._setup = custom_config or config.Config().get_account_setup()
         self._sent_box_name = self._setup["sent_folder"]
 
     @_imap_errors_handler(IMAPClientError)
@@ -88,10 +87,10 @@ class IMAPClient(object):
             self._conn = imaplib.IMAP4(server_in, port=port_in)
         self._do_login()
 
-    @_imap_errors_handler(InvalidCredentials)
+    @_imap_errors_handler(InvalidCredentialsError)
     def _do_login(self):
         self._conn.login(self._setup["address"],
-                         self._config_obj.decrypt_password(self._setup["password"]))
+                         self._setup["password"])
 
     @_imap_errors_handler(IMAPClientError)
     def logout(self):

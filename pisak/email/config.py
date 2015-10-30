@@ -66,6 +66,7 @@ class Config:
         except AssertionError as exc:
             raise EmailConfigError(exc) from exc
         ret_setup = self._config.copy()
+        ret_setup['password'] = self.decrypt_password(ret_setup['password'])
         if "sent_folder" not in ret_setup or not ret_setup["sent_folder"]:
             server = ret_setup['address'].split('@')[-1]
             ret_setup["sent_folder"] = \
