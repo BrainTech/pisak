@@ -7,7 +7,7 @@ from gi.repository import Clutter, GObject
 
 import pisak
 from pisak import logger, exceptions, properties, configurator, dirs
-
+from pisak.sound_effects import Synthezator
 
 _LOG = logger.get_logger(__name__)
 
@@ -765,6 +765,14 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                         self.player.play(selection.sounds[icon_name])
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
+                elif isinstance(selection, pisak.widgets.PhotoTile):
+                    if pisak.config.as_bool('speech_synthesis'):
+                        strateg_conf = pisak.config['PisakRowStrategy']
+                        scan_time = strateg_conf.as_int('interval') / 1000
+                        synthezator = Synthezator(selection.label_text)
+                        synthezator.read(scan_time)
+                    else:
+                        self.play_scanning_sound()
                 else:
                     self.play_scanning_sound()
             else:
