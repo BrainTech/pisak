@@ -22,7 +22,7 @@ def get_blog_config():
     :returns: tuple consisting of blog address, user name and user password
     """
     config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF8')['blog']
-    return {"url": config["address"],
+    return {"address": config["address"],
             "user_name": config["user_name"],
             "password": decrypt_password(config["password"]) or PASSWORD,
             "title": config["title"].upper()}

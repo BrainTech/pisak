@@ -60,7 +60,7 @@ class Blog(object):
             raise exceptions.BlogMethodError(exc) from exc
 
     def _login(self):
-        address = (self.address or self.config_dict["url"]) + self.API
+        address = (self.address or self.config_dict["address"]) + self.API
         # authentication errors are never raised from here; socket related errors
         # can be raised on connection troubles; ServerConnectionError can be
         # raised by wordpress_xmlrpc on xmlrpc client ProtocolError but actually, on invalid

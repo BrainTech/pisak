@@ -291,11 +291,15 @@ class Panel(Ui_MainWindow):
     def onLineEdit_blogTitleTextChanged(self, title):
         self._cache['blog']['title'] = title
 
+    def _test_feedback(self, app, conf, feedback_label, utils):
+        conf['password'] = utils.decrypt_password(conf['password'])
+        resp, msg = app.test(conf)
+        feedback_label.setText(msg)
+        feedback_label.setStyleSheet('color: {}'.format('green' if resp else 'red'))
+
     def onPushButton_blogTestClicked(self):
-        conf = self._cache['blog']
-        conf['password'] = blog_utils.decrypt_password(conf['password'])
-        res, msg = blog_app.test(conf)
-        self.label_blogTest.setText(msg)
+        self._test_feedback(
+            blog_app, self._cache['blog'], self.label_blogTest, blog_utils)
 
     def onLineEdit_followedBlogTextChanged(self, line_edit, blog):
         self._cache['followed_blogs'][line_edit.alias] = blog
@@ -306,10 +310,8 @@ class Panel(Ui_MainWindow):
         line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
 
     def onPushButton_emailTestClicked(self):
-        conf = self._cache['email']
-        conf['password'] = email_utils.decrypt_password(conf['password'])
-        res, msg = email_app.test(conf)
-        self.label_emailTest.setText(msg)
+        self._test_feedback(
+            email_app, self._cache['email'], self.label_emailTest, email_utils)
 
     def onLineEdit_emailAddressTextChanged(self, address):
         self._cache['email']['address'] = address

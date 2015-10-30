@@ -98,6 +98,7 @@ class IMAPClient(object):
         Logout from the account.
         """
         if self._conn is not None:
+            self._conn.select()
             self._conn.close()
             self._conn.logout()
         else:

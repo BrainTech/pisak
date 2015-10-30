@@ -7,8 +7,8 @@ def test(config):
 
     MESSAGES = {
         'no_internet': 'Brak połączenia z internetem.\nSprawdź swoje łącze i spróbuj ponownie.',
-        'invalid_credentials': 'Nieprawidłowe dane uwierzytelniające.\n'
-                               'Sprawdź wpisaną nazwę użytkownika i hasło i spróbuj ponownie.',
+        'invalid_credentials': 'Nieprawidłowa nazwa użytkownika lub hasło.\n'
+                               'Sprawdź wprowadzone dane i spróbuj ponownie.',
         'unknown': 'Błąd weryfikacji.\nSprawdź wszystkie wprowadzone dane '
                    'i spróbuj ponownie.',
         'no_such_blog': 'Blog nie istnieje. Jeśli chcesz założyć swojego bloga '
@@ -22,7 +22,7 @@ def test(config):
         ret = False, MESSAGES['no_internet']
     except exceptions.BlogAuthenticationError:
         ret = False, MESSAGES['invalid_credentials']
-    except Exception as exc:
+    except Exception:
         ret = False, MESSAGES['unknown']
     else:
         ret = True, MESSAGES['success']
