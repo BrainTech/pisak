@@ -86,6 +86,7 @@
         "type": "PisakScanningGroup",
         "children": ["speller_menu_box"],
         "scanning-hilite": true,
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy",
@@ -299,6 +300,7 @@
         "type": "PisakScanningGroup",
         "children": ["domain_panel_box"],
         "scanning-hilite": true,
+	"sound": "domena",
         "strategy": {
             "id": "domain_group_strategy",
             "type": "PisakRowStrategy",
@@ -411,6 +413,7 @@
         "type": "PisakScanningGroup",
         "children": ["main_panel_box"],
         "scanning-hilite": true,
+	"sound": "litery",
         "strategy": {
             "id": "main_panel_group_strategy",
             "type": "PisakRowStrategy",
@@ -459,6 +462,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_menu_box"],
         "scanning-hilite": true,
+	"sound": "1",
         "strategy": {
             "id": "keyboard_menu_group_strategy",
             "type": "PisakRowStrategy",
@@ -621,6 +625,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_1_box"],
         "scanning-hilite": true,
+	"sound": "2",
         "strategy": {
             "id": "keyboard_row_1_group_strategy",
             "type": "PisakRowStrategy",
@@ -733,6 +738,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_2_box"],
         "scanning-hilite": true,
+	"sound": "3",
         "strategy": {
             "id": "keyboard_row_2_group_strategy",
             "type": "PisakRowStrategy",
@@ -852,6 +858,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_3_box"],
         "scanning-hilite": true,
+	"sound": "4",
         "strategy": {
             "id": "keyboard_row_3_group_strategy",
             "type": "PisakRowStrategy",
@@ -987,6 +994,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_4_box"],
         "scanning-hilite": true,
+	"sound": "5",
         "strategy": {
             "id": "keyboard_row_4_group_strategy",
             "type": "PisakRowStrategy",
@@ -1098,6 +1106,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_5_box"],
         "scanning-hilite": true,
+	"sound": "6",
         "strategy": {
             "id": "keyboard_row_5_group_strategy",
             "type": "PisakRowStrategy",

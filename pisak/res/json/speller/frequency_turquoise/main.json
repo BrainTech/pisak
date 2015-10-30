@@ -101,7 +101,8 @@
         "type": "PisakMenuHeader",
         "color": "rgba(75, 149, 148, 255)",
         "name": "funkcjenapis",
-        "height": 65.28
+        "ratio-width": 0.1,
+        "ratio-height": 0.06
     },
     {
         "id": "speller_menu_box",
@@ -120,7 +121,7 @@
         "id": "button_1",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": "KLAWIATURA",
+        "text": "LITERY",
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
@@ -205,15 +206,20 @@
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
         "icon-size": 50,
-        "label": "CZYTAJ",
+        "label": "PRZECZYTAJ",
         "icon-name": "przeczytaj",
         "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/text_to_speech",
-                           "object": "text_box"
-                       }
-                   ]
+	    {
+		"name": "clicked",
+		"handler": "general/kill_group",
+		"object": "speller_menu"
+	    },
+            {
+                "name": "clicked",
+                "handler": "speller/text_to_speech",
+                "object": "text_box"
+            }
+        ]
     },
     {
         "id": "button_6",
@@ -259,7 +265,7 @@
         "id": "button_8",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": "NOWY DOKUMENT",
+        "text": "NOWY",
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
@@ -278,7 +284,7 @@
         "id": "button_exit",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": "PANEL STARTOWY",
+        "text": "WYJŚCIE",
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
@@ -472,7 +478,7 @@
         "id": "keyboard_menu_button_1",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -491,7 +497,7 @@
         "id": "keyboard_menu_button_2",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -509,7 +515,7 @@
         "id": "keyboard_menu_button_3",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -527,7 +533,7 @@
         "id": "keyboard_menu_button_4",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -544,8 +550,7 @@
         "id": "keyboard_menu_button_5",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
-        "alternative-text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -563,7 +568,7 @@
         "id": "keyboard_menu_button_6",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -581,7 +586,7 @@
         "id": "keyboard_menu_button_7",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -599,7 +604,7 @@
 	"id": "keyboard_menu_button_8",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -626,7 +631,7 @@
         "id": "keyboard_menu_button_10",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
@@ -999,7 +1004,7 @@
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
-        "icon-name": "nav_left",
+        "icon-name": "nav_left2",
         "signals": [
                        {
                            "name": "clicked",
@@ -1012,11 +1017,11 @@
         "id": "key_3_9",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
-        "text": " ",
+        "label": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
         "icon-size": 30,
-        "icon-name": "nav_right",
+        "icon-name": "nav_right2",
         "signals": [
                        {
                            "name": "clicked",

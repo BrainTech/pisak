@@ -1067,8 +1067,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
         self.box.add_child(self.label)
 
     def _play_selection_sound(self, source):
-        if pisak.app.window.input_group.middleware != "scanning":
-            pisak.app.play_sound_effect('select')
+        pisak.app.play_sound_effect('selection')
 
     def _toggle(self):
         for element in self.get_children():
@@ -1702,7 +1701,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
 
     @icon_name.setter
     def icon_name(self, value):
-        self._icon_name = str(value)
+        self._icon_name = value
         self._assign_sound(self._icon_name)
         self.current_icon_name = self._icon_name
 

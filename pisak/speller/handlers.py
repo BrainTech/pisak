@@ -1,7 +1,8 @@
 import subprocess
 import os
 
-from pisak import signals
+import pisak
+from pisak import signals, sound_effects
 from pisak.speller import widgets, documents_manager
 
 
@@ -181,7 +182,11 @@ def text_to_speech(text_box):
     """
     text = text_box.get_text()
     if text:
-        subprocess.Popen(["milena_say", text])
+        synth = sound_effects.Synthezator(text)
+        if pisak.app.window.input_group.middleware == "scanning":
+            synth.read_and_call(pisak.app.window.pending_group.start_cycle)
+        else:
+            synth.read()
 
 
 @signals.registered_handler("speller/backspace")
