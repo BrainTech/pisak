@@ -17,6 +17,10 @@ class CursorGroup(layout.Bin, configurator.Configurable):
     """
     __gtype_name__ = "PisakCursorGroup"
 
+    __gsignals__ = {
+        'cursor-moved': (GObject.SIGNAL_RUN_FIRST, None, ())
+    }
+
     def __init__(self):
         super().__init__()
         self.connect("notify::mapped", self.init_content)
@@ -58,6 +62,7 @@ class CursorGroup(layout.Bin, configurator.Configurable):
         self.cursor.set_y(
             coords[2]-self.label.get_children()[1].get_adjustment().get_value() +
             y_offset)
+        self.emit('cursor-moved')
 
 class Cursor(Clutter.Actor):
     """
@@ -226,16 +231,22 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text = Mx.Label()
         self.margin = Clutter.Margin.new()
         self.margin.top = 20
+        self._lines = 0
         self.margin.left = self.margin.right = 10
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
-        self.connect("notify::mapped", self._check_to_resize)
-        self.clutter_text.connect("text-changed", self._check_to_resize)
+        self.connect("notify::mapped", self._init_setup)
         self.clutter_text.connect("cursor-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
 
+    def _init_setup(self, *args):
+        self.parent = self.get_parent()
+        if isinstance(self.parent, CursorGroup):
+            self.parent.connect("cursor-moved", self._check_to_resize)
+        self._check_to_resize()
+        
     def _add_operation(self, operation):
         if len(self.history) == 0 or not self.history[-1].compose(operation):
             self.history.append(operation)
@@ -247,13 +258,13 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.clutter_text.set_line_wrap_mode(Pango.WrapMode.CHAR)
 
     def _check_to_resize(self, *args):
+        cursor_size = self.clutter_text.get_cursor_size() + 9#disturbing const
         pango_layout = self.clutter_text.get_layout()
-        pango_height = pango_layout.get_size()[1] / Pango.SCALE
         pango_lines = pango_layout.get_lines()
-        add_line = sum((int(line.index_to_x(line.length, 1) / Pango.SCALE / self.get_width()) for line in pango_lines))
-        add_line += 2
-        cursor_size = self.clutter_text.get_cursor_size() + 2
-        self.text.set_height(pango_height + add_line*cursor_size)
+        lines_quantity = len(pango_lines)
+        if self._lines != lines_quantity:
+            self._lines = lines_quantity
+            self.text.set_height((self._lines+2)*cursor_size)
 
     def _scroll_to_view(self, *args):
         pos = self.get_cursor_position()
@@ -523,6 +534,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         Move to new line
         """
         self.type_text("\n")
+        self.clutter_text.emit("cursor-changed")
 
     @property
     def ratio_width(self):
