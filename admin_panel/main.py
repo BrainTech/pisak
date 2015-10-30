@@ -306,7 +306,7 @@ class Panel(Ui_MainWindow):
         line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
 
     def onPushButton_emailTestClicked(self):
-        res, msg = email_app.test(self._cache['email'])
+        conf = self._cache['email']
         conf['password'] = email_utils.decrypt_password(conf['password'])
         res, msg = email_app.test(conf)
         self.label_emailTest.setText(msg)
