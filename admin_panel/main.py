@@ -9,6 +9,7 @@ from PyQt5 import QtWidgets
 from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
 from pisak.blog import config as blog_utils
 from pisak.email.config import Config as email_utils
+from pisak import email as email_app, blog as blog_app
 
 from panel import Ui_MainWindow
 from loc import MAPS
@@ -291,7 +292,10 @@ class Panel(Ui_MainWindow):
         self._cache['blog']['title'] = title
 
     def onPushButton_blogTestClicked(self):
-        pass
+        conf = self._cache['blog']
+        conf['password'] = blog_utils.decrypt_password(conf['password'])
+        res, msg = blog_app.test(conf)
+        self.label_blogTest.setText(msg)
 
     def onLineEdit_followedBlogTextChanged(self, line_edit, blog):
         self._cache['followed_blogs'][line_edit.alias] = blog
@@ -302,7 +306,10 @@ class Panel(Ui_MainWindow):
         line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
 
     def onPushButton_emailTestClicked(self):
-        pass
+        res, msg = email_app.test(self._cache['email'])
+        conf['password'] = email_utils.decrypt_password(conf['password'])
+        res, msg = email_app.test(conf)
+        self.label_emailTest.setText(msg)
 
     def onLineEdit_emailAddressTextChanged(self, address):
         self._cache['email']['address'] = address
