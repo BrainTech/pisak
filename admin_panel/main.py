@@ -7,6 +7,7 @@ import configobj
 from PyQt5 import QtWidgets
 
 from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
+from pisak.blog import config as blog_utils
 
 from panel import Ui_MainWindow
 from loc import MAPS
@@ -56,7 +57,7 @@ class Panel(Ui_MainWindow):
 
         blog = config['blog']
         self.lineEdit_blogUsername.setText(blog['user_name'])
-        self.lineEdit_blogPassword.setText(blog['password'])
+        self.lineEdit_blogPassword.setText(blog_utils.decrypt_password(blog['password']))
         self.lineEdit_blogURL.setText(blog['address'])
         self.lineEdit_blogTitle.setText(blog['title'])
 
@@ -167,7 +168,6 @@ class Panel(Ui_MainWindow):
         self.lineEdit_emailSentFolder.textChanged.connect(self.onLineEdit_emailSentFolderTextChanged)
         self.lineEdit_emailPassword.textChanged.connect(self.onLineEdit_emailPasswordTextChanged)
         self.lineEdit_emailIMAPServer.textChanged.connect(self.onLineEdit_emailIMAPServerTextChanged)
-        self.lineEdit_emailPassword.textChanged.connect(self.onLineEdit_emailPasswordTextChanged)
         self.lineEdit_emailSMTPServer.textChanged.connect(self.onLineEdit_emailSMTPServerTextChanged)
         self.comboBox_emailPortIMAP.currentTextChanged.connect(self.onComboBox_emailPortIMAPCurrentTextChanged)
         self.comboBox_emailPortSMTP.currentTextChanged.connect(self.onComboBox_emailPortSMTPCurrentTextChanged)
@@ -281,7 +281,7 @@ class Panel(Ui_MainWindow):
         self._cache['blog']['user_name'] = username
 
     def onLineEdit_blogPasswordTextChanged(self, password):
-        self._cache['blog']['password'] = password
+        self._cache['blog']['password'] = blog_utils.encrypt_password(password)
 
     def onLineEdit_blogURLTextChanged(self, url):
         self._cache['blog']['address'] = url

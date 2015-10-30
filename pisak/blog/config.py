@@ -12,20 +12,23 @@ Runtime cache of the user password if chosen not to be stored permanently.
 PASSWORD = None
 
 
+CONFIG_PATH = dirs.HOME_MAIN_CONFIG
+
+
 def get_blog_config():
     """
     Get all the blog configurations.
 
     :returns: tuple consisting of blog address, user name and user password
     """
-    config = configobj.ConfigObj(dirs.HOME_BLOG_CONFIG, encoding='UTF8')
-    return {"url": config.get("address"),
-            "user_name": config.get("user_name"),
-            "password": config.get("password") or PASSWORD,
-            "title": config.get("title").upper()}
+    config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF8')['blog']
+    return {"url": config["address"],
+            "user_name": config["user_name"],
+            "password": decrypt_password(config["password"]) or PASSWORD,
+            "title": config["title"].upper()}
             # include the below line into the blog config dict in
             # order to get use of the password encryption mode: 
-            #_decrypt_password(config.get("password"))
+            # decrypt_password(config['password'])
 
 
 def save_blog_config(address, user_name, title, password=None):
@@ -37,16 +40,17 @@ def save_blog_config(address, user_name, title, password=None):
     :param title: blog title
     :param password: user password
     """
-    config = configobj.ConfigObj(dirs.HOME_BLOG_CONFIG, encoding='UTF8')
-    config["address"] = address
-    config["user_name"] = user_name
-    config["title"] = title
+    config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF8')
+    blog_config = config['blog']
+    blog_config["address"] = address
+    blog_config["user_name"] = user_name
+    blog_config["title"] = title
     if password:
-        config["password"] = _encrypt_password(password)
+        blog_config["password"] = encrypt_password(password)
     config.write()
 
 
-def _decrypt_password(encrypted):
+def decrypt_password(encrypted):
     """
     Decrypt the given encrypted password.
     
@@ -58,7 +62,7 @@ def _decrypt_password(encrypted):
         return "".join([chr(ord(sign)-1) for sign in list(encrypted)[::-1]])
 
 
-def _encrypt_password(password):
+def encrypt_password(password):
     """
     Not very safe solution. Only for people who really are unable to remember
     their password. Anyone who gets here will be able to decrypt
@@ -75,19 +79,5 @@ def get_followed_blogs():
 
     :returns: list with all followed blogs
     """
-    return configobj.ConfigObj(dirs.HOME_FOLLOWED_BLOGS,
-                               encoding='UTF8').get("all") or []
-
-
-def follow_blog(blog_address):
-    """
-    Add blog to the list of followed blogs.
-
-    :param blog_address: URL to the blog
-    """
-    store = configobj.ConfigObj(dirs.HOME_FOLLOWED_BLOGS, encoding='UTF8')
-    if store.get("all"):
-        store["all"].append(blog_address)
-    else:
-        store["all"] = [blog_address]
-    store.write()
+    return list(configobj.ConfigObj(CONFIG_PATH,
+            encoding='UTF8')['followed_blogs'].values())
