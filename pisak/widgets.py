@@ -18,13 +18,53 @@ from pisak.res import colors
 _LOG = logger.get_logger(__name__)
 
 
-class Date(Mx.Label):
+class Label(Mx.Label):
+    """
+    PISAK label.
+    """
+
+    __gtype_name__ = "PisakLabel"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._upper_case = pisak.config.as_bool('upper_case')
+        self._adapt_clutter_text()
+
+    def _adapt_clutter_text(self):
+        clutter_text = self.get_clutter_text()
+        generic_set_text = clutter_text.set_text
+        generic_insert_text = clutter_text.insert_text
+
+        def custom_set_text(text):
+            """
+            Override Clutter.Text generic method for any text preprocessing.
+            """
+            generic_set_text(text.upper() if self._upper_case else text)
+
+        def custom_insert_text(text, pos):
+            """
+            Override Clutter.Text generic method for any text preprocessing.
+            """
+            generic_insert_text(text.upper() if self._upper_case else text, pos)
+
+        clutter_text.set_text = custom_set_text
+        clutter_text.insert_text = custom_insert_text
+
+    def set_text(self, text):
+        """
+        Override Mx.Label generic method for any text preprocessing.
+        """
+        super().set_text(text.upper() if self._upper_case else text)
+
+
+class Date(Label):
     """
     Display today date.
     """
     __gtype_name__ = "PisakDate"
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         today = "DATA:   " + time.strftime("%d-%m-%Y")
         self.set_text(today)
 
@@ -668,7 +708,7 @@ class Clock(layout.Bin, Timer, configurator.Configurable, style.StylableContaine
             value.connect("progressed", self._supply_value)
 
     def _init_display(self):
-        self.display = Mx.Label()
+        self.display = Label()
         self.display.set_style_class("PisakClock")
         self.add_child(self.display)
         self._update_display()
@@ -1062,7 +1102,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
         self.preview = Mx.Image()
         self.preview.set_allow_upscale(True)
         self.box.add_child(self.preview)
-        self.label = Mx.Label()
+        self.label = Label()
         self.label.set_style_class("PisakPhotoTileLabel")
         self.box.add_child(self.label)
 
@@ -1193,7 +1233,7 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
     __gtype_name__ = "PisakProgressBar"
     __gproperties__ = {
         "label": (
-            Mx.Label.__gtype__,
+            Label.__gtype__,
             "", "", GObject.PARAM_READWRITE),
         "progress": (
             GObject.TYPE_FLOAT, None, None, 0, 1., 0,
@@ -1540,9 +1580,16 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self.icon_name = None
         self.disabled = False
         self.disabled_when = None
+        self._upper_case = pisak.config.as_bool('upper_case')
         self.content_offset = 26
         self._connect_signals()
         self.prepare_style()
+
+    def set_label(self, label):
+        """
+        Override Clutter.Button generic method for any label preprocessing.
+        """
+        super().set_label(label.upper() if self._upper_case else label)
 
     def _prepare_label(self):
         self.clutter_text = [child for child in

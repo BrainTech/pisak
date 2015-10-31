@@ -74,12 +74,12 @@ class LoadingStage(Clutter.Stage):
 
     def _init_content(self):
         self.set_layout_manager(Clutter.BinLayout())
-        json = dirs.get_json_path('loading_screen', '_'.join(['default', pisak.config['skin']]))
+        json = dirs.get_json_path('loading_screen', '_'.join(
+            ['default', pisak.config['skin']]))
         script = Clutter.Script()
         script.load_from_file(json)
         main = script.get_object('main')
         self.add_actor(main)
-
 
 class AppManager(Clutter.Actor,
                  configurator.Configurable,
