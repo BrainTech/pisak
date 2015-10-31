@@ -125,8 +125,8 @@ class Tile(widgets.PhotoTile):
         self.box.add_child(self.label)
         self.label.orientation = Clutter.Orientation.VERTICAL
         self.label.spacing = 20
-        self.title = Mx.Label()
-        self.date = Mx.Label()
+        self.title = widgets.Label()
+        self.date = widgets.Label()
         self.title.set_margin_right(margin)
         self.title.set_margin_left(margin)
         self.date.set_margin_right(margin)
@@ -167,6 +167,8 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
             GObject.TYPE_FLOAT, None, None,
             0, 1., 0, GObject.PARAM_READWRITE)
     }
+
+    BODY_UPPERCASE = 'body { text-transform: uppercase; }'
     
     def __init__(self):
         super().__init__()
@@ -184,6 +186,7 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
         self.view_actor = GtkClutter.Actor.new_with_contents(self.container)
         self.add_child(self.view_actor)
         self.view.connect("document-load-finished", self._reload)
+        self._upper_case = pisak.config.as_bool('upper_case')
 
     @property
     def ratio_width(self):
@@ -208,6 +211,8 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
         self.view_actor.set_height(converted_value)
 
     def load_html(self, html, ref_url="about::blank"):
+        if self._upper_case:
+            self.css += self.BODY_UPPERCASE
         html = '<head><style>' + self.css + '</style></head><body>' + html + '</body>'
         self.view.load_string(html, "text/html", "utf-8", ref_url)
 

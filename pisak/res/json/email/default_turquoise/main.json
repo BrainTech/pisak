@@ -46,7 +46,7 @@
     },
     {
         "id": "title",
-        "type": "MxLabel",
+        "type": "PisakLabel",
 		"style-class": "PisakEmailTitle",
 	    "x-align": "end",
 	    "x-expand": true,

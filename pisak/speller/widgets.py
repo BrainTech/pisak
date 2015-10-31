@@ -60,6 +60,7 @@ class CursorGroup(layout.Bin, configurator.Configurable):
             coords[2]-self.label.get_children()[1].get_adjustment().get_value() +
             y_offset)
 
+
 class Cursor(Clutter.Actor):
     """
     Widget displaying text cursor drawn on ClutterCanvas.
@@ -81,6 +82,7 @@ class Cursor(Clutter.Actor):
         context.rectangle(0, 0, width, height)
         context.fill()
         return True
+
 
 class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
            style.StylableContainer):
@@ -224,7 +226,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.box = Mx.BoxLayout()
         self.box.set_orientation(Mx.Orientation.VERTICAL)
         self.box.set_scroll_to_focused(True)
-        self.text = Mx.Label()
+        self.text = widgets.Label()
         self.margin = Clutter.Margin.new()
         self.margin.top = 20
         self.margin.left = self.margin.right = 10

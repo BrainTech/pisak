@@ -39,7 +39,7 @@
     },
 	{
 		"id": "message",
-		"type": "MxLabel",
+		"type": "PisakLabel",
 		"style-class": "PisakPopUp"
 	}
 ]

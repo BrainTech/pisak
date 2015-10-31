@@ -34,7 +34,7 @@
     },
     {
         "id": "about",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakBlogAboutMe",
         "x-align": "start",
 	"line-wrap": true
