@@ -5,6 +5,8 @@ import os
 
 import configobj
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QRegularExpression
+from PyQt5.QtGui import QRegularExpressionValidator
 
 from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
 from pisak.blog import config as blog_utils
@@ -122,6 +124,11 @@ class Panel(Ui_MainWindow):
         self.mainWindow = MainWindow
         self._connect_all_signals()
         self._fill_in_forms()
+
+        digit_regexp = QRegularExpression('[0-9]*')
+        digit_validator = QRegularExpressionValidator(digit_regexp)
+        self.comboBox_emailPortIMAP.setValidator(digit_validator)
+        self.comboBox_emailPortSMTP.setValidator(digit_validator)
 
     def _connect_all_signals(self):
         self.checkBox_blog.toggled.connect(self.onCheckBox_blogToggled)
