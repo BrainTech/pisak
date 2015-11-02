@@ -11,6 +11,11 @@ from collections import namedtuple
 
 from gi.repository import Gdk
 
+from pisak import logger
+
+
+_LOG = logger.get_logger(__name__)
+
 
 ScreenSizeMM = namedtuple('ScreenSizeMM', 'width height')
 ScreenSizePix = namedtuple('ScreenSizePix', 'width height')
@@ -21,6 +26,7 @@ size_pix = None
 size_mm = None
 SCREEN_DPMM = None
 SCREEN_DPI = None
+
 
 def _initialize():
     global size_pix, size_mm, SCREEN_DPMM, SCREEN_DPI, _initialized
@@ -47,18 +53,18 @@ def _initialize():
                             size_mm = ScreenSizeMM(int(temp[0]), int(temp[1]))
                             break
             except OSError:
-                print('No xrandr, falling back to Gdk for screen size in mm.')
+                _LOG.debug('No xrandr, falling back to Gdk for screen size in mm.')
                 size_mm = ScreenSizeMM(
                     Gdk.Screen.width_mm(),
                     Gdk.Screen.height_mm())
         else:
-            print('Apparently not on linux, using Gdk.Screen for mm size.')
+            _LOG.debug('Apparently not on linux, using Gdk.Screen for mm size.')
             size_mm = ScreenSizeMM(Gdk.Screen.width_mm(), Gdk.Screen.height_mm())
 
         try:
             SCREEN_DPMM = size_pix.width / size_mm.width
         except ZeroDivisionError:
-            print(
+            _LOG.debug(
                 'Issue with xrandr causes screen size to be 0mm, using Gdk.Screen of mm size.')
             size_mm = ScreenSizeMM(Gdk.Screen.width_mm(), Gdk.Screen.height_mm())
             SCREEN_DPMM = size_pix.width / size_mm.width
@@ -128,4 +134,4 @@ if __name__ == '__main__':
         size_pix.width,
         size_pix.height,
         round(SCREEN_DPI))
-    print(msg)
+    _LOG.debug(msg)
