@@ -42,9 +42,10 @@ class Blog(object):
 
     API = "/xmlrpc.php"
 
-    def __init__(self, blog_address=None):
+    def __init__(self, blog_address=None, custom_config=None):
         super().__init__()
         self.address = blog_address
+        self.config_dict = custom_config or config.get_blog_config()
         self._iface = None
         self._login()
 
@@ -59,16 +60,15 @@ class Blog(object):
             raise exceptions.BlogMethodError(exc) from exc
 
     def _login(self):
-        config_dict = config.get_blog_config()
-        address = (self.address or config_dict["url"]) + self.API
+        address = (self.address or self.config_dict["url"]) + self.API
         # authentication errors are never raised from here; socket related errors
         # can be raised on connection troubles; ServerConnectionError can be
         # raised by wordpress_xmlrpc on xmlrpc client ProtocolError but actually, on invalid
         # XML-RPC protocol, the OSError is raised by xmlrpc instead of the above
         try:
             self._iface = wordpress_xmlrpc.Client(address,
-                                                  config_dict["user_name"],
-                                                  config_dict["password"])
+                                                  self.config_dict["user_name"],
+                                                  self.config_dict["password"])
         except OSError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except Exception as exc:
@@ -94,13 +94,13 @@ class _OwnBlog(Blog):
     USER_PHOTO_PATH = os.path.join(dirs.get_user_dir("pictures"),
                                    "blog_user_photo.jpg")
 
-    def __init__(self):
+    def __init__(self, custom_config=None):
         self.max_posts = 1000
         self.max_comments = 1000
         self.about_me_page_title = "O mnie"  # displayed title of the "About me" page
         self.pending_post = None  # post instance being edited at a moment
         self.post_images = []  # list to store images to be attached to the current post
-        super().__init__()
+        super().__init__(custom_config=custom_config)
         if not self.get_about_me_page():
             self._create_about_me_page()
         self._cache_user_photo()

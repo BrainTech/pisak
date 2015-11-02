@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'panel.ui'
 #
-# Created: Mon Oct 26 09:17:43 2015
+# Created: Fri Oct 30 18:00:09 2015
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -354,10 +354,22 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_3)
         self.horizontalLayout_11.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.label_8 = QtWidgets.QLabel(self.horizontalLayoutWidget_3)
         self.label_8.setWordWrap(True)
         self.label_8.setObjectName("label_8")
-        self.horizontalLayout_11.addWidget(self.label_8)
+        self.verticalLayout_5.addWidget(self.label_8)
+        self.line_9 = QtWidgets.QFrame(self.horizontalLayoutWidget_3)
+        self.line_9.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_9.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_9.setObjectName("line_9")
+        self.verticalLayout_5.addWidget(self.line_9)
+        self.label_blogTest = QtWidgets.QLabel(self.horizontalLayoutWidget_3)
+        self.label_blogTest.setWordWrap(True)
+        self.label_blogTest.setObjectName("label_blogTest")
+        self.verticalLayout_5.addWidget(self.label_blogTest)
+        self.horizontalLayout_11.addLayout(self.verticalLayout_5)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_11.addItem(spacerItem3)
         self.line_7 = QtWidgets.QFrame(self.horizontalLayoutWidget_3)
@@ -443,10 +455,23 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.label_7 = QtWidgets.QLabel(self.horizontalLayoutWidget_2)
         self.label_7.setWordWrap(True)
         self.label_7.setObjectName("label_7")
-        self.horizontalLayout_10.addWidget(self.label_7)
+        self.verticalLayout_7.addWidget(self.label_7)
+        self.line_10 = QtWidgets.QFrame(self.horizontalLayoutWidget_2)
+        self.line_10.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_10.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_10.setObjectName("line_10")
+        self.verticalLayout_7.addWidget(self.line_10)
+        self.label_emailTest = QtWidgets.QLabel(self.horizontalLayoutWidget_2)
+        self.label_emailTest.setText("")
+        self.label_emailTest.setWordWrap(True)
+        self.label_emailTest.setObjectName("label_emailTest")
+        self.verticalLayout_7.addWidget(self.label_emailTest)
+        self.horizontalLayout_10.addLayout(self.verticalLayout_7)
         spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_10.addItem(spacerItem6)
         self.line_6 = QtWidgets.QFrame(self.horizontalLayoutWidget_2)
@@ -563,7 +588,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(4)
         self.comboBox_skin.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -634,6 +659,7 @@ class Ui_MainWindow(object):
         self.label_scanSound.setText(_translate("MainWindow", "Dźwięk skanowania"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Skanowanie"))
         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p>Podaj ustawienia swojego bloga, a następnie wciśnij przycisk &quot;Testuj połączenie&quot; aby sprawdzić poprawność wpisanych danych i stan połączenia z serwerem.</p><p>Jeśli nie masz jeszcze swojego bloga, a chciałbyś go założyć, skontaktuj się z obsługą techniczną projektu PISAK.</p><p>Możesz także podać adresy inych blogów, które chcesz śledzić i przeglądać w ramach aplikacji.</p></body></html>"))
+        self.label_blogTest.setText(_translate("MainWindow", "<html><head/><body><p><br/></p></body></html>"))
         self.label_blogUsername.setText(_translate("MainWindow", "Nazwa użytkownika"))
         self.label_blogPassword.setText(_translate("MainWindow", "Hasło"))
         self.label_blogURL.setText(_translate("MainWindow", "Adres URL bloga"))

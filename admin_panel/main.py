@@ -5,8 +5,13 @@ import os
 
 import configobj
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QRegularExpression
+from PyQt5.QtGui import QRegularExpressionValidator
 
 from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
+from pisak.blog import config as blog_utils
+from pisak.email.config import Config as email_utils
+from pisak import email as email_app, blog as blog_app
 
 from panel import Ui_MainWindow
 from loc import MAPS
@@ -56,13 +61,13 @@ class Panel(Ui_MainWindow):
 
         blog = config['blog']
         self.lineEdit_blogUsername.setText(blog['user_name'])
-        self.lineEdit_blogPassword.setText(blog['password'])
+        self.lineEdit_blogPassword.setText(blog_utils.decrypt_password(blog['password']))
         self.lineEdit_blogURL.setText(blog['address'])
         self.lineEdit_blogTitle.setText(blog['title'])
 
         email = config['email']
         self.lineEdit_emailAddress.setText(email['address'])
-        self.lineEdit_emailPassword.setText(email['password'])
+        self.lineEdit_emailPassword.setText(email_utils.decrypt_password(email['password']))
         self.lineEdit_emailSentFolder.setText(email['sent_folder'])
         self.lineEdit_emailIMAPServer.setText(email['IMAP_server'])
         self.lineEdit_emailSMTPServer.setText(email['SMTP_server'])
@@ -120,6 +125,11 @@ class Panel(Ui_MainWindow):
         self._connect_all_signals()
         self._fill_in_forms()
 
+        digit_regexp = QRegularExpression('[0-9]*')
+        digit_validator = QRegularExpressionValidator(digit_regexp)
+        self.comboBox_emailPortIMAP.setValidator(digit_validator)
+        self.comboBox_emailPortSMTP.setValidator(digit_validator)
+
     def _connect_all_signals(self):
         self.checkBox_blog.toggled.connect(self.onCheckBox_blogToggled)
         self.checkBox_viewer.toggled.connect(self.onCheckBox_viewerToggled)
@@ -167,7 +177,6 @@ class Panel(Ui_MainWindow):
         self.lineEdit_emailSentFolder.textChanged.connect(self.onLineEdit_emailSentFolderTextChanged)
         self.lineEdit_emailPassword.textChanged.connect(self.onLineEdit_emailPasswordTextChanged)
         self.lineEdit_emailIMAPServer.textChanged.connect(self.onLineEdit_emailIMAPServerTextChanged)
-        self.lineEdit_emailPassword.textChanged.connect(self.onLineEdit_emailPasswordTextChanged)
         self.lineEdit_emailSMTPServer.textChanged.connect(self.onLineEdit_emailSMTPServerTextChanged)
         self.comboBox_emailPortIMAP.currentTextChanged.connect(self.onComboBox_emailPortIMAPCurrentTextChanged)
         self.comboBox_emailPortSMTP.currentTextChanged.connect(self.onComboBox_emailPortSMTPCurrentTextChanged)
@@ -281,7 +290,7 @@ class Panel(Ui_MainWindow):
         self._cache['blog']['user_name'] = username
 
     def onLineEdit_blogPasswordTextChanged(self, password):
-        self._cache['blog']['password'] = password
+        self._cache['blog']['password'] = blog_utils.encrypt_password(password)
 
     def onLineEdit_blogURLTextChanged(self, url):
         self._cache['blog']['address'] = url
@@ -290,7 +299,10 @@ class Panel(Ui_MainWindow):
         self._cache['blog']['title'] = title
 
     def onPushButton_blogTestClicked(self):
-        pass
+        conf = self._cache['blog']
+        conf['password'] = blog_utils.decrypt_password(conf['password'])
+        res, msg = blog_app.test(conf)
+        self.label_blogTest.setText(msg)
 
     def onLineEdit_followedBlogTextChanged(self, line_edit, blog):
         self._cache['followed_blogs'][line_edit.alias] = blog
@@ -301,13 +313,16 @@ class Panel(Ui_MainWindow):
         line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
 
     def onPushButton_emailTestClicked(self):
-        pass
+        conf = self._cache['email']
+        conf['password'] = email_utils.decrypt_password(conf['password'])
+        res, msg = email_app.test(conf)
+        self.label_emailTest.setText(msg)
 
     def onLineEdit_emailAddressTextChanged(self, address):
         self._cache['email']['address'] = address
 
     def onLineEdit_emailPasswordTextChanged(self, password):
-        self._cache['email']['password'] = password
+        self._cache['email']['password'] = email_utils.encrypt_password(password)
 
     def onLineEdit_emailSentFolderTextChanged(self, folder):
         self._cache['email']['sent_folder'] = folder
