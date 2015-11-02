@@ -15,13 +15,9 @@ from gi.repository import GObject, Clutter, Mx
 
 import pisak
 from pisak import application, logger, configurator, properties,\
-    widgets, arg_parser, inputs
+    widgets, arg_parser, inputs, dirs
 
 _LOG = logger.get_logger(__name__)
-
-MESSAGES = {
-    "application_loading": "Wczytywanie aplikacji..."
-}
 
 
 ### PISAK applications entry point.  ###
@@ -74,23 +70,15 @@ class LoadingStage(Clutter.Stage):
 
     def __init__(self):
         super().__init__()
+        self._init_content()
+
+    def _init_content(self):
         self.set_layout_manager(Clutter.BinLayout())
-        self._init_background()
-        self._init_text()
-
-    def _init_background(self):
-        background = widgets.BackgroundPattern()
-        background.ratio_width = 1
-        background.ratio_height = 1
-        self.add_child(background)
-
-    def _init_text(self):
-        text = Mx.Label()
-        text.set_style_class("LoadingPanel")
-        text.set_text(MESSAGES["application_loading"])
-        text.set_x_align(Clutter.ActorAlign.CENTER)
-        text.set_y_align(Clutter.ActorAlign.CENTER)
-        self.add_child(text)
+        json = dirs.get_json_path('loading_screen', '_'.join(['default', pisak.config['skin']]))
+        script = Clutter.Script()
+        script.load_from_file(json)
+        main = script.get_object('main')
+        self.add_actor(main)
 
 
 class AppManager(Clutter.Actor,
@@ -129,7 +117,7 @@ class AppManager(Clutter.Actor,
         buttons_list = []
         available = pisak.config['available_apps']
         for app, values in self.apps.items():
-            if available.as_bool(app):
+            if app in available and available.as_bool(app) and app != 'main_panel':
                 desc = {
                     "exec_path": self._get_exec_path(values["module"]),
                     "icon_size": values["icon_size"],
