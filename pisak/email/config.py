@@ -9,6 +9,7 @@ from pisak import logger, exceptions, dirs
 
 _LOG = logger.get_logger(__name__)
 
+
 class EmailConfigError(exceptions.PisakException):
     pass
 
@@ -19,7 +20,7 @@ class Config:
     """
 
     # path to the config file.
-    PATH = dirs.HOME_EMAIL_CONFIG
+    PATH = dirs.HOME_MAIN_CONFIG
 
     # default sent box names for different providers of the email service.
     DEFAULT_SENT_BOX = {
@@ -35,8 +36,8 @@ class Config:
         """
         Validate config content. Check if all the required keys exist.
         """
-        for key in ["server_address", "user_address",
-                    "password", "port_out", "port_in"]:
+        for key in ["address", "password", "SMTP_port", "IMAP_port",
+                    "SMTP_server", "IMAP_server"]:
             if key not in self._config:
                 raise AssertionError(
                     "No '{}' key in the email configuration file.".format(key))
@@ -51,7 +52,7 @@ class Config:
                   "Such file should be here:  {}.".format(self.PATH)
             _LOG.critical(msg)
             raise FileNotFoundError(msg)
-        self._config = configobj.ConfigObj(self.PATH, encoding='UTF8')
+        self._config = configobj.ConfigObj(self.PATH, encoding='UTF8')['email']
 
     def get_account_setup(self):
         """
@@ -65,41 +66,17 @@ class Config:
         except AssertionError as exc:
             raise EmailConfigError(exc) from exc
         ret_setup = self._config.copy()
-        if "sent_box_name" not in ret_setup or not ret_setup["sent_box_name"]:
-            ret_setup["sent_box_name"] = \
-                self.DEFAULT_SENT_BOX[ret_setup["server_address"]] if \
-                ret_setup["server_address"] in self.DEFAULT_SENT_BOX else \
+        ret_setup['password'] = self.decrypt_password(ret_setup['password'])
+        if "sent_folder" not in ret_setup or not ret_setup["sent_folder"]:
+            server = ret_setup['address'].split('@')[-1]
+            ret_setup["sent_folder"] = \
+                self.DEFAULT_SENT_BOX[server] if \
+                server in self.DEFAULT_SENT_BOX else \
                 self.DEFAULT_SENT_BOX["unknown"]
         return ret_setup
 
-    def save_account_setup(self, server_address, user_address, password, sent_box_name,
-                           port_out=587, port_in=993, keyfile=None, certfile=None):
-        """
-        Save server and email account settings to a file.
-
-        :param server_address: address of the server that the email account is on.
-        :param user_address: user address for the email account.
-        :param password: password to the email account.
-        :param sent_box_name: name of the mailbox for sent messages specific for
-        a given email service provider.
-        :param port_out: port used for outcoming mail.
-        :param port_in: port used for incoming mail.
-        :param keyfile: path to the file containing key.
-        :param certfile: path to the file containing certificate.
-        """
-        self._config["server_address"] = server_address
-        self._config["user_address"] = user_address
-        self._config["password"] = encrypt_password(password)
-        self._config["sent_box_name"] = sent_box_name
-        self._config["port_out"] = port_out
-        self._config["port_in"] = port_in
-        if keyfile:
-            self._config["keyfile"] = keyfile
-        if certfile:
-            self._config["certfile"] = certfile
-        self._config.write()
-
-    def decrypt_password(self, encrypted):
+    @staticmethod
+    def decrypt_password(encrypted):
         """
         Decrypt the given encrypted password.
 
@@ -110,7 +87,8 @@ class Config:
         if isinstance(encrypted, str):
             return "".join([chr(ord(sign)-1) for sign in list(encrypted)[::-1]])
 
-    def encrypt_password(self, password):
+    @staticmethod
+    def encrypt_password(password):
         """
         Not very safe solution. Only for people who really are unable to remember
         their password. Anyone who gets here will be able to decrypt

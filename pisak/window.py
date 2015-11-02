@@ -113,9 +113,16 @@ class Window(configurator.Configurable):
         :param view_list: list of tuples of avalaible views, each consists
         of view name and view callable preparator.
         """
+        skin = self.config['skin']
+        speller_layout = self.config['speller']['layout']
         layout = 'default'
+        if app_name in ['speller', 'blog', 'email']:
+            layout = speller_layout
         if self._configuration:
-            layout = self._configuration.get("layout")
+            special_layout = self._configuration.get("layout")
+            if special_layout:
+                layout = special_layout
+        layout = '_'.join([layout, skin])
         self.views = {}
         for view_name, preparator in view_list:
             self.views[os.path.join(app_name, view_name)] = (

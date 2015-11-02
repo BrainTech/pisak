@@ -104,6 +104,27 @@ class SimpleMessage(object):
         msg["Subject"] = Header(self._msg["subject"], self.charset)
         return msg
 
+    def test(self, custom_config=None):
+        """
+        Test SMTP connection.
+        """
+        setup = custom_config or config.Config().get_account_setup()
+        server_out = "{}:{}".format(
+                setup["SMTP_server"], setup["SMTP_port"])
+        try:
+            server = smtplib.SMTP(server_out)
+            server.ehlo_or_helo_if_needed()
+            if server.has_extn("STARTTLS"):
+                server.starttls(
+                    keyfile=setup.get("keyfile"), certfile=setup.get("certfile"))
+            server.ehlo_or_helo_if_needed()
+            server.login(setup["address"], setup["password"])
+            server.quit()
+        except socket.error as exc:
+            raise exceptions.NoInternetError(exc) from exc
+        except (smtplib.SMTPException, SSLError) as exc:
+            raise EmailSendingError(exc) from exc
+
     def send(self):
         """
         Send the message through the SMTP.
@@ -111,8 +132,8 @@ class SimpleMessage(object):
         msg = self._compose_message()
         config_obj = config.Config()
         setup = config_obj.get_account_setup()
-        server_out = "smtp.{}:{}".format(
-                setup["server_address"], setup["port_out"])
+        server_out = "{}:{}".format(
+                setup["SMTP_server"], setup["SMTP_port"])
         try:
             server = smtplib.SMTP(server_out)
             server.ehlo_or_helo_if_needed()
@@ -122,9 +143,9 @@ class SimpleMessage(object):
             else:
                 _LOG.warning("Server does not support STARTTLS.")
             server.ehlo_or_helo_if_needed()
-            server.login(setup["user_address"],
+            server.login(setup["address"],
                          config_obj.decrypt_password(setup["password"]))
-            server.sendmail(setup["user_address"],
+            server.sendmail(setup["address"],
                             self.recipients, msg.as_string())
             server.quit()
             _LOG.debug("Email was sent successfully.")
