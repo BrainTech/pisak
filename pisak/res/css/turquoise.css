@@ -23,13 +23,13 @@ PisakBackgroundFulfillment {
 }
 
 
-/* Loading panel  */
+/* Loading screen  */
 
-MxLabel.LoadingPanel {
+MxLabel.LoadingScreen {
   font-family: Kelson Sans;
   font-size: 50pt;
   font-weight: bold;
-  color: black;
+  color: white;
 }
 
 

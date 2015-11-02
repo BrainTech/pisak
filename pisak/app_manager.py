@@ -63,7 +63,7 @@ def run(descriptor):
 
 ### Section with management tools of PISAK applications' 'executables'. ###
 
-class LoadingStage(Clutter.Stage):
+class LoadingScreen(Clutter.Stage):
     """
     Stage for the time a new app is being loaded.
     """
@@ -97,7 +97,7 @@ class AppManager(Clutter.Actor,
         self.current_app = None
         self.apps = []
         self.apply_props()
-        self.loading_stage = LoadingStage()
+        self.loading_screen = LoadingScreen()
 
     def launch_app(self, app_descriptor):
         """
@@ -133,15 +133,15 @@ class AppManager(Clutter.Actor,
         Deactivate the main panel and all its content.
         """
         pisak.app.window.input_group.stop_middleware()
-        self.loading_stage.show()
+        self.loading_screen.show()
         if not arg_parser.get_args().debug:
-            self.loading_stage.set_fullscreen(True)
+            self.loading_screen.set_fullscreen(True)
 
     def maximize_panel(self, event):
         """
         Reactivate the main panel and all its content.
         """
-        self.loading_stage.hide()
+        self.loading_screen.hide()
         pisak.app.window.input_group.run_middleware()
 
     def run_app(self, button, app_exec):
