@@ -123,6 +123,7 @@ class Window(configurator.Configurable):
             if special_layout:
                 layout = special_layout
         layout = '_'.join([layout, skin])
+        print(layout)
         self.views = {}
         for view_name, preparator in view_list:
             self.views[os.path.join(app_name, view_name)] = (

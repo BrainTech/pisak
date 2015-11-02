@@ -60,5 +60,5 @@ def get_followed_blogs():
 
     :returns: list with all followed blogs
     """
-    return list(configobj.ConfigObj(CONFIG_PATH,
-            encoding='UTF8')['followed_blogs'].values())
+    return [blog for blog in configobj.ConfigObj(CONFIG_PATH,
+            encoding='UTF8')['followed_blogs'].values() if blog]

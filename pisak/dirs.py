@@ -288,7 +288,7 @@ def get_blog_css_path():
     return css_path
 
 
-def get_json_path(view, layout='default', app=''):
+def get_json_path(view, layout='default_default', app=''):
     """
     Get a json file responsible for building one of the views of the given
     application. Shape of the view is described by 'layout' parameter.
@@ -316,8 +316,8 @@ def get_json_path(view, layout='default', app=''):
     if not os.path.isfile(view_path):
         json_dir = res.get(os.path.join("json", app, layout))
         view_path = os.path.join(json_dir, view) + ".json"
-        if not os.path.isfile(view_path) and layout is not "default":
-            default_json_dir = res.get(os.path.join("json", app, "default"))
+        if not os.path.isfile(view_path) and layout is not "default_default":
+            default_json_dir = res.get(os.path.join("json", app, "default_default"))
             view_path = os.path.join(default_json_dir, view) + ".json"
     if not os.path.isfile(view_path):
         msg = "Default json for '{}' view of the '{}' application not " \
