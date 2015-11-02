@@ -283,8 +283,8 @@ class PhotoSlidesSource(pager.DataSource):
         self.item_ratio_width = 0.68
         self.library = model.get_library()
         self.data_generator = lambda value: \
-                        self.library.get_category_by_id(value).items
-        self.data_sets_count = len(self.library.categories)
+                        self.library.get_category_by_id(value).get_all_items()
+        self.data_sets_count = len(self.library.get_all_categories())
 
     def get_pending_slides(self, index):
         """
@@ -336,7 +336,7 @@ class LibraryTilesSource(pager.DataSource):
 
     def __init__(self):
         super().__init__()
-        self.data = list(model.get_library().categories)
+        self.data = list(model.get_library().get_all_categories())
 
     def _produce_item(self, album):
         tile = widgets.PhotoTile()
@@ -363,15 +363,15 @@ class AlbumTilesSource(pager.DataSource):
         super().__init__()
         self.library = model.get_library()
         self.data_generator = lambda value: \
-                        self.library.get_category_by_id(value).items
-        self.data_sets_count = len(self.library.categories)
+                        self.library.get_category_by_id(value).get_all_items()
+        self.data_sets_count = len(self.library.get_all_categories())
 
     def _produce_item(self, data_item):
         tile = widgets.PhotoTile()
         self._prepare_item(tile)
         tile.hilite_tool = widgets.Aperture()
         tile.connect("clicked", self.item_handler,
-                        data_item.id, self.data_set_id)
+                        data_item.id, self.data_set_idx)
         tile.scale_mode = Mx.ImageScaleMode.FIT
         tile.preview_path = data_item.path
         return tile

@@ -14,7 +14,7 @@ def prepare_photo_view(app, window, script, data):
     photo_id = data["photo_id"]
 
     data_source = script.get_object("photo_data_source")
-    data_source.data_set_id = album_id
+    data_source.data_set_idx = album_id
 
     slideshow = script.get_object("slideshow_widget")
     slideshow.show_initial_photo_id(photo_id)
@@ -47,7 +47,7 @@ def prepare_album_view(app, window, script, data):
             "viewer/photo", {"photo_id": photo_id, "album_id": album_id})
 
     data_source.item_handler = photo_tile_handler
-    data_source.data_set_id = album_id
+    data_source.data_set_idx = album_id
     data_source.emit('data-is-ready')
 
 

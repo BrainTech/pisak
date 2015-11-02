@@ -6,6 +6,7 @@ from multiprocessing import Process, Manager, Event
 
 from gi.repository import GObject, ClutterGst, Clutter
 
+import pisak
 from pisak import res
 from pisak import properties, configurator
 
@@ -130,7 +131,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         self.rewind_step = 3
         self.skip_step = 30
         self.volume_step = 0.1
-        self.volume = 1
+        self.volume = pisak.config.as_int('sound_effects_volume') / 100
         self.rewind_pace = 200  # pace of rewinding in miliseconds
         self.rewind_timer_handler = None
         self.rewind_timer = Clutter.Timeline.new(self.rewind_pace)
@@ -343,6 +344,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         """
         self.volume = min(self.volume + self.volume_step, 1)
         self._engine.set_audio_volume(self.volume)
+        pisak.config['sound_effects_volume'] = str(int(self.volume * 100))
 
     def decrease_volume(self):
         """
@@ -350,6 +352,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         """
         self.volume = max(self.volume - self.volume_step, 0)
         self._engine.set_audio_volume(self.volume)
+        pisak.config['sound_effects_volume'] = str(int(self.volume * 100))
 
     def stop_rewind(self):
         """
@@ -367,6 +370,7 @@ class AudioPlayback(MediaPlayback):
     def __init__(self):
         super().__init__()
         self.engine  = ClutterGst.VideoTexture()
+        
 
 
 class VideoPlayback(MediaPlayback):

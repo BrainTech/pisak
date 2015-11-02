@@ -86,6 +86,7 @@
         "type": "PisakScanningGroup",
         "children": ["speller_menu_box"],
         "scanning-hilite": true,
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy",
@@ -304,6 +305,7 @@
         "type": "PisakScanningGroup",
         "children": ["prediction_panel_box"],
         "scanning-hilite": true,
+	"sound": "predykcja",
         "strategy": {
             "id": "prediction_group_strategy",
             "type": "PisakRowStrategy",
@@ -425,6 +427,7 @@
         "type": "PisakScanningGroup",
         "children": ["main_panel_box"],
         "scanning-hilite": true,
+	"sound": "litery",
         "strategy": {
             "id": "main_panel_group_strategy",
             "type": "PisakRowStrategy",
@@ -475,6 +478,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_menu_box"],
         "scanning-hilite": true,
+	"sound": "1",
         "strategy": {
             "id": "keyboard_menu_group_strategy",
             "type": "PisakRowStrategy",
@@ -682,6 +686,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_1_box"],
         "scanning-hilite": true,
+	"sound": "2",
         "strategy": {
             "id": "keyboard_row_1_group_strategy",
             "type": "PisakRowStrategy",
@@ -805,6 +810,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_2_box"],
         "scanning-hilite": true,
+	"sound": "3",
         "strategy": {
             "id": "keyboard_row_2_group_strategy",
             "type": "PisakRowStrategy",
@@ -936,6 +942,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_3_box"],
         "scanning-hilite": true,
+	"sound": "4",
         "strategy": {
             "id": "keyboard_row_3_group_strategy",
             "type": "PisakRowStrategy",

@@ -169,6 +169,7 @@
         "id": "main_menu",
         "type": "PisakScanningGroup",
         "children": ["main_menu_box"],
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
@@ -189,7 +190,7 @@
         "id": "button_next_mail",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "label": "NASTĘPNA WIADOMOŚĆ",
+        "text": "NASTĘPNA WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
         "icon-size": 50,
@@ -199,7 +200,7 @@
         "id": "button_previous_mail",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "label": "POPRZEDNIA WIADOMOŚĆ",
+        "text": "POPRZEDNIA WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
         "icon-size": 50,
@@ -209,7 +210,7 @@
         "id": "button_save",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "label": "ZAPISZ",
+        "text": "ZAPISZ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
         "icon-size": 50,
@@ -219,7 +220,7 @@
         "id": "button_new_mail",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "label": "NOWA WIADOMOŚĆ",
+        "text": "NOWA WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
         "icon-size": 50,
@@ -229,7 +230,7 @@
         "id": "button_back",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "label": "LISTA WIADOMOŚCI",
+        "text": "LISTA WIADOMOŚCI",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
         "icon-size": 50,
@@ -239,7 +240,7 @@
         "id": "button_exit",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "label": "PANEL STARTOWY",
+        "text": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
         "icon-size": 50,
@@ -249,6 +250,7 @@
         "id": "message_menu",
         "type": "PisakScanningGroup",
         "children": ["message_menu_box"],
+	"sound": "edycja",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
@@ -335,7 +337,7 @@
         "ratio-width": 0.07,
         "ratio-height": 0.09,
         "icon-size": 50,
-        "icon-name": "bin"
+        "icon-name": "bin2"
     },
     {
         "id": "message_content",

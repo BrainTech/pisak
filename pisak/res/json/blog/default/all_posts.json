@@ -65,6 +65,7 @@
         "id": "button_menu",
         "type": "PisakScanningGroup",
         "children": ["button_menu_box"],
+	"sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
@@ -196,6 +197,7 @@
         "y-align": "start",
         "rows": 3,
         "columns": 3,
+	"sound": "wybierz_post",
         "page-strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "button_menu"
@@ -204,7 +206,8 @@
     },
     {
         "id": "posts_data",
-        "type": "PisakBlogPostTileSource"
+        "type": "PisakBlogPostTileSource",
+        "blog-type": "own"
     },
     {
         "id": "progress_bar",

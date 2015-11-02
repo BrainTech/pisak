@@ -127,15 +127,17 @@ class AppManager(Clutter.Actor,
         :return: list of available buttons descriptions
         """
         buttons_list = []
+        available = pisak.config['available_apps']
         for app, values in self.apps.items():
-            desc = {
-                "exec_path": self._get_exec_path(values["module"]),
-                "icon_size": values["icon_size"],
-                "icon_name": values["icon_name"],
-                "label": values["label"],
-                "style_class": "PisakMainPanelButton"
-            }
-            buttons_list.append(desc)
+            if available.as_bool(app):
+                desc = {
+                    "exec_path": self._get_exec_path(values["module"]),
+                    "icon_size": values["icon_size"],
+                    "icon_name": values["icon_name"],
+                    "label": values["label"],
+                    "style_class": "PisakMainPanelButton"
+                }
+                buttons_list.append(desc)
         return buttons_list
 
     def minimize_panel(self):

@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 from gi.repository import Mx, GObject, Pango, Clutter, GtkClutter, WebKit, Gtk
 
+import pisak
 from pisak import logger, pager, widgets, utils, layout, unit, properties, \
     dirs
 from pisak.blog import wordpress, config, html_parsers
@@ -28,16 +29,37 @@ class PostTileSource(pager.DataSource):
     """
     __gtype_name__ = "PisakBlogPostTileSource"
 
+    __gproperties__ = {
+        'blog-type': (
+            str, '', '', '', GObject.PARAM_READWRITE)
+    }
+
     def __init__(self):
         super().__init__()
+        self._blog_type = None
+        self.lazy_offset = 0
 
-    def _produce_item(self, post):
+    @property
+    def blog_type(self):
+        return self._blog_type
+
+    @blog_type.setter
+    def blog_type(self, value):
+        self._blog_type = value
+        if value == 'own':
+            now = datetime.now()
+            self._data_sorting_key = lambda post: now - post.date
+        elif value == 'followed':
+            self._data_sorting_key = lambda post: post['date']
+
+    def _produce_item(self, post_item):
+        post = post_item.content
         tile = Tile()
         self._prepare_item(tile)
         frame = widgets.Frame()
         frame.set_style_class("PisakBlogPostTile")
         tile.add_child(frame)
-        tile.connect("clicked", self.item_handler, post)
+        tile.connect("clicked", self.item_handler, post_item)
         tile.hilite_tool = widgets.Aperture()
         if isinstance(post, dict):
             post_title = post["title"]
@@ -53,6 +75,17 @@ class PostTileSource(pager.DataSource):
                 "%Y-%m-%d %H:%M:%S")
         tile.date.set_text(utils.date_to_when(post_date))
         return tile
+
+    def _query_portion_of_data_by_number(self, offset, number):
+        if self._blog_type == 'own':
+            return wordpress.blog.get_many_posts(offset, number)
+        elif self._blog_type == 'followed':
+            return pisak.app.box['followed_blog'].get_many_posts(
+                offset, number)
+
+    def _check_ids_range(self):
+        self._length = 100
+        return list(map(str, range(0, 100)))
 
 
 class BlogTileSource(pager.DataSource):

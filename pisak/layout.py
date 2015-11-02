@@ -1,13 +1,15 @@
-'''
+"""
 Definitions of classes built-in with layout managers . These actors can
 be used to describe whole application view in ClutterScript. Relevant
 layout parameters are proxied to internal layout manager.
-'''
+"""
 from gi.repository import Clutter, GObject, Mx
 
 from pisak import res, logger, unit, properties, configurator
 
+
 _LOG = logger.get_logger(__name__)
+
 
 class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
     """

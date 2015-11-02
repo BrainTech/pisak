@@ -234,7 +234,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.connect("notify::mapped", self._check_to_resize)
         self.clutter_text.connect("text-changed", self._check_to_resize)
         self.clutter_text.connect("cursor-changed", self._scroll_to_view)
-        self.clutter_text.connect("text-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
 
@@ -246,13 +245,14 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def _set_text_params(self):
         self.clutter_text.set_editable(True)
         self.clutter_text.set_line_wrap(True)
-        self.clutter_text.set_line_wrap_mode(Pango.WrapMode.WORD_CHAR)
+        self.clutter_text.set_line_wrap_mode(Pango.WrapMode.CHAR)
 
     def _check_to_resize(self, *args):
         pango_layout = self.clutter_text.get_layout()
         pango_height = pango_layout.get_size()[1] / Pango.SCALE
-        add_line = int(self.clutter_text.get_size()[0] / self.get_width())
-        add_line += 1
+        pango_lines = pango_layout.get_lines()
+        add_line = sum((int(line.index_to_x(line.length, 1) / Pango.SCALE / self.get_width()) for line in pango_lines))
+        add_line += 2
         cursor_size = self.clutter_text.get_cursor_size()
         self.text.set_height(pango_height + add_line*cursor_size)
 
@@ -419,7 +419,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         if self.automatic_space:
                 text_after += ' '
         #automatically add whitespace after predicted word
-        #this is the default in most prediction software 
+        #this is the default in most prediction software
 
         current_text = self.get_text()
         # if the text buffer is empty, or ends with whitespace, simply
@@ -443,6 +443,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
                 self._add_operation(operation)
         else:
             self.type_text(text_after)
+        self.set_cursor_position(-1)
 
     def move_cursor_forward(self):
         """
@@ -705,7 +706,7 @@ class Key(widgets.Button, configurator.Configurable):
     @default_text.setter
     def default_text(self, value):
         self._default_text = str(value)
-        self.sounds[self._default_text] = self.get_sound(self.default_text)
+        self._assign_sound(self._default_text)
 
     @property
     def altgr_text(self):
@@ -714,7 +715,7 @@ class Key(widgets.Button, configurator.Configurable):
     @altgr_text.setter
     def altgr_text(self, value):
         self._altgr_text = str(value)
-        self.sounds[self._altgr_text] = self.get_sound(self.altgr_text)
+        self._assign_sound(self._altgr_text)
 
     @property
     def special1_text(self):
@@ -723,7 +724,7 @@ class Key(widgets.Button, configurator.Configurable):
     @special1_text.setter
     def special1_text(self, value):
         self._special1_text = str(value)
-        self.sounds[self._special1_text] = self.get_sound(self.special1_text)
+        self._assign_sound(self._special1_text)
 
     @property
     def special2_text(self):
@@ -732,7 +733,7 @@ class Key(widgets.Button, configurator.Configurable):
     @special2_text.setter
     def special2_text(self, value):
         self._special2_text = str(value)
-        self.sounds[self._special2_text] = self.get_sound(self.special2_text)
+        self._assign_sound(self._special2_text)
 
     @property
     def target(self):
@@ -760,7 +761,7 @@ class Dictionary(text_tools.Predictor):
 
     def __init__(self):
         super().__init__()
-        self.basic_content = pisak.config['prediction_default']
+        self.basic_content = list(pisak.config['prediction'].values())
         self.apply_props()
 
     def do_prediction(self, text, position):
