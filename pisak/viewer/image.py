@@ -6,7 +6,10 @@ import random
 from PIL import Image, ImageFilter
 from gi.repository import Cogl, Clutter, GObject
 
-from pisak import res, properties, configurator
+from pisak import res, properties, configurator, logger
+
+
+_LOG = logger.get_logger(__name__)
 
 
 class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
@@ -195,7 +198,7 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         mode = self.buffer.mode
         pixel_format = '_'.join([mode, str(byte_per_pixel)])
         if pixel_format not in self.PIXEL_FORMATS:
-            print('Pixel format {} not supported.'.format(pixel_format))
+            _LOG.warning('Pixel format {} not supported.'.format(pixel_format))
         else:
             cogl_pixel_format = self.PIXEL_FORMATS[pixel_format]
         self.slide.set_from_data(data, cogl_pixel_format, width, height, row_stride)

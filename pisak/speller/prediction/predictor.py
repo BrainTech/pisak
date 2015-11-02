@@ -24,6 +24,7 @@ _CONFIG_PARSER.read(_CONFIG_FILE)
 
 _CONFIG_PARSER["Database"]["database"] = _DB_PATH
 
+
 def get_predictions(string):
     callback = CallbackClass(string)
     predictions = pressagio.Pressagio(callback, _CONFIG_PARSER).predict()
@@ -47,6 +48,3 @@ class CallbackClass(pressagio.callback.Callback):
 
     def future_stream(self):
         return ''
-
-if __name__ == '__main__':
-    print(get_predictions('w'))
