@@ -223,6 +223,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self._init_text()
         self.prepare_style()
         self.automatic_space = True # the default
+        self.parent = None
 
     def _init_text(self):
         self.box = Mx.BoxLayout()
@@ -231,7 +232,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text = Mx.Label()
         self.margin = Clutter.Margin.new()
         self.margin.top = 20
-        self._lines = 0
+        self._lines_quantity = 0
         self.margin.left = self.margin.right = 10
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
@@ -258,14 +259,16 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.clutter_text.set_line_wrap_mode(Pango.WrapMode.CHAR)
 
     def _check_to_resize(self, *args):
-        cursor_size = self.clutter_text.get_cursor_size() + 9#disturbing const
+        cursor_size = self.clutter_text.get_cursor_size() + 9
+        #disturbing const 9 -> so that the line heights are right
         pango_layout = self.clutter_text.get_layout()
         pango_lines = pango_layout.get_lines()
         lines_quantity = len(pango_lines)
-        if self._lines != lines_quantity:
-            self._lines = lines_quantity
-            self.text.set_height((self._lines+2)*cursor_size)
-
+        if self._lines_quantity != lines_quantity:
+            self._lines_quantity = lines_quantity
+            self.text.set_height((self._lines_quantity+2)*cursor_size)
+            #add 2 lines so that the text is not written at the lowest line
+            
     def _scroll_to_view(self, *args):
         pos = self.get_cursor_position()
         coords = self.clutter_text.position_to_coords(pos)
