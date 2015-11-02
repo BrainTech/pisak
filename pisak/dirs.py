@@ -288,7 +288,7 @@ def get_blog_css_path():
     return css_path
 
 
-def get_json_path(view, layout='default', app='',):
+def get_json_path(view, layout='default', app=''):
     """
     Get a json file responsible for building one of the views of the given
     application. Shape of the view is described by 'layout' parameter.
