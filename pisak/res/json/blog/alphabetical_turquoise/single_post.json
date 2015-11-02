@@ -30,7 +30,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakBlogSinglePostTitle",
         "x-expand": true,
         "margin-right": 100,

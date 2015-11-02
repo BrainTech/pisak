@@ -42,7 +42,7 @@
     },
     {
         "id": "blog_header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakBlogViewerAboutMeAlbumHeader",
 	"x-expand": true,
         "x-align": "center",
@@ -50,7 +50,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakBlogViewerAboutMeAlbumHeader",
         "x-expand": true,
         "margin-right": 100,
@@ -181,7 +181,7 @@
         "id": "progress_bar",
         "type": "PisakProgressBar",
         "style-class": "PisakBlogViewerAboutMeProgressBar",
-        "label": {"type": "MxLabel"},
+        "label": {"type": "PisakLabel"},
         "ratio-width": 1,
         "followed-object": "pager",
         "progress-transition-duration": 1000,

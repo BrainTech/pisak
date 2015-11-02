@@ -6,10 +6,9 @@ import os
 from gi.repository import Clutter, Mx
 
 from pisak import exceptions
-from pisak import signals, configurator, dirs, inputs
+from pisak import signals, configurator, dirs, inputs, widgets
 
 import pisak.layout  # @UnusedImport
-import pisak.widgets  # @UnusedImport
 import pisak.handlers  # @UnusedImport
 
 
@@ -185,7 +184,7 @@ class Window(configurator.Configurable):
             self.load_view("popup", {"message": message})
 
     def _display_popup_widget(self, container, message):
-        popup = Mx.Label()
+        popup = widgets.Label()
         popup.set_text(message)
         popup.set_style_class("PisakPopUp")
         container.add_child(popup)

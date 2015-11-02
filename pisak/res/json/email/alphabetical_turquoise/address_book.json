@@ -36,7 +36,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailHeader",
 		"text": "KSIĄŻKA ADRESOWA",
 		"x-expand": true,
@@ -256,7 +256,7 @@
         "ratio-width": 1,
         "followed-object": "pager",
         "label": {
-            "type": "MxLabel"
+            "type": "PisakLabel"
         },
         "progress-transition-duration": 1000,
         "ratio-height": 0.05,

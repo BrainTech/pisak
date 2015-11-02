@@ -431,7 +431,7 @@
     },
     {
 	    "id": "speller_header",
-	    "type": "MxLabel",
+	    "type": "PisakLabel",
 	    "x-expand": true,
 	    "x-align": "start",
 	    "style-class": "PisakEmailSpellerContactAddressHeader",
