@@ -35,7 +35,7 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
                      'RGB_2': Cogl.PixelFormat.RGB_565, 'RGB_3': Cogl.PixelFormat.RGB_888,
                      'RGBA_2': Cogl.PixelFormat.RGBA_4444, 'RGBA_4': Cogl.PixelFormat.RGBA_8888}
 
-    SAVE_FORMATS = ['JPEG', 'PNG', 'TIFF', 'BMP', 'PNG']
+    SAVE_FORMATS = ['JPEG', 'PNG', 'TIFF', 'BMP']
 
     SAVE_DEFAULT_EXT = 'JPEG'
 
