@@ -768,7 +768,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                         self.player.play(selection.sounds[label])
                     elif label in [' ', '']:
                         icon_name = selection.current_icon_name
-                        self.player.play(selection.sounds[icon_name])
+                        if icon_name in selection.sounds:
+                            self.player.play(selection.sounds[icon_name])
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
                 elif isinstance(selection, pisak.widgets.PhotoTile):
