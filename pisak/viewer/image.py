@@ -212,17 +212,20 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self.buffer = self.original_photo.copy()
         self._load()
 
-    def save(self, *args):
-        msg = None
+    def save(self):
+        """
+        Save the currently edited buffer to a file.
+        """
+        err_msg = None
         if self._save_path and self._save_format:
             try:
                 self.buffer.save(self._save_path, format=self._save_format)
             except Exception as exc:
-                msg = exc
+                err_msg = exc
         else:
-            msg = 'No save path for the currently edited photo.'
-        if msg:
-            LOG.error(msg)
+            err_msg = 'No save path for the currently edited photo.'
+        if err_msg:
+            LOG.error(err_msg)
 
     def _load(self):
         data = self.buffer.tobytes()
