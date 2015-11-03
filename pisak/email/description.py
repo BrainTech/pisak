@@ -69,7 +69,7 @@ def prepare_main_view(app, window, script, data):
     try:
         try:
             client.login()
-        except imap_client.InvalidCredentials as e:
+        except imap_client.InvalidCredentialsError as e:
             window.load_popup(MESSAGES["invalid_credentials"], app.main_quit)
         except imap_client.IMAPClientError as e:
             window.load_popup(MESSAGES["login_fail"], app.main_quit)
