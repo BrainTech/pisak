@@ -3,7 +3,7 @@ from pisak.viewer import image, model
 
 
 @signals.registered_handler("viewer/save")
-def zoom(slide_space):
+def save(slide_space):
     """
     Save the photo.
 
