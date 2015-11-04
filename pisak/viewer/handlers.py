@@ -2,6 +2,19 @@ from pisak import signals
 from pisak.viewer import image, model
 
 
+@signals.registered_handler("viewer/save")
+def save(slide_space):
+    """
+    Save the photo.
+
+    :param slide_space: container with the pisak slide instance inside.
+    """
+    slide = slide_space.get_children()[0]
+    if slide.image_buffer is None:
+        slide.image_buffer = image.ImageBuffer()
+    slide.image_buffer.save()
+
+
 @signals.registered_handler("viewer/slideshow_toggle")
 def slideshow_toggle(slideshow_widget):
     """
