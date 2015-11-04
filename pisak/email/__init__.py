@@ -4,7 +4,7 @@ def test(config):
     """
     from pisak import exceptions
     from pisak.loc import EMAIL_MESSAGES as MESSAGES
-    from pisak.email.message import test_smtp_connection
+    from pisak.email.test_connection import test_smtp_connection
     from pisak.email.imap_client import IMAPClient, InvalidCredentialsError
 
     try:
