@@ -30,7 +30,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakViewerAlbumHeader",
         "x-expand": true,
         "margin-right": 100,
@@ -199,7 +199,7 @@
         "id": "progress_bar",
         "type": "PisakProgressBar",
         "style-class": "PisakViewerProgressBar",
-        "label": {"type": "MxLabel"},
+        "label": {"type": "PisakLabel"},
         "followed-object": "slideshow_widget",
         "ratio-width": 1,
         "progress-transition-duration": 1000,
