@@ -10,9 +10,9 @@ from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
 from pisak.blog import config as blog_utils
 from pisak.email.config import Config as email_utils
 from pisak import email as email_app, blog as blog_app
+from pisak.loc import CONFIG_MAPS as MAPS
 
 from panel import Ui_MainWindow
-from loc import MAPS
 
 
 if not os.path.isdir(HOME_PISAK_CONFIGS):
