@@ -139,6 +139,7 @@ class Tile(widgets.PhotoTile):
         self.date.set_style_class("PisakBlogPostTileDate")
         self.label.add_child(self.title)
         self.label.add_child(self.date)
+        self.label.get_text = self.title.get_text
 
 
 class UserPhoto(Mx.Image):

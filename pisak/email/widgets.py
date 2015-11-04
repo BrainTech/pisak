@@ -190,6 +190,9 @@ class MailboxTile(widgets.PhotoTile):
             label.set_style_class('PisakEmailMessageTile' + header)
             self.label.add_child(label)
 
+        # set the get_text method to the topic label so it can be read
+        self.label.get_text = self.label.get_children()[0].get_text
+
 
 class EmailButton(widgets.Button):
     """
