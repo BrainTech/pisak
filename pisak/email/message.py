@@ -143,8 +143,7 @@ class SimpleMessage(object):
             else:
                 _LOG.warning("Server does not support STARTTLS.")
             server.ehlo_or_helo_if_needed()
-            server.login(setup["address"],
-                         config_obj.decrypt_password(setup["password"]))
+            server.login(setup["address"], setup["password"])
             server.sendmail(setup["address"],
                             self.recipients, msg.as_string())
             server.quit()
