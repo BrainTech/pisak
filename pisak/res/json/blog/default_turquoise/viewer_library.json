@@ -191,7 +191,7 @@
         "id": "progress_bar",
         "type": "PisakProgressBar",
         "style-class": "PisakBlogViewerProgressBar",
-        "label": {"type": "MxLabel"},
+        "label": {"type": "PisakLabel"},
         "ratio-width": 1,
         "followed-object": "pager",
         "progress-transition-duration": 1000,

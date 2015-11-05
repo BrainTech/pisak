@@ -85,7 +85,7 @@ class LoadingStage(Clutter.Stage):
         self.add_child(background)
 
     def _init_text(self):
-        text = Mx.Label()
+        text = widgets.Label()
         text.set_style_class("LoadingPanel")
         text.set_text(MESSAGES["application_loading"])
         text.set_x_align(Clutter.ActorAlign.CENTER)

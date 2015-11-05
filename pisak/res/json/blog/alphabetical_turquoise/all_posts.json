@@ -45,7 +45,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakBlogAllPostsTitle",
         "x-expand": true,
         "margin-right": 50,
@@ -53,7 +53,7 @@
     },
     {
         "id": "date",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakBlogAllPostsInfo",
 	"margin-left": 50,
         "x-align": "start"
@@ -213,7 +213,7 @@
         "id": "progress_bar",
         "type": "PisakProgressBar",
         "style-class": "PisakBlogProgressBar",
-        "label": {"type": "MxLabel"},
+        "label": {"type": "PisakLabel"},
         "ratio-width": 1,
         "followed-object": "pager",
         "progress-transition-duration": 1000,

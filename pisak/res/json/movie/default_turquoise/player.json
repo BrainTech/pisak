@@ -29,7 +29,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakMovieHeader",
         "color": "rgba(65, 139, 138, 255)"
     },

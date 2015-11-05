@@ -452,7 +452,7 @@
     },
     {
 	"id": "speller_header",
-	"type": "MxLabel",
+	"type": "PisakLabel",
 	"style-class": "PisakBlogSpellerTitleHeader",
 	"x-expand": true,
 	"x-align": "start",

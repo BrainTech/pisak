@@ -762,6 +762,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
             if self.button_sound_support_enabled:
+                strateg_conf = pisak.config['PisakRowStrategy']
+                scan_time = strateg_conf.as_int('interval') / 1000
                 if isinstance(selection, pisak.widgets.Button):
                     label = selection.get_label()
                     if label in selection.sounds:
@@ -770,12 +772,13 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                         icon_name = selection.current_icon_name
                         if icon_name in selection.sounds:
                             self.player.play(selection.sounds[icon_name])
+                    else:
+                        synthezator = Synthezator(label)
+                        synthezator.read(scan_time)
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
                 elif isinstance(selection, pisak.widgets.PhotoTile):
                     if pisak.config.as_bool('speech_synthesis'):
-                        strateg_conf = pisak.config['PisakRowStrategy']
-                        scan_time = strateg_conf.as_int('interval') / 1000
                         synthezator = Synthezator(selection.label_text)
                         synthezator.read(scan_time)
                     else:

@@ -181,7 +181,7 @@ class MailboxTile(widgets.PhotoTile):
         # name of the corresponding header's lower-cased name;
         # list of headers is at the moment taken from the `imap_client` module.
         for header in imap_client.MAILBOX_HEADERS[mailbox]:
-            label = Mx.Label()
+            label = widgets.Label()
             setattr(self, header.lower(), label)
             label.set_margin_right(margin)
             label.set_margin_left(margin)
@@ -189,6 +189,9 @@ class MailboxTile(widgets.PhotoTile):
                                 Pango.Alignment.CENTER)
             label.set_style_class('PisakEmailMessageTile' + header)
             self.label.add_child(label)
+
+        # set the get_text method to the topic label so it can be read
+        self.label.get_text = self.label.get_children()[0].get_text
 
 
 class EmailButton(widgets.Button):
