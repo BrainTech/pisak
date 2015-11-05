@@ -173,11 +173,10 @@ class Strategy(Clutter.Actor):
             raise Exception("Unsupported selection")
 
     def unwind(self):
+        self.group.stop_cycle()
         if self.unwind_to is not None:
-            self.group.stop_cycle()
             self.unwind_to.start_cycle()
         else:
-            self.group.stop_cycle()
             self.group.parent_group.start_cycle()
 
     def get_current_element(self):
@@ -294,8 +293,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         if self.strategy is not None:
             self.strategy.group = None
         self._strategy = value
-        if self.strategy is not None:
-            self.strategy.group = self
+        if self._strategy is not None:
+            self._strategy.group = self
 
     @property
     def scanning_hilite(self):
@@ -412,6 +411,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
         collapsed = get_top_level_group([self])
         if collapsed is not self:
+            if not (collapsed.strategy.unwind_to or collapsed.parent_group):
+                collapsed.strategy.unwind_to = self.strategy.unwind_to or self.parent_group
             collapsed.start_cycle()
             return
 
@@ -808,7 +809,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         :return: True if scanning has anywhere to unwind to, False otherwise.
         """
-        return self.unwind_to is not None
+        return self.unwind_to is not None or self.group.parent_group is not None
 
     def _is_killed(self):
         """

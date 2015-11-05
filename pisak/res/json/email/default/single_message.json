@@ -171,7 +171,6 @@
         "children": ["main_menu_box"],
 	"sound": "funkcje",
         "strategy": {
-            "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
         }
     },
@@ -252,7 +251,6 @@
         "children": ["message_menu_box"],
 	"sound": "edycja",
         "strategy": {
-            "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
         }
     },
