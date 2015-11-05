@@ -1,6 +1,7 @@
 """
 Module with tools to interface a WordPress based blog.
 """
+import threading
 import os.path
 from io import BytesIO
 
@@ -44,6 +45,8 @@ class Blog(object):
 
     def __init__(self, blog_address=None, custom_config=None):
         super().__init__()
+        self._lock = threading.RLock()
+
         self.address = blog_address
         self.config_dict = custom_config or config.get_blog_config()
         self._iface = None
@@ -51,7 +54,8 @@ class Blog(object):
 
     def _call(self, method):
         try:
-            return self._iface.call(method)
+            with self._lock:
+                return self._iface.call(method)
         except OSError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except wordpress_xmlrpc.exceptions.InvalidCredentialsError as exc:
