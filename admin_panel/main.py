@@ -299,7 +299,7 @@ class Panel(Ui_MainWindow):
 
     def onPushButton_blogTestClicked(self):
         self._test_feedback(
-            blog_app, self._cache['blog'], self.label_blogTest, blog_utils)
+            blog_app, self._cache['blog'].copy(), self.label_blogTest, blog_utils)
 
     def onLineEdit_followedBlogTextChanged(self, line_edit, blog):
         self._cache['followed_blogs'][line_edit.alias] = blog
@@ -311,7 +311,7 @@ class Panel(Ui_MainWindow):
 
     def onPushButton_emailTestClicked(self):
         self._test_feedback(
-            email_app, self._cache['email'], self.label_emailTest, email_utils)
+            email_app, self._cache['email'].copy(), self.label_emailTest, email_utils)
 
     def onLineEdit_emailAddressTextChanged(self, address):
         self._cache['email']['address'] = address
