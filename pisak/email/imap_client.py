@@ -144,26 +144,6 @@ class IMAPClient(object):
         """
         return self._get_message(self._sent_box_name, id)
 
-    def get_many_messages_from_inbox(self, ids):
-        """
-        Get many messages with the given ids from the inbox.
-
-        :param ids: list of ids of the messages.
-
-        :return: list of dictionaries with the messages; or False on query failure.
-        """
-        return self._get_many_messages("INBOX", ids)
-
-    def get_many_messages_from_sent_box(self, ids):
-        """
-        Get messages with the given ids from the box of sent messages.
-
-        :param ids: list of ids of the messages.
-
-        :return: list of dictionaries with the messages; or False on query failure.
-        """
-        return self._get_many_messages(self._sent_box_name, ids)
-
     def get_many_previews_from_inbox(self, ids):
         """
         Get many previews with the given ids from the inbox.
@@ -185,25 +165,6 @@ class IMAPClient(object):
         """
         return self._get_many_previews(self._sent_box_name, ids,
                                        MAILBOX_HEADERS["sent_box"])
-
-    def get_inbox_list(self):
-        """
-        Get list containing previews of all the messages.
-
-        :returns: list of dictionary with message previews, each containing:
-        subject, sender and date; or False on query failure.
-        """
-        return self._get_mailbox_list("INBOX", MAILBOX_HEADERS["inbox"])
-
-    def get_sent_box_list(self):
-        """
-        Get list containing previews of all the sent messages.
-
-        :returns: list of dictionary with message previews, each containing:
-        subject, sender and date; or False on query failure.
-        """
-        return self._get_mailbox_list(self._sent_box_name,
-                                      MAILBOX_HEADERS["sent_box"])
 
     def delete_message_from_inbox(self, id):
         """
@@ -255,23 +216,6 @@ class IMAPClient(object):
         self._conn.expunge()
 
     @_imap_errors_handler(IMAPClientError)
-    def _get_mailbox_list(self, mailbox, headers):
-        self._conn.select(mailbox)
-        res, ids_data = self._conn.search(None, "ALL")
-        if res != self._positive_response_code:
-            ret = False
-        else:
-            ids = ids_data[0].decode(parsers.DEFAULT_CHARSET, "replace").split()
-            res, msg_data = self._conn.fetch(
-                ",".join(ids),
-                "(BODY.PEEK[HEADER.FIELDS ({})])".format(" ".join(headers).upper()))
-            if res != self._positive_response_code:
-                ret = False
-            else:
-                ret = parsers.parse_mailbox_list(ids, msg_data, headers)
-        return ret
-
-    @_imap_errors_handler(IMAPClientError)
     def _get_many_previews(self, mailbox, ids, headers):
         self._conn.select(mailbox)
         res, previews_data = self._conn.fetch(
@@ -307,20 +251,6 @@ class IMAPClient(object):
         else:
             ret =  parsers.parse_message(
                 msg_data[0][1].decode(parsers.DEFAULT_CHARSET, "replace"))
-        return ret
-
-    @_imap_errors_handler(IMAPClientError)
-    def _get_many_messages(self, mailbox, ids):
-        ids = ' ,'.join(ids)
-        self._conn.select(mailbox)
-        res, msgs_data = self._conn.fetch(ids, '(RFC822)')
-        if res != self._positive_response_code:
-            ret = False
-        else:
-            ret = []
-            for msg in msgs_data[0][1]:
-                ret.append(parsers.parse_message(
-                    msg.decode(parsers.DEFAULT_CHARSET, "replace")))
         return ret
 
     @_imap_errors_handler(IMAPClientError)
