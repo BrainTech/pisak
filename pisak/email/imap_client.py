@@ -1,6 +1,7 @@
 """
 Module providing access to the email account through the imap client.
 """
+import threading
 import socket
 import imaplib
 import email
@@ -63,11 +64,18 @@ class IMAPClient(object):
     Used access protocol - IMAP.
     """
     def __init__(self):
+        self._lock = threading.RLock()
+
         self._conn = None
         self._positive_response_code = "OK"
         self._config_obj = config.Config()
         self._setup = self._config_obj.get_account_setup()
         self._sent_box_name = self._setup["sent_box_name"]
+
+    def _call(self, method, *args, **kwargs):
+        with self._lock:
+            func = getattr(self._conn, method)
+            return func(*args, **kwargs)
 
     @_imap_errors_handler(IMAPClientError)
     def login(self):
@@ -90,17 +98,20 @@ class IMAPClient(object):
 
     @_imap_errors_handler(InvalidCredentials)
     def _do_login(self):
-        self._conn.login(self._setup["user_address"],
-                         self._config_obj.decrypt_password(self._setup["password"]))
+        self._call('login',
+                    self._setup["user_address"],
+                    self._config_obj.decrypt_password(self._setup["password"]))
 
     @_imap_errors_handler(IMAPClientError)
     def logout(self):
         """
         Logout from the account.
         """
-        if self._conn is not None:
-            self._conn.close()
-            self._conn.logout()
+        with self._lock:
+            conn_open = self._conn is not None
+        if conn_open:
+            self._call('close')
+            self._call('logout')
         else:
             _LOG.warning("There is no connection to the email account."
                          "Nowhere to logout from.")
@@ -200,8 +211,8 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def _get_ids(self, mailbox):
-        self._conn.select(mailbox)
-        res, ids_data = self._conn.search(None, "ALL")
+        self._call('select', mailbox)
+        res, ids_data = self._call('search', None, "ALL")
         if res != self._positive_response_code:
             ret = False
         else:
@@ -211,14 +222,14 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def _delete_message(self, mailbox, id):
-        self._conn.select(mailbox)
-        self._conn.store(id, "+FLAGS", "\\Deleted")
-        self._conn.expunge()
+        self._call('select', mailbox)
+        self._call('store', id, "+FLAGS", "\\Deleted")
+        self._call('expunge')
 
     @_imap_errors_handler(IMAPClientError)
     def _get_many_previews(self, mailbox, ids, headers):
-        self._conn.select(mailbox)
-        res, previews_data = self._conn.fetch(
+        self._call('select', mailbox)
+        res, previews_data = self._call('fetch',
                 ",".join(ids),
                 "(BODY.PEEK[HEADER.FIELDS ({})])".format(
                         " ".join(headers).upper()))
@@ -233,7 +244,7 @@ class IMAPClient(object):
         """
         It is strongly advised not to use this method right now.
         """
-        res, mailboxes_data = self._conn.list()
+        res, mailboxes_data = self._call('list')
         if res != self._positive_response_code:
             return False
         else:
@@ -244,8 +255,8 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def _get_message(self, mailbox, id):
-        self._conn.select(mailbox)
-        res, msg_data = self._conn.fetch(id, '(RFC822)')
+        self._call('select', mailbox)
+        res, msg_data = self._call('fetch', id, '(RFC822)')
         if res != self._positive_response_code:
             ret = False
         else:
@@ -255,8 +266,8 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def _get_mailbox_count(self, mailbox):
-        self._conn.select(mailbox)
-        res, ids_data = self._conn.search(None, "ALL")
+        self._call('select', mailbox)
+        res, ids_data = self._call('search', None, "ALL")
         if res != self._positive_response_code:
             ret = False
         else:
@@ -266,7 +277,7 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def _get_mailbox_status(self, mailbox):
-        res, status_data = self._conn.status(mailbox, "(MESSAGES UNSEEN)")
+        res, status_data = self._call('status', mailbox, "(MESSAGES UNSEEN)")
         if res != self._positive_response_code:
             ret = False
         else:
@@ -277,12 +288,12 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def _append_to_mailbox(self, mailbox, message):
-        res, _query_ret  = self._conn.append(
+        res, _query_ret  = self._call('append',
                  mailbox, "", imaplib.Time2Internaldate(time.time()),
                 message.as_string())
         return res == self._positive_response_code
 
     @_imap_errors_handler(IMAPClientError)
     def _create_mailbox(self, mailbox):
-        res, _query_ret  = self._conn.create(mailbox)
+        res, _query_ret  = self._call('create', mailbox)
         return res == self._positive_response_code
