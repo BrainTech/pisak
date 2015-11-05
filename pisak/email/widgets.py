@@ -27,6 +27,7 @@ ERROR_MESSAGES = {
     "unknown": "Wystąpił błąd. Spróbuj ponownie."
 }
 
+
 class AddressTileSource(pager.DataSource):
     """
     Data source that provides tiles representing different addresses
