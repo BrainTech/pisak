@@ -2,10 +2,14 @@ def test(config):
     """
     Test provided email settings or server connection.
     """
+    import socket
+
     from pisak import exceptions
     from pisak.loc import EMAIL_MESSAGES as MESSAGES
     from pisak.email.test_connection import test_smtp_connection
     from pisak.email.imap_client import IMAPClient, InvalidCredentialsError
+
+    socket.setdefaulttimeout(5)
 
     try:
         dummy_client = IMAPClient(config)
@@ -13,7 +17,7 @@ def test(config):
         dummy_client.logout()
 
         test_smtp_connection(config)
-    except exceptions.NoInternetError:
+    except (socket.timeout, exceptions.NoInternetError):
         ret = False, MESSAGES['no_internet']
     except InvalidCredentialsError:
         ret = False, MESSAGES['invalid_credentials']
@@ -25,4 +29,7 @@ def test(config):
         ret = False, MESSAGES['unknown']
     else:
         ret = True, MESSAGES['success']
+
+    socket.setdefaulttimeout(None)
+
     return ret
