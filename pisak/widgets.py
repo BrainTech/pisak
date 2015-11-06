@@ -1437,6 +1437,9 @@ class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurabl
 
         handle.render_cairo(context)
 
+        self.show()
+        self.set_z_position(1)
+
     @property
     def ratio_width(self):
         """
