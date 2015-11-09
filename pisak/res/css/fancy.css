@@ -1,7 +1,7 @@
 /*  general */
 
 MxButton:scanning { 
-    color: #ccc;
+    color: #ffffffff;
     border-image: url("black_flat.png");
 }
 
@@ -196,7 +196,7 @@ PisakButton.PisakSymbolerButton:hover {
 
 
 MxButton.PisakSymbolerButton:scanning { 
-    color: #ccc;
+    color: #ffffffff;
     border-image: url("black_flat.png");
 }
 
