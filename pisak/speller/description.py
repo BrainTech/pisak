@@ -12,7 +12,9 @@ def prepare_main_view(app, window, script, data):
 
     from pisak.obci_scanner import Scanner
     scanner = Scanner(window.ui.keyboard_panel)
-    scanner.start()
+    scanner.run_scenario([(('row', 'random-replacement-greedy'), 5000),
+                          (('column', 'order'), 4000),
+                          (('element', 'random-replacement'), 6000)])
 
 
 speller_app = {
