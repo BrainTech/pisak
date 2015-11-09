@@ -2,11 +2,12 @@
 Module with operations on image data.
 '''
 import random
+import os
 
 from PIL import Image, ImageFilter
 from gi.repository import Cogl, Clutter, GObject
 
-from pisak import res, properties, configurator, logger
+from pisak import properties, configurator, logger
 
 
 _LOG = logger.get_logger(__name__)
@@ -29,15 +30,40 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
             Clutter.Actor.__gtype__,
             "", "", GObject.PARAM_READWRITE)
     }
+
     PIXEL_FORMATS = {'1_1': Cogl.PixelFormat.G_8, 'L_1': Cogl.PixelFormat.A_8,
                      'RGB_2': Cogl.PixelFormat.RGB_565, 'RGB_3': Cogl.PixelFormat.RGB_888,
                      'RGBA_2': Cogl.PixelFormat.RGBA_4444, 'RGBA_4': Cogl.PixelFormat.RGBA_8888}
+
+    SAVE_FORMATS = ['JPEG', 'PNG', 'TIFF', 'BMP']
+
+    SAVE_DEFAULT_EXT = 'JPEG'
+
+    SAVE_CONCATENATED_STRING = '_edited'
+
     def __init__(self):
+        self._save_path = None
+        self._save_format = None
         self.buffer = None
         self.original_photo = None
         self.zoom_timer = None
         self.noise_timer = None
         self.apply_props()
+
+    def _create_save_path(self, original_path):
+        directory, basename = os.path.split(original_path)
+        name, ext = os.path.splitext(basename)
+        name += self.SAVE_CONCATENATED_STRING
+        self._save_path = os.path.join(directory, name + ext)
+        if ext:
+            proper_ext = ext[1:].upper()
+            if proper_ext in self.SAVE_FORMATS:
+                ext = proper_ext
+            else:
+                ext = self.SAVE_DEFAULT_EXT
+        else:
+            ext = self.SAVE_DEFAULT_EXT
+        self._save_format = ext
 
     @property
     def path(self):
@@ -47,6 +73,7 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
     def path(self, value):
         self._path = value
         if value is not None:
+            self._create_save_path(value)
             try:
                 self.original_photo = Image.open(self.path)
             except OSError:
@@ -185,8 +212,20 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self.buffer = self.original_photo.copy()
         self._load()
 
-    def save(self, *args):
-        raise NotImplementedError()
+    def save(self):
+        """
+        Save the currently edited buffer to a file.
+        """
+        err_msg = None
+        if self._save_path and self._save_format:
+            try:
+                self.buffer.save(self._save_path, format=self._save_format)
+            except Exception as exc:
+                err_msg = exc
+        else:
+            err_msg = 'No save path for the currently edited photo.'
+        if err_msg:
+            LOG.error(err_msg)
 
     def _load(self):
         data = self.buffer.tobytes()

@@ -20,7 +20,11 @@ _LOG = logger.get_logger(__name__)
 
 class Label(Mx.Label):
     """
-    PISAK label.
+    PISAK label. Methods of the Mx.Label and of the internally instantiated
+    Clutter.Text responsible for any text input are overriden (see `set_text`)
+    or replaced (see `_adapt_clutter_text`) in order to manage any text
+    preprocessing. Currently on that initial stage, if this is set
+    in the main config, text is converted to upper-case.
     """
 
     __gtype_name__ = "PisakLabel"
@@ -37,13 +41,19 @@ class Label(Mx.Label):
 
         def custom_set_text(text):
             """
-            Override Clutter.Text generic method for any text preprocessing.
+            Replaces Clutter.Text generic method for any text preprocessing.
+            Converts string passed as an argument to upper-case, if only such
+            a parameter was set in the PISAK config. Then call the original method
+            passing that text.
             """
             generic_set_text(text.upper() if self._upper_case else text)
 
         def custom_insert_text(text, pos):
             """
-            Override Clutter.Text generic method for any text preprocessing.
+            Replaces Clutter.Text generic method for any text preprocessing.
+            Converts string passed as an argument to upper-case, if only such
+            a parameter was set in the PISAK config. Then call the original method
+            passing that text.
             """
             generic_insert_text(text.upper() if self._upper_case else text, pos)
 
@@ -52,7 +62,10 @@ class Label(Mx.Label):
 
     def set_text(self, text):
         """
-        Override Mx.Label generic method for any text preprocessing.
+        Overrides Mx.Label generic method for any text preprocessing.
+        Converts string passed as an argument to upper-case, if only such
+        a parameter was set in the PISAK config. Then call the original method
+        passing that text.
         """
         super().set_text(text.upper() if self._upper_case else text)
 

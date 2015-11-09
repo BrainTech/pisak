@@ -88,8 +88,13 @@ class Synthezator(object):
             self.process = subprocess.Popen(["milena_say", self.text])
         else:
             timeout = sec_converter(timeout)
-            call = 'milena_say "-S trim 0 {}" {}'.format(timeout, self.text)
-            self.process = subprocess.Popen([call], shell=True)
+            if pisak.arg_parser.get_args().debug:
+                call = 'milena_say "-S trim 0 {}" {}'
+            else:
+                call = 'milena_say "-S trim 0 {}" {} 2>/dev/null'
+            self.process = subprocess.Popen([call.format(timeout,
+                                                         self.text)],
+                                            shell=True)
 
 
     def read_and_call(self, func_to_call, timeout=None):

@@ -125,7 +125,7 @@ class Panel(Ui_MainWindow):
         self._connect_all_signals()
         self._fill_in_forms()
 
-        digit_regexp = QRegularExpression('[0-9]*')
+        digit_regexp = QRegularExpression('^([1-9][0-9]*)*')
         digit_validator = QRegularExpressionValidator(digit_regexp)
         self.comboBox_emailPortIMAP.setValidator(digit_validator)
         self.comboBox_emailPortSMTP.setValidator(digit_validator)

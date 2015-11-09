@@ -612,7 +612,7 @@
         "signals": [
                        {
                            "name": "clicked",
-                           "handler": "speller/enter",
+                           "handler": "speller/new_line",
                            "object": "text_box"
                        }
                    ]

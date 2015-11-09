@@ -58,16 +58,16 @@
         "id": "button_1",
         "type": "PisakButton",
         "style-class": "PisakViewerButton",
-        "label": "ZOOM",
-	"scanning-pauser": true,
+        "label": "ZAPISZ",
+	    "scanning-pauser": true,
         "ratio-width": 0.24,
         "ratio-height": 0.0742,
         "icon-size": 50,
-        "icon-name": "zoom",
+        "icon-name": "zapisz",
         "signals": [
             {
                 "name": "clicked",
-                "handler": "viewer/zoom",
+                "handler": "viewer/save",
                 "object": "slide_space"
             }
         ]

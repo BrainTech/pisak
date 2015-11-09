@@ -142,7 +142,7 @@ def parse_mailbox_list(ids, msg_data, headers):
     :returns: list of dictionaries containing parsed message previews.
     """
     mailbox_list = []
-    for idx, (_spec, msg) in enumerate(msg_data[::2]):
+    for idx, (_spec, msg) in enumerate(reversed(msg_data[::2])):
         parsed_msg = {"UID": ids[idx]}
         str_msg = msg.decode(DEFAULT_CHARSET, "replace")
         for header_name in headers:

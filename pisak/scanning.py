@@ -131,7 +131,8 @@ class Strategy(Clutter.Actor):
         if element is None:
             _LOG.debug("There is no current element that could be frozen.")
             return
-        self.play_selection_sound()
+        if self.select_sound_enabled:
+            self.play_selection_sound()
         if isinstance(element, Group):
             if not self.group.paused:
                 self.group.stop_cycle()
@@ -172,11 +173,10 @@ class Strategy(Clutter.Actor):
             raise Exception("Unsupported selection")
 
     def unwind(self):
+        self.group.stop_cycle()
         if self.unwind_to is not None:
-            self.group.stop_cycle()
             self.unwind_to.start_cycle()
         else:
-            self.group.stop_cycle()
             self.group.parent_group.start_cycle()
 
     def get_current_element(self):
@@ -293,8 +293,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         if self.strategy is not None:
             self.strategy.group = None
         self._strategy = value
-        if self.strategy is not None:
-            self.strategy.group = self
+        if self._strategy is not None:
+            self._strategy.group = self
 
     @property
     def scanning_hilite(self):
@@ -411,6 +411,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
         collapsed = get_top_level_group([self])
         if collapsed is not self:
+            if not (collapsed.strategy.unwind_to or collapsed.parent_group):
+                collapsed.strategy.unwind_to = self.strategy.unwind_to or self.parent_group
             collapsed.start_cycle()
             return
 
@@ -568,8 +570,13 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._unwind_to = None
         self.timeout_token = None
         self.player = pisak.app.sound_effects_player
-        self.sound_support_enabled = pisak.config.as_bool("sound_support_enabled") and \
-                             pisak.config.as_bool("sound_effects_enabled")
+        sounds_enabled = pisak.config.as_bool("sound_effects_enabled")
+        self.button_sound_support_enabled = sounds_enabled and \
+                                            pisak.config.as_bool("sound_support_enabled")
+        self.scan_sound_enabled = sounds_enabled and \
+                                  pisak.config.as_bool('scan_sound_enabled')
+        self.select_sound_enabled = sounds_enabled and \
+                                    pisak.config.as_bool('select_sound_enabled')
         self.apply_props()
 
     @property
@@ -755,20 +762,24 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if self.sound_support_enabled:
+            if self.button_sound_support_enabled:
+                strateg_conf = pisak.config['PisakRowStrategy']
+                scan_time = strateg_conf.as_int('interval') / 1000
                 if isinstance(selection, pisak.widgets.Button):
                     label = selection.get_label()
                     if label in selection.sounds:
                         self.player.play(selection.sounds[label])
                     elif label in [' ', '']:
                         icon_name = selection.current_icon_name
-                        self.player.play(selection.sounds[icon_name])
+                        if icon_name in selection.sounds:
+                            self.player.play(selection.sounds[icon_name])
+                    else:
+                        synthezator = Synthezator(label)
+                        synthezator.read(scan_time)
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
                 elif isinstance(selection, pisak.widgets.PhotoTile):
                     if pisak.config.as_bool('speech_synthesis'):
-                        strateg_conf = pisak.config['PisakRowStrategy']
-                        scan_time = strateg_conf.as_int('interval') / 1000
                         synthezator = Synthezator(selection.label_text)
                         synthezator.read(scan_time)
                     else:
@@ -776,7 +787,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                 else:
                     self.play_scanning_sound()
             else:
-                self.play_scanning_sound()
+                if self.scan_sound_enabled:
+                    self.play_scanning_sound()
             if hasattr(selection, "enable_hilite"):
                 selection.enable_hilite()
             elif isinstance(selection, Group):
@@ -797,7 +809,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         :return: True if scanning has anywhere to unwind to, False otherwise.
         """
-        return self.unwind_to is not None
+        return self.unwind_to is not None or self.group.parent_group is not None
 
     def _is_killed(self):
         """
