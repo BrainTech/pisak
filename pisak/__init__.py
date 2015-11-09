@@ -1,6 +1,7 @@
 import os
 
 from pisak.hooks import init_hooks
+from pisak.unit import initialize as init_units
 from pisak import settings
 
 """
@@ -25,3 +26,4 @@ app = None
 
 def init():
     init_hooks()
+    init_units()
