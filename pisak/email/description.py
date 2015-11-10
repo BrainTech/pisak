@@ -485,8 +485,7 @@ def prepare_single_message_view(app, window, script, data):
             app.box['new_message'].recipients = \
                 [message['From'][0][1]] + \
                 [msg[1] for msg in message['To'] if
-                    msg[1] != '@'.join([setup['user_address'],
-                                        setup['server_address']])]
+                    msg[1] != setup['address']]
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'reply_all'})
 
