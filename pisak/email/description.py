@@ -2,7 +2,7 @@ import textwrap
 
 from gi.repository import GObject
 
-from pisak import res, logger, exceptions, handlers
+from pisak import res, logger, exceptions, handlers, unit
 from pisak.viewer import model
 from pisak.email import address_book, message, imap_client, config, widgets
 
@@ -463,6 +463,18 @@ def prepare_single_message_view(app, window, script, data):
         window.ui.date_content.set_text(str(message["Date"]))
         if "Body" in message:
             window.ui.message_body.type_text(message["Body"])
+            raw_text = window.ui.message_body.clutter_text
+            font_name = raw_text.get_font_name()
+            for i in font_name.split():
+                try:
+                    cursor_height = unit.pt_to_px(int(i))
+                except ValueError:
+                    if 'px' in i:
+                        cursor_height = int(i.strip('px'))
+                    else:
+                        pass
+            cursor_height = round(cursor_height)
+            raw_text.set_cursor_size(2*cursor_height)
 
         def reply():
             '''
