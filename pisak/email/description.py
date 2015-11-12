@@ -1,6 +1,6 @@
 import textwrap
 
-from gi.repository import GObject
+from gi.repository import GObject, Pango
 
 from pisak import res, logger, exceptions, handlers, unit
 from pisak.viewer import model
@@ -462,32 +462,16 @@ def prepare_single_message_view(app, window, script, data):
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
         if "Body" in message:
-            window.ui.message_body.type_text(message["Body"])
-            raw_text = window.ui.message_body.clutter_text
-            font_name = raw_text.get_font_name()
-            font_parts = font_name.split()
-            cursor_height = None
-            while font_parts:
-                font_part = font_parts.pop()
-                if 'px' in font_part:
-                    try:
-                        cursor_height = int(font_part.strip('px'))
-                        break
-                    except ValueError:
-                        pass
-                else:
-                    try:
-                        cursor_height = unit.pt_to_px(int(font_part))
-                        break
-                    except ValueError:
-                        pass
-            if not cursor_height and not font_parts:
-                msg = "Failed to find cursor size " +\
-                      "loading default HUGE"
-                _LOG.error(msg)
-                cursor_height = 100
-            cursor_height = round(cursor_height)
+
+            raw_text = window.ui.message_body.text.get_clutter_text()
+            font_description = raw_text.get_font_description()
+            font_size = font_description.get_size() / Pango.SCALE
+            cursor_height = int(font_size) + 40
+            # add stub (40) as font size retrieval malfunctions
             raw_text.set_cursor_size(cursor_height)
+            
+            window.ui.message_body.type_text(message["Body"])
+            
 
         def reply():
             '''
