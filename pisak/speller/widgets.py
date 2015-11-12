@@ -240,7 +240,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
         self.connect("notify::mapped", self._init_setup)
-        self.clutter_text.connect("cursor-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
 
@@ -248,6 +247,8 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.parent = self.get_parent()
         if isinstance(self.parent, CursorGroup):
             self.parent.connect("cursor-moved", self._check_to_resize)
+            self.clutter_text.connect("cursor-changed",
+                                      self._scroll_to_view)
         self._check_to_resize()
         
     def _add_operation(self, operation):
