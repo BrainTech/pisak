@@ -6,12 +6,18 @@ from gi.repository import Clutter
 from pisak import logger
 
 
+class elements_group(list):
+
+    def __str__(self):
+        return 'Group: ' + ', '.join(list(map(str, self)))
+
+
 class Scanner:
 
     def __init__(self, content):
         self._rows = []
         self._columns = []
-        self._elements = []
+        self._elements = elements_group()
         self._parse_content(content)
 
         self.interval = 100  # scanning interval in miliseconds
@@ -31,15 +37,15 @@ class Scanner:
 
         self._current_cycle_start = None  # when the current strategy cycle was started
 
-        # list of currently scanned items (elements or some lists of elements):
-        self._items = []
+        # list of currently scanned items (elements or some groups of elements):
+        self._items = None
         # list of ids corresponding to the currently scanned items:
         self._sampling_pool = []
         # rule describing how to sample items, callable:
         self._sampling_rule = None
 
         self._working = False
-        self._current_item = None
+        self._current_item = None  # can be an element or an elements_group instance
         self._logger = logger.get_obci_logger()
 
     @property
@@ -142,19 +148,21 @@ class Scanner:
             strategy, duration = self._current_scenario.pop(0)
             self.strategy = strategy
             self.start(duration/1000)
+        else:
+            self.clean_up()
 
     def _reset_params(self):
         self._idx = 0
 
     def _parse_content(self, content):
         for box in content.get_children():
-            new_row = []
+            new_row = elements_group()
             self._rows.append(new_row)
             for column_idx, element in enumerate(box.get_children()[0].get_children()):
                 new_row.append(element)
                 self._elements.append(element)
                 if column_idx >= len(self._columns):
-                    new_column = [element]
+                    new_column = elements_group((element,))
                     self._columns.append(new_column)
                 else:
                     self._columns[column_idx].append(element)
@@ -199,3 +207,12 @@ class Scanner:
             else:
                 self._flash_item_off(self._current_item)
                 return False
+
+
+def parse_logs():
+    path = logger.OBCI_LOGS_PATH
+    with open(path, 'r') as file:
+        lines = file.readlines()
+    for line in lines:
+        timestamp, event = line.split(maxsplit=1)
+        event = event.rstrip('\n')
