@@ -33,8 +33,7 @@ Description of each input is a dictionary and should contain following keys:
 
 - process - external process needed by a device to work. None or dictionary with keys:
   - command - bash command to run the process;
-  - server - boolean, if there is a need for a websocket server for communication between a process
-    and the main program;
+  - server - boolean, if there is a need for a websocket server for communication between a process and the main program;
   - startup - (optional) some extra function called on process start-up.
 - middleware - middle layer between an external device and the main program. None or dictionary with keys:
   - name - name of the middleware, currently available: "scanning" and "sprite";
