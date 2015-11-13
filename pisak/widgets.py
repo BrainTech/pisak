@@ -8,7 +8,7 @@ import os
 
 import cairo
 from requests.structures import CaseInsensitiveDict
-from gi.repository import Clutter, Mx, GObject, Rsvg, Cogl, GdkPixbuf, Pango
+from gi.repository import Clutter, Mx, GObject, Cogl, GdkPixbuf, Pango
 
 import pisak
 from pisak import res, logger, unit, properties, scanning, configurator, \

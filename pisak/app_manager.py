@@ -11,6 +11,11 @@ import importlib
 import sys
 import traceback
 
+import gi
+
+gi.require_version('Clutter', '1.0')
+gi.require_version('Mx', '1.0')
+
 from gi.repository import GObject, Clutter, Mx
 
 import pisak
