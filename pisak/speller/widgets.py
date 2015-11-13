@@ -239,12 +239,18 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
+        font_description = self.clutter_text.get_font_description()
+        font_size = font_description.get_size() / Pango.SCALE
+        cursor_height = int(font_size) + 40
+        # add stub (40) as font size retrieval malfunctions
+        self.clutter_text.set_cursor_size(cursor_height)
         self.connect("notify::mapped", self._init_setup)
         self._set_text_params()
         self.add_actor(self.box)
 
     def _init_setup(self, *args):
         self.parent = self.get_parent()
+        
         if isinstance(self.parent, CursorGroup):
             self.parent.connect("cursor-moved", self._check_to_resize)
             self.clutter_text.connect("cursor-changed",
