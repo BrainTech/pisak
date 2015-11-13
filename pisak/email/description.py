@@ -1,8 +1,8 @@
 import textwrap
 
-from gi.repository import GObject
+from gi.repository import GObject, Pango
 
-from pisak import res, logger, exceptions, handlers
+from pisak import res, logger, exceptions, handlers, unit
 from pisak.viewer import model
 from pisak.email import address_book, message, imap_client, config, widgets
 
@@ -462,7 +462,16 @@ def prepare_single_message_view(app, window, script, data):
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
         if "Body" in message:
+
+            raw_text = window.ui.message_body.text.get_clutter_text()
+            font_description = raw_text.get_font_description()
+            font_size = font_description.get_size() / Pango.SCALE
+            cursor_height = int(font_size) + 40
+            # add stub (40) as font size retrieval malfunctions
+            raw_text.set_cursor_size(cursor_height)
+            
             window.ui.message_body.type_text(message["Body"])
+            
 
         def reply():
             '''
