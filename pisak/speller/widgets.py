@@ -556,7 +556,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def ratio_width(self, value):
         self._ratio_width = value
         self.set_width(unit.w(value))
-        self.text.set_width(unit.w(value))
 
     @property
     def ratio_height(self):
@@ -566,7 +565,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def ratio_height(self, value):
         self._ratio_height = value
         self.set_height(unit.h(value))
-        self.text.set_height(unit.h(value))
 
 
 class Key(widgets.Button, configurator.Configurable):
