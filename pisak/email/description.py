@@ -461,15 +461,8 @@ def prepare_single_message_view(app, window, script, data):
             "; ".join([record[0] + " <" + record[1] + ">" for
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
-        if "Body" in message:
 
-            raw_text = window.ui.message_body.text.get_clutter_text()
-            font_description = raw_text.get_font_description()
-            font_size = font_description.get_size() / Pango.SCALE
-            cursor_height = int(font_size) + 40
-            # add stub (40) as font size retrieval malfunctions
-            raw_text.set_cursor_size(cursor_height)
-            
+        if "Body" in message:
             window.ui.message_body.type_text(message["Body"])
             
 
