@@ -1,6 +1,8 @@
 from collections import UserDict
+import logging
 import cssutils
 
+cssutils.log.setLevel(logging.CRITICAL)
 
 def name_resolver(name):
     dec_name = name.replace(' ', '')
