@@ -1,4 +1,4 @@
-/*  general */
+/* general */
 
 MxButton:scanning { 
     color: #ccc;
@@ -19,7 +19,7 @@ MxLabel.PisakClock {
 }
 
 
-/* Loading panel  */
+/* Loading panel */
 
 MxLabel.LoadingPanel {
   font-family: Kelson Sans;
