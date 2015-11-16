@@ -24,6 +24,17 @@ class StyleDict(UserDict):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._properties = {}
+        self._child_styles = []
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self._child_styles.append(key)
+
+    def __repr__(self):
+        if not self:
+            return 'properties - {}'.format(self.properties.__repr__())
+        else:
+            return '{}'.format(super().__repr__())
         
     @property
     def properties(self):
@@ -32,6 +43,10 @@ class StyleDict(UserDict):
     @properties.setter
     def properties(self, value):
         self._properties = value
+
+    @property
+    def child_styles(self):
+        return self._child_styles
                 
 
 class CssToDict(UserDict):
