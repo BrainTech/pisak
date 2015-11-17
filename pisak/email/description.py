@@ -464,7 +464,7 @@ def prepare_single_message_view(app, window, script, data):
 
         if "Body" in message:
             window.ui.message_body.type_text(message["Body"])
-            
+            window.ui.message_body._fix_scroll()
 
         def reply():
             '''
