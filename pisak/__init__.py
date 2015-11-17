@@ -1,7 +1,7 @@
 import os
 
 from pisak.hooks import init_hooks
-from pisak import settings
+from pisak import settings, css_parser, dirs
 
 """
 Absolute path to the package directory.
@@ -16,6 +16,10 @@ Global configuration object that contains all the default settings.
 """
 config = settings.Config()
 
+""""
+Global css object.
+"""
+css = css_parser.CssToDict(dirs.get_css_path())
 
 """
 Instance of the current application.
