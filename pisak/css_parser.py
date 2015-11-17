@@ -4,7 +4,7 @@ import cssutils
 
 cssutils.log.setLevel(logging.CRITICAL)
 
-def name_resolver(name):
+def resolve_name(name):
     dec_name = name.replace(' ', '')
     pseudo_style_class = None
     style_class = None
@@ -33,10 +33,10 @@ class StyleDict(UserDict):
         self._child_styles.append(key)
 
     def __repr__(self):
-        if not self:
-            return 'properties - {}'.format(self.properties.__repr__())
+        if self == {}:
+            return 'properties - {}'.format(repr(self._properties))
         else:
-            return '{}'.format(super().__repr__())
+            return super().__repr__()
         
     @property
     def properties(self):
@@ -65,16 +65,16 @@ class CssToDict(UserDict):
         for rule in rule_gen:
             class_names = rule.selectorText.replace(' ', '').split(',')
             for class_name in class_names:
-                object_name, style_class, pseudo_style_class = name_resolver(
+                object_name, style_class, pseudo_style_class = resolve_name(
                 class_name)
-                if object_name not in self.keys():
+                if object_name not in self:
                     self[object_name] = StyleDict()
                 if pseudo_style_class:
                     pseudo_dict = StyleDict()
                     pseudo_dict.properties = {k: rule.style[k] for k in
                                               rule.style.keys()}
                     if style_class:
-                        if style_class not in self[object_name].keys():
+                        if style_class not in self[object_name]:
                             self[object_name][style_class] = StyleDict()
                         self[object_name][style_class][pseudo_style_class] =\
                         pseudo_dict
@@ -88,12 +88,12 @@ class CssToDict(UserDict):
                     self[object_name].properties = {k: rule.style[k] for k in
                                                     rule.style.keys()}
                 else:
-                    raise Warning("Func {} returned only None".format(
-                        name_resolver))
+                    raise Warning("Func {} returned only Nones".format(
+                        resolve_name))
 
 
     def get_properties(self, full_name):
-        name, style_class, pseudo_style_class = name_resolver(full_name)
+        name, style_class, pseudo_style_class = resolve_name(full_name)
         props = self[name].properties.copy()
         if style_class:
             props.update(self[name][style_class].properties)
