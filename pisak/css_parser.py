@@ -11,26 +11,30 @@ def resolve_name(name):
     object_name = None
     if ':' in dec_name:
         dec_name = dec_name.split(':')
-        pseudo_style_class = dec_name.pop()
+        assert len(dec_name) == 2, ("It is assumed that an object has one"
+                                    " pseudo-style-class defined")
+        pseudo_style_class = dec_name[1]
         dec_name = dec_name[0]
     if '.' in dec_name:
         dec_name = dec_name.split('.')
-        style_class = dec_name.pop()
+        assert len(dec_name) == 2, ("It is assumed that an object has one"
+                                    " style-class defined")
+        style_class = dec_name[1]
         object_name = dec_name[0]
     else:
         object_name = dec_name
     return object_name, style_class, pseudo_style_class
 
 
-class StyleDict(UserDict):
+class PropsDict(UserDict):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._properties = {}
-        self._child_styles = []
+        self._children = []
 
     def __setitem__(self, key, value):
         super().__setitem__(key, value)
-        self._child_styles.append(key)
+        self._children.append(key)
 
     def __repr__(self):
         if self == {}:
@@ -47,8 +51,8 @@ class StyleDict(UserDict):
         self._properties = value
 
     @property
-    def child_styles(self):
-        return self._child_styles
+    def children(self):
+        return self._children
                 
 
 class CssToDict(UserDict):
@@ -68,25 +72,22 @@ class CssToDict(UserDict):
                 object_name, style_class, pseudo_style_class = resolve_name(
                 class_name)
                 if object_name not in self:
-                    self[object_name] = StyleDict()
+                    self[object_name] = PropsDict()
                 if pseudo_style_class:
-                    pseudo_dict = StyleDict()
-                    pseudo_dict.properties = {k: rule.style[k] for k in
-                                              rule.style.keys()}
+                    pseudo_dict = PropsDict()
+                    pseudo_dict.properties = dict(rule.style)
                     if style_class:
                         if style_class not in self[object_name]:
-                            self[object_name][style_class] = StyleDict()
-                        self[object_name][style_class][pseudo_style_class] =\
-                        pseudo_dict
+                            self[object_name][style_class] = PropsDict()
+                        self[object_name][style_class][pseudo_style_class] = \
+                            pseudo_dict
                             
                 elif style_class:
-                    style_dict = StyleDict()
-                    style_dict.properties = {k: rule.style[k] for k in
-                                             rule.style.keys()}
+                    style_dict = PropsDict()
+                    style_dict.properties = dict(rule.style)
                     self[object_name][style_class] = style_dict
                 elif object_name:
-                    self[object_name].properties = {k: rule.style[k] for k in
-                                                    rule.style.keys()}
+                    self[object_name].properties = dict(rule.style)
                 else:
                     raise Warning("Func {} returned only Nones".format(
                         resolve_name))
