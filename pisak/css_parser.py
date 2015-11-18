@@ -1,28 +1,10 @@
-from collections import UserDict
 import logging
 import cssutils
 
 cssutils.log.setLevel(logging.CRITICAL)
 
 
-def resolve_name(name):
-    dec_name = name.replace(' ', '')
-    pseudo_style_class = None
-    style_class = None
-    if ':' in dec_name:
-        dec_name = dec_name.split(':')
-        pseudo_style_class = dec_name[-1]
-        dec_name = dec_name[0]
-    if '.' in dec_name:
-        dec_name = dec_name.split('.')
-        style_class = dec_name[-1]
-        object_name = dec_name[0]
-    else:
-        object_name = dec_name
-    return object_name, style_class, pseudo_style_class
-
-
-class PropsDict(UserDict):
+class PropsDict(dict):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._properties = {}
@@ -51,12 +33,29 @@ class PropsDict(UserDict):
         return self._children
                 
 
-class CssToDict(UserDict):
+class CssToDict(dict):
     def __init__(self, path):
         super().__init__()
         self.css_path = path
         self.raw_css = None
         self._parse_css()
+
+    @staticmethod
+    def resolve_class_name(name):
+        dec_name = name.replace(' ', '')
+        pseudo_style_class = None
+        style_class = None
+        if ':' in dec_name:
+            dec_name = dec_name.split(':')
+            pseudo_style_class = dec_name[-1]
+            dec_name = dec_name[0]
+        if '.' in dec_name:
+            dec_name = dec_name.split('.')
+            style_class = dec_name[-1]
+            object_name = dec_name[0]
+        else:
+            object_name = dec_name
+        return object_name, style_class, pseudo_style_class
 
     def _parse_css(self):
         self.raw_css = cssutils.parseFile(self.css_path)
@@ -65,7 +64,7 @@ class CssToDict(UserDict):
         for rule in rule_gen:
             class_names = rule.selectorText.replace(' ', '').split(',')
             for class_name in class_names:
-                object_name, style_class, pseudo_style_class = resolve_name(
+                object_name, style_class, pseudo_style_class = self.resolve_class_name(
                     class_name)
                 if object_name not in self:
                     self[object_name] = PropsDict()
@@ -86,7 +85,7 @@ class CssToDict(UserDict):
                     self[object_name].properties = dict(rule.style)
 
     def get_properties(self, full_name):
-        name, style_class, pseudo_style_class = resolve_name(full_name)
+        name, style_class, pseudo_style_class = self.resolve_class_name(full_name)
         props = self[name].properties.copy()
         if style_class:
             props.update(self[name][style_class].properties)
