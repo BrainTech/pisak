@@ -4,11 +4,11 @@ import cssutils
 
 cssutils.log.setLevel(logging.CRITICAL)
 
+
 def resolve_name(name):
     dec_name = name.replace(' ', '')
     pseudo_style_class = None
     style_class = None
-    object_name = None
     if ':' in dec_name:
         dec_name = dec_name.split(':')
         assert len(dec_name) == 2, ("It is assumed that an object has one"
@@ -70,7 +70,7 @@ class CssToDict(UserDict):
             class_names = rule.selectorText.replace(' ', '').split(',')
             for class_name in class_names:
                 object_name, style_class, pseudo_style_class = resolve_name(
-                class_name)
+                    class_name)
                 if object_name not in self:
                     self[object_name] = PropsDict()
                 if pseudo_style_class:
@@ -86,12 +86,8 @@ class CssToDict(UserDict):
                     style_dict = PropsDict()
                     style_dict.properties = dict(rule.style)
                     self[object_name][style_class] = style_dict
-                elif object_name:
-                    self[object_name].properties = dict(rule.style)
                 else:
-                    raise Warning("Func {} returned only Nones".format(
-                        resolve_name))
-
+                    self[object_name].properties = dict(rule.style)
 
     def get_properties(self, full_name):
         name, style_class, pseudo_style_class = resolve_name(full_name)
@@ -102,5 +98,5 @@ class CssToDict(UserDict):
                 props.update(
                     self[name][style_class][pseudo_style_class].properties)
         elif pseudo_style_class:
-            props.update(self[name][pseudo_style_classes].properties)
+            props.update(self[name][pseudo_style_class].properties)
         return props
