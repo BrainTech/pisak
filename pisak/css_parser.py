@@ -11,15 +11,11 @@ def resolve_name(name):
     style_class = None
     if ':' in dec_name:
         dec_name = dec_name.split(':')
-        assert len(dec_name) == 2, ("It is assumed that an object has one"
-                                    " pseudo-style-class defined")
-        pseudo_style_class = dec_name[1]
+        pseudo_style_class = dec_name[-1]
         dec_name = dec_name[0]
     if '.' in dec_name:
         dec_name = dec_name.split('.')
-        assert len(dec_name) == 2, ("It is assumed that an object has one"
-                                    " style-class defined")
-        style_class = dec_name[1]
+        style_class = dec_name[-1]
         object_name = dec_name[0]
     else:
         object_name = dec_name
