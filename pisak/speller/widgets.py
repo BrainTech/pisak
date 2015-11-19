@@ -239,11 +239,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.text.set_margin(self.margin)
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
-        font_description = self.clutter_text.get_font_description()
-        font_size = font_description.get_size() / Pango.SCALE
-        cursor_height = int(font_size) + 40
-        # add stub (40) as font size retrieval malfunctions
-        self.clutter_text.set_cursor_size(cursor_height)
         self.connect("notify::mapped", self._init_setup)
         self._set_text_params()
         self.add_actor(self.box)
@@ -256,6 +251,23 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             self.clutter_text.connect("cursor-changed",
                                       self._scroll_to_view)
         self._check_to_resize()
+
+    def _fix_scroll(self, *args):
+        label_props = pisak.css.get_properties(
+            'MxLabel.{}'.format(self.text.get_style_class()))
+        font_size = label_props['font-size']
+        if 'pt' in font_size:
+            cursor_height = unit.pt_to_px(int(font_size.strip('pt')))
+        elif 'px' in font_size:
+            cursor_height = int(font_size.strip('px'))
+        else:
+            _LOG.warning('Cannot parse font-size sensibly,'
+            'falling to default cursor size: 100.')
+            cursor_height = 100
+        lines = self.clutter_text.get_layout().get_line_count()
+        text_len = len(self.text.get_text())
+        factor = 1.5*text_len**0.55/lines
+        self.clutter_text.set_cursor_size(cursor_height*factor)
         
     def _add_operation(self, operation):
         if len(self.history) == 0 or not self.history[-1].compose(operation):
