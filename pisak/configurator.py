@@ -17,15 +17,10 @@ from pisak import logger
 _LOG = logger.get_logger(__name__)
 
 
-class ConfiguratorError(KeyError):
-    def __init__(self):
-        super().__init__()
-
-
 class Configurable(object):
-    '''
+    """
     Class initializing config for other PISAK classes.
-    '''
+    """
 
     def __init__(self):
         super().__init__()
@@ -33,6 +28,10 @@ class Configurable(object):
 
     @property
     def config(self):
+        """
+        Current configuration object that
+        contains all the specification.
+        """
         return self._config_obj
 
     @config.setter
@@ -40,12 +39,12 @@ class Configurable(object):
         self._config_obj = value
 
     def apply_props(self, extra_configs=None):
-        '''
+        """
         Apply all the properties from the config.
 
         :param extra_configs: if any extra configs should be applied.
         List of many or single string are accepted.
-        '''
+        """
         self.config = pisak.config
         if extra_configs:
             self.config.update_config(extra_configs)

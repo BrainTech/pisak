@@ -23,15 +23,13 @@ _LOG = logger.get_logger(__name__)
 class _Application(configurator.Configurable):
     """
     Abstract application class. This is the entry point for all Pisak apps.
+    On init it initializes the application stage, style and global
+    sound effects player.
+
+    :param argv: application arguments.
+    :param descriptor: general application descriptor.
     """
     def __init__(self, argv, descriptor):
-        """
-        Initialize the application. Call methods that initialize
-        application stage, style and global sound effects player. 
-        
-        :param argv: application arguments.
-        :param descriptor: general application descriptor.
-        """
         super().__init__()
         Clutter.init(sys.argv)
 
@@ -69,8 +67,6 @@ class _Application(configurator.Configurable):
         Read the given descriptor and adjust the application.
 
         :param descriptor: dictionary with the application description.
-
-        :return: None.
         """
         app_elements = descriptor.get("elements")
         if app_elements:
@@ -115,16 +111,16 @@ class _Application(configurator.Configurable):
         Play one of the previously instantiated sound effects by the means of
         an internal player.
 
-        :param sound_name: name of the sound to be played
+        :param sound_name: name of the sound to be played.
         """
         if self.sound_effects_player is not None:
             self.sound_effects_player.play(sound_name)
 
     def create_window(self, argv, descriptor):
         """
-        Abstract method which should create Clutter.Stage instance
+        Abstract method which should create Clutter.Stage instance.
 
-        :param: argv application arguments.
+        :param: argv: application arguments.
         :param descriptor: general application descriptor.
         """
         raise NotImplementedError
@@ -137,8 +133,6 @@ class _Application(configurator.Configurable):
         :param message: debug message, should indicate the type of the
         application being started.
         :param loop: callable, main loop of the application.
-
-        :return: None.
         """
         _LOG.debug(message)
         self.main_loop_is_running = True
@@ -167,7 +161,14 @@ class ClutterApp(_Application):
     """
     Implementation of a Clutter-based application.
     """
+
     def create_window(self, argv, descriptor):
+        """
+        Create application main window as the Clutter.Stage.
+
+        :param: argv: application arguments.
+        :param descriptor: general application descriptor.
+        """
         clutter_window = window.Window(self, Clutter.Stage(), descriptor)
         clutter_window.stage.set_title('Pisak Main')
         if arg_parser.get_args().debug:
@@ -191,7 +192,7 @@ class ClutterApp(_Application):
         """
         Quit the application. Destroying the main window stage triggers
         `Clutter.main_quit` function which stops the main application loop.
-         """
+        """
         self.window.stage.destroy()
 
 
@@ -199,11 +200,18 @@ class GtkApp(_Application):
     """
     Implementation of application for JSON descriptors inside GtkWindow.
     """
+
     def __init__(self, argv, descriptor):
         Gtk.init(sys.argv)
         super().__init__(argv, descriptor)
 
     def create_window(self, argv, descriptor):
+        """
+        Create application main window as the Gtk.Window.
+
+        :param: argv: application arguments.
+        :param descriptor: general application descriptor.
+        """
         gtk_window = Gtk.Window()
         embed = GtkClutter.Embed()
         gtk_window.add(embed)

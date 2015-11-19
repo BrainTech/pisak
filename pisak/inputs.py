@@ -1,3 +1,6 @@
+"""
+Module manages various PISAK input devices and their middlewares.
+"""
 import subprocess
 import time
 import os
@@ -171,7 +174,7 @@ class InputGroup(object):
         be reactive to the input events. Launch or schedule launching
         of a activator appropriate for the current input type.
 
-        :param actor: top level UI object
+        :param actor: top level UI object.
         """
         self.scanning_group = None
         self.content = actor
@@ -194,7 +197,7 @@ class InputGroup(object):
         Decorated with 'launch_scanning' function launches scanning and
         connects handler to the proper signal.
 
-        :returns: id of the handler connected to the key release signal
+        :return: id of the handler connected to the key release signal.
         """
         self.action_signal = "key-" + self.react_on + "-event"
         self.scanning_handler = scanning.Group.key_release
@@ -205,7 +208,7 @@ class InputGroup(object):
         Decorated with 'launch_scanning' function launches scanning and
         connects handler to the proper signal.
 
-        :returns: id of the handler connected to the button release signal
+        :return: id of the handler connected to the button release signal.
         """
         display = Gdk.Display.get_default()
         screen = display.get_default_screen()
@@ -220,7 +223,7 @@ class InputGroup(object):
         Decorated with 'launch_scanning' function launches scanning and
         connects handler to the proper signal.
 
-        :returns: id of the handler connected to the key release signal
+        :return: id of the handler connected to the key release signal.
         """
         if not self.switch_listener:
             self.switch_listener = PisakSwitchListener()
@@ -233,7 +236,7 @@ class InputGroup(object):
         """
         Get description of things necessary for activating the scanning group.
 
-        :param scanning_group: scanning group
+        :param scanning_group: scanning group.
         """
         if "key" in self.action_signal:
             signal_source = scanning_group
@@ -326,6 +329,7 @@ class InputGroup(object):
             _LOG.debug("No deactivator specified for the input group "
                        "with input {}.".format(self.input_mode))
 
+
 class PisakSwitchListener(GObject.GObject):
     """
     Container of methods needed for communicating with pisak-switch device.
@@ -376,7 +380,9 @@ class PisakSwitchListener(GObject.GObject):
 
     def get_signal(self):
         """
-        :return: Read data from defined endpoint.
+        Read data from defined endpoint.
+
+        :return: received data.
         """
         return self.device.read(self.endpoint.bEndpointAddress,
                                 self.signal_size)[0]
@@ -411,12 +417,13 @@ def _wait_on_eviacam_startup(process):
             break
         time.sleep(0.1)
 
+
 def run_input_process():
     """
     Check for input type in the default settings and run the
     input as a separate process.
 
-    :returns: process of the input or None and device server or None
+    :return: process of the input or None and device server or None.
     """
     input_mode = pisak.config.get("input")
     _LOG.debug("Input selected: {}.".format(input_mode))

@@ -1,5 +1,5 @@
 """
-Classes for defining scanning in JSON layouts
+Classes for defining scanning in JSON layouts.
 """
 import time
 
@@ -72,21 +72,39 @@ class StylableScannable(Scannable):
     Hilighted and scanned widgets are marked with CSS pseudoclasses.
     """
     def enable_hilite(self):
+        """
+        Enables hilite style for this widget.
+        """
         self.style_pseudo_class_add("hover")
 
     def disable_hilite(self):
+        """
+        Disables hilite style for this widget.
+        """
         self.style_pseudo_class_remove("hover")
 
     def enable_scanned(self):
+        """
+        Enables scanned style for this widget.
+        """
         self.style_pseudo_class_add("scanning")
 
     def disable_scanned(self):
+        """
+        Disables scanned style for this widget.
+        """
         self.style_pseudo_class_remove("scanning")
 
     def enable_lag_hilite(self):
+        """
+        Enables lag_hilite style for this widget.
+        """
         self.style_pseudo_class_add("lag_hilite")
         
     def disable_lag_hilite(self):
+        """
+        Disables lag_hilite style for this widget.
+        """
         self.style_pseudo_class_remove("lag_hilite")
 
     def activate(self):
@@ -125,6 +143,8 @@ class Strategy(Clutter.Actor):
     def select(self, element=None):
         """
         Selects currently highlighted element.
+
+        :param element: optional, element to be directly selected.
         """
         select_lag_disabled = False
         element = element or self.get_current_element()
@@ -173,6 +193,10 @@ class Strategy(Clutter.Actor):
             raise Exception("Unsupported selection")
 
     def unwind(self):
+        """
+        Stops the group cycle. Starts scanning a group set
+        as an 'unwind' or a parent group if no 'unwind' has been set.
+        """
         self.group.stop_cycle()
         if self.unwind_to is not None:
             self.unwind_to.start_cycle()
@@ -184,12 +208,15 @@ class Strategy(Clutter.Actor):
         Abstract method to extract currently highlighted element from an
         internal strategy state.
 
-        :returns: currently highlighed element
+        :return: currently highlighed element.
         """
         raise NotImplementedError("Incomplete strategy implementation")
 
 
 class ScanningException(exceptions.PisakException):
+    """
+    Scanning specific exception.
+    """
     pass
 
 
@@ -198,6 +225,7 @@ class _GroupObserver(object):
     Helper class for Group. This class observes all group descendants. When
     subgroup change it schedules update in scanning seqence.
     """
+
     def __init__(self, group):
         self.group = group
         self._init_connections()
@@ -286,6 +314,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def strategy(self):
+        """
+        Scanning strategy that will manage the entire scanning cycle.
+        """
         return self._strategy
 
     @strategy.setter
@@ -298,6 +329,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def scanning_hilite(self):
+        """
+        Whether the 'scanning' hilite style should be enabled, boolean.
+        """
         return self._scanning_hilite
 
     @scanning_hilite.setter
@@ -308,6 +342,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def sound(self):
+        """
+        Sound specific for the group, played when the group is being scanned.
+        """
         return self._sound
 
     @sound.setter
@@ -316,9 +353,17 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             self._sound = dirs.get_sound_path(name + '.wav') or self._sound
 
     def schedule_update(self):
+        """
+        Schedule updating a list of the group current subgroups.
+        """
         self.fresh_subgroups = False
 
     def get_subgroups(self):
+        """
+        Get a list of the subgroups belonging currently to the group.
+
+        :return: list of all the subgroups.
+        """
         if not self.fresh_subgroups:
             self.fresh_subgroups = True
             self._subgroups = list(self._gen_subgroups())
@@ -361,6 +406,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     def is_empty(self):
         """
         Tests if group is empty.
+
         :return: True if group has subgroups, False otherwise.
         """
         return len(self.get_subgroups()) == 0
@@ -368,6 +414,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     def is_singular(self):
         """
         Test if group has exactly 1 element.
+
         :return: True if group has exactly 1 subgroup, False otherwise.
         """
         return len(self.get_subgroups()) == 1
@@ -433,6 +480,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     def _on_singular(self):
         """
         Do something when the group is singular.
+
+        :return: boolean.
         """
         sub_element = self.get_subgroups()[0]
         if isinstance(sub_element, Group):
@@ -451,7 +500,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     def stop_cycle(self):
         """
-        Stop currently running group cycle
+        Stop currently running group cycle.
         """
         if self.signal_source and self.input_handler_token:
             self.signal_source.disconnect(self.input_handler_token)
@@ -460,16 +509,35 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.strategy.stop()
 
     def set_key_focus(self):
+        """
+        Set key focus to the stage owning the group.
+        """
         stage = self.get_stage()
         if stage is not None:
             stage.set_key_focus(self)
 
     def key_release(self, _source, event):
+        """
+        Key release handler. Triggers an action.
+
+        :param _source: signal source.
+        :param event: event specification, contains a released key code.
+
+        :return: True.
+        """
         if event.unicode_value == ' ':
             self.user_action_handler()
         return True
 
     def button_release(self, source, event=None):
+        """
+        Button release handler. Triggers an action.
+
+        :param source: signal source.
+        :param event: optional, event specification.
+
+        :return: False.
+        """
         self.user_action_handler()
         return False
 
@@ -482,6 +550,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
                 s._recursive_apply(test, operation)
 
     def enable_hilite(self):
+        """
+        Recursively enable hilite.
+        """
         def operation(s):
             s.enable_hilite()
             self._hilited.append(s)
@@ -490,11 +561,17 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             operation)
 
     def disable_hilite(self):
+        """
+        Disable hilite of all the previously hilited elements.
+        """
         for s in self._hilited:
             s.disable_hilite()
         self._hilited = []
 
     def enable_lag_hilite(self):
+        """
+        Recursively enable lag hilite.
+        """
         def operation(s):
             s.enable_lag_hilite()
             self._lag_hilited.append(s)
@@ -503,11 +580,17 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             operation)
 
     def disable_lag_hilite(self):
+        """
+        Disable lag hilite of all the previously lag-hilited elements.
+        """
         for s in self._lag_hilited:
             s.disable_lag_hilite()
         self._lag_hilited = []
 
     def enable_scan_hilite(self):
+        """
+        Recursively enable scan hilite.
+        """
         def operation(s):
             s.enable_scanned()
             self._scanned.append(s)
@@ -516,6 +599,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             operation)
 
     def disable_scan_hilite(self):
+        """
+        Disable hilite of all the previously scan-hilited elements.
+        """
         for s in self._scanned:
             s.disable_scanned()
         self._scanned = []

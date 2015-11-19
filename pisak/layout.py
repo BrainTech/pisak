@@ -15,6 +15,7 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
     """
     Arranges children in single line using BoxLayout.
     """
+
     __gtype_name__ = "PisakBoxLayout"
 
     __gproperties__ = {
@@ -78,6 +79,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def orientation(self):
+        """
+        Orientation in space: vertical or horizontal.
+        """
         return self.layout.get_orientation()
 
     @orientation.setter
@@ -87,6 +91,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def spacing(self):
+        """
+        Distance between neighbouring children, in pixels.
+        """
         return self.layout.get_spacing()
 
     @spacing.setter
@@ -95,6 +102,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def homogeneous(self):
+        """
+        Whether children should be expanded all proportionally.
+        """
         return self.layout.get_homogeneous()
 
     @homogeneous.setter
@@ -103,6 +113,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_width(self):
+        """
+        Widget width, as a fraction of the whole screen width.
+        """
         return self._ratio_width
 
     @ratio_width.setter
@@ -112,6 +125,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_height(self):
+        """
+        Widget height, as a fraction of the whole screen height.
+        """
         return self._ratio_height
 
     @ratio_height.setter
@@ -121,6 +137,11 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_spacing(self):
+        """
+        Distance between neighbouring children, as a fraction of the whole
+        screen width/height, depending on the current orientation setting,
+        :see: :property:`orientation`.
+        """
         return self._ratio_spacing
 
     @ratio_spacing.setter
@@ -130,6 +151,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_bottom(self):
+        """
+        Widget bottom margin, as a fraction of the whole screen height.
+        """
         return self._ratio_margin_bottom
 
     @ratio_margin_bottom.setter
@@ -139,6 +163,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_top(self):
+        """
+        Widget top margin, as a fraction of the whole screen height.
+        """
         return self._ratio_margin_top
 
     @ratio_margin_top.setter
@@ -148,6 +175,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_right(self):
+        """
+        Widget right margin, as a fraction of the whole screen width.
+        """
         return self._ratio_margin_right
 
     @ratio_margin_right.setter
@@ -157,6 +187,9 @@ class Box(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_left(self):
+        """
+        Widget left margin, as a fraction of the whole screen width.
+        """
         return self._ratio_margin_left
 
     @ratio_margin_left.setter
@@ -170,6 +203,7 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
     Places its children on top of each other (overlaying them
     along the 'z' axis).
     """
+
     __gtype_name__ = "PisakBinLayout"
     __gproperties__ = {
         "ratio_width": (
@@ -204,6 +238,9 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_width(self):
+        """
+        Widget width, as a fraction of the whole screen width.
+        """
         return self._ratio_width
 
     @ratio_width.setter
@@ -213,6 +250,9 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_height(self):
+        """
+        Widget height, as a fraction of the whole screen height.
+        """
         return self._ratio_height
 
     @ratio_height.setter
@@ -222,6 +262,9 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_bottom(self):
+        """
+        Widget bottom margin, as a fraction of the whole screen height.
+        """
         return self._ratio_margin_bottom
 
     @ratio_margin_bottom.setter
@@ -231,6 +274,9 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_top(self):
+        """
+        Widget top margin, as a fraction of the whole screen height.
+        """
         return self._ratio_margin_top
 
     @ratio_margin_top.setter
@@ -240,6 +286,9 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_right(self):
+        """
+        Widget right margin, as a fraction of the whole screen width.
+        """
         return self._ratio_margin_right
 
     @ratio_margin_right.setter
@@ -249,6 +298,9 @@ class Bin(Clutter.Actor, properties.PropertyAdapter, configurator.Configurable):
 
     @property
     def ratio_margin_left(self):
+        """
+        Widget left margin, as a fraction of the whole screen width.
+        """
         return self._ratio_margin_left
 
     @ratio_margin_left.setter

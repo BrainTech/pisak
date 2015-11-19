@@ -7,7 +7,7 @@ by GObject system and by python language.
 """
 
 
-class PropertyAdapter(object):
+class PropertyAdapter:
     """
     Utility class for GObject vs python types of properties conversion.
     Contains gobject obligatory property setter and getter.
@@ -15,7 +15,15 @@ class PropertyAdapter(object):
     setter is called first and this, in turn, looks for related pythonic
     attribute with the same name and calls its setter.
     """
+
     def find_attribute(self, name):
+        """
+        Finds property of a given name.
+
+        :param name: name of an attribute.
+
+        :return: attribute.
+        """
         name = self._repair_prop_name(name)
         for relative in self.__class__.mro():
             attribute = relative.__dict__.get(name)
@@ -32,6 +40,9 @@ class PropertyAdapter(object):
     def do_set_property(self, spec, value):
         """
         Introspect object properties and set the value.
+
+        :param spec: specification of an attribute.
+        :param value: new value that an attribute should be set with.
         """
         attribute = self.find_attribute(spec.name)
         if attribute is not None and isinstance(attribute, property):
@@ -42,6 +53,10 @@ class PropertyAdapter(object):
     def do_get_property(self, spec):
         """
         Introspect object properties and get the value.
+
+        :param spec: specification of an attribute.
+
+        :return: value of the found property.
         """
         attribute = self.find_attribute(spec.name)
         if attribute is not None and isinstance(attribute, property):

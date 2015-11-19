@@ -24,4 +24,8 @@ app = None
 
 
 def init():
+    """
+    Should be run on the PISAK program start before doing anything else.
+    Initializes any necessary tools, processes or resources.
+    """
     init_hooks()

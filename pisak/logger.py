@@ -1,8 +1,12 @@
+"""
+PISAK logging facility.
+"""
 import os
 import logging
 from logging import handlers
 
 from pisak import arg_parser
+
 
 HOME = os.path.expanduser("~")
 HOME_PISAK_DIR = os.path.join(HOME, ".pisak")
@@ -17,6 +21,15 @@ LEVELS = {'debug': logging.DEBUG,
 
 
 def get_logger(name):
+    """
+    Creates and returns new logger, registers it with the given name.
+    Logger output files are rotated when their size exceeds 10**7 bytes,
+    10 back-ups are stored at a time.
+
+    :param name: name that a logger should be registered with.
+
+    :return: logger instance.
+    """
     logger = logging.getLogger(name)
     logger.setLevel(LEVELS['debug'])
 
@@ -53,6 +66,8 @@ def get_logger(name):
 def get_event_logger():
     """
     Get logger devoted to some specific events that happened to the PISAK program.
+
+    :return: logger instance.
     """
     logger = logging.getLogger("PISAK events")
     logger.setLevel(LEVELS['info'])
