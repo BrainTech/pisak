@@ -8,7 +8,7 @@ import os
 
 import cairo
 from requests.structures import CaseInsensitiveDict
-from gi.repository import Clutter, Mx, GObject, Rsvg, Cogl, GdkPixbuf, Pango
+from gi.repository import Clutter, Mx, GObject, Cogl, GdkPixbuf, Pango
 
 import pisak
 from pisak import res, logger, unit, properties, scanning, configurator, \
@@ -151,6 +151,9 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
 
     @property
     def ratio_width(self):
+        """
+        Width of the widget, as a fraction of the entire screen width.
+        """
         return self._ratio_width
 
     @ratio_width.setter
@@ -160,6 +163,9 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
 
     @property
     def ratio_height(self):
+        """
+        Height of the widget, as a fraction of the entire screen height.
+        """
         return self._ratio_height
 
     @ratio_height.setter
@@ -169,6 +175,9 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
 
     @property
     def playback(self):
+        """
+        Media stream player instance.
+        """
         return self._playback
 
     @playback.setter
@@ -181,6 +190,9 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
 
     @property
     def info_display(self):
+        """
+        Widget that should display informations about the media stream.
+        """
         return self._info_display
 
     @info_display.setter

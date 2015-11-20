@@ -1,8 +1,8 @@
 import textwrap
 
-from gi.repository import GObject
+from gi.repository import GObject, Pango
 
-from pisak import res, logger, exceptions, handlers
+from pisak import res, logger, exceptions, handlers, unit
 from pisak.viewer import model
 from pisak.email import address_book, message, imap_client, config, widgets
 
@@ -461,8 +461,10 @@ def prepare_single_message_view(app, window, script, data):
             "; ".join([record[0] + " <" + record[1] + ">" for
                        record in message["To"]]))
         window.ui.date_content.set_text(str(message["Date"]))
+
         if "Body" in message:
             window.ui.message_body.type_text(message["Body"])
+            window.ui.message_body._fix_scroll()
 
         def reply():
             '''
@@ -485,8 +487,7 @@ def prepare_single_message_view(app, window, script, data):
             app.box['new_message'].recipients = \
                 [message['From'][0][1]] + \
                 [msg[1] for msg in message['To'] if
-                    msg[1] != '@'.join([setup['user_address'],
-                                        setup['server_address']])]
+                    msg[1] != setup['address']]
             window.load_view(VIEWS_MAP["new_message_initial_view"],
                              {'original_msg': message, 'action': 'reply_all'})
 

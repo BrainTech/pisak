@@ -240,15 +240,34 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.box.add_actor(self.text, 0)
         self.clutter_text = self.text.get_clutter_text()
         self.connect("notify::mapped", self._init_setup)
-        self.clutter_text.connect("cursor-changed", self._scroll_to_view)
         self._set_text_params()
         self.add_actor(self.box)
 
     def _init_setup(self, *args):
         self.parent = self.get_parent()
+        
         if isinstance(self.parent, CursorGroup):
             self.parent.connect("cursor-moved", self._check_to_resize)
+            self.clutter_text.connect("cursor-changed",
+                                      self._scroll_to_view)
         self._check_to_resize()
+
+    def _fix_scroll(self, *args):
+        label_props = pisak.css.get_properties(
+            'MxLabel.{}'.format(self.text.get_style_class()))
+        font_size = label_props['font-size']
+        if 'pt' in font_size:
+            cursor_height = unit.pt_to_px(int(font_size.strip('pt')))
+        elif 'px' in font_size:
+            cursor_height = int(font_size.strip('px'))
+        else:
+            _LOG.warning('Cannot parse font-size sensibly,'
+            'falling to default cursor size: 100.')
+            cursor_height = 100
+        lines = self.clutter_text.get_layout().get_line_count()
+        text_len = len(self.text.get_text())
+        factor = 1.5*text_len**0.55/lines
+        self.clutter_text.set_cursor_size(cursor_height*factor)
         
     def _add_operation(self, operation):
         if len(self.history) == 0 or not self.history[-1].compose(operation):
@@ -549,7 +568,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def ratio_width(self, value):
         self._ratio_width = value
         self.set_width(unit.w(value))
-        self.text.set_width(unit.w(value))
 
     @property
     def ratio_height(self):
@@ -559,7 +577,6 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def ratio_height(self, value):
         self._ratio_height = value
         self.set_height(unit.h(value))
-        self.text.set_height(unit.h(value))
 
 
 class Key(widgets.Button, configurator.Configurable):

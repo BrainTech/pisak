@@ -1,7 +1,7 @@
-/*  general */
+/* general */
 
 MxButton:scanning { 
-    color: #ffffffff;
+    color: #ccc;
     border-image: url("black_flat.png");
 }
 
@@ -225,7 +225,7 @@ PisakButton.PisakSymbolerButton:lag_hilite {
 }
 
 MxButton.PisakSymbolerButton:scanning { 
-    color: #ffffffff;
+    color: #ccc;
     border-image: url("black_flat.png");
 }
 

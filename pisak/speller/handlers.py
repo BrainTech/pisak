@@ -215,7 +215,7 @@ def enter(text_box):
 
     :param text_box: text box
     """
-    text_box.type_text("\n")
+    text_box.move_to_new_line()
 
 
 @signals.registered_handler("speller/new_line")

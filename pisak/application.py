@@ -4,7 +4,13 @@ Basic classes for Pisak application.
 import sys
 import os
 
-from gi.repository import Gtk, GObject, Clutter, Mx, ClutterGst, GtkClutter
+import gi
+
+gi.require_version('Gtk', '3.0')
+gi.require_version('ClutterGst', '2.0')
+gi.require_version('GtkClutter', '1.0')
+
+from gi.repository import GObject, Gtk, Clutter, Mx, ClutterGst, GtkClutter
 
 import pisak
 from pisak import res, logger, sound_effects, window, configurator, \
