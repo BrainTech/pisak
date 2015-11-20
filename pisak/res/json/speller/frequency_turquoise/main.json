@@ -99,7 +99,6 @@
     {
         "id": "menu_header",
         "type": "PisakMenuHeader",
-        "color": "rgba(75, 149, 148, 255)",
         "name": "funkcjenapis",
         "ratio-width": 0.1,
         "ratio-height": 0.06
@@ -310,6 +309,13 @@
         }
     },
     {
+        "id": "prediction_header",
+        "type": "PisakMenuHeader",
+        "name": "predykcjanapis",
+	"ratio-height": 0.06,
+	"ratio-width": 0.1
+    },
+    {
         "id": "prediction_panel_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
@@ -322,13 +328,6 @@
             "prediction_5", "prediction_4","prediction_3", "prediction_2",
             "prediction_1", "prediction_header"
         ]
-    },
-    {
-        "id": "prediction_header",
-        "type": "PisakMenuHeader",
-        "color": "rgba(65, 139, 138, 255)",
-        "name": "predykcjanapis",
-        "height": 65.28
     },
     {
         "id": "prediction_1",

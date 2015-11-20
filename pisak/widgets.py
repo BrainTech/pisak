@@ -1435,16 +1435,16 @@ class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurabl
         super().__init__()
         self.svg = None
         self._color = None
+        self._name = None
         self._canvas = Clutter.Canvas()
         self.set_content(self._canvas)
         self._canvas.set_size(20, 20)
-        self._canvas.connect('draw', self._draw)
-        self._canvas.invalidate()
+        self.connect("notify::name", lambda _, __: self._canvas.invalidate())
         self.prepare_style()
 
     def _draw(self, canvas, context, w, h):
         if self.svg is None:
-            return
+            _LOG.warning('No svg.')
         if self.color is not None:
             self.svg.change_color(self.color)
         handle, pixbuf = self.svg.get_handle(), self.svg.get_pixbuf()
@@ -1501,7 +1501,7 @@ class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurabl
     @color.setter
     def color(self, value):
         self._color = value
-        self._load()
+        self._canvas.invalidate()
 
     @property
     def name(self):
@@ -1515,6 +1515,7 @@ class Header(Clutter.Actor, properties.PropertyAdapter, configurator.Configurabl
         self._name = value
         try:
             self.svg = svg.PisakSVG(value)
+            self._canvas.connect('draw', self._draw)
             self._load()
         except FileNotFoundError as message:
             _LOG.warning(message)
