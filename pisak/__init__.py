@@ -19,7 +19,7 @@ config = settings.Config()
 """"
 Global css object.
 """
-css = css_parser.CssToDict(dirs.get_css_path())
+css = css_parser.CssDict(dirs.get_css_path())
 
 """
 Instance of the current application.
