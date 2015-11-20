@@ -55,7 +55,7 @@ def remove_document(path):
     """
     Remove record from the datatabse pointing to the not existing file.
 
-    :param path: path column of the requested to delete record
+    :param path: path column of the requested to delete record.
     """
     with _establish_session() as sess:
         sess.query(Document).filter(Document.path == path).delete()
@@ -66,9 +66,9 @@ def add_document(name, path):
     Insert new document related record to the database.
     Return path in the file system to the new document.
 
-    :param name: name of the new document
+    :param name: name of the new document.
 
-    :param path: path to the new document
+    :param path: path to the new document.
     """
     if not is_in_database(path):
         with _establish_session() as sess:
@@ -79,7 +79,9 @@ def is_in_database(path):
     """
     Check if document with the given path is already in the database.
 
-    :param path: path to the document file
+    :param path: path to the document file.
+
+    :return: boolean.
     """
     with _establish_session() as sess:
         document = sess.query(Document).filter(Document.path == path).first()
@@ -92,6 +94,8 @@ def is_in_database(path):
 def generate_new_path():
     """
     Generate path for the new document file.
+
+    :return: path for a text document.
     """
     with _establish_session() as sess:
         file_no = sess.query(Document).count()
@@ -121,7 +125,7 @@ def _establish_session():
 
 class Document(_Base):
     """
-    Class representing a row in the documents table in the database
+    Class representing a row in the documents table in the database.
     """
     __tablename__ = "documents"
     id = Column(Integer, primary_key=True)

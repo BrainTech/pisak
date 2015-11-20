@@ -1,6 +1,6 @@
-'''
+"""
 Definitions of widgets specific to speller applet
-'''
+"""
 import re
 
 from gi.repository import Clutter, Mx, GObject, Pango
@@ -23,16 +23,16 @@ class CursorGroup(layout.Bin, configurator.Configurable):
 
     def __init__(self):
         super().__init__()
-        self.connect("notify::mapped", self.init_content)
+        self.connect("notify::mapped", self._init_content)
         self.first_run = True
         self.apply_props()
 
-    def init_content(self, *args):
+    def _init_content(self, *args):
         self.label = [i for i in self.get_children()
                      if type(i) == Text][0]
-        self.label.clutter_text.connect('cursor-changed', self.move_cursor)
+        self.label.clutter_text.connect('cursor-changed', self._move_cursor)
 
-    def init_cursor(self):
+    def _init_cursor(self):
         font_name = self.label.clutter_text.get_font_name()
         for i in font_name.split():
             try:
@@ -50,9 +50,9 @@ class CursorGroup(layout.Bin, configurator.Configurable):
         self.cursor.set_x(0)
         self.cursor.set_y(0)
 
-    def move_cursor(self, event):
+    def _move_cursor(self, event):
         if self.first_run:
-            self.init_cursor()
+            self._init_cursor()
             self.first_run = False
         cursor_pos = self.label.clutter_text.get_cursor_position()
         coords = self.label.clutter_text.position_to_coords(cursor_pos)
@@ -68,7 +68,10 @@ class CursorGroup(layout.Bin, configurator.Configurable):
 class Cursor(Clutter.Actor):
     """
     Widget displaying text cursor drawn on ClutterCanvas.
+
+    :param size: size of the cursor, 2-element tuple.
     """
+
     def __init__(self, size):
         super().__init__()
         self.width = size[0]
@@ -76,12 +79,12 @@ class Cursor(Clutter.Actor):
         self.set_size(self.width, self.height)
         self.canvas = Clutter.Canvas()
         self.canvas.set_size(self.width, self.height)
-        self.canvas.connect('draw', self.draw)
+        self.canvas.connect('draw', self._draw)
         self.canvas.invalidate()
         self.set_content(self.canvas)
 
     @staticmethod
-    def draw(canvas, context, width, height):
+    def _draw(canvas, context, width, height):
         context.set_source_rgb(0, 0, 0)
         context.rectangle(0, 0, width, height)
         context.fill()
@@ -101,15 +104,14 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     """
     class Insertion(object):
         """
-        Text replacement operation
+        Text replacement operation.
         """
         def __init__(self, pos, value):
             """
-            Creates text insertion
+            Creates text insertion.
 
-            :param: pos absolute position of insertion
-
-            :param: value nonempty string to be inserted
+            :param: pos absolute position of insertion.
+            :param: value nonempty string to be inserted.
             """
             self.pos = pos
             self.value = value
@@ -322,44 +324,44 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.clutter_text.set_cursor_position(new_pos)
 
     def scroll_to(self, value):
-        '''
+        """
         Scroll the text field to some arbitrary value.
-        '''
+        """
         scroll_bar = self.get_children()[1]
         adj = scroll_bar.get_adjustment()
         adj.set_value(value)
         scroll_bar.set_adjustment(adj)
 
     def scroll_down(self):
-        '''
+        """
         Scroll the text field one step down.
-        '''
+        """
         self._scroll(1)
 
     def scroll_up(self):
-        '''
+        """
         Scroll the text field one step up.
-        '''
+        """
         self._scroll(-1)
 
     def revert_operation(self):
-        '''
+        """
         Undo the previous operation.
-        '''
+        """
         if len(self.history) > 0:
             self.history.pop().revert(self)
 
     def get_cursor_position(self):
-        '''
+        """
         Get current position of the cursor in the number of chars.
-        '''
+        """
         pos = self.clutter_text.get_cursor_position()
         return pos if pos >= 0 else self.get_text_length()
 
     def set_cursor_position(self, new_pos):
-        '''
+        """
         Set new position of the cursor as the number of chars.
-        '''
+        """
         self.clutter_text.set_cursor_position(new_pos)
 
     def get_text(self):

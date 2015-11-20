@@ -20,7 +20,7 @@ def attach_post_content(text_field):
     Attach content to the currenlty edited post.
 
     :param text_field: text field that contains a content for the currently
-    edited post
+    edited post.
     """
     post = wordpress.blog.pending_post
     if post is not None:
@@ -33,7 +33,7 @@ def attach_post_title(text_field):
     Attach title to the currenlty edited post.
 
     :param text_field: text field that contains a title for the currently
-    edited post
+    edited post.
     """
     post = wordpress.blog.pending_post
     if post is not None:
@@ -68,7 +68,7 @@ def publish_about_me_bio(text_field):
     """
     Publish about me informations.
 
-    :param text_field: text field that contains about me informations
+    :param text_field: text field that contains about me informations.
     """
     wordpress.blog.update_about_me_bio(text_field.get_text())
 
@@ -77,7 +77,7 @@ def publish_about_me_photo(photo_path):
     """
     Publish my photo on the about me page.
 
-    :param photo_path: photo path
+    :param photo_path: photo path.
     """
     wordpress.blog.update_about_me_photo(photo_path)
 
@@ -103,7 +103,7 @@ def scroll_post_up(post):
     """
     Scroll post upward. 
     
-    :param post: post to be scrolled
+    :param post: post to be scrolled.
     """
     post.v_adj.set_value(post.v_adj.get_value() - post.v_adj.get_page_size()/2)
 
@@ -112,16 +112,17 @@ def scroll_post_down(post):
     """
     Scroll post downward. 
     
-    :param post: post to be scrolled
+    :param post: post to be scrolled.
     """
     post.v_adj.set_value(post.v_adj.get_value() + post.v_adj.get_page_size()/2)
+
 
 @signals.registered_handler("blog/go_back")
 def go_back(post):
     """
     Go backward in the site. 
     
-    :param view: view to be changed
+    :param post: post object.
     """
     post.view.go_back()
 
@@ -130,6 +131,6 @@ def go_forward(post):
     """
     Go forward in the site. 
     
-    :param view: view to be changed
+    :param post: post object.
     """
     post.view.go_forward()

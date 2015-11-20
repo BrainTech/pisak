@@ -9,6 +9,7 @@ class StylableContainer(object):
     Base class for objects being containers of stylables that propagate
     their style class prop for descendants
     """
+
     def _recursive_apply_style(self, actor):
         if isinstance(actor, Mx.Stylable) and actor is not self:
             if isinstance(self, Mx.Stylable) and self.get_style_class():
@@ -37,6 +38,9 @@ class StylableContainer(object):
         self.connect("notify::style-class", lambda *_: self.apply_props())
 
     def apply_props(self):
+        """
+        Apply all the properties to the object.
+        """
         raise NotImplementedError
 
     def prepare_style(self):

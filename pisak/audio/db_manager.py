@@ -1,3 +1,6 @@
+"""
+Music database management.
+"""
 import os
 
 from sqlalchemy import Table, Column, Integer, String, Boolean, MetaData, \
@@ -214,6 +217,8 @@ class DBLoader(DBConnector):
 
         :param name: name of the folder.
         :param cover_path: path to a cover of the given folder.
+
+        :return: rowid of the inserted or already existing record.
         """
         ret = self._execute(folders.insert().prefix_with('OR IGNORE'),
                 name=name, cover_path=cover_path)

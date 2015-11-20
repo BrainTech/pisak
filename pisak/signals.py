@@ -1,6 +1,6 @@
-'''
+"""
 Implementation of signal connecting strategy for ClutterScript.
-'''
+"""
 import sys
 import inspect
 from functools import wraps
@@ -11,35 +11,6 @@ from pisak import logger
 
 
 _LOG = logger.get_logger(__name__)
-
-
-"""
-Object or module relative to which signal handlers are named
-"""
-BASE_NAMESPACE = sys.modules[__name__]
-
-
-def resolve_name(handler_name):
-    """
-    Resolve python name to python value in current namespace
-    """
-    import pisak.handlers  # @UnusedImport
-    name_parts = handler_name.split('.')
-    current = BASE_NAMESPACE
-    for part in name_parts:
-        current = current.__dict__[part]
-    return current
-
-
-def resolve_handler(handler_name):
-    """
-    Resolve handler name and check for callability
-    """
-    function = resolve_name(handler_name)
-    if callable(function):
-        return function
-    else:
-        raise Exception("Specified handler is not a function")
 
 
 def wrap_function(function):
@@ -68,6 +39,19 @@ def wrap_function(function):
 
 
 def connect_function(gobject, signal, target, flags, function, data):
+    """
+    Wrapper that connects a GObject signals handlers in a proper way,
+    taking into consideration any requested flags or parameters.
+
+    :param gobject: any :class:`GObject.GObject` instance.
+    :param signal: signal name.
+    :param target: object that should be passed to the handler as an argument,
+    can be None.
+    :param flags: any extra flags, supported now: GObject.ConnectFlags.AFTER.
+    :param function: callable, handler function.
+    :param data: any extra data, can be anything, depending
+    on the 'function' signature.
+    """
     # TODO:
     # make 'git grep connect' and redirect all the resulted connections in here
     if target is not None:
@@ -81,12 +65,22 @@ def connect_function(gobject, signal, target, flags, function, data):
         gobject.connect(signal, function, data)
 
 
-def python_connect(script, gobject, signal, handler, target, flags, data):
+def connect_registered(script, gobject, signal, handler, target, flags, data):
     """
-    Implementation of signal connector used by
-    ClutterScript.connect_signals_full.
+    Alternate implementation of signal connector. Uses only registered
+    functions instead of introspection.
+
+    :param script: ClutterScript.
+    :param gobject: any :class:`GObject.GObject` instance.
+    :param signal: signal name.
+    :param handler: callable, handler function.
+    :param target: object that should be passed to the handler as an argument,
+    can be None.
+    :param flags: any extra flags, supported now: GObject.ConnectFlags.AFTER.
+    :param data: any extra data, can be anything, depending
+    on the 'function' signature.
     """
-    function = resolve_handler(handler)
+    function = resolve_registered(handler)
     wrapped = wrap_function(function)
     connect_function(gobject, signal, target, flags, wrapped, data)
 
@@ -95,7 +89,11 @@ _HANDLER_MAP = {}
 
 def resolve_registered(handler):
     """
-    Resolve registered function
+    Resolve registered function.
+
+    :param handler: handler name.
+
+    :return: callable, previously registered function.
     """
     function = _HANDLER_MAP.get(handler)
     if function is not None:
@@ -106,7 +104,10 @@ def resolve_registered(handler):
 
 def register_function(handler, function):
     """
-    Registers a function as handler
+    Registers a function as handler.
+
+    :param handler: handler name.
+    :param function: callable, handler function.
     """
     if callable(function):
         _HANDLER_MAP[handler] = function
@@ -116,19 +117,11 @@ def register_function(handler, function):
 
 def registered_handler(handler_name):
     """
-    Decorator
+    Decorator.
+
+    :param handler_name: name that the function should be regitered with.
     """
     def f_reg(function):
         register_function(handler_name, function)
         return function
     return f_reg
-
-
-def connect_registered(script, gobject, signal, handler, target, flags, data):
-    """
-    Alternate implementation of signal connector. Uses only registered
-    functions instead of introspection.
-    """
-    function = resolve_registered(handler)
-    wrapped = wrap_function(function)
-    connect_function(gobject, signal, target, flags, wrapped, data)

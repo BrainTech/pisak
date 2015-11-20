@@ -1,3 +1,6 @@
+"""
+Email address book management.
+"""
 from contextlib import contextmanager
 from functools import wraps
 
@@ -69,6 +72,9 @@ def _db_session_handler(func):
 
 
 class AddressBookError(exceptions.PisakException):
+    """
+    Address book unexpected condition, maybe problems when accessing the database.
+    """
     pass
 
 
@@ -93,6 +99,9 @@ class AddressBook(text_tools.Predictor):
     def do_prediction(self, text, position):
         """
         Implementation of the `text_tools.Predictor` method.
+
+        :param text: text to feed the predictor with.
+        :param position: how many signs from the given text should ba taken.
         """
         feed = text[0 : position]
         self.content = self._book_lookup(feed)
@@ -106,7 +115,7 @@ class AddressBook(text_tools.Predictor):
         :param contact_id: identification number of a contact that should
         be returned.
 
-        :returns: single instance of a `_Contact` with the given id or None if
+        :return: single instance of a `_Contact` with the given id or None if
         there was no match.
         """
         contact = self.sess.query(_Contact).filter(
@@ -135,7 +144,7 @@ class AddressBook(text_tools.Predictor):
         """
         Get number of contacts in the address book.
 
-        :returns: integer with number of contacts in the address book
+        :return: integer with number of contacts in the address book
         """
         return self.sess.query(func.count(_Contact.id)).scalar()
 
@@ -144,7 +153,7 @@ class AddressBook(text_tools.Predictor):
         """
         Retrieve all records from the address book.
 
-        :returns: list of all contacts.
+        :return: list of all contacts.
         """
         contacts = self.sess.query(_Contact).all()
         self.sess.expunge_all()
@@ -175,7 +184,7 @@ class AddressBook(text_tools.Predictor):
 
         :param contact: dictionary with new contact.
 
-        :returns: True on successfull update of the book with the given
+        :return: True on successfull update of the book with the given
         contact or False otherwise, for example when address same as the
         one of the given contact has already been in the book.
         """

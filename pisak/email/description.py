@@ -40,6 +40,14 @@ BUILTIN_CONTACTS = [
 
 
 def prepare_main_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_inbox", "email/inbox")
     handlers.button_to_view(window, script, "button_sent", "email/sent")
@@ -95,6 +103,14 @@ def prepare_main_view(app, window, script, data):
 
 
 def prepare_drafts_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(
         window, script, "button_new_message",
@@ -103,6 +119,14 @@ def prepare_drafts_view(app, window, script, data):
 
 
 def prepare_inbox_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(
         window, script, "button_new_message",
@@ -143,6 +167,14 @@ def prepare_inbox_view(app, window, script, data):
 
 
 def prepare_sent_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(
         window, script, "button_new_message",
@@ -183,6 +215,14 @@ def prepare_sent_view(app, window, script, data):
 
 
 def prepare_speller_message_body_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     if data and 'original_msg' in data and data['original_msg'].get('Body'):
         body = '\n' + textwrap.indent(
             data['original_msg']['Body'], '>', lambda line: True)
@@ -197,6 +237,14 @@ def prepare_speller_message_body_view(app, window, script, data):
 
 
 def prepare_speller_message_subject_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     if data and 'original_msg' in data:
         subject = data['original_msg']['Subject']
         action = data.get('action')
@@ -217,11 +265,27 @@ def prepare_speller_message_subject_view(app, window, script, data):
 
 
 def prepare_speller_message_to_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed", "email/sent")
 
 
 def prepare_address_book_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     data_source = script.get_object("data_source")
 
     contacts = []
@@ -284,6 +348,14 @@ def prepare_address_book_view(app, window, script, data):
 
 
 def prepare_contact_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_back", "email/main")
 
@@ -326,6 +398,14 @@ def prepare_contact_view(app, window, script, data):
 
 
 def prepare_speller_contact_name_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     def edit_contact_name():
         try:
             app.box["address_book"].edit_contact_name(
@@ -343,6 +423,14 @@ def prepare_speller_contact_name_view(app, window, script, data):
 
 
 def prepare_speller_contact_address_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     text_box = window.ui.text_box
 
     if not data or (data and data.get("new")):
@@ -389,6 +477,14 @@ def prepare_speller_contact_address_view(app, window, script, data):
 
 
 def prepare_viewer_contact_library_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_back", "email/contact",
                             {"contact_id": data["contact_id"]})
@@ -400,6 +496,14 @@ def prepare_viewer_contact_library_view(app, window, script, data):
 
 
 def prepare_viewer_contact_album_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     contact_id = data["contact_id"]
 
     handlers.button_to_view(window, script, "button_exit")
@@ -426,6 +530,14 @@ def prepare_viewer_contact_album_view(app, window, script, data):
 
 
 def prepare_single_message_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     box = data["previous_view"]
     msg_id = data["message_uid"]
 

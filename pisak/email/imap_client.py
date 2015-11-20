@@ -21,15 +21,25 @@ _LOG = logger.get_logger(__name__)
 
 
 class IMAPClientError(exceptions.PisakException):
-    ...
+    """
+    IMAP protocol-related unexpected condition met by the client.
+    """
+    pass
 
 
 class MailboxNotFoundError(IMAPClientError):
-    ...
+    """
+    Error raised when some mailbox can not be found.
+    """
+    pass
 
 
 class InvalidCredentialsError(IMAPClientError):
-    ...
+    """
+    Error raised when an authentication attempt fails because
+    of invalid credentials.
+    """
+    pass
 
 
 def _imap_errors_handler(custom_error):
@@ -77,6 +87,9 @@ class IMAPClient(object):
 
     @_imap_errors_handler(IMAPClientError)
     def login(self):
+        """
+        Login to the IMAP account.
+        """
         server_in = self._setup["IMAP_server"]
         port_in = self._setup["IMAP_port"]
         if port_in == "993":
@@ -119,7 +132,7 @@ class IMAPClient(object):
         Get number of all messages in the inbox and
         number of the unseen messages.
 
-        :returns: tuple with two integers: number of all messages
+        :return: tuple with two integers: number of all messages
         and number of unseen messages; or False on query failure.
         """
         return self._get_mailbox_status("INBOX")
@@ -128,7 +141,7 @@ class IMAPClient(object):
         """
         Get number of all messages in the sent box.
 
-        :returns: integers with number of all messages;
+        :return: integers with number of all messages;
         or False on query failure.
         """
         return self._get_mailbox_count(self._sent_box_name)

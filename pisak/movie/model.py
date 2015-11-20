@@ -1,3 +1,6 @@
+"""
+Movies library management.
+"""
 import os.path
 import subprocess
 import threading
@@ -46,6 +49,13 @@ class _Library(media_library.Library):
         super().__init__(exec_for_all=self.assign_cover, *args, **kwargs)
 
     def find_subtitles(self, movie_path):
+        """
+        Find subtitles for a movie.
+
+        :param movie_path: path to a movie.
+
+        :return: path to subtitles or None if nothing found.
+        """
         base_path = os.path.splitext(movie_path)[0]
         for ext in SUBTITLE_EXTENSIONS:
             path = ".".join([base_path, ext])
@@ -53,6 +63,16 @@ class _Library(media_library.Library):
                 return path
 
     def assign_cover(self, folder, movie, movie_path, folder_path, folder_name, dir_files):
+        """
+        Find and set a cover picture for a given movie.
+
+        :param folder: folder instance.
+        :param movie: movie instance as a library item.
+        :param movie_path: path to the movie.
+        :param folder_path: path to a folder that contains the movie.
+        :param folder_name: name of the folder.
+        :path dir_file: list of all the files in the directory.
+        """
         naked_movie_path = os.path.splitext(movie_path)[0]
         cover_path = self._find_cover(naked_movie_path, COVER_EXTENSIONS)
         if not cover_path:
@@ -115,6 +135,11 @@ class _Library(media_library.Library):
 
 
 def get_library():
+    """
+    Get the movie library.
+
+    :return: library instance.
+    """
     try:
         library = _LIBRARY_STORE[LIBRARY_DIR]
     except KeyError:

@@ -22,6 +22,7 @@ size_mm = None
 SCREEN_DPMM = None
 SCREEN_DPI = None
 
+
 def _initialize():
     global size_pix, size_mm, SCREEN_DPMM, SCREEN_DPI, _initialized
     if _initialized:
@@ -70,9 +71,9 @@ def mm(value):
     """
     Convert milimeters to number of pixels.
 
-    :param value: milimeters
+    :param value: milimeters.
     
-    :returns: number of pixels, as integer
+    :return: number of pixels, as integer.
     """
     global SCREEN_DPMM
     _initialize()
@@ -84,9 +85,9 @@ def w(v):
     Get the number of pixels covering the given part of the device screen
     in horizontal direction.
 
-    :param v: floating point number, from 0 to 1
+    :param v: floating point number, from 0 to 1.
     
-    :returns: number of pixels, as float
+    :return: number of pixels, as float.
     """
     global size_pix
     _initialize()
@@ -98,9 +99,9 @@ def h(v):
     Get the number of pixels covering the given part of the device screen
     in vertical direction.
 
-    :param v: floating point number, from 0 to 1
+    :param v: floating point number, from 0 to 1.
     
-    :returns: number of pixels, as float
+    :return: number of pixels, as float.
     """
     global size_pix
     _initialize()
@@ -111,9 +112,9 @@ def pt_to_px(pt):
     """
     Convert points to number of pixels.
 
-    :param pt: number of points
+    :param pt: number of points.
 
-    :returns: number of pixels, as float
+    :return: number of pixels, as float.
     """
     global SCREEN_DPMM
     _initialize()

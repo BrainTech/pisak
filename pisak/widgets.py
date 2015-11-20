@@ -15,6 +15,7 @@ from pisak import res, logger, unit, properties, scanning, configurator, \
     utils, media, style, layout, svg, sound_effects, dirs
 from pisak.res import colors
 
+
 _LOG = logger.get_logger(__name__)
 
 
@@ -66,6 +67,8 @@ class Label(Mx.Label):
         Converts string passed as an argument to upper-case, if only such
         a parameter was set in the PISAK config. Then call the original method
         passing that text.
+
+        :param text: text to be set, string.
         """
         super().set_text(text.upper() if self._upper_case else text)
 
@@ -203,6 +206,9 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
 
     @property
     def data_source(self):
+        """
+        :class:`pisak.pager.DataSource` instance.
+        """
         return self._data_source
 
     @data_source.setter
@@ -213,6 +219,9 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
 
     @property
     def visual(self):
+        """
+        MxImage that will display some media-related graphics.
+        """
         return self._visual
 
     @visual.setter
@@ -320,6 +329,11 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
                    and_play=False):
         """
         Move focus to the current item and play it if ordered so.
+
+        :param previous: previously focused item.
+        :param direction: direction of moving the focus.
+        :param and_play: whether item should be started playing
+        immediately after receiving the focus, boolean.
         """
         self.items[self.idx].toggle()
         self._update_visualization()
@@ -385,6 +399,9 @@ class TileContainer(object):
 
     @property
     def tile_ratio_height(self):
+        """
+        Tile height, as a fraction of the whole screen height.
+        """
         return self._tile_ratio_height
 
     @tile_ratio_height.setter
@@ -393,6 +410,9 @@ class TileContainer(object):
 
     @property
     def tile_ratio_width(self):
+        """
+        Tile width, as a fraction of the whole screen width.
+        """
         return self._tile_ratio_width
 
     @tile_ratio_width.setter
@@ -401,6 +421,9 @@ class TileContainer(object):
 
     @property
     def tile_ratio_spacing(self):
+        """
+        Spacing between tile's children, as a fraction of the whole screen width/height.
+        """
         return self._tile_ratio_spacing
 
     @tile_ratio_spacing.setter
@@ -409,6 +432,9 @@ class TileContainer(object):
 
     @property
     def tile_preview_ratio_height(self):
+        """
+        Preview height, as a fraction of the whole screen height.
+        """
         return self._tile_preview_ratio_height
 
     @tile_preview_ratio_height.setter
@@ -417,6 +443,9 @@ class TileContainer(object):
 
     @property
     def tile_preview_ratio_width(self):
+        """
+        Preview width, as a fraction of the whole screen width.
+        """
         return self._tile_preview_ratio_width
 
     @tile_preview_ratio_width.setter
@@ -476,6 +505,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
 
     @property
     def tile_ratio_width(self):
+        """
+        Tile width, as a fraction of the whole screen width.
+        """
         return self._tile_ratio_width
 
     @tile_ratio_width.setter
@@ -484,6 +516,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
 
     @property
     def tile_ratio_height(self):
+        """
+        Tile height, as a fraction of the whole screen height.
+        """
         return self._tile_ratio_height
 
     @tile_ratio_height.setter
@@ -492,6 +527,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
 
     @property
     def row_count(self):
+        """
+        Number of rows that children will be arranged in.
+        """
         return self._row_count
 
     @row_count.setter
@@ -500,6 +538,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
 
     @property
     def column_count(self):
+        """
+        Number of columns that children will be arranged in.
+        """
         return self._column_count
 
     @column_count.setter
@@ -508,6 +549,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
 
     @property
     def target(self):
+        """
+        Some target object, for performing some specific actions on.
+        """
         return self._target
 
     @target.setter
@@ -516,6 +560,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
 
     @property
     def background_scene(self):
+        """
+        Main widget that the dialog will be displayed on.
+        """
         return self._background_scene
 
     @background_scene.setter
@@ -526,6 +573,9 @@ class DialogWindow(layout.Box, configurator.Configurable):
         """
         Put the dialog window onto the screen. Generate content.
         If this is the case, start scanning it.
+
+        :param message: text to be displayed on the dialog.
+        :param items: items to be displayed on the dialog.
         """
         self.background_scanning_group = self.get_parent()
         self.stage = self.background_scene.get_stage()
@@ -591,6 +641,9 @@ class ButtonMenu(layout.Box, configurator.Configurable):
 
     @property
     def button_source(self):
+        """
+        Buttons supplier.
+        """
         return self._button_source
 
     @button_source.setter
@@ -600,6 +653,11 @@ class ButtonMenu(layout.Box, configurator.Configurable):
             self.arrange_buttons()
 
     def arrange_buttons(self):
+        """
+        Arranges buttons into the grid. Buttons, depending on their number,
+        are placed in the nodes of a proportional
+        grid that tends to be as square as possible.
+        """
         if self.button_source is not None:
             descs = self.button_source.get_buttons_descriptor()
             count = len(descs)
@@ -700,6 +758,9 @@ class Clock(layout.Bin, Timer, configurator.Configurable, style.StylableContaine
 
     @property
     def style_class(self):
+        """
+        Style class name.
+        """
         return self._style_class
 
     @style_class.setter
@@ -708,6 +769,9 @@ class Clock(layout.Bin, Timer, configurator.Configurable, style.StylableContaine
 
     @property
     def delimiter(self):
+        """
+        Delimiter used when formatting the time display.
+        """
         return self._delimiter
 
     @delimiter.setter
@@ -716,6 +780,10 @@ class Clock(layout.Bin, Timer, configurator.Configurable, style.StylableContaine
 
     @property
     def direction(self):
+        """
+        Direction of the passage of time. -1 for a countdown and 1
+        for a standard clock.
+        """
         return self._direction
 
     @direction.setter
@@ -724,6 +792,10 @@ class Clock(layout.Bin, Timer, configurator.Configurable, style.StylableContaine
 
     @property
     def measured_proccess(self):
+        """
+        Some proccess-representing object
+        that should be measured.
+        """
         return self._measured_proccess
 
     @measured_proccess.setter
@@ -794,12 +866,14 @@ class HiliteTool(Clutter.Actor):
 
 
 class Aperture(
-    HiliteTool,
-    properties.PropertyAdapter,
-    configurator.Configurable):
+    HiliteTool, properties.PropertyAdapter, configurator.Configurable):
     """
     This actor draws a semi transparent cover with rectangular aperture in
     the center. It can be used to highlight another widget.
+
+    :param r: red color amount.
+    :param g: green color amount.
+    :param b: blue color amount.
     """
     __gtype_name__ = "PisakAperture"
     __gproperties__ = {
@@ -876,6 +950,11 @@ class Aperture(
         self._b = float(value)
 
     def set_cover(self, value):
+        """
+        Set cover to some specific value.
+
+        :param value: normalized value from 0 to 1, where 1 is a full cover.
+        """
         self.remove_transition("cover")
         self.cover_transition.set_from(self.get_property("cover"))
         self.cover_transition.set_to(value)
@@ -904,9 +983,15 @@ class Aperture(
         self.set_content(self.canvas)
 
     def turn_on(self):
+        """
+        Enable cover.
+        """
         self.set_cover(self.COVER_ON)
 
     def turn_off(self):
+        """
+        Disable cover.
+        """
         self.set_cover(self.COVER_OFF)
 
 
@@ -995,6 +1080,9 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
 
     @property
     def style_class(self):
+        """
+        Style class name.
+        """
         return self._style_class
 
     @style_class.setter
@@ -1003,6 +1091,10 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
 
     @property
     def toggled(self):
+        """
+        Tile toggled or not, boolean. Toggled tile is marked visually by
+        decreasing its content size.
+        """
         return self._toggled
 
     @toggled.setter
@@ -1018,7 +1110,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
     @property
     def label_text(self):
         """
-        Text on the photo label
+        Text on the photo label.
         """
         return self.label.get_text()
 
@@ -1051,7 +1143,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
     @property
     def preview_ratio_width(self):
         """
-        Screen-relative width
+        Screen-relative width.
         """
         return self._preview_ratio_width
 
@@ -1063,7 +1155,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
     @property
     def preview_ratio_height(self):
         """
-        Screen-relative height
+        Screen-relative height.
         """
         return self._preview_ratio_height
 
@@ -1075,7 +1167,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
     @property
     def ratio_spacing(self):
         """
-        Screen-relative spacing between photo and label
+        Screen-relative spacing between photo and label.
         """
         return self.box.ratio_spacing
 
@@ -1086,7 +1178,7 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
     @property
     def scale_mode(self):
         """
-        Preview photo scale mode
+        Preview photo scale mode.
 
         :see: :class:`gi.repository.Mx.Image`
         """
@@ -1146,43 +1238,69 @@ class PhotoTile(layout.Bin, properties.PropertyAdapter, scanning.Scannable,
         """
         Add tile frame for extra visual effects.
 
-        :param frame: tile frame widget
+        :param frame: tile frame widget.
         """
         self.frame = frame
         self.add_child(frame)
 
     def activate(self):
+        """
+        Activates the tile by emitting 'clicked' signal.
+        """
         self.emit("clicked")
 
     def enable_hilite(self):
+        """
+        Turns hilite on.
+        """
         if self.hilite_tool is not None:
             self.hilite_tool.r, self.hilite_tool.g, self.hilite_tool.b = \
                 utils.convert_color(colors.PURPLE)[:-1]
             self.hilite_tool.turn_on()
 
     def disable_hilite(self):
+        """
+        Turns hilite off.
+        """
         if self.hilite_tool is not None:
             self.hilite_tool.turn_off()
 
     def enable_lag_hilite(self):
+        """
+        Turns lag-hilite on.
+        """
         if self.hilite_tool is not None:
             self.hilite_tool.r, self.hilite_tool.g, self.hilite_tool.b = \
                 utils.convert_color(colors.CYAN)[:-1]
             self.hilite_tool.turn_on()
 
     def disable_lag_hilite(self):
+        """
+        Turns lag-hilite off.
+        """
         if self.hilite_tool is not None:
             self.hilite_tool.turn_off()
 
     def enable_scanned(self):
+        """
+        Turns scanned-hilite on. Not implemented by now.
+        """
         # TODO: add scanned highlight
         pass
 
     def disable_scanned(self):
+        """
+        Turns scanned-hilite off. Not implemented by now.
+        """
         # TODO: add scanned highlight
         pass
 
     def is_disabled(self):
+        """
+        Check whether tile is disabled. Tile can not be disabled by now.
+
+        :return: False.
+        """
         return False
 
     def adjust(self):
@@ -1221,6 +1339,9 @@ class Slider(Mx.Slider, properties.PropertyAdapter, configurator.Configurable,
 
     @property
     def followed_object(self):
+        """
+        Object whose progress is indicated by the slider.
+        """
         return self._followed_object
 
     @followed_object.setter
@@ -1231,6 +1352,9 @@ class Slider(Mx.Slider, properties.PropertyAdapter, configurator.Configurable,
 
     @property
     def value_transition_duration(self):
+        """
+        Duration of an animation displayed when the slider progresses.
+        """
         return self.value_transition.get_duration()
 
     @value_transition_duration.setter
@@ -1298,6 +1422,9 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
 
     @property
     def style_class(self):
+        """
+        Style class name.
+        """
         return self._style_class
 
     @style_class.setter
@@ -1306,6 +1433,9 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
 
     @property
     def label(self):
+        """
+        Label object that will display text on the progress bar.
+        """
         return self._label
 
     @label.setter
@@ -1347,7 +1477,7 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
     @property
     def progress(self):
         """
-        Progressbar value.
+        Progress bar value.
         """
         return self.bar.get_progress()
 
@@ -1613,6 +1743,8 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     def set_label(self, label):
         """
         Override Clutter.Button generic method for any label preprocessing.
+
+        :param label: text to be displayed on the button, string.
         """
         super().set_label(label.upper() if self._upper_case else label)
 
@@ -1627,11 +1759,11 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     def _connect_signals(self):
         self.connect("clicked", self._play_selection_sound)
         self.connect("notify::text", self._set_initial_label)
-        self.connect("clicked", self.on_click_activate)
+        self.connect("clicked", self._on_click_activate)
         self.connect("notify::style-pseudo-class",
                      self._on_style_pseudo_class_change)
         self.connect("notify::size", lambda *args: self._rescale_icon())
-        self.connect("notify::mapped", self.set_space)
+        self.connect("notify::mapped", self._set_space)
         self.connect("notify::mapped", self._change_icon_style)
         self.set_reactive(True)
 
@@ -1662,6 +1794,10 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
 
     @property
     def scanning_pauser(self):
+        """
+        Whether selection of the button with a scanning should
+        pause its cycle, boolean.
+        """
         return self._scanning_pauser
 
     @scanning_pauser.setter
@@ -1670,6 +1806,10 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
 
     @property
     def related_object(self):
+        """
+        Some object related to the button, that the button should
+        have direct access to.
+        """
         return self._related_object
 
     @related_object.setter
@@ -1679,7 +1819,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @property
     def ratio_width(self):
         """
-        Screen-relative width
+        Screen-relative width.
         """
         return self._ratio_width
 
@@ -1691,7 +1831,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @property
     def ratio_height(self):
         """
-        Screen-relative height
+        Screen-relative height.
         """
         return self._ratio_height
 
@@ -1699,12 +1839,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     def ratio_height(self, value):
         self._ratio_height = float(value)
         self.set_height(unit.h(self._ratio_height))
-
-    def _assign_sound(self, name):
-        if name:
-            sound = dirs.get_sound_path(name + '.wav')
-            if sound:
-                self.sounds[name] = sound
 
     @property
     def text(self):
@@ -1745,9 +1879,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self._current_icon_name = value
         if isinstance(value, str):
             if not self.box:
-                self.custom_content()
+                self._custom_content()
             if len(value) > 0:
-                self.load_icon()
+                self._load_icon()
                 self.box.show()
             else:
                 self.box.hide()
@@ -1810,35 +1944,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     def on_select_hilite_duration(self, value):
         self._on_select_hilite_duration = value
 
-    def _set_initial_label(self, source, spec):
-        self.set_default_label()
-        self.disconnect_by_func(self._set_initial_label)
-
-    def set_default_label(self):
-        """
-        Restores default label
-
-        :see: text
-        :see: alternative_text
-        """
-        self.set_label(self.text)
-
-    def set_space(self, *args):
-        """
-        Sets space between label and icon
-        """
-        try:
-            if self.custom_padding:
-                self._insert_padding()
-            else:
-                img_width = self.image.get_width()
-                text_width = self.get_children()[0].get_children()[1].get_width()
-                butt_width = self.get_width()
-                self.space.set_width(
-                    butt_width - img_width - text_width - self.content_offset)
-        except AttributeError:
-            pass
-
     @property
     def custom_padding(self):
         """
@@ -1871,27 +1976,15 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             where = -1
         original_box.add_actor(self._padding, where)
 
-    def set_alternative_label(self):
-        """
-        Sets alternative label as current
-        """
-        self.set_label(self.alternative_text)
+    def _assign_sound(self, name):
+        if name:
+            sound = dirs.get_sound_path(name + '.wav')
+            if sound:
+                self.sounds[name] = sound
 
-    def switch_label(self):
-        """
-        Switches between labels
-        """
-        current_label = self.get_label()
-        if current_label in (self.alternative_text, None):
-            self.set_default_label()
-        elif current_label == self.text:
-            self.set_alternative_label()
-
-    def switch_icon(self):
-        """
-        Switches between icons
-        """
-        raise NotImplementedError
+    def _set_initial_label(self, source, spec):
+        self.set_default_label()
+        self.disconnect_by_func(self._set_initial_label)
 
     def _on_style_pseudo_class_change(self, source, event):
         if self.style_pseudo_class_contains("toggled"):
@@ -1901,7 +1994,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             self.current_icon_name = self.icon_name
         self._change_icon_style()
 
-    def custom_content(self):
+    def _custom_content(self):
         self.set_icon_visible(False)
         self.box = layout.Box()
         original_box = self.get_children()[0]
@@ -1929,23 +2022,23 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
                 self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
             self.set_icon()
 
-    def load_icon(self):
-        self.load_svg()
+    def _load_icon(self):
+        self._load_svg()
         self._rescale_icon()
         if self.is_disabled():
             self.image.set_opacity(100)
 
-    def load_svg(self):
+    def _load_svg(self):
         try:
             self.svg = svg.PisakSVG(self.current_icon_name)
         except FileNotFoundError as error:
             _LOG.warning(error)
 
-    def set_icon_color(self, color='white'):
+    def _set_icon_color(self, color='white'):
         self.svg.change_color(color)
-        self.set_icon()
+        self._set_icon()
 
-    def set_icon(self):
+    def _set_icon(self):
         pixbuf = self.svg.get_pixbuf()
         self.image.set_from_data(pixbuf.get_pixels(),
                                  Cogl.PixelFormat.RGBA_8888,
@@ -1962,31 +2055,87 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             return  # no icon so nothing to has its style changed
         try:
             color = self.clutter_text.get_color()
-            self.set_icon_color('rgb({}, {}, {})'.format(color.red,
+            self._set_icon_color('rgb({}, {}, {})'.format(color.red,
                                                          color.green,
                                                          color.blue))
         except AttributeError:
             msg = 'No icon for button {} or icon is not a svg.'
             _LOG.info(msg.format(self))
 
-    def hilite_off(self):
-        self.style_pseudo_class_remove("hover")
-
-    def hilite_on(self):
-        self.style_pseudo_class_add("hover")
-
-    def on_select_hilite_off(self, token):
-        if token == self.timeout_token:
-            self.style_pseudo_class_remove("active")
-
-    def on_click_activate(self, source):
+    def _on_click_activate(self, source):
         if self.on_select_hilite_duration:
             self.style_pseudo_class_add("active")
             self.timeout_token = object()
             Clutter.threads_add_timeout(0,
                                         self.on_select_hilite_duration,
-                                        self.on_select_hilite_off,
+                                        self._on_select_hilite_off,
                                         self.timeout_token)
+
+    def _on_select_hilite_off(self, token):
+        if token == self.timeout_token:
+            self.style_pseudo_class_remove("active")
+
+     def _set_space(self, *args):
+        """
+        Sets space between label and icon.
+
+        :param args: args passed when the function
+        is registered as a signal handler.
+        """
+        try:
+            if self.custom_padding:
+                self._insert_padding()
+            else:
+                img_width = self.image.get_width()
+                text_width = self.get_children()[0].get_children()[1].get_width()
+                butt_width = self.get_width()
+                self.space.set_width(
+                    butt_width - img_width - text_width - self.content_offset)
+        except AttributeError:
+            pass
+
+     def set_default_label(self):
+        """
+        Restores default label.
+
+        :see: text
+        :see: alternative_text
+        """
+        self.set_label(self.text)
+
+    def set_alternative_label(self):
+        """
+        Sets alternative label as current
+        """
+        self.set_label(self.alternative_text)
+
+    def switch_label(self):
+        """
+        Switches between labels
+        """
+        current_label = self.get_label()
+        if current_label in (self.alternative_text, None):
+            self.set_default_label()
+        elif current_label == self.text:
+            self.set_alternative_label()
+
+    def switch_icon(self):
+        """
+        Switches between icons
+        """
+        raise NotImplementedError
+
+    def hilite_off(self):
+        """
+        Disable hilite.
+        """
+        self.style_pseudo_class_remove("hover")
+
+    def hilite_on(self):
+        """
+        Enable hilite.
+        """
+        self.style_pseudo_class_add("hover")
 
     def activate(self):
         """
@@ -1996,12 +2145,27 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self.emit("clicked")
 
     def is_disabled(self):
+        """
+        Check if the button is disabled.
+
+        :return: boolean.
+        """
         return self.get_disabled()
 
     def is_toggled(self):
+        """
+        Check if the button is toggled.
+
+        :return: boolean.
+        """
         return self.style_pseudo_class_contains("toggled")
 
     def is_working(self):
+        """
+        Check if the button is in the working state.
+
+        :return: boolean.
+        """
         return self.style_pseudo_class_contains("working")
 
     def toggle(self):
@@ -2067,10 +2231,6 @@ class BackgroundPattern(layout.Bin):
 
     @property
     def pattern(self):
-        return self._pattern
-
-    @pattern.setter
-    def pattern(self, value):
         """
         Type of pattern to be drawn as background of an app. Avalaible:
         'fence' - default type, dense fence-like pattern of thin, slanted
@@ -2082,18 +2242,18 @@ class BackgroundPattern(layout.Bin):
         :param value: name of the pattern as string
 
         See also:
-        
+
         :see: :property:`pisak.widgets.BackgroundPattern.rgba`
         """
+        return self._pattern
+
+    @pattern.setter
+    def pattern(self, value):
         self._pattern = value
         self.background_image.invalidate()
 
     @property
     def rgba(self):
-        return self._rgba
-
-    @rgba.setter
-    def rgba(self, value):
         """
         Color of the background pattern.
 
@@ -2103,6 +2263,10 @@ class BackgroundPattern(layout.Bin):
         in the resulting color. Given string is then converted to the list
         containing floating point values of the consecutive channels.
         """
+        return self._rgba
+
+    @rgba.setter
+    def rgba(self, value):
         self._rgba = list(map(
             lambda string: float(string.strip())/255, value.split(",")))
         self.background_image.invalidate()
@@ -2177,10 +2341,3 @@ class BackgroundPattern(layout.Bin):
         gradient.add_color_stop_rgba(0.9, *self.rgba)
         context.set_source(gradient)
         context.paint()
-
-class BacgroundFulfillment(Mx.Frame):
-    """
-    This is used only for the possibility to change background in css file.
-    """
-
-    __gtype_name__ = "PisakBackgroundFulfillment"

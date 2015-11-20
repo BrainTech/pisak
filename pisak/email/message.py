@@ -1,3 +1,6 @@
+"""
+Module implements one class that can send e-mail messages through the SMTP protocol.
+"""
 import smtplib
 import socket
 from ssl import SSLError
@@ -12,10 +15,16 @@ _LOG = logger.get_logger(__name__)
 
 
 class  EmailSendingError(exceptions.PisakException):
+    """
+    SMTP protocol-related error.
+    """
     pass
 
 
 class SimpleMessage(object):
+    """
+    Simple message consisting of just a subject, body and recipients.
+    """
 
     def __init__(self):
         self.charset = "utf-8"
@@ -97,7 +106,7 @@ class SimpleMessage(object):
         """
         Compose a message object from all the stored data.
 
-        :returns: fully prepared message object for internal use
+        :return: fully prepared message object for internal use
         """
         msg = MIMEText(self._msg["body"], "plain", self.charset)
         msg["To"] = ", ".join(self._msg["recipients"])
@@ -107,6 +116,8 @@ class SimpleMessage(object):
     def test(self, custom_config=None):
         """
         Test SMTP connection.
+
+        :param custom_config: custom configuration parameters, dictionary.
         """
         setup = custom_config or config.Config().get_account_setup()
         server_out = "{}:{}".format(
@@ -170,6 +181,6 @@ class SimpleMessage(object):
         Compose a prettyfied version of the message that can be saved in a
         human-readable shape, for example as a draft message.
 
-        :returns: dictionary containing all the separate message fields.
+        :return: dictionary containing all the separate message fields.
         """
         return self._msg

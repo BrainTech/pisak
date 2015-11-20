@@ -1,3 +1,6 @@
+"""
+Module contains paint application main tools.
+"""
 import os
 import math
 
@@ -43,6 +46,12 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
 
     def __init__(self):
         super().__init__()
+        self._step_duration = 100
+        self._step = 0.01
+        self._max_cycles = 2
+        self._line_width = 5
+        self._line_color = Clutter.Color.new(0, 0, 0, 255)
+
         self.set_clip_to_allocation(True)
         self.canvas = Clutter.Canvas()
         self.set_content(self.canvas)
@@ -51,6 +60,10 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
 
     @property
     def step_duration(self):
+        """
+        How long should it take to make one step, in other words it
+        is a duration of an animation, in miliseconds.
+        """
         return self._step_duration
 
     @step_duration.setter
@@ -59,6 +72,9 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
 
     @property
     def step(self):
+        """
+        Number of pixels covered by one step of the tool.
+        """
         return self._step
 
     @step.setter
@@ -67,6 +83,9 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
 
     @property
     def max_cycles(self):
+        """
+        Number of full cycles before stopping the tool.
+        """
         return self._max_cycles
 
     @max_cycles.setter
@@ -75,6 +94,9 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
 
     @property
     def line_width(self):
+        """
+        Drawing line width, in pixels.
+        """
         return self._line_width
 
     @line_width.setter
@@ -83,6 +105,9 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
 
     @property
     def line_color(self):
+        """
+        Drawing line color, ClutterColor.
+        """
         return self._line_color
 
     @line_color.setter
@@ -125,6 +150,9 @@ class EaselTool(Clutter.Actor, properties.PropertyAdapter):
     def on_user_click(self, source, event):
         """
         Public signal handler calling internally declared functions.
+
+        :param source: signal source.
+        :param event: event description.
         """
         for handler in self.click_handlers:
             handler(source, event)
@@ -155,8 +183,9 @@ class Navigator(EaselTool, configurator.Configurable):
     def run(self, from_x, from_y):
         """
         Turn on the navigator, begin line rotation.
-        :param from_x: x coordinate of the navigator base point
-        :param from_y: y coordinate of the navigator base point
+
+        :param from_x: x coordinate of the navigator base point.
+        :param from_y: y coordinate of the navigator base point.
         """
         self.angle = 0
         self.width, self.height = self.get_size()
@@ -377,13 +406,14 @@ class Bender(EaselTool, configurator.Configurable):
         """
         Turn on the bender, declare initial parameters, begin the
         bending animation.
-        :param from_x: x coordinate of the line first point
-        :param from_y: y coordinate of the line first point
-        :param to_x: x coordinate of the line second point
-        :param to_y: y coordinate of the line second point
-        :param angle: angle of the line's plane in user's space in radians
-        :param color: color of the bender line
-        :param line_width: width of the bender line
+
+        :param from_x: x coordinate of the line first point.
+        :param from_y: y coordinate of the line first point.
+        :param to_x: x coordinate of the line second point.
+        :param to_y: y coordinate of the line second point.
+        :param angle: angle of the line's plane in user's space in radians.
+        :param color: color of the bender line.
+        :param line_width: width of the bender line.
         """
         self.width, self.height = self.get_size()
         self.canvas.set_size(self.width, self.height)
@@ -487,11 +517,12 @@ class Yardstick(EaselTool, configurator.Configurable):
         """
         Turn on the yardstick, declare initial parameters, begin the
         measuring animation.
-        :param from_x: x coordinate of the line base point
-        :param from_y: y coordinate of the line base point
-        :param angle: angle of the line's plane in user's space in radians
-        :param color: color of the yardstick line
-        :param line_width: width of the yardstick line
+
+        :param from_x: x coordinate of the line base point.
+        :param from_y: y coordinate of the line base point.
+        :param angle: angle of the line's plane in user's space in radians.
+        :param color: color of the yardstick line.
+        :param line_width: width of the yardstick line.
         """
         self.to_x = self.base_x = self.from_x = from_x
         self.to_y = self.base_y = self.from_y = from_y
@@ -619,6 +650,9 @@ class Easel(layout.Bin, configurator.Configurable):
 
     @property
     def localizer(self):
+        """
+        :class:`Localizer` instance.
+        """
         return self._localizer
 
     @localizer.setter
@@ -631,6 +665,9 @@ class Easel(layout.Bin, configurator.Configurable):
 
     @property
     def navigator(self):
+        """
+        :class:`Navigator` instance.
+        """
         return self._navigator
 
     @navigator.setter
@@ -643,6 +680,9 @@ class Easel(layout.Bin, configurator.Configurable):
 
     @property
     def bender(self):
+        """
+        :class:`Bender` instance.
+        """
         return self._bender
 
     @bender.setter
@@ -655,6 +695,9 @@ class Easel(layout.Bin, configurator.Configurable):
 
     @property
     def yardstick(self):
+        """
+        :class:`Yardstick` instance.
+        """
         return self._yardstick
 
     @yardstick.setter

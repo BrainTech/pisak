@@ -1,3 +1,6 @@
+"""
+Movie application specific signal handlers.
+"""
 from pisak import signals
 from pisak.movie import model
 
@@ -6,7 +9,8 @@ from pisak.movie import model
 def toggle_fullscreen(movie_widget):
     """
     Turn on or turn off the fullscreen mode.
-    :param movie_widget: pisak movie widget
+
+    :param movie_widget: pisak movie widget.
     """
     movie_widget.toggle_fullscreen()
 
@@ -16,7 +20,7 @@ def add_or_remove_from_favs(playback):
     """
     Add or remove the currently displayed movie from the favourites.
 
-    :param playback: videoplayback with movie to be marked as favourite
+    :param playback: videoplayback with movie to be marked as favourite.
     """
     path = playback.filename
     lib = model.get_library()

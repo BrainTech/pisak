@@ -1,3 +1,6 @@
+"""
+Photo library management center.
+"""
 import os.path
 from pisak import dirs, media_library
 
@@ -20,6 +23,12 @@ _LIBRARY_STORE = {}
 
 
 def get_library():
+    """
+    Retrieve the photo library. Library is loaded just once and then is stored
+    as a module-level variable.
+
+    :return: library.
+    """
     try:
         library = _LIBRARY_STORE[LIBRARY_DIR]
     except KeyError:

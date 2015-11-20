@@ -1,3 +1,6 @@
+"""
+Wordpress JSON REST API client implementation.
+"""
 import requests
 
 from pisak import logger
@@ -31,7 +34,7 @@ class Blog(object):
         """
         Get all posts from the blog.
 
-        :returns: list of all posts. Each post is a dictionary.
+        :return: list of all posts. Each post is a dictionary.
         """
         return self._get(
             "/posts/?number={}".format(str(self.max_posts)))["posts"]
@@ -55,7 +58,7 @@ class Blog(object):
 
         :param ide: id of a post to be returned.
 
-        :returns: single post. Post is a dictionary.
+        :return: single post. Post is a dictionary.
         """
         return self._get("/posts/{}".format(str(ide)))
 
@@ -65,7 +68,7 @@ class Blog(object):
 
         :param ide: id of the comment to be returned.
 
-        :returns: single comment. Comment is a dictionary.
+        :return: single comment. Comment is a dictionary.
         """
         return self._get("/comments/{}".format(str(ide)))
         
@@ -75,7 +78,7 @@ class Blog(object):
 
         :param post_ide: id of the post.
 
-        :returns: list of all comments for the given post.
+        :return: list of all comments for the given post.
         Each comment is a dictionary
         """
         return self._get(
@@ -88,7 +91,7 @@ class Blog(object):
 
         :param post: post instance
 
-        :returns: properly constructed post view
+        :return: properly constructed post view
         """
         line_break = "<br>"
         space = 2 * line_break

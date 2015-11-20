@@ -8,6 +8,14 @@ import pisak.movie.handlers  # @UnusedImport
 
 
 def prepare_flat_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     def movie_tile_handler(tile, movie_id):
         window.load_view(
             "movie/player", {"movie_id": movie_id})
@@ -19,6 +27,14 @@ def prepare_flat_view(app, window, script, data):
 
 
 def prepare_player_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     movie_id = data.get("movie_id")
     library = model.get_library()
     movie = library.get_item_by_id(movie_id)
@@ -27,6 +43,7 @@ def prepare_player_view(app, window, script, data):
     playback.filename = movie_path
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_library", "movie/main")
+
 
 movie_app = {
     "app": "movie",

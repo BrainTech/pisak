@@ -1,3 +1,6 @@
+"""
+Email application specific widgets.
+"""
 import datetime
 from gi.repository import Clutter, Mx, Pango, GObject
 
@@ -197,10 +200,20 @@ class EmailButton(widgets.Button):
         self._extra_label = None
 
     def set_extra_label(self, extra):
+        """
+        Set some extra label that will be concatenated to a default one.
+
+        :param extra: text to be an extra label.
+        """
         self.set_label(self.get_label() + extra)
         self._extra_label = extra
 
     def get_label(self):
+        """
+        Get label without any extra labels.
+
+        :return: label, string.
+        """
         if self._extra_label:
             label = self.clutter_text.get_text()
             return label[: label.rfind(self._extra_label)].strip()

@@ -1,3 +1,6 @@
+"""
+Text operations-related tools.
+"""
 import threading
 
 from gi.repository import GObject, Clutter
@@ -42,7 +45,7 @@ class Predictor(Clutter.Actor, properties.PropertyAdapter,
         :param accuracy_level: what level of prediction accuracy is required for the
         requested suggestion item.
 
-        :returns: single item from the predictor content list.
+        :return: single item from the predictor content list.
         """
         if accuracy_level < len(self.content):
             return self.content[accuracy_level]
