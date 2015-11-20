@@ -5,14 +5,16 @@ cssutils.log.setLevel(logging.CRITICAL)
 
 
 class PropsDict(dict):
+    '''
+    A dictionary with properties.
+    Shows properties if no record inside.
+    '''
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._properties = {}
-        self._children = []
 
     def __setitem__(self, key, value):
         super().__setitem__(key, value)
-        self._children.append(key)
 
     def __repr__(self):
         if self == {}:
@@ -22,18 +24,23 @@ class PropsDict(dict):
         
     @property
     def properties(self):
+        '''
+        Properties of the record stored within the dict.
+        '''
         return self._properties
 
     @properties.setter
     def properties(self, value):
         self._properties = value
-
-    @property
-    def children(self):
-        return self._children
                 
 
-class CssToDict(dict):
+class CssDict(dict):
+    '''
+    A nested dict of PropsDict's that are css classes, theirs style
+    and pseudo classes.
+
+    :param path: path to the css file that is to be converted to dict
+    '''
     def __init__(self, path):
         super().__init__()
         self.css_path = path
@@ -42,6 +49,14 @@ class CssToDict(dict):
 
     @staticmethod
     def resolve_class_name(name):
+        '''
+        Helper function to decompose the css class name
+        into class name, style, and pseudo-style.
+
+        :param name: css descriptor of class (e.g. MxLabel.PisakLabel:hover)
+
+        :returns: class name, style-class name, pseudo-style-class name
+        '''
         dec_name = name.replace(' ', '')
         pseudo_style_class = None
         style_class = None
@@ -85,6 +100,14 @@ class CssToDict(dict):
                     self[object_name].properties = dict(rule.style)
 
     def get_properties(self, full_name):
+        '''
+        Getter of properties for a css descriptor.
+        Merges properties of the class, style-class and pseudo-style-class.
+
+        :param full_name: A css descriptor (e.g. MxLabel.PisakLabel:hover)
+
+        :returns: dict with properties for given css descriptor
+        '''
         name, style_class, pseudo_style_class = self.resolve_class_name(full_name)
         props = self[name].properties.copy()
         if style_class:
