@@ -1572,3 +1572,10 @@ PisakButton.PisakBudzikButtonB:hover {
     color: white;
     border-image: url("red_flat.png");
 }
+
+MxLabel.PisakBudzikLabel {
+    font-family: Kelson Sans;
+    font-size: 70px;
+    font-weight: bold;
+    color: black;
+}
