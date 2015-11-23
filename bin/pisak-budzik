@@ -1,0 +1,13 @@
+#!/usr/bin/env python3
+
+"""
+Script to run Speller application.
+"""
+
+import pisak
+from pisak import app_manager
+from pisak.budzik.description import budzik_app
+
+if __name__ == "__main__":
+    pisak.init()
+    app_manager.run(budzik_app)

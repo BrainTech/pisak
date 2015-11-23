@@ -1,0 +1,78 @@
+[
+    {
+        "id": "main",
+        "type": "PisakScanningGroup",
+	"y-expand": true,
+	"x-expand": true,
+	    "strategy": {
+                        "id": "main_group_strategy",
+                        "type": "PisakRowStrategy"
+                    },
+        "children": [
+                        "main_box", "background_box"
+                    ]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio_margin_top": 0.0136,
+        "ratio_margin_bottom": 0.0136,
+        "ratio_margin_left": 0.0211,
+        "ratio_margin_right": 0.0211,
+        "ratio_spacing": 0.0211,
+        "orientation": "horizontal",
+        "children": [
+                        "button_B", "button_A"
+                    ]
+    },
+    {
+        "id": "button_A",
+        "type": "PisakButton",
+        "style-class": "PisakBudzikButtonA",
+        "text": "TAK",
+        "x-align": "middle",
+        "ratio-width": 0.4,
+        "ratio-height": 0.5,
+        "label": "TAK",
+        "disabled_when": "scanning_off"
+    },
+    {
+        "id": "button_B",
+        "type": "PisakButton",
+        "style-class": "PisakBudzikButtonB",
+        "text": "NIE",
+        "x-align": "middle",
+        "ratio-width": 0.4,
+        "ratio-height": 0.5,
+        "label": "NIE",
+        "disabled_when": "scanning_off"
+    },
+    {
+        "id": "button_3",
+        "type": "PisakButton",
+        "style-class": "PisakSpellerButton",
+        "text": "ZAPISZ",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "ZAPISZ",
+        "icon-name": "zapisz",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/save",
+                           "object": "pop_up_box"
+                       }
+                   ]
+    }
+]
