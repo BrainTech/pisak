@@ -2020,7 +2020,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         if self.svg:
             if self.icon_size:
                 self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
-            self.set_icon()
+            self._set_icon()
 
     def _load_icon(self):
         self._load_svg()
@@ -2075,7 +2075,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         if token == self.timeout_token:
             self.style_pseudo_class_remove("active")
 
-     def _set_space(self, *args):
+    def _set_space(self, *args):
         """
         Sets space between label and icon.
 
@@ -2094,7 +2094,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         except AttributeError:
             pass
 
-     def set_default_label(self):
+    def set_default_label(self):
         """
         Restores default label.
 
