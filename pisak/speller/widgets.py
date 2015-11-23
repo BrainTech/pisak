@@ -119,13 +119,28 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             assert len(self.value) > 0, "Invalid insertion"
 
         def apply(self, text):
+            """
+            Do apply the insertion.
+
+            :param text: widget containig text.
+            """
             text.clutter_text.insert_text(self.value, self.pos)
 
         def revert(self, text):
+            """
+            Revert the insertion and restore the previous state of text.
+
+            :param text: widget containig text.
+            """
             end = self.pos + len(self.value)
             text.clutter_text.delete_text(self.pos, end)
 
         def compose(self, operation):
+            """
+            Compose two insertions into one text modification.
+
+            :param operation: type of operation to be performed.
+            """
             if isinstance(operation, Text.Insertion):
                 consecutive = self.pos + len(self.value) == operation.pos
                 compatible = not self.value[-1].isspace() or \
@@ -159,13 +174,28 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             assert len(self.value), "Invalid deletion"
 
         def apply(self, text):
+            """
+            Do apply the deletion.
+
+            :param text: widget containig text.
+            """
             end = self.pos + len(self.value)
             text.clutter_text.delete_text(self.pos, end)
 
         def revert(self, text):
+            """
+            Revert the deletion and restore the previous state of text.
+
+            :param text: widget containig text.
+            """
             text.clutter_text.insert_text(self.value, self.pos)
 
         def compose(self, operation):
+            """
+            Compose two deletions into one text modification.
+
+            :param operation: type of operation to be performed.
+            """
             if isinstance(operation, Text.Deletion):
                 consecutive = operation.pos + len(operation.value) == self.pos
                 compatible = operation.value[-1].isspace() or \
@@ -204,12 +234,27 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             text.clutter_text.insert_text(after, self.pos)
 
         def apply(self, text):
+            """
+            Do apply the replacement.
+
+            :param text: widget containig text.
+            """
             self._replace(text, self.before, self.after)
 
         def revert(self, text):
+            """
+            Revert the replacement and restore the previous state of text.
+
+            :param text: widget containig text.
+            """
             self._replace(text, self.after, self.before)
 
         def compose(self, *args):
+            """
+            Compose two replacements into one text modification. Currently not supported.
+
+            :param args: type of operation to be performed.
+            """
             return False
 
         def __str__(self):
@@ -326,6 +371,8 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def scroll_to(self, value):
         """
         Scroll the text field to some arbitrary value.
+
+        :param value: new scrollview adjustment value.
         """
         scroll_bar = self.get_children()[1]
         adj = scroll_bar.get_adjustment()
@@ -354,6 +401,8 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def get_cursor_position(self):
         """
         Get current position of the cursor in the number of chars.
+
+        :return: current cursor position, integer.
         """
         pos = self.clutter_text.get_cursor_position()
         return pos if pos >= 0 else self.get_text_length()
@@ -361,27 +410,34 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def set_cursor_position(self, new_pos):
         """
         Set new position of the cursor as the number of chars.
+
+        :param new_pos: number of chars indication
+        position that the cursor should be moved to, integer, counting from 0.
         """
         self.clutter_text.set_cursor_position(new_pos)
 
     def get_text(self):
         """
-        Return the entire text from the text buffer
+        Return the entire text from the text buffer.
+
+        :return: entire text, string.
         """
         return self.clutter_text.get_text()
 
     def get_text_length(self):
         """
-        Return the number of characters in the text buffer
+        Return the number of characters in the text buffer.
+
+        :return: length of the text, integer.
         """
         return len(self.clutter_text.get_text())
         
     def type_text(self, text):
         """
         Insert the given text to the text buffer on the
-        current cursor position
+        current cursor position.
 
-        :param: text string passed after a user's actions
+        :param: text string passed after a user's actions.
         """
         prev_pos = self.clutter_text.get_cursor_position()
         pos = self.get_cursor_position()
@@ -391,21 +447,10 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         if prev_pos == -1 and new_pos == 0:
             self.set_cursor_position(-1)
 
-    def type_unicode_char(self, char):
-        """
-        Append the given unicode character to the text buffer
-
-        :param char: unicode character in the form of unicode escape sequence
-        :deprecated:
-        """
-        # TODO: remove
-        operation = Text.Insertion(self.get_text_length(), char)
-        self._add_operation(operation)
-
     def delete_char(self):
         """
         Delete the single character from behind the
-        current cursor position
+        current cursor position.
         """
         pos = self.get_cursor_position()
         if pos == 0:
@@ -418,16 +463,16 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     def delete_text(self, start_pos, end_pos):
         """
-        Delete all characters from positions from the given range
+        Delete all characters from positions from the given range.
 
-        :param start_pos: start position given in characters
-        :param end_pos: end position given in characters
+        :param start_pos: start position given in characters.
+        :param end_pos: end position given in characters.
         """
         self.clutter_text.delete_text(start_pos, end_pos)
 
     def clear_all(self):
         """
-        Clear the entire text buffer
+        Clear the entire text buffer.
         """
         text = self.get_text()
         if len(text) > 0:
@@ -437,7 +482,9 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def get_endmost_string(self):
         """
         Look for and return the first string of characters with no whitespaces
-        starting from the end of the text buffer
+        starting from the end of the text buffer.
+
+        :return: endmost string, string.
         """
         text = self.get_text()
         stripped_text = text.rstrip()
@@ -448,9 +495,9 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
     def replace_endmost_string(self, text_after):
         """
         Look for the first string of characters with no whitespaces starting
-        from the end of the text buffer and replace it with the given text
+        from the end of the text buffer and replace it with the given text.
 
-        :param text_after: string passed after a user's action
+        :param text_after: string passed after a user's action.
         """
         if self.automatic_space:
                 text_after += ' '
@@ -483,7 +530,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     def move_cursor_forward(self):
         """
-        Move cursor one position forward
+        Move cursor one position forward.
         """
         current_position = self.get_cursor_position()
         if current_position < self.get_text_length():
@@ -491,7 +538,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
             
     def move_cursor_backward(self):
         """
-        Move cursor one position backward
+        Move cursor one position backward.
         """
         current_position = self.get_cursor_position()
         text_length = self.get_text_length()
@@ -502,7 +549,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     def move_word_backward(self):
         """
-        Move cursor one word backward
+        Move cursor one word backward.
         """
         current_position = self.get_cursor_position()
         text = self.clutter_text.get_text()
@@ -524,7 +571,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     def move_word_forward(self):
         """
-        Move cursor one word forward
+        Move cursor one word forward.
         """
         current_position = self.get_cursor_position()
         text = self.clutter_text.get_text()
@@ -564,6 +611,9 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     @property
     def ratio_width(self):
+        """
+        Screen-relative width.
+        """
         return self._ratio_width
 
     @ratio_width.setter
@@ -573,6 +623,9 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
 
     @property
     def ratio_height(self):
+        """
+        Screen-relative height.
+        """
         return self._ratio_height
 
     @ratio_height.setter
@@ -647,20 +700,35 @@ class Key(widgets.Button, configurator.Configurable):
             self.pre_special_text = text_to_cache
 
     def undo_label(self):
+        """
+        Restore the first label from the stored chain of consecutive labels history.
+        """
         while self.undo_chain:
             operation = self.undo_chain.pop()
             if callable(operation) and operation in self.allowed_undos:
                 operation(self)
 
     def set_pre_special_label(self):
+        """
+        Set a label that had been displayed on the button before
+        the special label replaced it.
+        """
         if self.pre_special_text:
             self.set_label(self.pre_special_text)
             self.pre_special_text = None
 
     def set_default_label(self):
+        """
+        Restore the default label.
+        """
         self.set_label(self.default_text)
 
     def set_special_label(self, specialmode):
+        """
+        Set some special label.
+
+        :param specialmode: one of: 'special1' or 'special2'.
+        """
         self._cache_pre_special_text(self.get_label())
         if "special1" == specialmode:
             if self.special1_text is not None:
@@ -672,16 +740,26 @@ class Key(widgets.Button, configurator.Configurable):
             raise exceptions.PisakException("Invalid argument")
 
     def set_caps_label(self):
+        """
+        Set the label to be all uppercase.
+        """
         label = self.get_label()
         if label.isalpha():
             self.set_label(label.upper())
 
     def set_lower_label(self):
+        """
+        Set the label to be all lowercase.
+        """
         label = self.get_label()
         if label.isalpha():
             self.set_label(label.lower())
 
     def set_altgr_label(self):
+        """
+        Set the label to be as the one produced by
+        holding the 'alt gr' key while typing it, if applies.
+        """
         try:
             label = self.get_label()
             if label.isalpha():
@@ -693,6 +771,11 @@ class Key(widgets.Button, configurator.Configurable):
             return None
 
     def set_swap_altgr_label(self):
+        """
+        Either set the label to be as the one produced by
+        holding the 'alt gr' key while typing it or
+        revert it to be in the default state, if possible and if applies.
+        """
         try:
             label = self.get_label()
             if self.altgr_text.lower() == label.lower():
@@ -714,6 +797,9 @@ class Key(widgets.Button, configurator.Configurable):
             return None
 
     def set_swap_caps_label(self):
+        """
+        Swap label case to upper or lower.
+        """
         label = self.get_label()
         if label.isalpha():
             self.set_label(label.swapcase())
@@ -731,11 +817,19 @@ class Key(widgets.Button, configurator.Configurable):
             return None
 
     def on_activate(self, source):
+        """
+        'Clicked' signal handler. Types the current label text to the text box.
+
+        :param source: signal source.
+        """
         if self.target:
             self.target.type_text(self.get_label())
 
     @property
     def default_text(self):
+        """
+        Default label text.
+        """
         return self._default_text
 
     @default_text.setter
@@ -745,6 +839,9 @@ class Key(widgets.Button, configurator.Configurable):
 
     @property
     def altgr_text(self):
+        """
+        'alt gr' label text.
+        """
         return self._altgr_text
 
     @altgr_text.setter
@@ -754,6 +851,9 @@ class Key(widgets.Button, configurator.Configurable):
 
     @property
     def special1_text(self):
+        """
+        Special text no 1.
+        """
         return self._special1_text
 
     @special1_text.setter
@@ -763,6 +863,9 @@ class Key(widgets.Button, configurator.Configurable):
 
     @property
     def special2_text(self):
+        """
+        Special text no 2.
+        """
         return self._special2_text
 
     @special2_text.setter
@@ -772,6 +875,9 @@ class Key(widgets.Button, configurator.Configurable):
 
     @property
     def target(self):
+        """
+        Target widget that any text will be send to.
+        """
         return self._target
 
     @target.setter
@@ -800,6 +906,13 @@ class Dictionary(text_tools.Predictor):
         self.apply_props()
 
     def do_prediction(self, text, position):
+        """
+        Perform the prediction for the given text.
+
+        :param text: text that needs a prediction, string.
+        :param position: number of characters from the beginning position
+        of the text that should be included.
+        """
         text_segment = text[0:position]
         context = self.get_prediction_context(text_segment)
         if len(text_segment) == 0 or not context:
@@ -814,6 +927,11 @@ class Dictionary(text_tools.Predictor):
         Extract prediction context from a text. Strips any leading or trailing
         whitespace. Takes only a fragment of a text after last
         context-clearing symbol.
+
+        :param text: text that the prediction should be performed for.
+
+        :return: context extracted from the given text
+        and being a feed for the prediction engine.
         """
         context = Dictionary.LAST_CONTEXT.search(text)
         if context:
@@ -879,6 +997,10 @@ class Prediction(widgets.Button, configurator.Configurable):
 
     @property
     def idle_icon_name(self):
+        """
+        Name of an icon being displayed on the button
+        while updating or processing a new feed.
+        """
         return self._idle_icon_name
 
     @idle_icon_name.setter
@@ -955,6 +1077,10 @@ class Prediction(widgets.Button, configurator.Configurable):
 
     @property
     def dictionary(self):
+        """
+        Backend engine that performs any prediction-related calculations
+        and supplies new content.
+        """
         return self._dictionary
 
     @dictionary.setter
@@ -965,6 +1091,9 @@ class Prediction(widgets.Button, configurator.Configurable):
 
     @property
     def target(self):
+        """
+        Widget that will be followed and modified by the predition engine.
+        """
         return self._target
 
     @target.setter
@@ -973,6 +1102,9 @@ class Prediction(widgets.Button, configurator.Configurable):
 
     @property
     def order_num(self):
+        """
+        Number on the list of all the prediction entries.
+        """
         return self._order_num
 
     @order_num.setter

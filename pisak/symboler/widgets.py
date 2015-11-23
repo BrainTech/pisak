@@ -138,6 +138,8 @@ class Entry(layout.Box, widgets.TileContainer, configurator.Configurable):
     def get_text(self):
         """
         Return string containing current text buffer.
+
+        :return: string of symbols text joined with a single whitespace.
         """
         return " ".join(self.text_buffer)
 
@@ -188,6 +190,9 @@ class TilesSource(pager.DataSource):
 
     @property
     def target(self):
+        """
+        :class:`pisak.pager.PagerWidget` instance.
+        """
         return self._target
 
     @target.setter
@@ -303,8 +308,6 @@ class TilesSource(pager.DataSource):
     def load_main_view(self):
         """
         Load view of the whole book of symbols.
-
-        :return: None.
         """
         self._update_view(self._book[0], 'book')
 

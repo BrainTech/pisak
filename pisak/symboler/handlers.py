@@ -1,3 +1,6 @@
+"""
+Signal handlers specific for the symboler application.
+"""
 import subprocess
 import configobj
 
@@ -10,6 +13,8 @@ def load_main(data_source):
     """
     Load main content of the symboler, that is table of contents
     and then all the categories.
+
+    :param data_source: source of the data for the pager.
     """
     data_source.load_main_view()
 
@@ -39,7 +44,7 @@ def save(pop_up):
     Save the current symbols buffer.
     Open a dialog window.
 
-    :param pop_up: dialog window
+    :param pop_up: dialog window.
     """
     def do_save(entry, symbols):
         _save_entry(entry, symbols)
@@ -73,7 +78,7 @@ def load(pop_up):
     inside the entry.
     Open a dialog window.
 
-    :param pop_up: dialog window
+    :param pop_up: dialog window.
     """
     entries_present_message = "WYBIERZ PLIK"
     no_entries_present_message = "BRAK PLIKÓW DO WCZYTANIA"
@@ -89,7 +94,8 @@ def load(pop_up):
 def text_to_speech(entry):
     """
     Read the text loud.
-    :param entry: symbols entry
+
+    :param entry: symbols entry.
     """
     text = entry.get_text()
     if text:
@@ -100,7 +106,8 @@ def text_to_speech(entry):
 def backspace(entry):
     """
     Delete the last symbol from the entry.
-    :param entry: symbols entry
+
+    :param entry: symbols entry.
     """
     entry.delete_symbol()
 
@@ -109,7 +116,8 @@ def backspace(entry):
 def clear_all(entry):
     """
     Clear the whole entry.
-    :param entry: symbols entry
+
+    :param entry: symbols entry.
     """
     text = entry.clear_all()
 
@@ -118,7 +126,8 @@ def clear_all(entry):
 def scroll_left(entry):
     """
     Scroll the entry content left.
-    :param entry: symbols entry
+
+    :param entry: symbols entry.
     """
     if len(entry.scrolled_content_right) > 0:
         entry.scroll_content_left()
@@ -128,7 +137,8 @@ def scroll_left(entry):
 def scroll_right(entry):
     """
     Scroll the entry content right.
-    :param entry: symbols entry
+
+    :param entry: symbols entry.
     """
     if len(entry.scrolled_content_left) > 0:
         entry.scroll_content_right()
