@@ -1,6 +1,6 @@
-'''
+"""
 Module with operations on image data.
-'''
+"""
 import random
 import os
 
@@ -67,6 +67,9 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def path(self):
+        """
+        Path to the photo.
+        """
         return self._path
 
     @path.setter
@@ -84,6 +87,9 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def slide(self):
+        """
+        Widget displaying the image.
+        """
         return self._slide
 
     @slide.setter
@@ -91,18 +97,36 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._slide = value
 
     def mirror(self, *args):
+        """
+        Make a mirror reflection of the image along the horizontal axis.
+        """
         self.buffer = self.buffer.transpose(Image.FLIP_LEFT_RIGHT)
         self._load()
 
     def grayscale(self, *args):
+        """
+        Apply grayscale filter to the image.
+
+        :param args: some args.
+        """
         self.buffer = self.buffer.convert('L')
         self._load()
 
     def rotate(self, *args):
+        """
+        Rotate the image by 90 degs clockwise.
+
+        :param args: some args.
+        """
         self.buffer = self.buffer.transpose(Image.ROTATE_90)
         self._load()
 
     def solarize(self, *args):
+        """
+        Solarize the image making it extra bright.
+
+        :param args: some args.
+        """
         threshold = 80
         bands = self.buffer.getbands()
         source = self.buffer.split()
@@ -116,6 +140,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def invert(self, *args):
+        """
+        Invert colors of the image.
+
+        :param args: some args.
+        """
         bands = self.buffer.getbands()
         source = self.buffer.split()
         for idx in range(len(source)):
@@ -127,6 +156,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def sepia(self, *args):
+        """
+        Apply sepia filter to the image.
+
+        :param args: some args.
+        """
         level = 50
         grayscale = self.buffer.convert('L')
         red = grayscale.point(lambda i: i + level*1.5)
@@ -142,6 +176,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def edges(self, *args):
+        """
+        Apply edges filter to the image.
+
+        :param args: some args.
+        """
         bands = self.buffer.getbands()
         source = self.buffer.split()
         for idx in range(len(source)):
@@ -153,6 +192,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def contour(self, *args):
+        """
+        Apply contour filter to the image.
+
+        :param args: some args.
+        """
         bands = self.buffer.getbands()
         source = self.buffer.split()
         for idx in range(len(source)):
@@ -164,6 +208,12 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def noise(self, *args):
+        """
+        Apply some random noise to the color bands of the image.
+        This is performed as an animation.
+
+        :param args: some args.
+        """
         if not self.noise_timer:
             self.noise_timer = Clutter.Timeline.new(200)
             self.noise_timer.set_repeat_count(50)
@@ -189,6 +239,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def zoom(self, *args):
+        """
+        Zoom the image. Zoom is performed as an animation.
+
+        :param args: some args.
+        """
         if not self.zoom_timer:
             self.zoom_timer = Clutter.Timeline.new(200)
             self.zoom_timer.set_repeat_count(35)
@@ -209,6 +264,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def original(self, *args):
+        """
+        Restore the original image.
+
+        :param args: some args.
+        """
         self.buffer = self.original_photo.copy()
         self._load()
 
