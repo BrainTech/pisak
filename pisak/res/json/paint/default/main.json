@@ -445,9 +445,9 @@
         "label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
-        "background-color": "linia czerwona",
-        "sound": "linia 10 punktów",
-	"icon-name": " ",
+        "background-color": "red",
+        "sound": "linia czerwona",
+	    "icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -465,12 +465,12 @@
         "type": "PisakButton",
         "style-class": "PisakPaintColorButton",
         "related-object": "easel",        
-	"label": " ",
+	    "label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "blue",
         "sound": "linia niebieska",
-	"icon-name": " ",
+	    "icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -515,7 +515,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "yellow",
-        "sound": "linia zółta",
+        "sound": "linia żółta",
 	"icon-name": " ",
         "signals": [
                 {
@@ -584,7 +584,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "magenta",
-        "sound": "linia magenta",
+        "sound": "linia w kolorze fuksji",
 	"icon-name": " ",
         "signals": [
                 {
@@ -607,7 +607,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(10, 200, 200)",
-        "sound": "linia seledynowa",
+        "sound": "linia jasno niebieska",
 	"icon-name": " ",
         "signals": [
                 {
@@ -630,8 +630,8 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 200, 10)",
-        "sound": "linia ",
-	"icon-name": " ",
+	    "sound": "linia ciemno żółta",
+        "icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
@@ -652,8 +652,8 @@
 	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
+        "sound": "linia brązowa",
         "background-color": "rgb(200, 100, 2)",
-        "sound": "linia ",
 	"icon-name": " ",
         "signals": [
                 {
@@ -676,8 +676,8 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(2, 200, 100)",
-        "sound": "linia ",
-	"icon-name": " ",
+	    "sound": "linia jasno zielona",
+        "icon-name": " ",
         "signals": [
                 {
                     "name": "clicked",
