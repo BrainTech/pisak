@@ -219,8 +219,6 @@ bool TobiiEyetracker::saveConfig() const
     if(!m_eye_tracker)
         return false;
 
-    const QString fileName(getBaseConfigPath() + ".bin");
-
     tobiigaze_calibration calib;
     tobiigaze_error_code error_code;
 
@@ -228,11 +226,12 @@ bool TobiiEyetracker::saveConfig() const
 
     if(error_code)
     {
-        qDebug() << "error in tobiigaze_get_calibration";
+        qDebug() << "error in tobiigaze_get_calibration:" << err2msg(error_code);
         return false;
     }
     else
     {
+        const QString fileName(getBaseConfigPath() + ".bin");
         QFile file(fileName);
 
         if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
