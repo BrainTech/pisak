@@ -40,7 +40,7 @@ class SoundEffectsPlayer(object):
         self._bus.connect('message', self._on_message)
 
     @property
-    def volume(self)
+    def volume(self):
         """
         Common volume level, normalized value between 0 and 1.
         """
