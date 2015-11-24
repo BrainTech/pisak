@@ -445,7 +445,7 @@
     },
     {
 	"id": "speller_header",
-	"type": "MxLabel",
+	"type": "PisakLabel",
 	"style-class": "PisakBlogSpellerCommentHeader",
 	"x-expand": true,
 	"x-align": "start",

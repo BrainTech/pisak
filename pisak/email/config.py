@@ -11,6 +11,9 @@ _LOG = logger.get_logger(__name__)
 
 
 class EmailConfigError(exceptions.PisakException):
+    """
+    Unexpected condition met by the configurator.
+    """
     pass
 
 
@@ -59,7 +62,7 @@ class Config:
         Get previously saved email account settings. If the configuration
         object's content is not valid raise `EmailConfigError`.
 
-        :returns: config object with email settings.
+        :return: config object with email settings.
         """
         try:
             self._validate_config()
@@ -80,9 +83,9 @@ class Config:
         """
         Decrypt the given encrypted password.
 
-        :param encrypted: encrypted password
+        :param encrypted: encrypted password.
 
-        :returns: decrypted password
+        :return: decrypted password.
         """
         if isinstance(encrypted, str):
             return "".join([chr(ord(sign)-1) for sign in list(encrypted)[::-1]])
@@ -94,6 +97,8 @@ class Config:
         their password. Anyone who gets here will be able to decrypt
         the password so we do not need to be very inventive.
 
-        param password: not encrypted password
+        :param password: not encrypted password.
+
+        :return: encrypted password, string.
         """
         return "".join([chr(ord(sign)+1) for sign in list(password)[::-1]])

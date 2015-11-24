@@ -12,10 +12,14 @@ import configobj
 
 from pisak import res, exceptions, logger
 
+
 _LOG = logger.get_logger(__name__)
 
 
 class LibraryException(exceptions.PisakException):
+    """
+    Exception thrown when the media library met some unexpected condition.
+    """
     pass
 
 
@@ -23,7 +27,11 @@ class Category(object):
     """
     Category of items that share some common trait, i.e belong
     to the same folder etc.
+
+    :param category_id: id number of the category.
+    :param name: name of the category.
     """
+
     def __init__(self, category_id, name):
         self.id = category_id
         self.name = name
@@ -43,7 +51,7 @@ class Category(object):
         Get preview of the category assuming that its items
         have attribute named 'path'.
 
-        :returns: path attribute of the first item or None
+        :return: path attribute of the first item or None.
         """
         if len(self._items) > 0:
             return self._items[0].path
@@ -60,7 +68,7 @@ class Category(object):
         """
         Remove item with the given path from the list of category items.
 
-        :param item_path: path attribute of the item
+        :param item_path: path attribute of the item.
         """
         try:
             self._do_remove_item(self._dict_items[item_path])
@@ -71,9 +79,9 @@ class Category(object):
         """
         Get item with the given path from the list of category items.
 
-        :param item_path: path attribute of the item
+        :param item_path: path attribute of the item.
 
-        :returns: item or None
+        :return: item or None.
         """
         try:
             return self._dict_items[item_path]
@@ -118,10 +126,12 @@ class FavouritesStore(object):
     """
     Container for managing items marked as favourite. List of their paths
     is stored in a file in res directory.
+
+    :param path: path to a file where info about the favourites is stored.
     """
+
     def __init__(self, path):
-        self._favs_store = configobj.ConfigObj(path,
-                                         encoding='UTF8')
+        self._favs_store = configobj.ConfigObj(path, encoding='UTF8')
 
     def get_all(self):
         """
@@ -129,7 +139,7 @@ class FavouritesStore(object):
         if it does refer to an existing file in the file system. If negative,
         then it is removed from the list and such updated list is saved.
 
-        :returns: list of paths to favourite items
+        :return: list of paths to favourite items.
         """
         favs = list(filter(lambda path: os.path.isfile(path),
                       (self._favs_store.get("favs") or [])))
@@ -141,7 +151,7 @@ class FavouritesStore(object):
         Save the given list of items to the file. Save is done only if
         the given list differs from the list stored.
 
-        :param favs: list of paths to favourite items
+        :param favs: list of paths to favourite items.
         """
         pre_favs = self._favs_store.get("favs")
         if favs != pre_favs:
@@ -152,7 +162,7 @@ class FavouritesStore(object):
         """
         Insert one favourite item to the list. Item is represented by its path.
 
-        :param path: path to the item
+        :param path: path to the item.
         """
         favs = self.get_all()
         if path not in favs:
@@ -164,7 +174,7 @@ class FavouritesStore(object):
         Remove one favourite item from the list. If not in list then
         nothing happens.
 
-        :param path: path to the item
+        :param path: path to the item.
         """
         favs = self.get_all()
         if path in favs:
@@ -175,7 +185,9 @@ class FavouritesStore(object):
         """
         Check if item with the given path has been marked as favourite.
 
-        :param path: path to the item
+        :param path: path to the item.
+
+        :return: boolean.
         """
         return path in self.get_all()
 
@@ -185,15 +197,15 @@ class Library(object):
     Library store. Contains lists with categories and items.
 
     :param path: path to the directory in the file system that
-    library is located in
+    library is located in.
     :param accepted_types: list of file types that will be accepted and
-    included as items while scanning the file system
+    included as items while scanning the file system.
     :param favs_store_path: path to the file that favourite items
-    will be stored in
+    will be stored in.
     :param favs_alias: alias for the category containing favourite items that
-    may be displayed to user
+    may be displayed to user.
     :param exec_for_all: callable that will be executed for each item found
-    while scanning the file system
+    while scanning the file system.
     """
     def __init__(self, path, accepted_types, favs_store_path=None,
                  favs_alias=None, exec_for_all=None):
@@ -240,7 +252,7 @@ class Library(object):
         Add item with the given path to the favourites. If already marked as one,
         nothing happens.
 
-        :param path: path to the item
+        :param path: path to the item.
         """
         if self.favs_store is None:
             return
@@ -258,7 +270,9 @@ class Library(object):
         """
         Check if the given item is in the favourites store already.
         
-        :param path: path to the item
+        :param path: path to the item.
+
+        :return: boolean.
         """
         return self.favs_store.is_in(path)
 
@@ -267,7 +281,7 @@ class Library(object):
         Remove item with the given path from the favourites. If not in favourites,
         nothing happens.
 
-        :param path: path to the item
+        :param path: path to the item.
         """
         if self.favs_store is None:
             return
@@ -284,7 +298,7 @@ class Library(object):
 
         :param category_id: index of the category
 
-        :returns: category or None
+        :returns: category or None.
         """
         try:
             return self._dict_categories[category_id]
@@ -295,9 +309,9 @@ class Library(object):
         """
         Get item with the given index.
 
-        :param item_id: index of the item
+        :param item_id: index of the item.
 
-        :returns: item or None
+        :returns: item or None.
         """
         try:
             return self._dict_items[item_id]
@@ -308,9 +322,9 @@ class Library(object):
         """
         Get item with the given path.
 
-        :param item_path: path of the item
+        :param item_path: path of the item.
 
-        :returns: item or None
+        :returns: item or None.
         """
         try:
             return self._dict_items[item_path]
@@ -390,6 +404,10 @@ class Library(object):
 
 
 class _Scanner(object):
+    """
+    Library scanner. Scans directories using :func:`os.walk`.
+    """
+
     def __init__(self, library):
         self.library = library
         self.magic = magic.open(magic.MIME_TYPE | magic.SYMLINK)
@@ -399,7 +417,7 @@ class _Scanner(object):
         """
         Get paths to the all items in the library.
 
-        :returns: set with paths to all items
+        :return: set with paths to all items.
         """
         return set([item.path for item in self.library.get_all_items()])
 

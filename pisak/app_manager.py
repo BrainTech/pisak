@@ -11,13 +11,20 @@ import importlib
 import sys
 import traceback
 
+import gi
+
+gi.require_version('Clutter', '1.0')
+gi.require_version('Mx', '1.0')
+
 from gi.repository import GObject, Clutter, Mx
 
 import pisak
 from pisak import application, logger, configurator, properties,\
     widgets, arg_parser, inputs
 
+
 _LOG = logger.get_logger(__name__)
+
 
 MESSAGES = {
     "application_loading": "Wczytywanie aplikacji..."
@@ -69,7 +76,7 @@ def run(descriptor):
 
 class LoadingStage(Clutter.Stage):
     """
-    Stage for the time a new app is being loaded.
+    Screen displayed when a new app is being loaded.
     """
 
     def __init__(self):
@@ -85,7 +92,7 @@ class LoadingStage(Clutter.Stage):
         self.add_child(background)
 
     def _init_text(self):
-        text = Mx.Label()
+        text = widgets.Label()
         text.set_style_class("LoadingPanel")
         text.set_text(MESSAGES["application_loading"])
         text.set_x_align(Clutter.ActorAlign.CENTER)
@@ -111,7 +118,8 @@ class AppManager(Clutter.Actor,
         self.apply_props()
         self.loading_stage = LoadingStage()
 
-    def launch_app(self, app_descriptor):
+    @staticmethod
+    def launch_app(app_descriptor):
         """
         Launch an app with the given descriptor.
 
@@ -156,12 +164,14 @@ class AppManager(Clutter.Actor,
         self.loading_stage.hide()
         pisak.app.window.input_group.run_middleware()
 
-    def run_app(self, button, app_exec):
+    def run_app(self, _button, app_exec):
         """
         Run an app with the given name as a new subprocess.
         Hide the current app stage.
 
-        :param app_exec: name of an app
+        :param _button: signal source when this method is registered
+        as an signal handler.
+        :param app_exec: name of an app.
         """
         if self.current_app is None:
             self.minimize_panel()

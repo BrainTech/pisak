@@ -11,6 +11,12 @@ _LOG = logger.get_logger(__name__)
 
 
 class Sprite(layout.Bin, configurator.Configurable):
+    """
+    Sprite (virtual cursor) object. It displays a big dot in a bright color
+    on the screen which follows input coordinates and selects GUI controls
+    on a timeouted hover.
+    """
+
     __gtype_name__ = "PisakSprite"
 
     __gproperties__ = {
@@ -18,19 +24,14 @@ class Sprite(layout.Bin, configurator.Configurable):
             GObject.TYPE_UINT,
             "", "",
             0, GObject.G_MAXUINT, 1600,
-            GObject.PARAM_READWRITE),
-        "locked": (
-            GObject.TYPE_BOOLEAN,
-            "", "",
-            False,
             GObject.PARAM_READWRITE)
     }
     
     def __init__(self):
         super().__init__()
+        self._timeout = 1
+
         self.container = None
-        self.timeout = 1000
-        self.locked = False
         self.clickables = None
         self._running = False
         self.hover_start = None
@@ -52,90 +53,8 @@ class Sprite(layout.Bin, configurator.Configurable):
         self.add_actor(self.sprite)
         self.update_sprite(self.initial_position)
 
-    @property
-    def timeout(self):
-        return self._timeout * 1000
-    
-    @timeout.setter
-    def timeout(self, value):
-        self._timeout = int(value) / 1000
-    
-    @property
-    def locked(self):
-        return self._locked
-    
-    @locked.setter
-    def locked(self, value):
-        self._locked = value
-    
-    def parse_coords(self, data):
-        if not data:
-            return self.coords
-        try:
-            coords = tuple(float(x) for x in data.split(' '))
-            coords = (round(coords[0] * unit.size_pix.width), round(coords[1] * unit.size_pix.height))
-            self.coords = coords
-        except Exception as ex:
-            raise Exception("Error parsing coordinates data: {}".format(ex))
-        return self.coords
-
-    def update_sprite(self, coords):
-        x, y = (coords[0] - self.sprite.get_width() / 2), (coords[1] - self.sprite.get_height() / 2)
-        self.sprite.set_position(x, y)
-    
     def _rescan(self, *source):
         self.clickables = None
-
-    def scan_clickables(self):
-        if self.container is None:
-            self.clickables = []
-            return
-        to_scan = self.container.get_children()
-        clickables = []
-        while len(to_scan) > 0:
-            current = to_scan.pop()
-            if isinstance(current, scanning.Scannable):
-                if not current.is_disabled():
-                    clickables.append(current)
-            to_scan = to_scan + current.get_children()
-        self.clickables = clickables
-        _LOG.debug("clickables: {}".format(clickables))
-    
-    def find_actor(self, coords):
-        if self.clickables is None:
-            self.scan_clickables()
-        for clickable in self.clickables:
-            (x, y), (w, h) = clickable.get_transformed_position(), clickable.get_size()
-            if (x <= coords[0]) and (coords[0] <= x + w) \
-                    and (y <= coords[1]) and (coords[1] <= y + h):
-                return clickable
-        return None
-
-    def on_new_coords(self, x, y):
-        coords = (x, y)
-        self.update_sprite(coords)
-        actor = self.find_actor(coords)
-        if actor is not None:
-            if actor == self.hover_actor:
-                if time.time() - self.hover_start > self._timeout:
-                    actor.emit("clicked")
-                    self.hover_start = time.time() + 1.0 # dead time
-            else:
-                # reset timeout
-                if self.hover_actor is not None:
-                    self.hover_actor.disable_hilite()
-                self.hover_actor = actor
-                self.hover_actor.enable_hilite()
-                self.hover_start = time.time()
-        else:
-            if self.hover_actor is not None:
-                self.hover_actor.disable_hilite()
-                self.hover_actor = None
-        return False
-
-    def on_new_data(self, data):
-        x, y = self.parse_coords(data)
-        Clutter.threads_add_timeout(-100, 20, self.on_new_coords, x, y)
 
     def _do_disconnect(self, obj, func):
         try:
@@ -158,7 +77,135 @@ class Sprite(layout.Bin, configurator.Configurable):
             self.all_rescan.append(current)
             to_conn = to_conn + current.get_children()
 
+    @property
+    def timeout(self):
+        """
+        Selection hover timeout, in miliseconds. Default is 1 second.
+        """
+        return self._timeout * 1000
+    
+    @timeout.setter
+    def timeout(self, value):
+        self._timeout = int(value) / 1000
+    
+    def parse_coords(self, data):
+        """
+        Parses raw data line into x-y coordinates tuple.
+
+        :param data: raw data with coordinates, being a single-line
+        string in a format: 'screenWidth% screenHeight%'.
+
+        :return: tuple with cursor parsed x and y coordinates, in pixels as floats.
+        """
+        if not data:
+            return self.coords
+        try:
+            coords = tuple(float(x) for x in data.split(' '))
+            coords = (round(coords[0] * unit.size_pix.width), round(coords[1] * unit.size_pix.height))
+            self.coords = coords
+        except Exception as ex:
+            raise Exception("Error parsing coordinates data: {}".format(ex))
+        return self.coords
+
+    def update_sprite(self, coords):
+        """
+        Changes cursor position on the screen.
+
+        :param coords: tuple with x and y coordinates.
+        """
+        x, y = (coords[0] - self.sprite.get_width() / 2), (coords[1] - self.sprite.get_height() / 2)
+        self.sprite.set_position(x, y)
+
+    def scan_clickables(self):
+        """
+        Detects any widgets that could be possibly clicked
+        and puts them on a list used by :func:`find_actor`.
+        """
+        if self.container is None:
+            self.clickables = []
+            return
+        to_scan = self.container.get_children()
+        clickables = []
+        while len(to_scan) > 0:
+            current = to_scan.pop()
+            if isinstance(current, scanning.Scannable):
+                if not current.is_disabled():
+                    clickables.append(current)
+            to_scan = to_scan + current.get_children()
+        self.clickables = clickables
+        _LOG.debug("clickables: {}".format(clickables))
+    
+    def find_actor(self, coords):
+        """
+        Looks for any widget positioned at a given coordinates.
+        If a widget is found then it is returned, otherwise returns None.
+
+        :param coords: tuple with x-y coordinates.
+
+        :return: some found widget or None.
+        """
+        if self.clickables is None:
+            self.scan_clickables()
+        for clickable in self.clickables:
+            (x, y), (w, h) = clickable.get_transformed_position(), clickable.get_size()
+            if (x <= coords[0]) and (coords[0] <= x + w) \
+                    and (y <= coords[1]) and (coords[1] <= y + h):
+                return clickable
+        return None
+
+    def on_new_coords(self, x, y):
+        """
+        Takes on any cursor-related actions when the new
+        coordinates arrive. Moves cursor, manages widgets
+        highlight, selects widgets if hovered for long enough.
+
+        :param x: new x coordinate, in pixels, float.
+        :param y: new y coordinate, in pixels, float.
+
+        :return: False, in order to avoid this function being called
+        again automatically, what otherwise would be the case as
+        long as this function is registered as a Clutter timeout callback
+        from another Python thread for the sake of better Python-threads
+        vs Clutter-GUI cooperation.
+        """
+        coords = (x, y)
+        self.update_sprite(coords)
+        actor = self.find_actor(coords)
+        if actor is not None:
+            if actor == self.hover_actor:
+                if time.time() - self.hover_start > self._timeout:
+                    actor.emit("clicked")
+                    self.hover_start = time.time() + 1.0 # dead time
+            else:
+                # reset timeout
+                if self.hover_actor is not None:
+                    self.hover_actor.disable_hilite()
+                self.hover_actor = actor
+                self.hover_actor.enable_hilite()
+                self.hover_start = time.time()
+        else:
+            if self.hover_actor is not None:
+                self.hover_actor.disable_hilite()
+                self.hover_actor = None
+        return False
+
+    def on_new_data(self, data):
+        """
+        Receives new raw data, parses them and schedules
+        calling the main thread callback.
+
+        :param data: raw data.
+        """
+        x, y = self.parse_coords(data)
+        Clutter.threads_add_timeout(-100, 20, self.on_new_coords, x, y)
+
     def run(self, container):
+        """
+        Displays and starts the sprite. Runs proper
+        tracker websocket client.
+
+        :param container: widget that the sprite should be placed above.
+        """
         self.container = container
         self._connect_rescan()
         self._rescan()
@@ -168,6 +215,9 @@ class Sprite(layout.Bin, configurator.Configurable):
         self.tracker_client.activate()
 
     def stop(self):
+        """
+        Stops the sprite. Stops the websocket client.
+        """
         self._running = False
         self.tracker_client.deactivate()
         self.container.remove_child(self)
@@ -176,4 +226,9 @@ class Sprite(layout.Bin, configurator.Configurable):
         self.hover_actor = None
 
     def is_running(self):
+        """
+        Checks whether the sprite is in a working state.
+
+        :return: boolean.
+        """
         return self._running

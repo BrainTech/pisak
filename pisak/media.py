@@ -15,6 +15,7 @@ class MediaPlaybackIface(object):
     """
     Interface of players of different kinds of media data.
     """
+
     def play(self):
         """
         Start playing the media stream.
@@ -98,6 +99,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
     Tool for controlling playback of different kinds of media data,
     being a wrapper of an inernal ClutterMedia.
     """
+
     __gsignals__ = {
         "progressed": (
             GObject.SIGNAL_RUN_FIRST, None,
@@ -152,7 +154,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         should be ClutterMedia. When set, default audio volume level is applied
         and handler is connected to signal emitted on media progress changes.
 
-        :param value: instance of an engine
+        :param value: instance of an engine.
         """
         self._engine = value
         if value is not None:
@@ -260,6 +262,8 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
     def get_duration(self):
         """
         Get duration of the media stream in seconds.
+
+        :return: duration, integer.
         """
         return self._engine.get_duration()
 
@@ -267,13 +271,15 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         """
         Move to the given position.
 
-        :param position: normalized value between 0 and 1 
+        :param position: normalized value between 0 and 1.
         """
         self._engine.set_progress(position)
 
     def get_elapsed_time(self):
         """
         Get media stream elapsed time in seconds.
+
+        :return: elapsed time, float.
         """
         return self._engine.get_duration() * self._engine.get_progress()
 
@@ -303,6 +309,8 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
     def is_playing(self):
         """
         Return the status of the media stream.
+
+        :return: boolean.
         """
         return self._engine.get_playing()
 
@@ -310,7 +318,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         """
         Set volume of the media stream.
 
-        :param value: normalized volume value between 0 and 1
+        :param value: normalized volume value between 0 and 1.
         """
         self._engine.set_audio_volume(value)
 
@@ -361,6 +369,7 @@ class MediaPlayback(Clutter.Actor, MediaPlaybackIface,
         if self.rewind_timer.is_playing():
             self.rewind_timer.stop()
 
+
 class AudioPlayback(MediaPlayback):
     """
     Tool for controlling playback of audio stream.
@@ -370,12 +379,11 @@ class AudioPlayback(MediaPlayback):
     def __init__(self):
         super().__init__()
         self.engine  = ClutterGst.VideoTexture()
-        
 
 
 class VideoPlayback(MediaPlayback):
     """
-    Tool for controlling playback of video stream.
+    Tool for controlling playback of video stream. Out of order, so far.
     """
     __gtype_name__ = "PisakVideoPlayback"
 
@@ -387,7 +395,7 @@ class VideoPlayback(MediaPlayback):
         Set subtitle for the current video stream. Format
         of a subtitle file should be one of these: TXT.
 
-        :param path: path to a file containing subtitle
+        :param path: path to a file containing subtitle.
         """
         self._engine.set_subtitle_uri(path)
 
@@ -395,6 +403,6 @@ class VideoPlayback(MediaPlayback):
         """
         Set font of a subtitle.
 
-        :param font: font of a subtitle
+        :param font: font of a subtitle.
         """
         self._engine.set_subtitle_font_name(font)

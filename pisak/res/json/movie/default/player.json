@@ -28,7 +28,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakMovieHeader"
     },
     {

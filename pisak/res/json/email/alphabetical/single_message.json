@@ -64,13 +64,13 @@
     },
     {
         "id": "from_label",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessage",
         "text": "NADAWCA:"
     },
     {
         "id": "from_content",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessage"
     },
     {
@@ -93,13 +93,13 @@
     },
 	{
 		"id": "to_label",
-		"type": "MxLabel",
+		"type": "PisakLabel",
 		"style-class": "PisakEmailSingleMessage",
         "text": "ODBIORCY:"
     },
     {
         "id": "to_content",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessage"
     },
     {
@@ -113,12 +113,12 @@
     },
     {
         "id": "cc_label",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessage"
     },
     {
         "id": "cc_content",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessage"
     },
     {
@@ -141,18 +141,18 @@
     },
 	{
 		"id": "date_label",
-		"type": "MxLabel",
+		"type": "PisakLabel",
 		"style-class": "PisakEmailSingleMessage",
         "text": "DATA:"
 	},
 	{
 		"id": "date_content",
-		"type": "MxLabel",
+		"type": "PisakLabel",
 		"style-class": "PisakEmailSingleMessage"
 	},
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessageTitle",
         "x-expand": true,
         "margin-right": 100,
@@ -170,7 +170,6 @@
         "type": "PisakScanningGroup",
         "children": ["main_menu_box"],
         "strategy": {
-            "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
         }
     },
@@ -250,7 +249,6 @@
         "type": "PisakScanningGroup",
         "children": ["message_menu_box"],
         "strategy": {
-            "id": "menu_group_strategy",
             "type": "PisakRowStrategy"
         }
     },
@@ -348,7 +346,7 @@
     },
     {
         "id": "message_subject",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailSingleMessageTitle"
     },
     {

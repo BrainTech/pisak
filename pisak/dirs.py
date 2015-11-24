@@ -12,6 +12,14 @@ _LOG = logger.get_logger(__name__)
 
 
 def ensure_dir(dirpath):
+    """
+    Checks if a given directory exists, if not then creates one,
+    and finally returns it.
+
+    :param dirpath: directory path.
+
+    :return: directory path, same as the one passed as a param.
+    """
     if not os.path.exists(dirpath):
         os.makedirs(dirpath)
     return dirpath
@@ -205,7 +213,7 @@ def find_path(folder1, folder2, file_name, with_raise=False,
     :param custom_msg: str, custom_msg for the error, should contain two '{}'
     specifying the places for the file paths
 
-    :returns: path to the found file or None
+    :return: path to the found file or None
     """
     msg = custom_msg or 'No such file found as {} or {}.'
     path = path1 = os.path.join(folder1, file_name)
@@ -225,8 +233,8 @@ def get_general_configs():
     """
     Get paths to files with general configuration.
 
-    :returns: list of configuration files, from the most default
-    to the most custom one
+    :return: list of configuration files, from the most default
+    to the most custom one.
     """
     configs = []
     if os.path.isfile(RES_MAIN_CONFIG):
@@ -248,7 +256,7 @@ def get_icon_path(name):
     :param name: name of the icon, that is a name of the file containing the
     icon without an extension. Accepted file format is SVG.
 
-    :returns: path to the icon or None if nothing was found
+    :return: path to the icon or None if nothing was found.
     """
     full_name = name + '.svg'
     icon_path = find_path(HOME_ICONS_DIR, 'icons', full_name,
@@ -268,9 +276,9 @@ def get_css_path(skin='default'):
     'css' folder with css files named the same as the given skin;
     in res directory - the same as in the home.
 
-    :param skin: name of the skin or None for default css
+    :param skin: name of the skin or None for default css.
 
-    :returns: path to css file
+    :return: path to css file.
     """
     full_name = skin + '.css'
     css_path = find_path(HOME_STYLE_DIR, 'css', full_name, with_raise=True,
@@ -281,6 +289,8 @@ def get_css_path(skin='default'):
 def get_blog_css_path():
     """
     Get css file to style Blog posts.
+
+    :return: path to a blog CSS file.
     """
     full_name = 'blog_style.css'
     css_path = find_path(HOME_STYLE_DIR, 'css', full_name, with_raise=True,
@@ -303,12 +313,12 @@ def get_json_path(view, layout='default', app='',):
     specific 'layout' with 'json' extended  files inside;
     in res directory - the same as for the home.
 
-    :param view: name of the view
-    :param layout: name of the layout of the view or None for default layout
+    :param view: name of the view.
+    :param layout: name of the layout of the view or None for default layout.
     :param app: name of the application or None, when None then general
     jsons are looked for.
 
-    :returns: path to the json file
+    :return: path to the json file.
     """
     # check home pisak dir
     view_path = os.path.join(HOME_JSON_DIR, app, layout, view) + ".json"
@@ -331,9 +341,9 @@ def get_user_dir(folder):
     Get path to one of the XDG user folders.
 
     :param folder: folder name as str, lowercase, possible are:
-    desktop, documents, downloads, music, pictures, public, templates, videos
+    desktop, documents, downloads, music, pictures, public, templates, videos.
 
-    :returns: path to XDG user directory
+    :return: path to XDG user directory.
     """
     return GLib.get_user_special_dir(USER_FOLDERS[folder])
 
@@ -347,7 +357,7 @@ def get_sound_path(name):
     :param name: name of the sound file, that is a name of the file without an extension. 
     Accepted file format is WAV.
 
-    :returns: path to the sound or None if nothing was found.
+    :return: path to the sound or None if nothing was found.
     """
     name = name.lower().replace(' ', '_').replace('\n', '_')
     sound_path = find_path(HOME_SOUNDS_DIR, 'sounds', name,

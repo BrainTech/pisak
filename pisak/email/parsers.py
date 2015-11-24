@@ -36,7 +36,7 @@ def _get_addresses(value, header=None):
     :param header: header name, obligatory when 'value' is an
     `email.message.Message` instance.
 
-    :returns: in case when 'value' param is an `email.message.Message`instance
+    :return: in case when 'value' param is an `email.message.Message`instance
     then returns list of tuples containing name and address for each record,
     if 'value' is a string then returns a single tuple of this kind.
     """
@@ -55,7 +55,7 @@ def _parse_date(raw_date):
 
     :param raw_date: raw date string.
 
-    :returns: datetime object or None in case of parsing failure
+    :return: datetime object or None in case of parsing failure
     """
     date_tuple = email.utils.parsedate(raw_date)
     return datetime.fromtimestamp(time.mktime(date_tuple)) \
@@ -69,7 +69,7 @@ def _decode_header(header):
 
     :param header: raw header.
 
-    :returns: single string with a decoded header.
+    :return: single string with a decoded header.
     """
     try:
         headers = email.header.decode_header(header)
@@ -94,7 +94,7 @@ def parse_message(raw_message):
 
     :param raw_message: single string with the whole  raw message.
 
-    :returns: dictionary containing all fields of parsed message.
+    :return: dictionary containing all fields of parsed message.
     """
     parsed_msg = {}
     msg = email.message_from_string(raw_message)
@@ -139,10 +139,10 @@ def parse_mailbox_list(ids, msg_data, headers):
     :param msg_data: raw messages data.
     :param headers: list of headers to be parsed.
 
-    :returns: list of dictionaries containing parsed message previews.
+    :return: list of dictionaries containing parsed message previews.
     """
     mailbox_list = []
-    for idx, (_spec, msg) in enumerate(msg_data[::2]):
+    for idx, (_spec, msg) in enumerate(reversed(msg_data[::2])):
         parsed_msg = {"UID": ids[idx]}
         str_msg = msg.decode(DEFAULT_CHARSET, "replace")
         for header_name in headers:

@@ -1,4 +1,4 @@
-/*  general */
+/* general */
 
 MxButton:scanning { 
     color: #ccc;
@@ -7,23 +7,23 @@ MxButton:scanning {
 
 PisakButton:disabled{
     color: grey;
-    font-size: 20pt;
+    font-size: 27px;
     font-family: serif;
     border-image: url("grey_frame.png") 5;
 }
 
 MxLabel.PisakClock {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: black;
 }
 
 
-/* Loading panel  */
+/* Loading panel */
 
 MxLabel.LoadingPanel {
   font-family: Kelson Sans;
-  font-size: 50pt;
+  font-size: 70px;
   font-weight: bold;
   color: black;
 }
@@ -33,7 +33,7 @@ MxLabel.LoadingPanel {
 
 PisakButton.PisakMainPanelButton {
     color: black;
-    font-size: 30pt;
+    font-size: 42px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -64,7 +64,7 @@ MxLabel.PisakSpellerText {
 
 PisakButton.PisakSpellerButton, PisakSpellerKey, PisakSpellerPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -108,25 +108,25 @@ MxProgressBarFill.PisakViewerProgressBar {
 
 MxLabel.PisakViewerProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: white;
 }
 
 MxLabel.PisakViewerPhotoTile {
   font-family: Kelson Sans;
-  font-size: 20pt;
+  font-size: 27px;
   color: black;
 }
 
 MxLabel.PisakViewerAlbumHeader {
-  font-size: 40pt;
+  font-size: 57px;
   font-family: Kelson Sans;
   color: black;
 }
 
 PisakButton.PisakViewerButton {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_flat.png");
@@ -135,7 +135,7 @@ PisakButton.PisakViewerButton {
 
 PisakButton.PisakViewerButton:hover {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("purple_flat.png");
@@ -155,7 +155,7 @@ PisakButton.PisakViewerButton:disabled{
 
 PisakButton.PisakPaintButton {
   color: white;
-  font-size: 15pt;
+  font-size: 21px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_flat.png");
@@ -176,13 +176,13 @@ PisakButton.PisakPaintButton:lag_hilite {
 
 MxLabel.PaintColorMenu {
   font-family: Kelson Sans;
-  font-size: 20pt;
+  font-size: 27px;
   color: black;
 }
 
 MxLabel.PaintLineMenu {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: black;
 }
 
@@ -208,7 +208,7 @@ MxStack.PisakPaintEaselFrame {
 
 PisakButton.PisakSymbolerButton {
    color: black;
-   font-size: 18pt;
+   font-size: 25px;
    font-family: Kelson Sans;
    font-weight: bold;
    border-image: url("black_frame.png") 5;
@@ -242,7 +242,7 @@ PisakSlider.PisakSymbolerSlider {
 
 MxLabel.PisakSymbolerPhotoTileLabel {
   font-family: Kelson Sans;
-  font-size: 16pt;
+  font-size: 21px;
   color: black;
 }
 
@@ -272,13 +272,13 @@ PisakSlider.PisakSymbolerSlider {
 
 MxLabel.PisakAudioHeader {
   font-family: Kelson Sans;
-  font-size: 25pt;
+  font-size: 35px;
   color: white;
 }
 
 MxLabel.PisakAudioFolderTile {
   font-family: Kelson Sans;
-  font-size: 25pt;
+  font-size: 35px;
   color: white;
 }
 
@@ -308,13 +308,13 @@ PisakFrame.PisakAudioFolderTile {
 
 MxLabel.PisakAudioPlaylistInfo {
   font-family: Kelson Sans;
-  font-size: 25pt;
+  font-size: 35px;
   color: white;
 }
 
 PisakButton.PisakAudioButton {
    color: white;
-   font-size: 15pt;
+   font-size: 21px;
    font-family: Kelson Sans;
    font-weight: bold;
    border-image: url("white_frame.png") 5;
@@ -335,7 +335,7 @@ PisakButton.PisakAudioButton:toggled {
 
 PisakButton.PisakAudioPlaylistButton {
    color: white;
-   font-size: 20pt;
+   font-size: 27px;
    font-family: Kelson Sans;
    font-weight: bold;
    border-image: url("transparent.png") 5;
@@ -371,7 +371,7 @@ MxProgressBarFill.PisakAudioProgressBar {
 
 MxLabel.PisakAudioProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: black;
 }
 
@@ -380,13 +380,13 @@ MxLabel.PisakAudioProgressBar {
 
 MxLabel.PisakMoviePhotoTile {
   font-family: Kelson Sans;
-  font-size: 25pt;
+  font-size: 35px;
   color: white;
 }
 
 MxLabel.PisakMovieHeader {
   font-family: Kelson Sans;
-  font-size: 25pt;
+  font-size: 35px;
   color: white;
 }
 
@@ -396,7 +396,7 @@ PisakFrame.PisakMoviePhotoTile {
 
 PisakButton.PisakMovieButton {
    color: white;
-   font-size: 15pt;
+   font-size: 21px;
    font-family: Kelson Sans;
    font-weight: bold;
    border-image: url("white_frame.png") 5;
@@ -427,7 +427,7 @@ PisakButton.PisakMovieButton:working {
 
 MxLabel.PisakMovieClock {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: black;
 }
 
@@ -441,7 +441,7 @@ MxProgressBarFill.PisakMovieProgressBar {
 
 MxLabel.PisakMovieProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: black;
 }
 
@@ -468,7 +468,7 @@ PisakButton.PisakBlogSpellerAboutMeButton,
 PisakSpellerKey.PisakBlogSpellerAboutMeKey, 
 PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -531,7 +531,7 @@ PisakButton.PisakBlogSpellerPostButton,
 PisakSpellerKey.PisakBlogSpellerPostKey, 
 PisakSpellerPrediction.PisakBlogSpellerPostPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -608,7 +608,7 @@ PisakButton.PisakBlogSpellerTitleButton,
 PisakSpellerKey.PisakBlogSpellerTitleKey, 
 PisakSpellerPrediction.PisakBlogSpellerTitlePrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -665,7 +665,7 @@ MxProgressBarFill.PisakBlogViewerAboutMeProgressBar {
 
 MxLabel.PisakBlogViewerAboutMeProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: white;
 }
 
@@ -679,7 +679,7 @@ MxProgressBarFill.PisakBlogViewerProgressBar {
 
 MxLabel.PisakBlogViewerProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: white;
 }
 
@@ -693,19 +693,19 @@ MxProgressBarFill.PisakBlogProgressBar {
 
 MxLabel.PisakBlogProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: white;
 }
 
 MxLabel.PisakBlogViewerAlbumHeader {
-  font-size: 40pt;
+  font-size: 57px;
   font-family: Kelson Sans;
   color: black;
 }
 
 PisakButton.PisakBlogViewerButton {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_flat.png");
@@ -713,7 +713,7 @@ PisakButton.PisakBlogViewerButton {
 
 PisakButton.PisakBlogViewerButton:hover {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("purple_flat.png");
@@ -733,14 +733,14 @@ PisakButton.PisakBlogViewerButton:disabled{
 }
 
 MxLabel.PisakBlogViewerAboutMeAlbumHeader {
-  font-size: 40pt;
+  font-size: 57px;
   font-family: Kelson Sans;
   color: black;
 }
 
 PisakButton.PisakBlogViewerAboutMeButton {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_flat.png");
@@ -748,7 +748,7 @@ PisakButton.PisakBlogViewerAboutMeButton {
 
 PisakButton.PisakBlogViewerAboutMeButton:hover {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("purple_flat.png");
@@ -768,13 +768,13 @@ PisakButton.PisakBlogViewerAboutMeButton:disabled{
 }
 
 MxLabel.PisakBlogAboutMeName {
-  font-size: 60pt;
+  font-size: 86px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakBlogAboutMe {
-  font-size: 35pt;
+  font-size: 50px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
@@ -782,7 +782,7 @@ MxLabel.PisakBlogAboutMe {
 
 PisakButton.PisakBlogButton {
   color: black;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_frame.png") 5;
@@ -791,7 +791,7 @@ PisakButton.PisakBlogButton {
 
 PisakButton.PisakBlogButton:hover {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("purple_flat.png");
@@ -812,7 +812,7 @@ PisakButton.PisakBlogButton:disabled{
 
 PisakButton.PisakBlogFlatButton {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_flat.png");
@@ -821,7 +821,7 @@ PisakButton.PisakBlogFlatButton {
 
 PisakButton.PisakBlogFlatButton:hover {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("purple_flat.png");
@@ -841,34 +841,34 @@ PisakButton.PisakBlogFlatButton:disabled{
 }
 
 MxLabel.PisakBlogTitle {
-  font-size: 30pt;
+  font-size: 42px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
 }
 
 MxLabel.PisakBlogAllPostsTitle {
-  font-size: 40pt;
+  font-size: 57px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
 }
 
 MxLabel.PisakBlogSinglePostTitle {
-  font-size: 30pt;
+  font-size: 42px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
 }
 
 MxLabel.PisakBlogAllPostsInfo {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakBlogPostTitle {
-  font-size: 25pt;
+  font-size: 35px;
   font-family: Kelson Sans;
   color: black;
 }
@@ -878,7 +878,7 @@ PisakScrolledText.PisakBlogPostText {
 }
 
 MxLabel.PisakBlogPostText {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
 }
@@ -892,13 +892,13 @@ MxFrame.PisakBlogPostFrame {
 }
 
 MxLabel.PisakBlogPostTileTitle {
-  font-size: 25pt;
+  font-size: 35px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakBlogPostTileDate {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
@@ -909,7 +909,7 @@ PisakFrame.PisakBlogBlogTile {
 }
 
 MxLabel.PisakBlogBlogTile {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
 }
@@ -934,7 +934,7 @@ PisakButton.PisakBlogSpellerCommentButton,
 PisakSpellerKey.PisakBlogSpellerCommentKey, 
 PisakSpellerPrediction.PisakBlogSpellerCommentPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -1004,7 +1004,7 @@ PisakButton.PisakEmailSpellerMessageContentButton,
 PisakSpellerKey.PisakEmailSpellerMessageContentKey, 
 PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -1052,7 +1052,7 @@ MxButton.PisakEmailSpellerMessageContentPrediction:disabled {
 }
 
 MxLabel.PisakEmailTitle {
-  font-size: 30pt;
+  font-size: 42px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
@@ -1060,7 +1060,7 @@ MxLabel.PisakEmailTitle {
 
 MxLabel.PisakEmailAddressTile {
   font-family: Kelson Sans;
-  font-size: 20pt;
+  font-size: 27px;
   color: black;
 }
 
@@ -1084,7 +1084,7 @@ PisakButton.PisakEmailSpellerMessageToButton,
 PisakSpellerKey.PisakEmailSpellerMessageToKey,
 PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -1151,7 +1151,7 @@ PisakButton.PisakEmailSpellerMessageSubjectButton,
 PisakSpellerKey.PisakEmailSpellerMessageSubjectKey,
 PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -1208,19 +1208,19 @@ MxProgressBarFill.PisakEmailProgressBar {
 
 MxLabel.PisakEmailProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: white;
 }
 
 MxLabel.PisakEmailHeader {
   font-family: Kelson Sans;
-  font-size: 25pt;
+  font-size: 35px;
   color: black;
 }
 
 PisakButton.PisakEmailButton {
    color: black;
-   font-size: 15pt;
+   font-size: 21px;
    font-family: Kelson Sans;
    font-weight: bold;
    border-image: url("black_frame.png") 5;
@@ -1255,7 +1255,7 @@ PisakFrame.PisakEmailAddressTile {
 
 MxLabel.PisakEmailInboxTile {
   font-family: Kelson Sans;
-  font-size: 20pt;
+  font-size: 27px;
   color: black;
 }
 
@@ -1265,7 +1265,7 @@ PisakFrame.PisakEmailInboxTile {
 
 MxLabel.PisakEmailSentTile {
   font-family: Kelson Sans;
-  font-size: 20pt;
+  font-size: 27px;
   color: black;
 }
 
@@ -1275,7 +1275,7 @@ PisakFrame.PisakEmailSentTile {
 
 MxLabel.PisakEmailDraftsTile {
   font-family: Kelson Sans;
-  font-size: 20pt;
+  font-size: 27px;
   color: black;
 }
 
@@ -1303,7 +1303,7 @@ PisakButton.PisakEmailSpellerContactNameButton,
 PisakSpellerKey.PisakEmailSpellerContactNameKey,
 PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -1370,7 +1370,7 @@ PisakButton.PisakEmailSpellerContactAddressButton,
 PisakSpellerKey.PisakEmailSpellerContactAddressKey,
 PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction {
     color: black;
-    font-size: 18pt;
+    font-size: 25px;
     font-family: Kelson Sans;
     font-weight: bold;
     border-image: url("black_frame.png") 5;
@@ -1434,13 +1434,13 @@ MxProgressBarFill.PisakEmailViewerContactProgressBar {
 
 MxLabel.PisakEmailViewerContactProgressBar {
   font-family: Kelson Sans;
-  font-size: 30pt;
+  font-size: 42px;
   color: white;
 }
 
 PisakButton.PisakEmailViewerContactButton {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("black_flat.png");
@@ -1448,7 +1448,7 @@ PisakButton.PisakEmailViewerContactButton {
 
 PisakButton.PisakEmailViewerContactButton:hover {
   color: white;
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   font-weight: bold;
   border-image: url("purple_flat.png");
@@ -1468,27 +1468,27 @@ PisakButton.PisakEmailViewerContactButton:disabled{
 }
 
 MxLabel.PisakEmailViewerContactAlbumHeader {
-  font-size: 40pt;
+  font-size: 57px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakEmailContact {
-  font-size: 35pt;
+  font-size: 50px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
 }
 
 MxLabel.PisakEmailSingleMessageTitle {
-  font-size: 30pt;
+  font-size: 42px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
 }
 
 MxLabel.PisakEmailSingleMessage {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
 }
@@ -1498,39 +1498,39 @@ PisakFrame.PisakEmailDate {
 }
 
 MxLabel.PisakEmailDate {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakEmailMessageTileDate {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakEmailMessageTileSubject {
-  font-size: 23pt;
+  font-size: 32px;
   font-family: Kelson Sans;
   color: black;
 }
 
 MxLabel.PisakEmailMessageTileTo {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
  }
 
 MxLabel.PisakPopUp {
-  font-size: 35pt;
+  font-size: 50px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;
 }
 
 MxLabel.PisakEmailMessageTileFrom {
-  font-size: 20pt;
+  font-size: 27px;
   font-family: Kelson Sans;
   color: black;
   font-weight: lighter;

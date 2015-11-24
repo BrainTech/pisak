@@ -42,7 +42,7 @@
 	},
 	{
         "id": "contact_address_label",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailContact",
         "x-align": "center",
 		"line-wrap": true,
@@ -50,7 +50,7 @@
     },
 	{
         "id": "contact_address_text",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailContact",
         "x-align": "center",
 		"line-wrap": true
@@ -64,7 +64,7 @@
 	},
 	{
         "id": "contact_name_label",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailContact",
         "x-align": "center",
 		"line-wrap": true,
@@ -72,7 +72,7 @@
     },
 	{
         "id": "contact_name_text",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakEmailContact",
         "x-align": "center",
 		"line-wrap": true

@@ -1,3 +1,7 @@
+"""
+Management center of any PISAK settings. Decalres one class that loads the main
+configuration file and stores all the settings.
+"""
 import configobj
 
 from pisak import logger, dirs

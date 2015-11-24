@@ -1,6 +1,7 @@
 """
 Module with tools to interface a WordPress based blog.
 """
+import threading
 import os.path
 from io import BytesIO
 
@@ -44,6 +45,8 @@ class Blog(object):
 
     def __init__(self, blog_address=None, custom_config=None):
         super().__init__()
+        self._lock = threading.RLock()
+
         self.address = blog_address
         self.config_dict = custom_config or config.get_blog_config()
         self._iface = None
@@ -51,7 +54,8 @@ class Blog(object):
 
     def _call(self, method):
         try:
-            return self._iface.call(method)
+            with self._lock:
+                return self._iface.call(method)
         except OSError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except wordpress_xmlrpc.exceptions.InvalidCredentialsError as exc:
@@ -78,8 +82,8 @@ class Blog(object):
         """
         Add comment to the given post.
 
-        :param post_id: id of the post to add the comment to
-        :param text: text of the comment
+        :param post_id: id of the post to add the comment to.
+        :param text: text of the comment.
         """
         self._call(wordpress_xmlrpc.methods.comments.NewComment(
                     post_id, wordpress_xmlrpc.WordPressComment(
@@ -138,7 +142,7 @@ class _OwnBlog(Blog):
         has an id assigned then it is just updated. Otherwise it is added
         as a new post. Post should consists of title and text.
 
-        :param post: instance of the post to be published
+        :param post: instance of the post to be published.
         """
         post.post_status = "publish"
         if not (hasattr(post, "post_type") and post.post_type == "page"):
@@ -154,8 +158,8 @@ class _OwnBlog(Blog):
         Upload image to the server and attach it to the
         given post as a thumbnail. Post itself is not published.
 
-        :param post: instance of the post
-        :param image_path: path to the image item in the file system
+        :param post: instance of the post.
+        :param image_path: path to the image item in the file system.
         """
         if not hasattr(post, "id"):
             post.post_status = "draft"
@@ -170,8 +174,8 @@ class _OwnBlog(Blog):
         Attach plain text to the given post.
         Keep all the previously embedded images intact.
 
-        :param post: post instance
-        :param text: new post text
+        :param post: post instance.
+        :param text: new post text.
         """
         post.content = html_parsers.embed_images(
             text, html_parsers.list_images(post.content))
@@ -181,7 +185,7 @@ class _OwnBlog(Blog):
         Upload all images stored on the 'post_images' list to the
         server and attach them to the given post.
 
-        :param post: instance of the post
+        :param post: instance of the post.
         """
         image_urls = []
         for image_path in self.post_images:
@@ -207,7 +211,7 @@ class _OwnBlog(Blog):
         """
         Update about me page with informations about the author.
 
-        :param text: content of the page, eg. the author bio
+        :param text: content of the page, eg. the author bio.
         """
         page = self.get_about_me_page()
         images = html_parsers.list_images(page.content)
@@ -220,7 +224,7 @@ class _OwnBlog(Blog):
         """
         Update about me page with the author photo.
 
-        :param photo_path: path to the new about me photo
+        :param photo_path: path to the new about me photo.
         """
         page = self.get_about_me_page()
         res = self._upload_media(photo_path)
@@ -233,7 +237,7 @@ class _OwnBlog(Blog):
         """
         Get page with informations about me.
 
-        :returns: instance of the about me page
+        :return: instance of the about me page.
         """
         page_list = self._call(wordpress_xmlrpc.methods.posts.GetPosts(
             {'post_type': 'page', 'title': self.about_me_page_title,
@@ -244,7 +248,7 @@ class _OwnBlog(Blog):
         """
         Delete post.
 
-        :param post: post to be deleted
+        :param post: post to be deleted.
         """
         self._call(wordpress_xmlrpc.methods.posts.DeletePost(post.id))
 
@@ -260,7 +264,7 @@ class _OwnBlog(Blog):
         """
         Get all the posts that have been published on the blog so far.
 
-        :returns: list of posts sorted by date of the publication
+        :return: list of posts sorted by date of the publication.
         """
         return self._call(wordpress_xmlrpc.methods.posts.GetPosts(
                 {'number': self.max_posts,  'orderby': 'post_date',
@@ -283,9 +287,9 @@ class _OwnBlog(Blog):
         """
         Get all comments for the given post.
 
-        :param post_id: id of the post to retrieve comments for
+        :param post_id: id of the post to retrieve comments for.
 
-        :returns: list of comment instances sorted by the creation date
+        :return: list of comment instances sorted by the creation date.
         """
         return self._call(wordpress_xmlrpc.methods.comments.GetComments(
                 {"post_id": post_id, 'orderby': 'date_created',
@@ -295,7 +299,7 @@ class _OwnBlog(Blog):
         """
         Delete comment with the given id.
 
-        :param comment_id: id of the comment to be deleted
+        :param comment_id: id of the comment to be deleted.
         """
         self._call(wordpress_xmlrpc.methods.comments.DeleteComment(comment_id))
 
@@ -303,7 +307,7 @@ class _OwnBlog(Blog):
         """
         Update user profile.
 
-        :param desc: dictionary with attributes to be applied to the user profile
+        :param desc: dictionary with attributes to be applied to the user profile.
         """
         profile = self._call(wordpress_xmlrpc.methods.users.GetProfile())
         for attribute, value in desc.items():
@@ -318,9 +322,9 @@ class _OwnBlog(Blog):
         """
         Retrieve user with the given id.
 
-        :param id: id of a user
+        :param id: id of a user.
 
-        :returns: instance of a user:
+        :return: instance of a user.
         """
         return self._call(wordpress_xmlrpc.methods.users.GetUser(user_id))
 
@@ -328,9 +332,9 @@ class _OwnBlog(Blog):
         """
         Compose and arrange all the post elements into a single html document.
 
-        :param post: post instance
+        :param post: post instance.
 
-        :returns: properly constructed post view
+        :return: properly constructed post view.
         """
         line_break = "<br>"
         space = 2 * line_break

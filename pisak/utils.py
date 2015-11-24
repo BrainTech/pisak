@@ -23,9 +23,9 @@ def json_to_xml(json_path):
     Convert file containing UI definition in the JSON format to the one in
     the XML format.
 
-    :param json_path: path to a json file
+    :param json_path: path to a json file.
 
-    :returns: path to a xml file or None if conversion failed
+    :return: path to a xml file or None if conversion failed.
     """
     def register_json_objects(json_obj):
         if isinstance(json_obj, list):
@@ -104,7 +104,7 @@ def json_to_xml(json_path):
     with open(xml_path, 'wb') as xml_file:
         xml_file.write(xml_string)
     if xml_file:
-       return xml_path
+        return xml_path
     else:
         _LOG.warning("Failed to generate xml file from the json file: {}".format(
                 json_path))
@@ -137,9 +137,9 @@ def date_to_when(date):
     Convert numerical date and time from the past to more human friendly time
     description, relative to the current time.
 
-    :param date: datetime
+    :param date: datetime.
 
-    :returns: string with time description
+    :return: string with time description.
     """
     def compare_unit(unit, unit_name_base):
         last_digit = int(str(int(unit))[-1])
@@ -202,10 +202,12 @@ def find_folder_image(dir_files, folder_name, folder_path, image_extensions):
     Find image representing the given folder.
 
     :param dir_files: list of files in the given folder among
-    whom the search will be conducted
-    :param folder_name: name of the given folder
-    :param folder_path: full path of the folder
-    :param image_extensions: possible extensions of the potential image file
+    whom the search will be conducted.
+    :param folder_name: name of the given folder.
+    :param folder_path: full path of the folder.
+    :param image_extensions: possible extensions of the potential image file.
+
+    :return: path to a file or None if nothing found.
     """
     for file in dir_files:
         file_name, ext = os.path.splitext(file.lower())
@@ -221,14 +223,16 @@ def produce_identicon(string, bins_count=(10, 10), size=(600, 600),
     """
     Generate identicon picture from hashtag corresponding to the given string.
 
-    :param string: string to be transformed into identicon
-    :param bins_count: tuple with numbers of bins in one row and one column
-    :param size: tuple with width and height of the resulting picture in px
+    :param string: string to be transformed into identicon.
+    :param bins_count: tuple with numbers of bins in one row and one column.
+    :param size: tuple with width and height of the resulting picture in px.
     :param save_path: path that the resulting picture will be located at,
-    if None the resulting picture will not be saved on disc
-    :param foreground: colors to be used as the foregrounds
-    :param backgrand: colors to be used as the backgrounds
-    :param image_format: format of the output image file
+    if None the resulting picture will not be saved on disc.
+    :param foreground: colors to be used as the foregrounds.
+    :param background: colors to be used as the backgrounds.
+    :param image_format: format of the output image file.
+
+    :return: freshly generated identicon, as bytes buffer.
     """
     if not foreground:
         foreground = ["rgb(45,79,255)", "rgb(254,180,44)",
@@ -253,8 +257,11 @@ def convert_color(color):
     """
     Return tuple with color bands normalized int values converted from
     the given color.
+
     :param color: instance of ClutterColor or string color description
-    in one of the formats accepted by ClutterColor
+    in one of the formats accepted by ClutterColor.
+
+    :return: 4-element tuple.
     """
     if isinstance(color, Clutter.Color):
         clutter_color = color
@@ -268,11 +275,13 @@ def hex_to_rgba(value):
     """
     Convert given color description in a hexadecimal format
     to normalized int values for separate color bands.
+
     :param value: color desc in hexadecimal format as returned by ClutterColor
-    to_string method, that is: #rrggbbaa
+    to_string method, that is: #rrggbbaa.
+
+    :return: 4-element tuple.
     """
     rgba = ()
     for idx in range(1, 9, 2):
         rgba += (int(value[idx:idx+2], 16)/255.,)
     return rgba
-    

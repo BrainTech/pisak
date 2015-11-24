@@ -6,14 +6,21 @@ import os
 from gi.repository import Clutter, Mx
 
 from pisak import exceptions
-from pisak import signals, configurator, dirs, inputs
+from pisak import signals, configurator, dirs, inputs, widgets
 
 import pisak.layout  # @UnusedImport
-import pisak.widgets  # @UnusedImport
 import pisak.handlers  # @UnusedImport
 
 
 def prepare_popup_view(app, window, script, data):
+    """
+    Prepare pop-up view, displayed on some special situations.
+
+    :param app: current application instance.
+    :param window: current application main window instance.
+    :param script: current view ClutterScript.
+    :param data: some extra, view-specific data.
+    """
     window.ui.message.set_text(data["message"])
 
 
@@ -42,6 +49,11 @@ class _UI(object):
 
 
 class Window(configurator.Configurable):
+    """
+    Any PISAK application main window class. It manages different views,
+    switches between them, manages a view layout.
+    """
+
     def __init__(self, application, stage, descriptor):
         super().__init__()
         # instance of an application that the window belongs to:
@@ -137,6 +149,13 @@ class Window(configurator.Configurable):
                 dirs.get_json_path(view_name, layout), preparator)
 
     def load_view(self, name, data=None):
+        """
+        Loads a given view. Replaces previous view, if any. Triggers
+        the input management system..
+
+        :param name: name of a view.
+        :param data: optional, some extra data.
+        """
         if name not in self.views.keys():
             message = "Descriptor has no view with name: {}".format(name)
             raise WindowError(message)
@@ -192,7 +211,7 @@ class Window(configurator.Configurable):
             self.load_view("popup", {"message": message})
 
     def _display_popup_widget(self, container, message):
-        popup = Mx.Label()
+        popup = widgets.Label()
         popup.set_text(message)
         popup.set_style_class("PisakPopUp")
         container.add_child(popup)

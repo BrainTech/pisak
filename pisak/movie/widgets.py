@@ -55,7 +55,7 @@ class FlatSource(pager.DataSource):
 
 class MovieFullscreen(layout.Bin):
     """
-    Widget containing movie in the fullscreen mode.
+    Widget that displays movie in the fullscreen mode.
     """
     __gtype_name__ = "PisakMovieFullscreen"
     __gproperties__ = {
@@ -87,6 +87,9 @@ class MovieFullscreen(layout.Bin):
 
     @property
     def engine(self):
+        """
+        Engine that plays the movie.
+        """
         return self._engine
 
     @engine.setter
@@ -95,6 +98,9 @@ class MovieFullscreen(layout.Bin):
 
     @property
     def exit_button(self):
+        """
+        Button that can be clicked in order to exit a fullscreen mode.
+        """
         return self._exit_button
 
     @exit_button.setter
@@ -104,6 +110,9 @@ class MovieFullscreen(layout.Bin):
 
     @property
     def menu(self):
+        """
+        Button menu of the movie player.
+        """
         return self._menu
 
     @menu.setter
@@ -111,6 +120,12 @@ class MovieFullscreen(layout.Bin):
         self._menu = value
 
     def toggle_fullscreen(self, *args):
+        """
+        Enter or exit the fullscreen mode. When entering this widget
+        is expanded and put on the top of the main window.
+
+        :param args: args passed by a signal emiter.
+        """
         self.fullscreen = not self.fullscreen
         if self.fullscreen:
             self.stage = self.engine.get_stage()

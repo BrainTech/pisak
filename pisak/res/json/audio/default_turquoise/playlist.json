@@ -29,7 +29,7 @@
     },
     {
         "id": "header",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakAudioHeader"
     },
     {
@@ -262,7 +262,7 @@
     },
     {
         "id": "info_display",
-        "type": "MxLabel",
+        "type": "PisakLabel",
         "style-class": "PisakAudioPlaylistInfo"
     },
     {

@@ -1,3 +1,6 @@
+"""
+Speller application specific handlers.
+"""
 import subprocess
 import os
 
@@ -8,17 +11,21 @@ from pisak.speller import widgets, documents_manager
 
 @signals.registered_handler("speller/scroll_up")
 def scroll_up(text_box):
-    '''
+    """
     Scroll the text field up.
-    '''
+
+    :param text_box: text box.
+    """
     text_box.scroll_up()
 
 
 @signals.registered_handler("speller/scroll_down")
 def scroll_down(text_box):
-    '''
+    """
     Scroll the text field down.
-    '''
+
+    :param text_box: text box.
+    """
     text_box.scroll_down()
 
 
@@ -27,7 +34,7 @@ def undo(text_box):
     """
     Undo the last operation applied to a text box.
 
-    :param text_box: undoable text box
+    :param text_box: undoable text box.
     """
     text_box.revert_operation()
 
@@ -37,7 +44,7 @@ def nav_right(text_box):
     """
     Move text cursor forward for one position.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_cursor_forward()
 
@@ -47,7 +54,7 @@ def nav_left(text_box):
     """
     Move text cursor backward for one position.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_cursor_backward()
 
@@ -57,7 +64,7 @@ def nav_down(text_box):
     """
     Move text cursor one line down.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_line_down()
 
@@ -67,7 +74,7 @@ def nav_up(text_box):
     """
     Move text cursor one line up.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_line_up()
 
@@ -77,7 +84,7 @@ def nav_word_backward(text_box):
     """
     Move text cursor backward skipping one word.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_word_backward()
 
@@ -87,7 +94,7 @@ def nav_word_forward(text_box):
     """
     Move text cursor forward skipping one word.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_word_forward()
 
@@ -98,7 +105,7 @@ def save(pop_up):
     Save the current text buffer content to a text file.
     Open a dialog window.
 
-    :param pop_up: dialog window
+    :param pop_up: dialog window.
     """
     file_overwrite_message = "WYBIERZ PLIK DO NADPISANIA"
     empty_text_box_message = "BRAK TEKSTU DO ZAPISANIA"
@@ -131,7 +138,7 @@ def load(pop_up):
     inside the text box.
     Open a dialog window.
 
-    :param pop_up: dialog window
+    :param pop_up: dialog window.
     """
     files_present_message = "WYBIERZ PLIK"
     no_files_present_message = "BRAK PLIKÓW DO WCZYTANIA"
@@ -148,7 +155,7 @@ def print_doc(text_box):
     """
     Print text from the text buffer.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     raise NotImplementedError
 
@@ -158,7 +165,7 @@ def send(text_box):
     """
     Send text from the text buffer by means of some other application.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     raise NotImplementedError
 
@@ -168,7 +175,7 @@ def new_document(text_box):
     """
     Remove the whole text from the text buffer and clear the text box.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.clear_all()
 
@@ -178,7 +185,7 @@ def text_to_speech(text_box):
     """
     Read the text loud.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text = text_box.get_text()
     if text:
@@ -194,7 +201,7 @@ def backspace(text_box):
     """
     Delete the one last character from the text buffer.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.delete_char()
 
@@ -204,7 +211,7 @@ def space(text_box):
     """
     Insert space in the end of the text buffer.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.type_text(" ")
 
@@ -213,9 +220,9 @@ def enter(text_box):
     """
     Insert enter in the end of the text buffer.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
-    text_box.type_text("\n")
+    text_box.move_to_new_line()
 
 
 @signals.registered_handler("speller/new_line")
@@ -223,7 +230,7 @@ def new_line(text_box):
     """
     Begin a new line of text.
 
-    :param text_box: text box
+    :param text_box: text box.
     """
     text_box.move_to_new_line()
 
@@ -233,7 +240,7 @@ def previous_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the previously displayed ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.undo_label()
@@ -251,7 +258,7 @@ def default_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the default ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_default_label()
@@ -265,7 +272,7 @@ def special1_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the special ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_special_label("special1")
@@ -281,7 +288,7 @@ def special2_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the extra ones (including emoticons).
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_special_label("special2")
@@ -297,7 +304,7 @@ def altgr_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the ones specified by altgr property.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_altgr_label()
@@ -314,7 +321,7 @@ def caps_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the upper cased ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_caps_label()
@@ -331,7 +338,7 @@ def lower_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the lower cased ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_lower_label()
@@ -348,7 +355,7 @@ def swap_special1_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the special or default ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_swap_special_label("special1")
@@ -362,7 +369,7 @@ def swap_special2_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the special or default ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_swap_special_label("special2")
@@ -377,7 +384,7 @@ def swap_altgr_chars(keyboard_item):
     Change chars on the keyboard keys to the ones specified by
     altgr property or to the default ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_swap_altgr_label()
@@ -392,7 +399,7 @@ def swap_caps_chars(keyboard_item):
     """
     Change chars on the keyboard keys to the upper or lower cased ones.
 
-    :param keyboard_item: some possibly nested keyboard item
+    :param keyboard_item: some possibly nested keyboard item.
     """
     if isinstance(keyboard_item, widgets.Key):
         keyboard_item.set_swap_caps_label()
@@ -408,7 +415,7 @@ def lower_chars_on_select(keyboard_panel):
     Automatically change chars on the keyboard keys to the lower cased ones
     after typing one of the characters.
 
-    :param keyboard_item: container with pisak key instances inside
+    :param keyboard_item: container with pisak key instances inside.
     """
     _previous_chars_on_select(keyboard_panel, keyboard_panel, widgets.Key.set_lower_label)
 
@@ -419,7 +426,7 @@ def caps_chars_on_select(keyboard_panel):
     Automatically change chars on the keyboard keys to the upper cased ones
     after typing one of the characters.
 
-    :param keyboard_item: container with pisak key instances inside
+    :param keyboard_item: container with pisak key instances inside.
     """
     _previous_chars_on_select(keyboard_panel, keyboard_panel, widgets.Key.set_caps_label)
 
@@ -430,7 +437,7 @@ def swap_caps_chars_on_select(keyboard_panel):
     Automatically change chars on the keyboard keys to the lower or upper
     cased ones after typing one of the characters.
 
-    :param keyboard_item: container with pisak key instances inside
+    :param keyboard_item: container with pisak key instances inside.
     """
     _previous_chars_on_select(keyboard_panel, keyboard_panel, widgets.Key.set_swap_caps_label)
 
@@ -441,7 +448,7 @@ def swap_altgr_chars_on_select(keyboard_panel):
     Automatically change chars on the keyboard keys to the ones specified by
     altgr property or to the default ones after typing one of the characters.
 
-    :param keyboard_item: container with pisak key instances inside
+    :param keyboard_item: container with pisak key instances inside.
     """
     _previous_chars_on_select(keyboard_panel, keyboard_panel, widgets.Key.set_swap_altgr_label)
 
@@ -452,7 +459,7 @@ def swap_special_chars_on_select(keyboard_panel):
     Automatically change chars on the keyboard keys to the special or default
     ones after typing one of the characters.
 
-    :param keyboard_item: container with pisak key instances inside
+    :param keyboard_item: container with pisak key instances inside.
     """
     _previous_chars_on_select(keyboard_panel, keyboard_panel, widgets.Key.set_swap_special_label)
 
@@ -463,7 +470,7 @@ def unset_toggled_state_on_select(button):
     Automatically unset toggled state of the button after selecting one
     of the keyboard keys.
 
-    :param button: speller button instance
+    :param button: speller button instance.
     """
     keyboard_panel = button.related_object
     key_bag = []
@@ -481,7 +488,7 @@ def unset_toggled_state(button):
     """
     Unset toggled state of the button.
 
-    :param button: speller button instance
+    :param button: speller button instance.
     """
     if button.get_toggled():
         button.set_toggled(False)
@@ -503,7 +510,7 @@ def set_toggled_state(button):
     """
     Set toggled state of the button.
 
-    :param button: speller button instance
+    :param button: speller button instance.
     """
     if not button.get_toggled():
         button.set_toggled(True)
@@ -514,7 +521,7 @@ def switch_toggled_state(button):
     """
     Set or unset toggled state of the button.
 
-    :param button: speller button instance
+    :param button: speller button instance.
     """
     if button.get_toggled():
         button.set_toggled(False)

@@ -10,6 +10,14 @@ import pisak.viewer.handlers  # @UnusedImport
 
 
 def prepare_photo_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     album_id = data["album_id"]
     photo_id = data["photo_id"]
 
@@ -31,6 +39,14 @@ def prepare_photo_view(app, window, script, data):
 
 
 def prepare_album_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     album_id = data["album_id"]
 
     handlers.button_to_view(window, script, "button_library", "viewer/main")
@@ -52,6 +68,14 @@ def prepare_album_view(app, window, script, data):
 
 
 def prepare_library_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     library_data = script.get_object("library_data")
     library_data.item_handler = lambda tile, album: window.load_view(
         "viewer/album", {"album_id": album})
@@ -60,12 +84,21 @@ def prepare_library_view(app, window, script, data):
 
 
 def prepare_photo_editing_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     photo = script.get_object("slide")
     photo.photo_path = data[0].slide.photo_path
 
     handlers.button_to_view(window, script, "button_photo", "viewer/photo",
                         {"photo_id": data[2], "album_id": data[1]})
     handlers.button_to_view(window, script, "button_start")
+
 
 viewer_app = {
     "app": "viewer",

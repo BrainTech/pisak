@@ -18,7 +18,16 @@ import pisak.viewer.handlers  # @UnusedImport
 import pisak.blog.widgets  # @UnusedImport
 import pisak.blog.handlers  # @UnusedImport
 
+
 def prepare_main_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     title_text = "   _   BLOG"
     wordpress.blog.pending_post = None
     handlers.button_to_view(window, script, "button_others", "blog/followed_blogs")
@@ -30,6 +39,14 @@ def prepare_main_view(app, window, script, data):
 
 
 def prepare_about_me_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_edit_desc",
                             "blog/speller_about_me")
     handlers.button_to_view(window, script, "button_edit_photo",
@@ -44,6 +61,14 @@ def prepare_about_me_view(app, window, script, data):
 
 
 def prepare_all_posts_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     wordpress.blog.pending_post = None
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_about", "blog/about_me")
@@ -69,6 +94,14 @@ def prepare_all_posts_view(app, window, script, data):
 
 
 def prepare_single_post_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
 
     post = data["post"]
     post_item = data["post_item"]
@@ -116,6 +149,14 @@ def prepare_single_post_view(app, window, script, data):
 
 
 def prepare_followed_blog_single_post_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     post = data["post"]
     post_item = data['post_item']
     posts = data["posts"]
@@ -154,6 +195,14 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
 
 
 def prepare_followed_blog_all_posts_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_about", "blog/about_me")
     handlers.button_to_view(window, script, "button_back", "blog/followed_blogs")
@@ -182,6 +231,14 @@ def prepare_followed_blog_all_posts_view(app, window, script, data):
 
 
 def prepare_followed_blogs_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_about", "blog/about_me")
     handlers.button_to_view(window, script, "button_back", "blog/main")
@@ -192,6 +249,14 @@ def prepare_followed_blogs_view(app, window, script, data):
 
 
 def prepare_speller_post_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     if wordpress.blog.pending_post is not None:
         text_field = script.get_object("text_box")
         plain_text = html_parsers.extract_text(
@@ -206,6 +271,14 @@ def prepare_speller_post_view(app, window, script, data):
 
 
 def prepare_speller_title_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     text_field = script.get_object("text_box")
     post = wordpress.blog.pending_post
     if post.title and post.title != "Untitled":
@@ -216,6 +289,14 @@ def prepare_speller_title_view(app, window, script, data):
 
 
 def prepare_viewer_library_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     library_data = script.get_object("library_data")
     library_data.item_handler = lambda tile, album: window.load_view(
         "blog/viewer_album", {"album_id": album})
@@ -225,6 +306,14 @@ def prepare_viewer_library_view(app, window, script, data):
 
 
 def prepare_viewer_album_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     library = viewer_model.get_library()
 
     def attach_photo(tile):
@@ -245,6 +334,14 @@ def prepare_viewer_album_view(app, window, script, data):
 
 
 def prepare_speller_about_me_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     text_widget = script.get_object("text_box")
     plain_bio = html_parsers.extract_text(
         wordpress.blog.get_about_me_page().content)
@@ -255,6 +352,14 @@ def prepare_speller_about_me_view(app, window, script, data):
 
 
 def prepare_viewer_about_me_library_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     library_data = script.get_object("library_data")
     library_data.item_handler = lambda tile, album: window.load_view(
         "blog/viewer_about_me_album", {"album_id": album})
@@ -262,6 +367,14 @@ def prepare_viewer_about_me_library_view(app, window, script, data):
 
 
 def prepare_viewer_about_me_album_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     library = viewer_model.get_library()
 
     def pick_photo(tile):
@@ -280,6 +393,14 @@ def prepare_viewer_about_me_album_view(app, window, script, data):
 
 
 def prepare_speller_comment_view(app, window, script, data):
+    """
+    View preparator.
+
+    :param app: reference to the application, :see: :module:`pisak.application`.
+    :param window: application main window, :class:`pisak.window.Window` instance.
+    :param script: ClutterScript with the view description.
+    :param data: some specific data.
+    """
     def publish_comment():
         text_widget = script.get_object("text_box")
         text = html_parsers.apply_linebreaks(text_widget.get_text())

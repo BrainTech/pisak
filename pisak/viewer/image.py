@@ -1,12 +1,16 @@
-'''
+"""
 Module with operations on image data.
-'''
+"""
 import random
+import os
 
 from PIL import Image, ImageFilter
 from gi.repository import Cogl, Clutter, GObject
 
-from pisak import res, properties, configurator
+from pisak import properties, configurator, logger
+
+
+_LOG = logger.get_logger(__name__)
 
 
 class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
@@ -26,24 +30,53 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
             Clutter.Actor.__gtype__,
             "", "", GObject.PARAM_READWRITE)
     }
+
     PIXEL_FORMATS = {'1_1': Cogl.PixelFormat.G_8, 'L_1': Cogl.PixelFormat.A_8,
                      'RGB_2': Cogl.PixelFormat.RGB_565, 'RGB_3': Cogl.PixelFormat.RGB_888,
                      'RGBA_2': Cogl.PixelFormat.RGBA_4444, 'RGBA_4': Cogl.PixelFormat.RGBA_8888}
+
+    SAVE_FORMATS = ['JPEG', 'PNG', 'TIFF', 'BMP']
+
+    SAVE_DEFAULT_EXT = 'JPEG'
+
+    SAVE_CONCATENATED_STRING = '_edited'
+
     def __init__(self):
+        self._save_path = None
+        self._save_format = None
         self.buffer = None
         self.original_photo = None
         self.zoom_timer = None
         self.noise_timer = None
         self.apply_props()
 
+    def _create_save_path(self, original_path):
+        directory, basename = os.path.split(original_path)
+        name, ext = os.path.splitext(basename)
+        name += self.SAVE_CONCATENATED_STRING
+        self._save_path = os.path.join(directory, name + ext)
+        if ext:
+            proper_ext = ext[1:].upper()
+            if proper_ext in self.SAVE_FORMATS:
+                ext = proper_ext
+            else:
+                ext = self.SAVE_DEFAULT_EXT
+        else:
+            ext = self.SAVE_DEFAULT_EXT
+        self._save_format = ext
+
     @property
     def path(self):
+        """
+        Path to the photo.
+        """
         return self._path
 
     @path.setter
     def path(self, value):
         self._path = value
         if value is not None:
+            self._create_save_path(value)
             try:
                 self.original_photo = Image.open(self.path)
             except OSError:
@@ -54,6 +87,9 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def slide(self):
+        """
+        Widget displaying the image.
+        """
         return self._slide
 
     @slide.setter
@@ -61,18 +97,36 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._slide = value
 
     def mirror(self, *args):
+        """
+        Make a mirror reflection of the image along the horizontal axis.
+        """
         self.buffer = self.buffer.transpose(Image.FLIP_LEFT_RIGHT)
         self._load()
 
     def grayscale(self, *args):
+        """
+        Apply grayscale filter to the image.
+
+        :param args: some args.
+        """
         self.buffer = self.buffer.convert('L')
         self._load()
 
     def rotate(self, *args):
+        """
+        Rotate the image by 90 degs clockwise.
+
+        :param args: some args.
+        """
         self.buffer = self.buffer.transpose(Image.ROTATE_90)
         self._load()
 
     def solarize(self, *args):
+        """
+        Solarize the image making it extra bright.
+
+        :param args: some args.
+        """
         threshold = 80
         bands = self.buffer.getbands()
         source = self.buffer.split()
@@ -86,6 +140,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def invert(self, *args):
+        """
+        Invert colors of the image.
+
+        :param args: some args.
+        """
         bands = self.buffer.getbands()
         source = self.buffer.split()
         for idx in range(len(source)):
@@ -97,6 +156,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def sepia(self, *args):
+        """
+        Apply sepia filter to the image.
+
+        :param args: some args.
+        """
         level = 50
         grayscale = self.buffer.convert('L')
         red = grayscale.point(lambda i: i + level*1.5)
@@ -112,6 +176,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def edges(self, *args):
+        """
+        Apply edges filter to the image.
+
+        :param args: some args.
+        """
         bands = self.buffer.getbands()
         source = self.buffer.split()
         for idx in range(len(source)):
@@ -123,6 +192,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def contour(self, *args):
+        """
+        Apply contour filter to the image.
+
+        :param args: some args.
+        """
         bands = self.buffer.getbands()
         source = self.buffer.split()
         for idx in range(len(source)):
@@ -134,6 +208,12 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def noise(self, *args):
+        """
+        Apply some random noise to the color bands of the image.
+        This is performed as an animation.
+
+        :param args: some args.
+        """
         if not self.noise_timer:
             self.noise_timer = Clutter.Timeline.new(200)
             self.noise_timer.set_repeat_count(50)
@@ -159,6 +239,11 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def zoom(self, *args):
+        """
+        Zoom the image. Zoom is performed as an animation.
+
+        :param args: some args.
+        """
         if not self.zoom_timer:
             self.zoom_timer = Clutter.Timeline.new(200)
             self.zoom_timer.set_repeat_count(35)
@@ -179,11 +264,28 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         self._load()
 
     def original(self, *args):
+        """
+        Restore the original image.
+
+        :param args: some args.
+        """
         self.buffer = self.original_photo.copy()
         self._load()
 
-    def save(self, *args):
-        raise NotImplementedError()
+    def save(self):
+        """
+        Save the currently edited buffer to a file.
+        """
+        err_msg = None
+        if self._save_path and self._save_format:
+            try:
+                self.buffer.save(self._save_path, format=self._save_format)
+            except Exception as exc:
+                err_msg = exc
+        else:
+            err_msg = 'No save path for the currently edited photo.'
+        if err_msg:
+            LOG.error(err_msg)
 
     def _load(self):
         data = self.buffer.tobytes()

@@ -1,3 +1,6 @@
+"""
+Module implements one class that can send e-mail messages through the SMTP protocol.
+"""
 import smtplib
 import socket
 from ssl import SSLError
@@ -11,11 +14,17 @@ from pisak.email import config
 _LOG = logger.get_logger(__name__)
 
 
-class EmailSendingError(exceptions.PisakException):
+class  EmailSendingError(exceptions.PisakException):
+    """
+    SMTP protocol-related error.
+    """
     pass
 
 
 class SimpleMessage(object):
+    """
+    Simple message consisting of just a subject, body and recipients.
+    """
 
     def __init__(self):
         self.charset = "utf-8"
@@ -122,8 +131,7 @@ class SimpleMessage(object):
             else:
                 _LOG.warning("Server does not support STARTTLS.")
             server.ehlo_or_helo_if_needed()
-            server.login(setup["address"],
-                         config_obj.decrypt_password(setup["password"]))
+            server.login(setup["address"], setup["password"])
             server.sendmail(setup["address"],
                             self.recipients, msg.as_string())
             server.quit()

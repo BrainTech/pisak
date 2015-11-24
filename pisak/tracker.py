@@ -1,3 +1,6 @@
+"""
+Websocket server and client implementations for PISAK eyetrackers.
+"""
 import asyncio
 import threading
 
@@ -6,6 +9,7 @@ from ws4py.server.tulipserver import WebSocketProtocol
 from ws4py.client.threadedclient import WebSocketClient
 
 from pisak import logger
+
 
 _LOG = logger.get_logger('tracker')
 
@@ -17,6 +21,9 @@ CLIENT_STOP_MSG = 'stop'
 
 
 class TrackerServer(object):
+    """
+    Server for trackers.
+    """
 
     clients = set()
 
@@ -78,7 +85,7 @@ class TrackerServer(object):
         """
         Create server based on the web sockets system.
 
-        :returns: server created.
+        :return: server created.
         """
         return self._loop.create_server(
             lambda: WebSocketProtocol(
@@ -128,6 +135,9 @@ class TrackerServer(object):
 
 
 class TrackerClient(WebSocketClient):
+    """
+    Tracker server client.
+    """
 
     SERVER_ADDRESS = 'ws://{}/ws'.format(
         ":".join([SERVER_HOST, SERVER_PORT]))

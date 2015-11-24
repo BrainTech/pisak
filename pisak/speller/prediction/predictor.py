@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-
+"""
+Prediction module. Uses Pressagio as an engine.
+"""
 import platform
 
 import pressagio.callback
@@ -24,8 +26,16 @@ _CONFIG_PARSER.read(_CONFIG_FILE)
 
 _CONFIG_PARSER["Database"]["database"] = _DB_PATH
 
+
 def get_predictions(string):
-    callback = CallbackClass(string)
+    """
+    Get prediction for the given string.
+
+    :param string: some string.
+
+    :return: list of predictions, as strings.
+    """
+    callback = __CallbackClass(string)
     predictions = pressagio.Pressagio(callback, _CONFIG_PARSER).predict()
     if string.rstrip().split()[-1][0].isupper() and string[-1] != ' ':  # capital letters are handled here
         predictions = [p[0].upper() + p[1:] for p in predictions]
@@ -34,7 +44,7 @@ def get_predictions(string):
     return predictions
 
 
-class CallbackClass(pressagio.callback.Callback):
+class __CallbackClass(pressagio.callback.Callback):
     def __init__(self, buffer):
         super().__init__()
         if platform.linux_distribution()[0] == 'Ubuntu':  # temporary fix
@@ -47,6 +57,3 @@ class CallbackClass(pressagio.callback.Callback):
 
     def future_stream(self):
         return ''
-
-if __name__ == '__main__':
-    print(get_predictions('w'))

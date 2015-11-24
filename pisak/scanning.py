@@ -1,5 +1,5 @@
 """
-Classes for defining scanning in JSON layouts
+Classes for defining scanning in JSON layouts.
 """
 import time
 
@@ -7,7 +7,8 @@ from gi.repository import Clutter, GObject
 
 import pisak
 from pisak import logger, exceptions, properties, configurator, dirs
-from pisak.sound_effects import Synthezator
+from pisak.sound_effects import Synthesizer
+
 
 _LOG = logger.get_logger(__name__)
 
@@ -72,21 +73,39 @@ class StylableScannable(Scannable):
     Hilighted and scanned widgets are marked with CSS pseudoclasses.
     """
     def enable_hilite(self):
+        """
+        Enables hilite style for this widget.
+        """
         self.style_pseudo_class_add("hover")
 
     def disable_hilite(self):
+        """
+        Disables hilite style for this widget.
+        """
         self.style_pseudo_class_remove("hover")
 
     def enable_scanned(self):
+        """
+        Enables scanned style for this widget.
+        """
         self.style_pseudo_class_add("scanning")
 
     def disable_scanned(self):
+        """
+        Disables scanned style for this widget.
+        """
         self.style_pseudo_class_remove("scanning")
 
     def enable_lag_hilite(self):
+        """
+        Enables lag_hilite style for this widget.
+        """
         self.style_pseudo_class_add("lag_hilite")
         
     def disable_lag_hilite(self):
+        """
+        Disables lag_hilite style for this widget.
+        """
         self.style_pseudo_class_remove("lag_hilite")
 
     def activate(self):
@@ -125,13 +144,16 @@ class Strategy(Clutter.Actor):
     def select(self, element=None):
         """
         Selects currently highlighted element.
+
+        :param element: optional, element to be directly selected.
         """
         select_lag_disabled = False
         element = element or self.get_current_element()
         if element is None:
             _LOG.debug("There is no current element that could be frozen.")
             return
-        self.play_selection_sound()
+        if self.select_sound_enabled:
+            self.play_selection_sound()
         if isinstance(element, Group):
             if not self.group.paused:
                 self.group.stop_cycle()
@@ -152,6 +174,26 @@ class Strategy(Clutter.Actor):
             else:
                 self._do_select(element)
 
+    def unwind(self):
+        """
+        Stops the group cycle. Starts scanning a group set
+        as an 'unwind' or a parent group if no 'unwind' has been set.
+        """
+        self.group.stop_cycle()
+        if self.unwind_to is not None:
+            self.unwind_to.start_cycle()
+        else:
+            self.group.parent_group.start_cycle()
+
+    def get_current_element(self):
+        """
+        Abstract method to extract currently highlighted element from an
+        internal strategy state.
+
+        :return: currently highlighed element.
+        """
+        raise NotImplementedError("Incomplete strategy implementation")
+
     def _do_select(self, element):
         if isinstance(element, Group):
             if not self.group.killed:
@@ -171,25 +213,11 @@ class Strategy(Clutter.Actor):
         else:
             raise Exception("Unsupported selection")
 
-    def unwind(self):
-        if self.unwind_to is not None:
-            self.group.stop_cycle()
-            self.unwind_to.start_cycle()
-        else:
-            self.group.stop_cycle()
-            self.group.parent_group.start_cycle()
-
-    def get_current_element(self):
-        """
-        Abstract method to extract currently highlighted element from an
-        internal strategy state.
-
-        :returns: currently highlighed element
-        """
-        raise NotImplementedError("Incomplete strategy implementation")
-
 
 class ScanningException(exceptions.PisakException):
+    """
+    Scanning specific exception.
+    """
     pass
 
 
@@ -198,6 +226,7 @@ class _GroupObserver(object):
     Helper class for Group. This class observes all group descendants. When
     subgroup change it schedules update in scanning seqence.
     """
+
     def __init__(self, group):
         self.group = group
         self._init_connections()
@@ -286,6 +315,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def strategy(self):
+        """
+        Scanning strategy that will manage the entire scanning cycle.
+        """
         return self._strategy
 
     @strategy.setter
@@ -293,11 +325,14 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         if self.strategy is not None:
             self.strategy.group = None
         self._strategy = value
-        if self.strategy is not None:
-            self.strategy.group = self
+        if self._strategy is not None:
+            self._strategy.group = self
 
     @property
     def scanning_hilite(self):
+        """
+        Whether the 'scanning' hilite style should be enabled, boolean.
+        """
         return self._scanning_hilite
 
     @scanning_hilite.setter
@@ -308,6 +343,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     @property
     def sound(self):
+        """
+        Sound specific for the group, played when the group is being scanned.
+        """
         return self._sound
 
     @sound.setter
@@ -316,35 +354,21 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             self._sound = dirs.get_sound_path(name + '.wav') or self._sound
 
     def schedule_update(self):
+        """
+        Schedule updating a list of the group current subgroups.
+        """
         self.fresh_subgroups = False
 
     def get_subgroups(self):
+        """
+        Get a list of the subgroups belonging currently to the group.
+
+        :return: list of all the subgroups.
+        """
         if not self.fresh_subgroups:
             self.fresh_subgroups = True
             self._subgroups = list(self._gen_subgroups())
         return self._subgroups
-
-    def _gen_subgroups(self):
-        """
-        Generator of all subgroups of the group.
-        """
-        to_scan = self.get_children()
-        while len(to_scan) > 0:
-            current = to_scan.pop(0)
-            if isinstance(current, Group):
-                if current.is_empty():
-                    pass
-                elif current.is_singular():
-                    yield current.get_subgroups()[0]
-                else:
-                    yield current
-            elif hasattr(current, "enable_hilite"):
-                if not current.is_disabled():
-                    yield current
-                else:
-                    pass
-            else:
-                to_scan.extend(current.get_children())
 
     def is_flat(self):
         """
@@ -361,6 +385,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     def is_empty(self):
         """
         Tests if group is empty.
+
         :return: True if group has subgroups, False otherwise.
         """
         return len(self.get_subgroups()) == 0
@@ -368,6 +393,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
     def is_singular(self):
         """
         Test if group has exactly 1 element.
+
         :return: True if group has exactly 1 subgroup, False otherwise.
         """
         return len(self.get_subgroups()) == 1
@@ -411,6 +437,8 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
         collapsed = get_top_level_group([self])
         if collapsed is not self:
+            if not (collapsed.strategy.unwind_to or collapsed.parent_group):
+                collapsed.strategy.unwind_to = self.strategy.unwind_to or self.parent_group
             collapsed.start_cycle()
             return
 
@@ -428,9 +456,111 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         self.set_key_focus()
         self.strategy.start()
 
+    def stop_cycle(self):
+        """
+        Stop currently running group cycle.
+        """
+        if self.signal_source and self.input_handler_token:
+            self.signal_source.disconnect(self.input_handler_token)
+        if self.scanning_hilite:
+            self.disable_scan_hilite()
+        self.strategy.stop()
+
+    def set_key_focus(self):
+        """
+        Set key focus to the stage owning the group.
+        """
+        stage = self.get_stage()
+        if stage is not None:
+            stage.set_key_focus(self)
+
+    def key_release(self, _source, event):
+        """
+        Key release handler. Triggers an action.
+
+        :param _source: signal source.
+        :param event: event specification, contains a released key code.
+
+        :return: True.
+        """
+        if event.unicode_value == ' ':
+            self.user_action_handler()
+        return True
+
+    def button_release(self, source, event=None):
+        """
+        Button release handler. Triggers an action.
+
+        :param source: signal source.
+        :param event: optional, event specification.
+
+        :return: False.
+        """
+        self.user_action_handler()
+        return False
+
+    def enable_hilite(self):
+        """
+        Recursively enable hilite.
+        """
+        def operation(s):
+            s.enable_hilite()
+            self._hilited.append(s)
+        self._recursive_apply(
+            lambda s: hasattr(s, "enable_hilite"),
+            operation)
+
+    def disable_hilite(self):
+        """
+        Disable hilite of all the previously hilited elements.
+        """
+        for s in self._hilited:
+            s.disable_hilite()
+        self._hilited = []
+
+    def enable_lag_hilite(self):
+        """
+        Recursively enable lag hilite.
+        """
+        def operation(s):
+            s.enable_lag_hilite()
+            self._lag_hilited.append(s)
+        self._recursive_apply(
+            lambda s: hasattr(s, "enable_lag_hilite"),
+            operation)
+
+    def disable_lag_hilite(self):
+        """
+        Disable lag hilite of all the previously lag-hilited elements.
+        """
+        for s in self._lag_hilited:
+            s.disable_lag_hilite()
+        self._lag_hilited = []
+
+    def enable_scan_hilite(self):
+        """
+        Recursively enable scan hilite.
+        """
+        def operation(s):
+            s.enable_scanned()
+            self._scanned.append(s)
+        self._recursive_apply(
+            lambda s: hasattr(s, "enable_scanned"),
+            operation)
+
+    def disable_scan_hilite(self):
+        """
+        Disable hilite of all the previously scan-hilited elements.
+        """
+        for s in self._scanned:
+            s.disable_scanned()
+        self._scanned = []
+
     def _on_singular(self):
         """
         Do something when the group is singular.
+
+        :return: boolean.
         """
         sub_element = self.get_subgroups()[0]
         if isinstance(sub_element, Group):
@@ -447,30 +577,6 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
                 ret = False
         return ret
 
-    def stop_cycle(self):
-        """
-        Stop currently running group cycle
-        """
-        if self.signal_source and self.input_handler_token:
-            self.signal_source.disconnect(self.input_handler_token)
-        if self.scanning_hilite:
-            self.disable_scan_hilite()
-        self.strategy.stop()
-
-    def set_key_focus(self):
-        stage = self.get_stage()
-        if stage is not None:
-            stage.set_key_focus(self)
-
-    def key_release(self, _source, event):
-        if event.unicode_value == ' ':
-            self.user_action_handler()
-        return True
-
-    def button_release(self, source, event=None):
-        self.user_action_handler()
-        return False
-
     def _recursive_apply(self, test, operation):
         subgroups = self.get_subgroups()
         for s in subgroups:
@@ -479,48 +585,35 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
             elif isinstance(s, Group):
                 s._recursive_apply(test, operation)
 
-    def enable_hilite(self):
-        def operation(s):
-            s.enable_hilite()
-            self._hilited.append(s)
-        self._recursive_apply(
-            lambda s: hasattr(s, "enable_hilite"),
-            operation)
-
-    def disable_hilite(self):
-        for s in self._hilited:
-            s.disable_hilite()
-        self._hilited = []
-
-    def enable_lag_hilite(self):
-        def operation(s):
-            s.enable_lag_hilite()
-            self._lag_hilited.append(s)
-        self._recursive_apply(
-            lambda s: hasattr(s, "enable_lag_hilite"),
-            operation)
-
-    def disable_lag_hilite(self):
-        for s in self._lag_hilited:
-            s.disable_lag_hilite()
-        self._lag_hilited = []
-
-    def enable_scan_hilite(self):
-        def operation(s):
-            s.enable_scanned()
-            self._scanned.append(s)
-        self._recursive_apply(
-            lambda s: hasattr(s, "enable_scanned"),
-            operation)
-
-    def disable_scan_hilite(self):
-        for s in self._scanned:
-            s.disable_scanned()
-        self._scanned = []
+    def _gen_subgroups(self):
+        """
+        Generator of all subgroups of the group.
+        """
+        to_scan = self.get_children()
+        while len(to_scan) > 0:
+            current = to_scan.pop(0)
+            if isinstance(current, Group):
+                if current.is_empty():
+                    pass
+                elif current.is_singular():
+                    yield current.get_subgroups()[0]
+                else:
+                    yield current
+            elif hasattr(current, "enable_hilite"):
+                if not current.is_disabled():
+                    yield current
+                else:
+                    pass
+            else:
+                to_scan.extend(current.get_children())
 
 
 class BaseStrategy(Strategy, properties.PropertyAdapter,
                    configurator.Configurable):
+    """
+    Base class for implementations of any specific strategy.
+    """
+
     __gproperties__ = {
         "interval": (
             GObject.TYPE_UINT,
@@ -568,8 +661,13 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._unwind_to = None
         self.timeout_token = None
         self.player = pisak.app.sound_effects_player
-        self.sound_support_enabled = pisak.config.as_bool("sound_support_enabled") and \
-                             pisak.config.as_bool("sound_effects_enabled")
+        sounds_enabled = pisak.config.as_bool("sound_effects_enabled")
+        self.button_sound_support_enabled = sounds_enabled and \
+                                            pisak.config.as_bool("sound_support_enabled")
+        self.scan_sound_enabled = sounds_enabled and \
+                                  pisak.config.as_bool('scan_sound_enabled')
+        self.select_sound_enabled = sounds_enabled and \
+                                    pisak.config.as_bool('select_sound_enabled')
         self.apply_props()
 
     @property
@@ -656,36 +754,33 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
             else:
                 self._do_start()
 
-    def _on_lag(self, lag_type, element_to_hilite, lag_duration):
+    @staticmethod
+    def play_scanning_sound():
         """
-        Stops ('lags') the scanning proccess for the given amount of time
-        and performs all the previously ordered actions, i.e. highlights
-        the current element. In the end schedules an adequate closure.
+        Play a 'tic toc'-like sound indicating the scanning cycle progress.
+        """
+        if pisak.app:
+            pisak.app.play_sound_effect('scanning')
 
-        :param lag_type: type of lag to be performed. Currently there are
-        only two of them: 'start_up' that can happen before the scanning
-        process starts and 'select', after selection of an element.
-        :param element_to_hilite: element that has scanning focus during the
-        lag and that should be highlighted.
-        :param lag_duration: duration of the lag in miliseconds.
+    @staticmethod
+    def play_selection_sound():
         """
-        if self.lag_hilite_mode == "blink":
-            timeout_start = time.time()
-            self.blink(element_to_hilite, timeout_start, lag_duration, 
-                       self.blinking_freq)
-        elif self.lag_hilite_mode == "still":
-            if hasattr(element_to_hilite, "enable_lag_hilite"):
-                element_to_hilite.enable_lag_hilite()
-        if lag_type == "start_up":
-            closure = self._do_start
-            param = None
-        elif lag_type == "select":
-            closure = self._do_select
-            param = element_to_hilite
-        Clutter.threads_add_timeout(0, lag_duration, closure, param)
+        Play a sound indicating that some selection has been made.
+        """
+        if pisak.app:
+            pisak.app.play_sound_effect('selection')
 
     @staticmethod
     def blink(blinking_element, timeout_start, overall_duration, freq):
+        """
+        Make the given element blinking.
+
+        :param blinking_element: any :class:`Scannable` instance.
+        :param timeout_start: current timestamp, helps calculating
+        when the animation should be over.
+        :param overall_duration: total duration of the blinking animation.
+        :param freq: frequency of blinking.
+        """
         hilitten = False
 
         def switch_hilite():
@@ -710,8 +805,82 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         Clutter.threads_add_timeout(0, freq, switch_hilite)
 
     def stop(self):
+        """
+        Stop the currently running scanning cycle.
+        """
         self.timeout_token = None
         self._stop_cycle()
+
+    def cycle_timeout(self, token):
+        """
+        Callback run on scanning cycle timeout. It can either move to
+        the next element in the current scanning sequence
+        or stop the cycle if it has been requested or pause the cycle or
+        start an 'unwind' group's cycle if there is nothing to do
+        with this one.
+
+        :param token: signal handler token, helps avoiding mess when
+        multiple handlers are registered.
+
+        :return: True or False, depending on whether the
+        cycle should be continued.
+        """
+        if self.timeout_token != token:
+            # timeout event not from current cycle
+            return False
+        elif self._is_killed():
+            self.group.stop_cycle()
+            return False
+        elif self._has_next():
+            if not self.group.paused:
+                self._expose_next()
+            return True
+        elif not self._has_unwind_to():
+            self._go_to_sleep()
+            return False
+        else:
+            self.unwind()
+            return False
+
+    def get_current_element(self):
+        """
+        Get current element from the scanning sequence.
+
+        :return: Scannable element.
+        """
+        if self.index is not None and self.index < len(self._subgroups):
+            return self._subgroups[self.index]
+        else:
+            msg = "There is no current element being a subgroup of group {}."
+            _LOG.warning(msg.format(self.group.get_id()))
+
+    def _on_lag(self, lag_type, element_to_hilite, lag_duration):
+        """
+        Stops ('lags') the scanning proccess for the given amount of time
+        and performs all the previously ordered actions, i.e. highlights
+        the current element. In the end schedules an adequate closure.
+
+        :param lag_type: type of lag to be performed. Currently there are
+        only two of them: 'start_up' that can happen before the scanning
+        process starts and 'select', after selection of an element.
+        :param element_to_hilite: element that has scanning focus during the
+        lag and that should be highlighted.
+        :param lag_duration: duration of the lag in miliseconds.
+        """
+        if self.lag_hilite_mode == "blink":
+            timeout_start = time.time()
+            self.blink(element_to_hilite, timeout_start, lag_duration,
+                       self.blinking_freq)
+        elif self.lag_hilite_mode == "still":
+            if hasattr(element_to_hilite, "enable_lag_hilite"):
+                element_to_hilite.enable_lag_hilite()
+        if lag_type == "start_up":
+            closure = self._do_start
+            param = None
+        elif lag_type == "select":
+            closure = self._do_select
+            param = element_to_hilite
+        Clutter.threads_add_timeout(0, lag_duration, closure, param)
 
     def _do_start(self, *_source):
         self.index = None
@@ -755,28 +924,33 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         if self.index is not None and self.index < len(self._subgroups):
             selection = self._subgroups[self.index]
-            if self.sound_support_enabled:
+            if self.button_sound_support_enabled:
+                strateg_conf = pisak.config['PisakRowStrategy']
+                scan_time = strateg_conf.as_int('interval') / 1000
                 if isinstance(selection, pisak.widgets.Button):
                     label = selection.get_label()
                     if label in selection.sounds:
                         self.player.play(selection.sounds[label])
                     elif label in [' ', '']:
                         icon_name = selection.current_icon_name
-                        self.player.play(selection.sounds[icon_name])
+                        if icon_name in selection.sounds:
+                            self.player.play(selection.sounds[icon_name])
+                    else:
+                        synthesizer = Synthesizer(label)
+                        synthesizer.read(scan_time)
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
                 elif isinstance(selection, pisak.widgets.PhotoTile):
                     if pisak.config.as_bool('speech_synthesis'):
-                        strateg_conf = pisak.config['PisakRowStrategy']
-                        scan_time = strateg_conf.as_int('interval') / 1000
-                        synthezator = Synthezator(selection.label_text)
-                        synthezator.read(scan_time)
+                        synthesizer = Synthesizer(selection.label_text)
+                        synthesizer.read(scan_time)
                     else:
                         self.play_scanning_sound()
                 else:
                     self.play_scanning_sound()
             else:
-                self.play_scanning_sound()
+                if self.scan_sound_enabled:
+                    self.play_scanning_sound()
             if hasattr(selection, "enable_hilite"):
                 selection.enable_hilite()
             elif isinstance(selection, Group):
@@ -797,7 +971,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
 
         :return: True if scanning has anywhere to unwind to, False otherwise.
         """
-        return self.unwind_to is not None
+        return self.unwind_to is not None or self.group.parent_group is not None
 
     def _is_killed(self):
         """
@@ -809,43 +983,13 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
     def _go_to_sleep(self):
         self.group.go_standby()
 
-    def cycle_timeout(self, token):
-        if self.timeout_token != token:
-            # timeout event not from current cycle
-            return False
-        elif self._is_killed():
-            self.group.stop_cycle()
-            return False
-        elif self._has_next():
-            if not self.group.paused:
-                self._expose_next()
-            return True
-        elif not self._has_unwind_to():
-            self._go_to_sleep()
-            return False
-        else:
-            self.unwind()
-            return False
-
-    def get_current_element(self):
-        if self.index is not None and self.index < len(self._subgroups):
-            return self._subgroups[self.index]
-        else:
-            msg = "There is no current element being a subgroup of group {}."
-            _LOG.warning(msg.format(self.group.get_id()))
-
-    @staticmethod
-    def play_scanning_sound():
-        if pisak.app:
-            pisak.app.play_sound_effect('scanning')
-
-    @staticmethod
-    def play_selection_sound():
-        if pisak.app:
-            pisak.app.play_sound_effect('selection')
-
 
 class RowStrategy(BaseStrategy):
+    """
+    Implementation of a row-based strategy suitable for groups
+    of widgets arranged in rows.
+    """
+
     __gtype_name__ = "PisakRowStrategy"
 
     def __init__(self):
@@ -854,6 +998,9 @@ class RowStrategy(BaseStrategy):
 
     @property
     def group(self):
+        """
+        Group owning the strategy.
+        """
         return self._group
 
     @group.setter
@@ -869,6 +1016,12 @@ class RowStrategy(BaseStrategy):
                 self.group.connect("allocation-changed", self.update_rows)
 
     def update_rows(self, *_args):
+        """
+        Updates any pending hilites and creates a new scanning sequence.
+
+        :param args: optional, arguments passed
+        when the function is registered as some signal handler.
+        """
         _LOG.debug("Row layout allocation changed")
         if self.index is not None:
             if self.index < len(self._subgroups):
@@ -879,6 +1032,9 @@ class RowStrategy(BaseStrategy):
         self.index = None
 
     def compute_sequence(self):
+        """
+        Creates a new scanning sequence.
+        """
         subgroups = self.group.get_subgroups()
         key_function = lambda a: list(reversed(a.get_transformed_position()))
         subgroups.sort(key=key_function)
@@ -889,6 +1045,7 @@ class ArbitraryOrderStrategy(BaseStrategy):
     """
     Strategy with arbitrary order of scanning
     """
+
     __gtype_name__ = "PisakArbitraryOrderStrategy"
 
     __gproperties__ = {
@@ -903,7 +1060,7 @@ class ArbitraryOrderStrategy(BaseStrategy):
     @property
     def subgroup_order(self):
         """
-        List of elements to scan
+        List of elements to scan, arbitrarily ordered.
         """
         return self._subgroup_order
 
@@ -913,6 +1070,9 @@ class ArbitraryOrderStrategy(BaseStrategy):
         self._subgroup_order = value_list
 
     def compute_sequence(self):
+        """
+        Creates a new scanning sequence.
+        """
         subgroups = self.group.get_subgroups()
         unordered = dict([(s.get_id(), s) for s in subgroups])
         self._subgroups = []

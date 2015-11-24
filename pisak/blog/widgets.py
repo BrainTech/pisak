@@ -41,6 +41,9 @@ class PostTileSource(pager.DataSource):
 
     @property
     def blog_type(self):
+        """
+        Type of the blog, one of: 'own' or 'followed'.
+        """
         return self._blog_type
 
     @blog_type.setter
@@ -125,8 +128,8 @@ class Tile(widgets.PhotoTile):
         self.box.add_child(self.label)
         self.label.orientation = Clutter.Orientation.VERTICAL
         self.label.spacing = 20
-        self.title = Mx.Label()
-        self.date = Mx.Label()
+        self.title = widgets.Label()
+        self.date = widgets.Label()
         self.title.set_margin_right(margin)
         self.title.set_margin_left(margin)
         self.date.set_margin_right(margin)
@@ -139,6 +142,7 @@ class Tile(widgets.PhotoTile):
         self.date.set_style_class("PisakBlogPostTileDate")
         self.label.add_child(self.title)
         self.label.add_child(self.date)
+        self.label.get_text = self.title.get_text
 
 
 class UserPhoto(Mx.Image):
@@ -167,6 +171,8 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
             GObject.TYPE_FLOAT, None, None,
             0, 1., 0, GObject.PARAM_READWRITE)
     }
+
+    BODY_UPPERCASE = 'body { text-transform: uppercase; }'
     
     def __init__(self):
         super().__init__()
@@ -184,9 +190,13 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
         self.view_actor = GtkClutter.Actor.new_with_contents(self.container)
         self.add_child(self.view_actor)
         self.view.connect("document-load-finished", self._reload)
+        self._upper_case = pisak.config.as_bool('upper_case')
 
     @property
     def ratio_width(self):
+        """
+        Screen-relative width.
+        """
         return self._ratio_width
 
     @ratio_width.setter
@@ -198,6 +208,9 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
 
     @property
     def ratio_height(self):
+        """
+        Screen-relative height.
+        """
         return self._ratio_height
 
     @ratio_height.setter
@@ -208,10 +221,23 @@ class BlogPost(Clutter.ScrollActor, properties.PropertyAdapter):
         self.view_actor.set_height(converted_value)
 
     def load_html(self, html, ref_url="about::blank"):
+        """
+        Load page directly from a HTML document.
+
+        :param html: HTML document, string.
+        :param ref_url: reference URL address.
+        """
+        if self._upper_case:
+            self.css += self.BODY_UPPERCASE
         html = '<head><style>' + self.css + '</style></head><body>' + html + '</body>'
         self.view.load_string(html, "text/html", "utf-8", ref_url)
 
     def load_url(self, url):
+        """
+        Load URL address.
+
+        :param url: URL address, string
+        """
         self.view.load_uri(url)
 
     def _reload(self, *args):

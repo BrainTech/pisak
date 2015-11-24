@@ -1,3 +1,6 @@
+"""
+Widgets for the viewer application.
+"""
 import os.path
 
 from gi.repository import Mx, GObject, Clutter
@@ -73,6 +76,9 @@ class SlideShow(layout.Bin, configurator.Configurable):
 
     @property
     def exit_button(self):
+        """
+        Widget that can be used to exit the fullscreen mode slideshow.
+        """
         return self._exit_button
 
     @exit_button.setter
@@ -82,6 +88,9 @@ class SlideShow(layout.Bin, configurator.Configurable):
 
     @property
     def data_source(self):
+        """
+        Viewer data source.
+        """
         return self._data_source
 
     @data_source.setter
@@ -90,6 +99,9 @@ class SlideShow(layout.Bin, configurator.Configurable):
 
     @property
     def transition_duration(self):
+        """
+        Duration of transition between photos.
+        """
         return self.new_slide_transition.get_duration()
 
     @transition_duration.setter
@@ -99,6 +111,9 @@ class SlideShow(layout.Bin, configurator.Configurable):
 
     @property
     def idle_duration(self):
+        """
+        Duration of one photo display in a slideshow mode.
+        """
         return self._idle_duration
 
     @idle_duration.setter
@@ -107,6 +122,9 @@ class SlideShow(layout.Bin, configurator.Configurable):
 
     @property
     def slideshow_on_fullscreen(self):
+        """
+        Whether slideshow should be displayed in the fullscreen mode, boolean.
+        """
         return self._slideshow_on_fullscreen
 
     @slideshow_on_fullscreen.setter
@@ -114,12 +132,22 @@ class SlideShow(layout.Bin, configurator.Configurable):
         self._slideshow_on_fullscreen = value
 
     def show_initial_photo_id(self, photo_id):
+        """
+        Display some arbitrary photo.
+
+        :param photo_index: index of the photo to be shown.
+        """
         library = model.get_library()
         photo = library.get_item_by_id(photo_id)
         index = self.data_source.data.index(photo)
         self.show_initial_slide(index)
 
     def show_initial_slide(self, initial_index=0):
+        """
+        Show the first slide from the whole set of slides.
+
+        :param initial_index: index of the slide to be shown.
+        """
         self.album_length = len(self.data_source.data)
         self.emit("limit-declared", self.album_length)
         self.index = initial_index
@@ -133,6 +161,12 @@ class SlideShow(layout.Bin, configurator.Configurable):
                   self.index+1)
 
     def slideshow_timeout(self):
+        """
+        Function called on a slideshow timeout.
+
+        :return: True or False, depending on the
+        state of the slideshow, set externally.
+        """
         if self.slideshow_on:
             self.next_slide()
             return True
@@ -409,6 +443,9 @@ class PhotoSlide(layout.Bin, configurator.Configurable):
 
     @property
     def image_buffer(self):
+        """
+        Buffer storing the image.
+        """
         return self._image_buffer
 
     @image_buffer.setter
@@ -420,6 +457,9 @@ class PhotoSlide(layout.Bin, configurator.Configurable):
 
     @property
     def photo_path(self):
+        """
+        Path to the photo.
+        """
         return self._photo_path
 
     @photo_path.setter
@@ -437,6 +477,10 @@ class PhotoSlide(layout.Bin, configurator.Configurable):
 
     @property
     def transition_duration(self):
+        """
+        Duration of an animation displayed
+        when showing the photo.
+        """
         return self.photo.get_transition_duration()
 
     @transition_duration.setter

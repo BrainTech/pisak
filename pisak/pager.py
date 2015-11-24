@@ -29,6 +29,7 @@ class DataItem:
     :param content: proper data content.
     :param cmp_key: key used for comparisons.
     """
+
     def __init__(self, content, cmp_key, flags=None):
         self.content = content
         self.cmp_key = cmp_key
@@ -42,8 +43,14 @@ class DataItem:
             return NotImplementedError
         return self.cmp_key < other.cmp_key
 
+    def __bool__(self):
+        return bool(self.content)
+
 
 class LazyWorker:
+    """
+    Lazy worker class. Loads data in a separate thread.
+    """
 
     def __init__(self, src):
         self._src = src
@@ -87,8 +94,7 @@ class LazyWorker:
                                     self._src._query_portion_of_data(ids))))
         self._src.data = self._src.produce_data(
             [(val, None) for val in list(self._src._lazy_data.values())],
-            self._src._data_sorting_key
-        )
+            self._src._data_sorting_key)
 
     def _load_portion_by_number(self, offset, number):
         data = self._src._query_portion_of_data_by_number(offset, number)
@@ -210,6 +216,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
     def target_spec(self):
         """
         Specification of a target that the `DataSource` serves as a data supplier for.
+        If the lazy loading mode is on then the lazy loader is triggered here.
         """
         return self._target_spec
 
@@ -223,6 +230,10 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     @property
     def custom_topology(self):
+        """
+        Whether the custom topology mode of the elements positioning
+        should be applied, boolean.
+        """
         return self._custom_topology
 
     @custom_topology.setter
@@ -242,6 +253,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     @property
     def item_ratio_height(self):
+        """
+        Item widget height, as a fraction of the whole screen height.
+        """
         return self._item_ratio_height
 
     @item_ratio_height.setter
@@ -250,6 +264,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     @property
     def item_ratio_width(self):
+        """
+        Item widget width, as a fraction of the whole screen width.
+        """
         return self._item_ratio_width
 
     @item_ratio_width.setter
@@ -280,6 +297,9 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
     @property
     def data_set_idx(self):
+        """
+        Idx of the current data set.
+        """
         return self._data_set_idx
 
     @data_set_idx.setter
@@ -330,6 +350,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         """
         Generate items and structure them into a nested list.
         """
+        data = self.data
         rows, cols = self.target_spec["rows"], self.target_spec["columns"]
         to = self.to_idx
         if self.from_idx + rows*cols >= self._length:
@@ -342,7 +363,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
                 items.append(row)
             idx += 1
             if index < self._length and index < self.to_idx:
-                item = self._produce_item(self.data[index])
+                item = self._produce_item(data[index])
             elif index > self._length or index >= self.to_idx:
                 item = Clutter.Actor()
                 self._prepare_filler(item)
@@ -481,8 +502,8 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
 
         :return: list of `DataItems`.
         """
-        return [DataItem(item, cmp_key_factory(item), flags) if item else
-                None for item, flags in raw_data]
+        return sorted([DataItem(item, cmp_key_factory(item), flags) for
+                       item, flags in raw_data])
 
     def clean_up(self):
         """
@@ -644,6 +665,7 @@ class _Page(scanning.Group):
     """
     Page widget supplied to pager as its content.
     """
+
     def __init__(self, items, spacing, strategy, sound, row_sounds):
         super().__init__()
         self.items = []  # flat container for the page content
@@ -697,6 +719,7 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
     Display elements placed on pages.
     Display only one page at time and is responsible for flipping them.
     """
+
     __gtype_name__ = "PisakPagerWidget"
     __gsignals__ = {
         "progressed": (
@@ -772,6 +795,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def page_count(self):
+        """
+        Total number of pages.
+        """
         return self._page_count
 
     @page_count.setter
@@ -781,6 +807,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def sound(self):
+        """
+        Sound specific for the pager.
+        """
         return self._sound
 
     @sound.setter
@@ -789,6 +818,10 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def row_sounds(self):
+        """
+        List of sounds specific for consecutive rows on a page.
+        Common for all pages.
+        """
         return self._row_sounds
 
     @row_sounds.setter
@@ -797,6 +830,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def page_strategy(self):
+        """
+        Scanning strategy. :see: :module:`pisak.scanning`
+        """
         return self._page_strategy
 
     @page_strategy.setter
@@ -805,6 +841,10 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def page_ratio_spacing(self):
+        """
+        Distance between neighbouring items on a page, as a fraction of the whole
+        screen width/height.
+        """
         return self._page_ratio_spacing
 
     @page_ratio_spacing.setter
@@ -814,6 +854,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def data_source(self):
+        """
+        :class:`DataSource` instance.
+        """
         return self._data_source
 
     @data_source.setter
@@ -830,6 +873,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def rows(self):
+        """
+        Number of rows.
+        """
         return self._rows
     
     @rows.setter
@@ -838,6 +884,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
     
     @property
     def columns(self):
+        """
+        Number of columns.
+        """
         return self._columns
     
     @columns.setter
@@ -846,6 +895,10 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def idle_duration(self):
+        """
+        Idle before flipping to the next page,
+        applies in the automatic flipping mode.
+        """
         return self._idle_duration
 
     @idle_duration.setter
@@ -854,6 +907,10 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def transition_duration(self):
+        """
+        Duration of an animation showing a page
+        sliding from one side to the middle of the screen.
+        """
         return self.new_page_transition.get_duration()
 
     @transition_duration.setter
@@ -863,6 +920,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
 
     @property
     def ready(self):
+        """
+        Whether the pager is ready to work, boolean.
+        """
         return self._ready
 
     @ready.setter
@@ -875,6 +935,8 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
         """
         Calculate the total number of pages in the pager, based on the
         length of data being supplied by the data source.
+
+        :param data_length: length of a data buffer.
         """
         if self.data_source.custom_topology:
             self.page_count = data_length
@@ -890,8 +952,6 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
         any page transitions are already over.
 
         :param items: list of items to be placed on the new page.
-
-        :return: None.
         """
         _new_page = _Page(items, self.page_spacing, self.page_strategy,
                           self.sound, self.row_sounds)
@@ -994,8 +1054,6 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
         Receive new items.
 
         :param items: list of items.
-
-        :return: None.
         """
         self._introduce_new_page(items)
 
@@ -1037,8 +1095,6 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
     def run_automatic(self):
         """
         Start automatic page flipping.
-
-        :deprecated: Use scanning instead
         """
         if self._page_count > 1:
             self.is_running = True
@@ -1048,8 +1104,6 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
     def stop_automatic(self):
         """
         Stop automatic page flipping.
-
-        :deprecated: Use scanning instead
         """
         self.is_running = False
 
@@ -1071,6 +1125,9 @@ class PageFlip(scanning.Group):
 
     @property
     def target(self):
+        """
+        :class:`PagerWidget` instance.
+        """
         return self._target
 
     @target.setter

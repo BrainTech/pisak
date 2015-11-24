@@ -19,7 +19,7 @@ def get_blog_config():
     """
     Get all the blog configurations.
 
-    :returns: tuple consisting of blog address, user name and user password
+    :return: tuple consisting of blog address, user name and user password.
     """
     config = configobj.ConfigObj(CONFIG_PATH, encoding='UTF8')['blog']
     return {"address": config["address"],
@@ -35,9 +35,9 @@ def decrypt_password(encrypted):
     """
     Decrypt the given encrypted password.
     
-    :param encrypted: encrypted password
+    :param encrypted: encrypted password.
 
-    :returns: decrypted password
+    :return: decrypted password, string.
     """
     if isinstance(encrypted, str):
         return "".join([chr(ord(sign)-1) for sign in list(encrypted)[::-1]])
@@ -49,7 +49,9 @@ def encrypt_password(password):
     their password. Anyone who gets here will be able to decrypt
     the password so we do not need to be very inventive.
 
-    :param password: not encrypted password
+    :param password: not encrypted password.
+
+    :return: string with an encrpted password.
     """
     return "".join([chr(ord(sign)+1) for sign in list(password)[::-1]])
 
@@ -58,7 +60,7 @@ def get_followed_blogs():
     """
     Get list of all followed blogs.
 
-    :returns: list with all followed blogs
+    :return: list with all followed blogs
     """
     return list(configobj.ConfigObj(CONFIG_PATH,
             encoding='UTF8')['followed_blogs'].values())

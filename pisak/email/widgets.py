@@ -1,4 +1,7 @@
-from datetime import datetime
+"""
+Email application specific widgets.
+"""
+import datetime
 from gi.repository import Clutter, Mx, Pango, GObject
 
 import pisak
@@ -70,30 +73,12 @@ class MailboxTileSource(pager.DataSource):
             str, '', '', '', GObject.PARAM_READWRITE)
     }
 
-    SPECIFIC_HEADERS = {
-        'inbox': lambda message:
-            ('from', message['From'][0] or message['From'][1]),
-        'sent_box': lambda message:
-            ('to', message['To'][0] or message['To'][1])
-    }
-
-    QUERY_DATA = {
-        'inbox': lambda imap_client: imap_client.get_many_previews_from_inbox,
-        'sent_box':  lambda imap_client: imap_client.get_many_previews_from_sent_box
-    }
-
-    QUERY_IDS = {
-        'inbox': lambda imap_client: imap_client.get_inbox_ids,
-        'sent_box': lambda imap_client: imap_client.get_sent_box_ids
-    }
-
     def __init__(self):
         super().__init__()
         self._mailbox = None
-        self._get_data = None
-        self._get_ids = None
-        now = datetime.now()
-        self._data_sorting_key = lambda msg: now - msg["Date"]
+        now = datetime.datetime.now()
+        maxdelta = datetime.timedelta(10**4)
+        self._data_sorting_key = lambda msg: ((now - msg["Date"]) if msg else maxdelta)
 
     @property
     def mailbox(self):
@@ -105,9 +90,6 @@ class MailboxTileSource(pager.DataSource):
     @mailbox.setter
     def mailbox(self, value):
         self._mailbox = value
-        imap_client = pisak.app.box["imap_client"]
-        self._get_data = self.QUERY_DATA[value](imap_client)
-        self._get_ids = self.QUERY_IDS[value](imap_client)
 
     def _produce_item(self, message_obj):
         message = message_obj.content
@@ -116,7 +98,9 @@ class MailboxTileSource(pager.DataSource):
         tile.connect('clicked', self.item_handler, message_obj)
 
         for label, value in (
-            self.SPECIFIC_HEADERS[self.mailbox](message),
+            ('from', message['From'][0] or message['From'][1]) if
+                self._mailbox == 'inbox' else
+            ('to', message['To'][0] or message['To'][1]),
             ('subject', message['Subject']),
             ('date', message['Date'].strftime(DATE_FORMAT))
         ):
@@ -124,14 +108,19 @@ class MailboxTileSource(pager.DataSource):
                 getattr(tile, label).set_text(value)
             except AttributeError as e:
                 _LOG.warning(e)
-
         return tile
 
     def _query_portion_of_data(self, ids):
-        return self._get_data(ids)
+        imap_client = pisak.app.box["imap_client"]
+        return imap_client.get_many_previews_from_inbox(ids) if \
+            self._mailbox == 'inbox' else \
+            imap_client.get_many_previews_from_sent_box(ids)
 
     def _query_ids(self):
-        return self._get_ids()
+        imap_client = pisak.app.box["imap_client"]
+        return imap_client.get_inbox_ids() if \
+            self._mailbox == 'inbox' else \
+            imap_client.get_sent_box_ids()
 
 
 class DraftsTileSource(pager.DataSource):
@@ -181,7 +170,7 @@ class MailboxTile(widgets.PhotoTile):
         # name of the corresponding header's lower-cased name;
         # list of headers is at the moment taken from the `imap_client` module.
         for header in imap_client.MAILBOX_HEADERS[mailbox]:
-            label = Mx.Label()
+            label = widgets.Label()
             setattr(self, header.lower(), label)
             label.set_margin_right(margin)
             label.set_margin_left(margin)
@@ -189,6 +178,9 @@ class MailboxTile(widgets.PhotoTile):
                                 Pango.Alignment.CENTER)
             label.set_style_class('PisakEmailMessageTile' + header)
             self.label.add_child(label)
+
+        # set the get_text method to the topic label so it can be read
+        self.label.get_text = self.label.get_children()[0].get_text
 
 
 class EmailButton(widgets.Button):
@@ -208,10 +200,20 @@ class EmailButton(widgets.Button):
         self._extra_label = None
 
     def set_extra_label(self, extra):
+        """
+        Set some extra label that will be concatenated to a default one.
+
+        :param extra: text to be an extra label.
+        """
         self.set_label(self.get_label() + extra)
         self._extra_label = extra
 
     def get_label(self):
+        """
+        Get label without any extra labels.
+
+        :return: label, string.
+        """
         if self._extra_label:
             label = self.clutter_text.get_text()
             return label[: label.rfind(self._extra_label)].strip()
