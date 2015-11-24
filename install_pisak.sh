@@ -14,7 +14,7 @@ sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-
 
 sudo apt-get install -y milena
 
-sudo pip3 install pressagio pydenticon ezodf python-wordpress-xmlrpc
+sudo pip3 install pressagio pydenticon ezodf python-wordpress-xmlrpc cssutils
 
 # if [ -d ~/pisak ]; then
 #     echo "Directory ~/pisak exists." 
