@@ -67,10 +67,11 @@
         "related-object": "easel",
         "ratio-width": 0.075,
         "ratio-height": 0.12,
-	"text": "5",
+	    "text": "5",
+        "sound": "linia 5 punktów",
         "label": " ",
-	"icon-size": "50",
-	"icon-name": "line_0",
+	    "icon-size": "50",
+	    "icon-name": "line_0",
         "signals": [
                 {
                     "name": "clicked",
@@ -91,6 +92,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "10",
+        "sound": "linia 10 punktów",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_1",
@@ -114,6 +116,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "20",
+        "sound": "linia 20 punktów",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_2",
@@ -137,6 +140,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "25",
+        "sound": "linia 25 punktów",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_3",
@@ -160,6 +164,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "35",
+        "sound": "linia 35 punktów",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_4",
@@ -440,7 +445,8 @@
         "label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
-        "background-color": "red",
+        "background-color": "linia czerwona",
+        "sound": "linia 10 punktów",
 	"icon-name": " ",
         "signals": [
                 {
@@ -463,6 +469,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "blue",
+        "sound": "linia niebieska",
 	"icon-name": " ",
         "signals": [
                 {
@@ -485,6 +492,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "green",
+        "sound": "linia zielona",
 	"icon-name": " ",
         "signals": [
                 {
@@ -507,6 +515,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "yellow",
+        "sound": "linia zółta",
 	"icon-name": " ",
         "signals": [
                 {
@@ -529,6 +538,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "purple",
+        "sound": "linia fioletowa",
 	"icon-name": " ",
         "signals": [
                 {
@@ -551,6 +561,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "black",
+        "sound": "linia czarna",
 	"icon-name": " ",
         "signals": [
                 {
@@ -573,6 +584,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "magenta",
+        "sound": "linia magenta",
 	"icon-name": " ",
         "signals": [
                 {
@@ -595,6 +607,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(10, 200, 200)",
+        "sound": "linia seledynowa",
 	"icon-name": " ",
         "signals": [
                 {
@@ -617,6 +630,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 200, 10)",
+        "sound": "linia ",
 	"icon-name": " ",
         "signals": [
                 {
@@ -639,6 +653,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 100, 2)",
+        "sound": "linia ",
 	"icon-name": " ",
         "signals": [
                 {
@@ -661,6 +676,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(2, 200, 100)",
+        "sound": "linia ",
 	"icon-name": " ",
         "signals": [
                 {
