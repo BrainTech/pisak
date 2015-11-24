@@ -116,6 +116,7 @@ class Panel(Ui_MainWindow):
         setattr(self, attr_name, line_edit)
         self._followed_blogs.append(line_edit)
         self.gridLayout_followedBlogs.addWidget(line_edit)
+        line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
         return line_edit
 
     def setupUi(self, MainWindow, app):
@@ -167,11 +168,7 @@ class Panel(Ui_MainWindow):
         self.lineEdit_blogURL.textChanged.connect(self.onLineEdit_blogURLTextChanged)
         self.lineEdit_blogTitle.textChanged.connect(self.onLineEdit_blogTitleTextChanged)
         self.pushButton_blogTest.clicked.connect(self.onPushButton_blogTestClicked)
-
-        for line_edit in self._followed_blogs:
-            line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
         self.pushButton_addFollowedBlog.clicked.connect(self.onPushButton_addFollowedBlogClicked)
-
         self.pushButton_emailTest.clicked.connect(self.onPushButton_emailTestClicked)
         self.lineEdit_emailAddress.textChanged.connect(self.onLineEdit_emailAddressTextChanged)
         self.lineEdit_emailSentFolder.textChanged.connect(self.onLineEdit_emailSentFolderTextChanged)
