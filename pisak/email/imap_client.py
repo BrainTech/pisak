@@ -121,6 +121,7 @@ class IMAPClient(object):
         with self._lock:
             conn_open = self._conn is not None
         if conn_open:
+            self._call('select')
             self._call('close')
             self._call('logout')
         else:

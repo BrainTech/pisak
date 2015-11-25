@@ -12,9 +12,9 @@ from pisak.dirs import HOME_PISAK_CONFIGS, HOME_MAIN_CONFIG, RES_MAIN_CONFIG
 from pisak.blog import config as blog_utils
 from pisak.email.config import Config as email_utils
 from pisak import email as email_app, blog as blog_app
+from pisak.loc import CONFIG_MAPS as MAPS
 
 from panel import Ui_MainWindow
-from loc import MAPS
 
 
 if not os.path.isdir(HOME_PISAK_CONFIGS):
@@ -116,6 +116,7 @@ class Panel(Ui_MainWindow):
         setattr(self, attr_name, line_edit)
         self._followed_blogs.append(line_edit)
         self.gridLayout_followedBlogs.addWidget(line_edit)
+        line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
         return line_edit
 
     def setupUi(self, MainWindow, app):
@@ -167,11 +168,7 @@ class Panel(Ui_MainWindow):
         self.lineEdit_blogURL.textChanged.connect(self.onLineEdit_blogURLTextChanged)
         self.lineEdit_blogTitle.textChanged.connect(self.onLineEdit_blogTitleTextChanged)
         self.pushButton_blogTest.clicked.connect(self.onPushButton_blogTestClicked)
-
-        for line_edit in self._followed_blogs:
-            line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
         self.pushButton_addFollowedBlog.clicked.connect(self.onPushButton_addFollowedBlogClicked)
-
         self.pushButton_emailTest.clicked.connect(self.onPushButton_emailTestClicked)
         self.lineEdit_emailAddress.textChanged.connect(self.onLineEdit_emailAddressTextChanged)
         self.lineEdit_emailSentFolder.textChanged.connect(self.onLineEdit_emailSentFolderTextChanged)
@@ -298,11 +295,15 @@ class Panel(Ui_MainWindow):
     def onLineEdit_blogTitleTextChanged(self, title):
         self._cache['blog']['title'] = title
 
+    def _test_feedback(self, app, conf, feedback_label, utils):
+        conf['password'] = utils.decrypt_password(conf['password'])
+        resp, msg = app.test(conf)
+        feedback_label.setText(msg)
+        feedback_label.setStyleSheet('color: {}'.format('green' if resp else 'red'))
+
     def onPushButton_blogTestClicked(self):
-        conf = self._cache['blog']
-        conf['password'] = blog_utils.decrypt_password(conf['password'])
-        res, msg = blog_app.test(conf)
-        self.label_blogTest.setText(msg)
+        self._test_feedback(
+            blog_app, self._cache['blog'].copy(), self.label_blogTest, blog_utils)
 
     def onLineEdit_followedBlogTextChanged(self, line_edit, blog):
         self._cache['followed_blogs'][line_edit.alias] = blog
@@ -313,10 +314,8 @@ class Panel(Ui_MainWindow):
         line_edit.textChanged.connect(lambda blog: self.onLineEdit_followedBlogTextChanged(line_edit, blog))
 
     def onPushButton_emailTestClicked(self):
-        conf = self._cache['email']
-        conf['password'] = email_utils.decrypt_password(conf['password'])
-        res, msg = email_app.test(conf)
-        self.label_emailTest.setText(msg)
+        self._test_feedback(
+            email_app, self._cache['email'].copy(), self.label_emailTest, email_utils)
 
     def onLineEdit_emailAddressTextChanged(self, address):
         self._cache['email']['address'] = address
