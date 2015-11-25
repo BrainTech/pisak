@@ -124,7 +124,7 @@ class Synthesizer(object):
         if timeout is None or timeout <= 0:
             self.process = subprocess.Popen(["milena_say", self.text])
         else:
-            timeout = _sec_converter(timeout)
+            timeout = self._sec_converter(timeout)
             if pisak.arg_parser.get_args().debug:
                 call = 'milena_say "-S trim 0 {}" {}'
             else:
