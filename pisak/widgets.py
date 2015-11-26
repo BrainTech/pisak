@@ -1740,6 +1740,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self._connect_signals()
         self.prepare_style()
 
+    def __str__(self):
+        return self.get_label() or self.get_id() or self._current_icon_name or super().__str__()
+
     def set_label(self, label):
         """
         Override Clutter.Button generic method for any label preprocessing.

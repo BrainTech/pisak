@@ -88,3 +88,35 @@ def get_event_logger():
     logger.addHandler(file_handler)
     logger.addHandler(console_handler)
     return logger
+
+
+OBCI_LOGS_PATH = os.path.join(HOME_LOGS_DIR, 'obci_logs.txt')
+
+class _OBCILogger:
+
+    PATH = OBCI_LOGS_PATH
+
+    def __init__(self):
+        self._logs = []
+
+    def log(self, time, event):
+        """
+        Log an event.
+
+        :param time: time.time() of the event.
+        :param event: name of the event.
+        """
+        self._logs.append(' '.join([str(time), event]) + '\n')
+
+    def save(self):
+        if self._logs:
+            with open(self.PATH, 'a') as file:
+                file.writelines(self._logs)
+            self._logs.clear()
+
+
+def get_obci_logger():
+    """
+    Get a logger suited for OBCI..
+    """
+    return _OBCILogger()
