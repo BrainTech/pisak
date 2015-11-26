@@ -70,6 +70,7 @@ PisakButton.PisakSpellerButton, PisakSpellerKey, PisakSpellerPrediction {
     border-image: url("black_frame.png") 5;
 }
 
+
 PisakButton.PisakSpellerButton:hover, PisakSpellerKey:hover, PisakSpellerPrediction:hover {
     color: white;
     border-image: url("purple_flat.png");
@@ -1542,4 +1543,39 @@ PisakFrame.PisakEmailMessageTile {
 
 PisakFrame.PisakEmailSingleMessage {
     border-image: url("black_frame_thin.png") 1;
+}
+
+/* BUDZIK */
+
+PisakButton.PisakBudzikButtonA {
+    color: black;
+    font-size: 100px;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("cyan_frame.png") 5;
+}
+
+PisakButton.PisakBudzikButtonA:hover {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBudzikButtonB {
+    color: black;
+    font-size: 100px;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("red_frame.png") 5;
+}
+
+PisakButton.PisakBudzikButtonB:hover {
+    color: white;
+    border-image: url("red_flat.png");
+}
+
+MxLabel.PisakBudzikLabel {
+    font-family: Kelson Sans;
+    font-size: 70px;
+    font-weight: bold;
+    color: black;
 }

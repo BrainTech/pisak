@@ -1,0 +1,91 @@
+[
+    {
+        "id": "main",
+        "type": "PisakScanningGroup",
+	"y-expand": true,
+	"x-expand": true,
+	    "strategy": {
+                        "id": "main_group_strategy",
+                        "type": "PisakRowStrategy"
+                    },
+        "children": [
+                        "main_box", "background_box"
+                    ]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+	"id": "main_box",
+	"type": "PisakBoxLayout",
+        "x-align": "start",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio_margin_top": 0.0136,
+        "ratio_margin_bottom": 0.0136,
+        "ratio_margin_left": 0.0211,
+        "ratio_margin_right": 0.0211,
+        "ratio_spacing": 0.0211,
+        "orientation": "vertical",
+        "children": [
+                        "button_box", "text_box"
+                    ]
+    },
+    {
+	"id": "text_box",
+	"type": "MxLabel",
+	"style-class": "PisakBudzikLabel",
+	"text": "Wybierz odpowiedź: "
+    },
+    {
+        "id": "button_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio_margin_top": 0.0136,
+        "ratio_margin_bottom": 0.0136,
+        "ratio_margin_left": 0.0211,
+        "ratio_margin_right": 0.0211,
+        "ratio_spacing": 0.0211,
+        "orientation": "horizontal",
+        "children": [
+                        "button_B", "button_A"
+                    ]
+    },
+    {
+        "id": "button_A",
+        "type": "PisakButton",
+        "style-class": "PisakBudzikButtonA",
+        "text": "TAK",
+        "x-align": "middle",
+        "ratio-width": 0.4,
+        "ratio-height": 0.5,
+	"signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "budzik/answer_yes",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_B",
+        "type": "PisakButton",
+        "style-class": "PisakBudzikButtonB",
+        "text": "NIE",
+        "x-align": "middle",
+        "ratio-width": 0.4,
+        "ratio-height": 0.5,
+	"signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "budzik/answer_no",
+                           "object": "text_box"
+                       }
+                   ]
+    }
+]
