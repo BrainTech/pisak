@@ -99,7 +99,6 @@
     {
         "id": "menu_header",
         "type": "PisakMenuHeader",
-        "color": "rgba(75, 149, 148, 255)",
         "name": "funkcjenapis",
         "ratio-width": 0.1,
         "ratio-height": 0.06
@@ -326,7 +325,6 @@
     {
         "id": "prediction_header",
         "type": "PisakMenuHeader",
-        "color": "rgba(65, 139, 138, 255)",
         "name": "predykcjanapis",
         "ratio-width": 0.1,
         "ratio-height": 0.06

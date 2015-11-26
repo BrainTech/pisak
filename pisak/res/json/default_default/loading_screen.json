@@ -1,0 +1,17 @@
+[
+  {
+        "id": "main",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ['text']
+    },
+    {
+        "id": "text",
+        "type": "PisakLabel",
+        "style-class": "LoadingScreen",
+        "x-align": 'center',
+        "y-align": "center",
+        "text": "Wczytywanie aplikacji..."
+    }
+]

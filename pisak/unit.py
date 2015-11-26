@@ -14,6 +14,8 @@ MonitorSizePix = namedtuple('MonitorSizePix', 'width height')
 
 size_pix = None
 size_mm = None
+SCREEN_DPMM = None
+SCREEN_DPI = None
 
 
 MONITOR_DPMM = None

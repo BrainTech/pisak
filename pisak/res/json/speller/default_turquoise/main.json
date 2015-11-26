@@ -99,9 +99,9 @@
     {
         "id": "menu_header",
         "type": "PisakMenuHeader",
-        "color": "rgba(75, 149, 148, 255)",
         "name": "funkcjenapis",
-        "height": 65.28
+        "ratio-height": 0.06,
+	"ratio-width": 0.1
     },
     {
         "id": "speller_menu_box",
@@ -325,9 +325,9 @@
     {
         "id": "prediction_header",
         "type": "PisakMenuHeader",
-        "color": "rgba(65, 139, 138, 255)",
         "name": "predykcjanapis",
-        "height": 65.28
+	"ratio-height": 0.06,
+	"ratio-width": 0.1
     },
     {
         "id": "prediction_1",
