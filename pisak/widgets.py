@@ -1716,6 +1716,10 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             GObject.PARAM_READWRITE),
         "disabled_when": (
             GObject.TYPE_STRING, "", "", "",
+            GObject.PARAM_READWRITE),
+        "sound": (
+            GObject.TYPE_STRING,
+            "", "", "scan",
             GObject.PARAM_READWRITE)
     }
 
@@ -1723,6 +1727,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         super().__init__()
         self.box = None
         self.sounds = CaseInsensitiveDict()
+        self._sound = 'scan'
         self._prepare_label()
         self.on_select_hilite_duration = None
         self.related_object = None
@@ -1741,9 +1746,21 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self._connect_signals()
         self.prepare_style()
 
+    @property
+    def sound(self):
+        """
+        Sound specific for the button.
+        """
+        return self._sound
+
+    @sound.setter
+    def sound(self, value):
+        self._sound = value
+
     def __str__(self):
         return self.get_label() or self.get_id() or self._current_icon_name or super().__str__()
 
+    
     def set_label(self, label):
         """
         Override Clutter.Button generic method for any label preprocessing.

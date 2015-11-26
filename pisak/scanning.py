@@ -935,6 +935,8 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                         icon_name = selection.current_icon_name
                         if icon_name in selection.sounds:
                             self.player.play(selection.sounds[icon_name])
+                    elif selection.sound:
+                        self.player.play(selection.sound)
                     else:
                         synthesizer = Synthesizer(label)
                         synthesizer.read(scan_time)

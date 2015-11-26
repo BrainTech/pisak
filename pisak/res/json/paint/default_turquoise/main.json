@@ -70,10 +70,11 @@
         "related-object": "easel",
         "ratio-width": 0.075,
         "ratio-height": 0.12,
-	"text": "5",
+	    "text": "5",
+        "sound": "linia 5 punktów",
         "label": " ",
-	"icon-size": "50",
-	"icon-name": "line_0",
+	    "icon-size": "50",
+	    "icon-name": "line_0",
         "signals": [
                 {
                     "name": "clicked",
@@ -93,10 +94,11 @@
         "related-object": "easel",
         "ratio-width": 0.075,
         "ratio-height": 0.12,
-	"text": "10",
+	    "text": "10",
+        "sound": "linia 10 punktów",
         "label": " ",
-	"icon-size": "50",
-	"icon-name": "line_1",
+	    "icon-size": "50",
+	    "icon-name": "line_1",
         "signals": [
                 {
                     "name": "clicked",
@@ -116,10 +118,11 @@
         "related-object": "easel",
         "ratio-width": 0.075,
         "ratio-height": 0.12,
-	"text": "20",
+	    "text": "20",
+        "sound": "linia 20 punktów",
         "label": " ",
-	"icon-size": "50",
-	"icon-name": "line_2",
+	    "icon-size": "50",
+	    "icon-name": "line_2",
         "signals": [
                 {
                     "name": "clicked",
@@ -139,10 +142,11 @@
         "related-object": "easel",
         "ratio-width": 0.075,
         "ratio-height": 0.12,
-	"text": "25",
+	    "text": "25",
+        "sound": "linia 25 punktów",
         "label": " ",
-	"icon-size": "50",
-	"icon-name": "line_3",
+	    "icon-size": "50",
+	    "icon-name": "line_3",
         "signals": [
                 {
                     "name": "clicked",
@@ -162,10 +166,11 @@
         "related-object": "easel",
         "ratio-width": 0.075,
         "ratio-height": 0.12,
-	"text": "35",
+	    "text": "35",
+        "sound": "linia 35 punktów",
         "label": " ",
-	"icon-size": "50",
-	"icon-name": "line_4",
+	    "icon-size": "50",
+	    "icon-name": "line_4",
         "signals": [
                 {
                     "name": "clicked",
@@ -443,6 +448,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "red",
+        "sound": "linia czerwona",
         "signals": [
                 {
                     "name": "clicked",
@@ -463,6 +469,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "blue",
+        "sound": "linia niebieska",
         "signals": [
                 {
                     "name": "clicked",
@@ -483,6 +490,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "green",
+        "sound": "linia zielona",
         "signals": [
                 {
                     "name": "clicked",
@@ -503,6 +511,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "yellow",
+        "sound": "linia żółta",
         "signals": [
                 {
                     "name": "clicked",
@@ -523,6 +532,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "purple",
+        "sound": "linia fioletowa",
         "signals": [
                 {
                     "name": "clicked",
@@ -543,6 +553,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "black",
+        "sound": "linia czarna",
         "signals": [
                 {
                     "name": "clicked",
@@ -563,6 +574,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "magenta",
+        "sound": "linia w kolorze fuksji",
         "signals": [
                 {
                     "name": "clicked",
@@ -583,6 +595,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(10, 200, 200)",
+        "sound": "linia jasno niebieska",
         "signals": [
                 {
                     "name": "clicked",
@@ -603,6 +616,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 200, 10)",
+        "sound": "linia ciemno żółta",
         "signals": [
                 {
                     "name": "clicked",
@@ -623,6 +637,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(200, 100, 2)",
+        "sound": "linia brązowa",
         "signals": [
                 {
                     "name": "clicked",
@@ -643,6 +658,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(2, 200, 100)",
+        "sound": "linia jasno zielona",
         "signals": [
                 {
                     "name": "clicked",
