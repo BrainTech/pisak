@@ -15,7 +15,7 @@ def save(slide_space):
     slide = slide_space.get_children()[0]
     if slide.image_buffer is None:
         slide.image_buffer = image.ImageBuffer()
-    slide.image_buffer.save()
+    slide.save_buffer()
 
 
 @signals.registered_handler("viewer/slideshow_toggle")

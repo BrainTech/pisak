@@ -92,11 +92,13 @@ def prepare_photo_editing_view(app, window, script, data):
     :param script: ClutterScript with the view description.
     :param data: some specific data.
     """
+    slideshow_widget, album_id, photo_id = data
     photo = script.get_object("slide")
-    photo.photo_path = data[0].slide.photo_path
+    photo.photo_path = slideshow_widget.slide.photo_path
+    photo.album_id = album_id
 
     handlers.button_to_view(window, script, "button_photo", "viewer/photo",
-                        {"photo_id": data[2], "album_id": data[1]})
+                        {"photo_id": photo_id, "album_id": album_id})
     handlers.button_to_view(window, script, "button_start")
 
 

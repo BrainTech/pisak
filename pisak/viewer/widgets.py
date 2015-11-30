@@ -7,7 +7,7 @@ from gi.repository import Mx, GObject, Clutter
 import cairo
 
 import pisak
-from pisak import res, widgets, layout, pager, properties, unit, configurator
+from pisak import res, widgets, layout, pager, properties, unit, configurator, media_library
 from pisak.viewer import image, model
 
 
@@ -434,8 +434,10 @@ class PhotoSlide(layout.Bin, configurator.Configurable):
 
     def __init__(self):
         super().__init__()
-        self.photo_path = None
-        self.image_buffer = None
+        self._photo_path = None
+        self._image_buffer = None
+
+        self.album_id = None
         self.photo = Mx.Image()
         self.photo.set_scale_mode(Mx.ImageScaleMode.FIT)
         self.add_child(self.photo)
@@ -489,3 +491,17 @@ class PhotoSlide(layout.Bin, configurator.Configurable):
 
     def set_from_data(self, data, mode, width, height, row_stride):
         self.photo.set_from_data(data, mode, width, height, row_stride)
+
+    def save_buffer(self):
+        """
+        Save the current image buffer.
+        """
+        if self._image_buffer is not None:
+            path = self._image_buffer.save()
+            if path:
+                library = model.get_library()
+                album = library.get_category_by_id(self.album_id)
+                item_id = library.get_id_for_new_item()
+                lib_item = media_library.Item(item_id, path, {})
+                album.append_item(lib_item)
+                library.append_item(lib_item)

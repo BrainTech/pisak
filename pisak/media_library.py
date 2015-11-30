@@ -355,6 +355,16 @@ class Library(object):
         self._dict_items[item.path] = item
         self._dict_items[item.id] = item
 
+    def get_id_for_new_item(self):
+        """
+        Get id for new item to be inserted to the library.
+
+        :return: id.
+        """
+        return (sorted([key for key in self._dict_items if
+                isinstance(key, int)])[-1] + 1) if \
+            len(self._dict_items) > 0 else 0
+
     def append_category(self, category):
         """
         Add category to the library.

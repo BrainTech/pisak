@@ -86,7 +86,7 @@
         "type": "PisakScanningGroup",
         "children": ["speller_menu_box"],
         "scanning-hilite": true,
-	"sound": "funkcje",
+	    "sound": "funkcje",
         "strategy": {
             "id": "menu_group_strategy",
             "type": "PisakRowStrategy",
