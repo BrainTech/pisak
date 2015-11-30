@@ -1092,7 +1092,7 @@ class Prediction(widgets.Button, configurator.Configurable):
     @property
     def target(self):
         """
-        Widget that will be followed and modified by the predition engine.
+        Widget that will be followed and modified by the prediction engine.
         """
         return self._target
 

@@ -558,7 +558,9 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
     def _on_singular(self):
         """
-        Do something when the group is singular.
+        Do something when the group is singular. If its only child is a
+        scanning group then start its cycle otherwise select the child element unless
+        this behaviour has been suppressed.
 
         :return: boolean.
         """

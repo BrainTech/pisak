@@ -107,7 +107,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Apply grayscale filter to the image.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         self.buffer = self.buffer.convert('L')
         self._load()
@@ -116,7 +117,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Rotate the image by 90 degs clockwise.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         self.buffer = self.buffer.transpose(Image.ROTATE_90)
         self._load()
@@ -125,7 +127,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Solarize the image making it extra bright.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         threshold = 80
         bands = self.buffer.getbands()
@@ -143,7 +146,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Invert colors of the image.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         bands = self.buffer.getbands()
         source = self.buffer.split()
@@ -159,7 +163,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Apply sepia filter to the image.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         level = 50
         grayscale = self.buffer.convert('L')
@@ -179,7 +184,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Apply edges filter to the image.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         bands = self.buffer.getbands()
         source = self.buffer.split()
@@ -195,7 +201,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Apply contour filter to the image.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         bands = self.buffer.getbands()
         source = self.buffer.split()
@@ -212,7 +219,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         Apply some random noise to the color bands of the image.
         This is performed as an animation.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         if not self.noise_timer:
             self.noise_timer = Clutter.Timeline.new(200)
@@ -242,7 +250,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Zoom the image. Zoom is performed as an animation.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         if not self.zoom_timer:
             self.zoom_timer = Clutter.Timeline.new(200)
@@ -267,7 +276,8 @@ class ImageBuffer(Clutter.Actor, properties.PropertyAdapter,
         """
         Restore the original image.
 
-        :param args: some args.
+        :param args: arguments passed when the function is
+        registered as a signal handler.
         """
         self.buffer = self.original_photo.copy()
         self._load()

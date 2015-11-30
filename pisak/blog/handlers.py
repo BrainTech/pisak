@@ -120,7 +120,7 @@ def scroll_post_down(post):
 @signals.registered_handler("blog/go_back")
 def go_back(post):
     """
-    Go backward in the site. 
+    Display previous post from the posts list.
     
     :param post: post object.
     """
@@ -129,7 +129,7 @@ def go_back(post):
 @signals.registered_handler("blog/go_forward")
 def go_forward(post):
     """
-    Go forward in the site. 
+    Display next post from the posts list.
     
     :param post: post object.
     """
