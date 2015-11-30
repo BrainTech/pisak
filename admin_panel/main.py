@@ -58,6 +58,7 @@ class Panel(Ui_MainWindow):
         self.checkBox_buttonSoundSupport.setChecked(config.as_bool('sound_support_enabled'))
         self.horizontalSlider_spriteTimeout.setValue(config['PisakSprite'].as_int('timeout'))
         self.comboBox_spellerLayout.setCurrentText(MAPS['SPELLER_LAYOUT'][config['speller']['layout']])
+        self.checkBox_textCase.setChecked(config.as_bool('upper_case'))
 
         blog = config['blog']
         self.lineEdit_blogUsername.setText(blog['user_name'])
