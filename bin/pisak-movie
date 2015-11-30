@@ -1,0 +1,16 @@
+#!/usr/bin/env python3
+
+'''
+Script to run PISAK movie player.
+'''
+
+from gi.repository import ClutterGst
+
+import pisak
+from pisak import app_manager
+from pisak.movie.description import movie_app 
+
+if __name__ == "__main__":
+    pisak.init()
+    ClutterGst.init()
+    app_manager.run(movie_app)

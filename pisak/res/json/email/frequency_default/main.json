@@ -1,0 +1,152 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "y-align": "center",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.08,
+        "ratio-margin-bottom": 0.04,
+        "ratio-spacing": 0.02,
+        "orientation": "horizontal",
+        "children": ["middle_box"]
+    },
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+	    "x-align": "start",
+        "x-expand": true,
+	    "orientation": "horizontal",
+        "ratio-spacing": 0.001,
+        "children": ["photo_bin", "left_box"]
+    },
+    {
+        "id": "left_box",
+        "type": "PisakBoxLayout",
+	    "orientation": "vertical",
+        "ratio-spacing": 0.005,
+        "children": ["menu_group", "title"]
+    },
+    {
+        "id": "title",
+        "type": "PisakLabel",
+		"style-class": "PisakEmailTitle",
+	    "x-align": "end",
+	    "x-expand": true,
+        "text": "POCZTA EMAIL"
+    },
+    {
+        "id": "menu_group",
+        "type": "PisakScanningGroup",
+        "children": ["menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.015,
+	    "x-align": "start",
+        "x-expand": true,
+        "y-align": "center",
+        "children": ["button_exit", "button_address_book",
+          "button_sent", "button_inbox", "button_new_message"]
+    },
+	{
+		"id": "button_new_message",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "NOWA WIADOMOŚĆ",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	    "custom-padding": "left",
+        "icon-name": "edytuj_opis"
+	},
+	{
+		"id": "button_address_book",
+        "type": "PisakEmailButton",
+        "style-class": "PisakEmailButton",
+        "label": "KSIĄŻKA ADRESOWA",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	    "custom-padding": "left",
+        "icon-name": "edytuj_zdjecie"
+	},
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "PANEL STARTOWY",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+	    "custom-padding": "left",
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+        "id": "button_drafts",
+        "type": "PisakEmailButton",
+        "style-class": "PisakEmailButton",
+        "label": "SZKICE",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	    "custom-padding": "left",
+        "icon-name": "edytuj2"
+    },
+    {
+        "id": "button_sent",
+        "type": "PisakEmailButton",
+        "style-class": "PisakEmailButton",
+        "label": "WYSŁANE",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	    "custom-padding": "left",
+        "icon-name": "komentuj"
+    },
+    {
+        "id": "button_inbox",
+        "type": "PisakEmailButton",
+        "style-class": "PisakEmailButton",
+        "label": "ODEBRANE",
+        "ratio-width": 0.5,
+        "ratio-height": 0.10,
+        "icon-size": 50,
+	    "custom-padding": "left",
+        "icon-name": "nawigator_ebook"
+    },
+    {
+        "id": "photo_bin",
+        "type": "PisakBinLayout",
+        "children": ["photo"]
+    },
+    {
+	    "id": "photo",
+	    "type": "PisakMenuHeader",
+        "color": "rgb(50, 100, 150)",
+        "ratio-width": 0.3,
+        "ratio-height": 0.445,
+       "name": "wyslij"
+    }
+]

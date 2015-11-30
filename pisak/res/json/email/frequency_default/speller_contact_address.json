@@ -1,0 +1,1161 @@
+[
+    {
+        "id": "main",
+        "type": "PisakScanningGroup",
+	    "strategy": {
+                        "id": "main_group_strategy",
+                        "type": "PisakRowStrategy"
+                    },
+        "children": [
+                        "main_box", "background_box"
+                    ]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "pop_up_scanning_group",
+        "type": "PisakScanningGroup",
+        "scanning-hilite": true,
+        "x-expand": true,
+        "y-expand": true,
+        "background-color": "rgba(0, 0, 0, 0.4)",
+        "reactive": true,
+        "strategy": {
+                        "type": "PisakRowStrategy"
+                    },
+        "children": ["pop_up_box", "pop_up_background"]
+    },
+    {
+        "id": "pop_up_background",
+        "type": "PisakBackgroundPattern",
+        "background-color": "white",
+        "ratio-width": 0.8,
+        "ratio-height": 0.8
+    },
+    {
+        "id": "pop_up_box",
+        "type": "PisakSpellerPopUp",
+        "target": "text_box",
+        "row-count": 3,
+        "column-count": 3,
+        "background-scene": "main",
+        "orientation": "vertical",
+        "ratio-margin-top": 0.1,
+        "ratio-margin-bottom": 0.1,
+        "ratio-margin-left": 0.1,
+        "ratio-margin-right": 0.1,
+        "ratio-spacing": 0.07,
+        "tile-ratio-height": 0.1,
+        "tile-ratio-width": 0.2,
+        "children": ["pop_up_space", "pop_up_header"]
+    },
+    {
+        "id": "pop_up_header",
+        "type": "ClutterText",
+        "font-name": "Kelson Sans light 30",
+        "line-alignment": "center"
+    },
+    {
+        "id": "pop_up_space",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.07,
+        "orientation": "vertical"
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio_margin_top": 0.0136,
+        "ratio_margin_bottom": 0.0136,
+        "ratio_margin_left": 0.0211,
+        "ratio_margin_right": 0.0211,
+        "ratio_spacing": 0.0211,
+        "orientation": "horizontal",
+        "children": [
+                        "main_panel", "domain_panel", "speller_menu"
+                    ]
+    },
+    {
+        "id": "speller_menu",
+        "type": "PisakScanningGroup",
+        "children": ["speller_menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy",
+	    "unwind-to": "main"
+        }
+    },
+    {
+        "id": "menu_header",
+        "type": "PisakMenuHeader",
+        "name": "funkcjenapis",
+        "height": 65.28
+    },
+    {
+        "id": "speller_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "y-align": "end",
+        "y-expand": true,
+        "ratio_spacing" : 0.0136,
+        "children": [
+            "button_exit", "button_6", "button_8",
+            "button_5", "button_save", "button_4",
+	    "button_proceed", "button_2",
+            "button_1", "menu_header"
+                    ]
+    },
+    {
+        "id": "button_save",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "ZAPISZ",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "ZAPISZ",
+        "icon-name": "zapisz",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/save",
+                           "object": "pop_up_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_1",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "KLAWIATURA",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "LITERY",
+        "icon-name": "klawiatura",
+        "disabled_when": "scanning_off",
+        "signals": [
+			{
+				"name": "clicked",
+				"handler": "scanning/set_pending_group",
+				"object": "main_panel"
+			}
+		]
+    },
+    {
+        "id": "button_2",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "DOMENA",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "DOMENA",
+        "icon-name": "domain2",
+        "disabled_when": "scanning_off",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "scanning/set_pending_group",
+                "object": "domain_panel"
+            }
+        ]
+    },
+
+    {
+        "id": "button_proceed",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "AKCEPTUJ",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "AKCEPTUJ",
+        "icon-name": "ocena"
+    },
+    {
+        "id": "button_4",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "WCZYTAJ",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "WCZYTAJ",
+        "icon-name": "wczytaj",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/load",
+			   "object": "pop_up_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_5",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "PRZECZYTAJ",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "CZYTAJ",
+        "icon-name": "przeczytaj",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/text_to_speech",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_6",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "WYŚLIJ",
+        "x-align": "start",
+        "disabled": true,
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "WYŚLIJ",
+        "icon-name": "wyslij",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/send",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_7",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "DRUKUJ",
+        "x-align": "start",
+        "disabled": true,
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "DRUKUJ",
+        "icon-name": "drukuj",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/print",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_8",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "NOWY DOKUMENT",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "NOWY",
+        "icon-name": "nowy_dokument",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/new_document",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": "PANEL STARTOWY",
+        "x-align": "start",
+        "ratio-width": 0.18312,
+        "ratio-height": 0.085,
+        "icon-size": 50,
+        "label": "WYJŚCIE",
+        "icon-name": "wyjdz"
+    },
+
+    {
+        "id": "domain_panel",
+        "type": "PisakScanningGroup",
+        "children": ["domain_panel_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "domain_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main"
+        }
+    },
+    {
+        "id": "domain_panel_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "y-align": "end",
+        "y-expand": true,
+        "ratio-spacing": 0.0136,
+        "children":
+        [
+            "domain_9","domain_8","domain_7","domain_6",
+	    "domain_5","domain_4","domain_3","domain_2",
+	    "domain_1","domain_header"
+        ]
+    },
+    {
+        "id": "domain_header",
+        "type": "PisakMenuHeader",
+        "name": "domenanapis",
+        "height": 65.28
+    },
+    {
+        "id": "domain_1",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+	"default-text": "@gmail.com",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_2",
+        "type": "PisakSpellerKey",
+            "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@interia.pl",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_3",
+        "type": "PisakSpellerKey",
+            "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@wp.pl",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_4",
+        "type": "PisakSpellerKey",
+            "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@o2.pl",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_5",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@hotmail.com",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_6",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@poczta.onet.pl",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_7",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@yahoo.com",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_8",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@op.pl",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "domain_9",
+        "type": "PisakSpellerKey",
+	    "style-class": "PisakEmailSpellerContactAddressDomain",
+        "default-text": "@poczta.fm",
+        "target": "text_box",
+        "ratio-width": 0.13734,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "main_panel",
+        "type": "PisakScanningGroup",
+        "children": ["main_panel_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "main_panel_group_strategy",
+            "type": "PisakRowStrategy",
+	    "unwind-to": "main"
+        }
+    },
+    {
+        "id": "main_panel_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.0136,
+        "children": [
+                         "keyboard", "cursored_text", "speller_header"
+                    ]
+    },
+    {
+	    "id": "speller_header",
+	    "type": "PisakLabel",
+	    "x-expand": true,
+	    "x-align": "start",
+	    "style-class": "PisakEmailSpellerContactAddressHeader",
+	    "text": "ADRES EMAIL:"
+    },
+    {
+	    "id": "cursored_text",
+	    "type": "PisakCursorGroup",
+	    "children": ["text_box"]
+    },
+    {
+        "id": "text_box",
+        "type": "PisakScrolledText",
+	    "style-class": "PisakEmailSpellerContactAddressText",
+        "x-align": "start",
+        "ratio-width": 0.59514,
+        "ratio-height": 0.312
+    },
+    {
+        "id": "keyboard",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.0136,
+        "children": ["keyboard_panel", "keyboard_menu"]
+    },
+    {
+        "id": "keyboard_menu",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_menu_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_menu_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "keyboard_menu_button_10", "keyboard_menu_button_9",
+                        "keyboard_menu_button_8", "keyboard_menu_button_7",
+                        "keyboard_menu_button_6", "keyboard_menu_button_5",
+                        "keyboard_menu_button_4", "keyboard_menu_button_3",
+                        "keyboard_menu_button_2", "keyboard_menu_button_1"
+                    ]
+    },
+    {
+        "id": "keyboard_menu_button_1",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "domain2",
+        "disabled_when": "scanning_off",
+        "spacing": 0,
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "scanning/set_pending_group",
+                "object": "domain_panel"
+            }
+        ]
+    },
+    {
+        "id": "keyboard_menu_button_2",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "backspace",
+        "spacing": 0,
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/backspace",
+                           "object": "text_box"
+                       }
+                   ]
+     },
+     {
+        "id": "keyboard_menu_button_3",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "cofnij",
+        "spacing": 0,
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/undo",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "keyboard_menu_button_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "@",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "keyboard_menu_button_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+     {
+        "id": "keyboard_menu_button_6",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "_",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+     },
+     {
+        "id": "keyboard_menu_button_7",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "-",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+     },
+     {
+        "id": "keyboard_menu_button_8",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+         "default-text": "+",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "keyboard_menu_button_9",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "*",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "keyboard_menu_button_10",
+        "type": "PisakButton",
+	"style-class": "PisakEmailSpellerContactAddressButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "funkcje",
+        "disabled_when": "scanning_off",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "scanning/set_pending_group",
+                "object": "speller_menu"
+            }
+        ]
+    },
+
+    {
+        "id": "keyboard_panel",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "y-align": "end",
+        "ratio_spacing": 0.0136,
+        "children": [
+            "keyboard_row_5", "keyboard_row_4", "keyboard_row_3",
+	    "keyboard_row_2", "keyboard_row_1"
+                    ]
+    },
+    {
+        "id": "keyboard_row_1",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_1_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_1_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_1_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_1_10", "key_1_9", "key_1_8", "key_1_7",
+                        "key_1_6", "key_1_5", "key_1_4", "key_1_3",
+                        "key_1_2", "key_1_1"
+                    ]
+    },
+    {
+        "id": "key_1_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "a",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "o",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "e",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "r",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "t",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_6",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "k",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_7",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "m",
+        "special1-text": "7",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_8",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "l",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_9",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "g",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_1_10",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "v",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+        {
+        "id": "keyboard_row_2",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_2_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_2_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_2_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_2_10", "key_2_9", "key_2_8", "key_2_7",
+                        "key_2_6", "key_2_5", "key_2_4", "key_2_3",
+                        "key_2_2", "key_2_1"
+                    ]
+    },
+    {
+        "id": "key_2_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "i",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "z",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "w",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "c",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "d",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_6",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "u",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_7",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "f",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_8",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "q",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_2_9",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "x",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+   	"id": "key_2_10",
+        "type": "PisakButton",
+        "style-class": "PisakEmailSpellerContactAddressButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "nav_up",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/nav_up",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "keyboard_row_3",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_3_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_3_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_3_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_3_10", "key_3_9", "key_3_8", "key_3_7",
+                        "key_3_6", "key_3_5", "key_3_4", "key_3_3",
+                        "key_3_2", "key_3_1"
+                    ]
+    },
+    {
+        "id": "key_3_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "n",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "s",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "y",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "p",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "j",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_6",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "b",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_7",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "h",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_3_8",
+        "type": "PisakButton",
+        "style-class": "PisakSpellerButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "nav_left",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/nav_left",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "key_3_9",
+        "type": "PisakButton",
+        "style-class": "PisakSpellerButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "nav_right",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/nav_right",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+	"id": "key_3_10",
+	"type": "PisakButton",
+        "style-class": "PisakSpellerButton",
+        "text": " ",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085,
+        "icon-size": 30,
+        "icon-name": "nav_down",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "speller/nav_down",
+                           "object": "text_box"
+                       }
+                   ]
+    },
+    {
+        "id": "keyboard_row_4",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_4_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_4_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_4_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_4_10", "key_4_9", "key_4_8", "key_4_7",
+                        "key_4_6", "key_4_5", "key_4_4", "key_4_3",
+                        "key_4_2", "key_4_1"
+                    ]
+    },
+    {
+        "id": "key_4_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "1",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "2",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "3",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "4",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "5",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_6",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "6",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_7",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "7",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_8",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "8",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_9",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "9",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_4_10",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": "0",
+        "target": "text_box",
+        "ratio-width": 0.048,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "keyboard_row_5",
+        "type": "PisakScanningGroup",
+        "children": ["keyboard_row_5_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "id": "keyboard_row_5_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "main_panel"
+        }
+    },
+    {
+        "id": "keyboard_row_5_box",
+        "type": "PisakBoxLayout",
+        "ratio_spacing": 0.0128,
+        "children": [
+                        "key_5_5", "key_5_4", "key_5_3",
+                        "key_5_2", "key_5_1"
+                    ]
+    },
+    {
+        "id": "key_5_1",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".pl",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_2",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".com",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_3",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".org",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_4",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".net",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    },
+    {
+        "id": "key_5_5",
+        "type": "PisakSpellerKey",
+	"style-class": "PisakEmailSpellerContactAddressKey",
+        "default-text": ".eu",
+        "target": "text_box",
+        "ratio-width": 0.1,
+        "ratio-height": 0.085
+    }
+]

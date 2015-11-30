@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+"""
+Script to run Blog app.
+"""
+from gi.repository import GtkClutter
+
+import pisak
+from pisak import app_manager
+from pisak.blog import wordpress
+from pisak.blog.description import blog_app
+
+
+if __name__ == "__main__":
+    pisak.init()
+    GtkClutter.init()
+    wordpress.initialize_session()
+    app_manager.run(blog_app)

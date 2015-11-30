@@ -1,0 +1,364 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box_group", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "pattern": "gradient",
+        "rgba": "94, 188, 188, 255",
+        "background-color": "rgba(188, 236, 236, 255)",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box_group",
+        "type": "PisakScanningGroup",
+        "children": ["main_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "center",
+        "y-align": "center",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.001,
+        "ratio-margin-bottom": 0.001,
+        "ratio-spacing": 0.02,
+        "orientation": "vertical",
+        "children": ["lower_box", "top_box"]
+    },
+    {
+        "id": "top_box",
+        "type": "PisakBoxLayout",
+        "x-align": "center",
+        "y-align": "center",
+        "ratio-height": 0.15,
+        "x-expand": true,
+        "ratio-spacing": 0.005,
+		"children": ["date_box", "to_box", "from_box"]
+    },
+    {
+        "id": "from_box",
+        "type": "PisakBoxLayout",
+		"ratio-spacing": 0.007,
+        "ratio-width": 0.23,
+        "y-expand": true,
+        "y-align": "center",
+        "orientation": "vertical",
+		"children": ["from_frame", "from_label"]
+	},
+    {
+        "id": "from_frame",
+        "type": "PisakFrame",
+        "x-expand": true,
+        "y-expand": true,
+        "style-class": "PisakEmailSingleMessage",
+        "children": ["from_content"]
+    },
+	{
+		"id": "from_label",
+		"type": "PisakLabel",
+		"style-class": "PisakEmailSingleMessage",
+        "text": "NADAWCA:"
+    },
+    {
+        "id": "from_content",
+        "type": "PisakLabel",
+        "style-class": "PisakEmailSingleMessage"
+    },
+    {
+        "id": "to_box",
+        "type": "PisakBoxLayout",
+		"ratio-spacing": 0.007,
+        "ratio-width": 0.52,
+         "y-expand": true,
+        "y-align": "center",
+        "orientation": "vertical",
+		"children": ["to_frame", "to_label"]
+	},
+    {
+        "id": "to_frame",
+        "type": "PisakFrame",
+        "x-expand": true,
+        "y-expand": true,
+        "style-class": "PisakEmailSingleMessage",
+        "children": ["to_content"]
+    },
+	{
+		"id": "to_label",
+		"type": "PisakLabel",
+		"style-class": "PisakEmailSingleMessage",
+        "text": "ODBIORCY:"
+    },
+    {
+        "id": "to_content",
+        "type": "PisakLabel",
+        "style-class": "PisakEmailSingleMessage"
+    },
+    {
+        "id": "cc_box",
+        "type": "PisakBoxLayout",
+		"ratio-spacing": 0.01,
+        "ratio-width": 0.1,
+        "y-align": "center",
+        "orientation": "vertical",
+        "children": ["cc_content", "cc_label"]
+    },
+    {
+        "id": "cc_label",
+        "type": "PisakLabel",
+        "style-class": "PisakEmailSingleMessage"
+    },
+    {
+        "id": "cc_content",
+        "type": "PisakLabel",
+        "style-class": "PisakEmailSingleMessage"
+    },
+    {
+        "id": "date_box",
+        "type": "PisakBoxLayout",
+		"ratio-spacing": 0.007,
+        "ratio-width": 0.23,
+         "y-expand": true,
+        "y-align": "center",
+        "orientation": "vertical",
+		"children": ["date_frame", "date_label"]
+	},
+    {
+        "id": "date_frame",
+        "type": "PisakFrame",
+        "x-expand": true,
+        "y-expand": true,
+        "style-class": "PisakEmailSingleMessage",
+        "children": ["date_content"]
+    },
+	{
+		"id": "date_label",
+		"type": "PisakLabel",
+		"style-class": "PisakEmailSingleMessage",
+        "text": "DATA:"
+	},
+	{
+		"id": "date_content",
+		"type": "PisakLabel",
+		"style-class": "PisakEmailSingleMessage"
+	},
+    {
+        "id": "header",
+        "type": "PisakLabel",
+        "style-class": "PisakEmailSingleMessageTitle",
+        "x-expand": true,
+        "margin-right": 100,
+        "x-align": "end",
+        "text": "TYTUŁ WIADOMOŚCI"
+    },
+    {
+        "id": "lower_box",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.02,
+        "children": ["message_menu", "message_content", "main_menu"]
+    },
+    {
+        "id": "main_menu",
+        "type": "PisakScanningGroup",
+        "children": ["main_menu_box"],
+        "strategy": {
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "main_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.012,
+        "y-expand": true,
+        "y-align": "center",
+        "children": ["button_exit", "button_back",
+            "button_new_mail", "button_save",
+            "button_previous_mail", "button_next_mail"]
+    },
+    {
+        "id": "button_next_mail",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "NASTĘPNA WIADOMOŚĆ",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "next"
+    },
+    {
+        "id": "button_previous_mail",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "POPRZEDNIA WIADOMOŚĆ",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "previous"
+    },
+    {
+        "id": "button_save",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "ZAPISZ",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "zapisz"
+    },
+    {
+        "id": "button_new_mail",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "NOWA WIADOMOŚĆ",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "edytuj_opis"
+    },
+    {
+        "id": "button_back",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "LISTA WIADOMOŚCI",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "back"
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": "PANEL STARTOWY",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+        "id": "message_menu",
+        "type": "PisakScanningGroup",
+        "children": ["message_menu_box"],
+        "strategy": {
+            "type": "PisakRowStrategy"
+        }
+    },
+    {
+        "id": "message_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.012,
+        "y-align": "center",
+        "children": ["button_remove", "button_forward", "button_reply_all",
+	    "button_reply", "button_scroll_up", "button_scroll_down"]
+    },
+    {
+        "id": "button_reply",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "reply"
+    },
+    {
+        "id": "button_reply_all",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "reply_all"
+    },
+    {
+        "id": "button_scroll_up",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "nav_up",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "speller/scroll_up",
+                "object": "message_body"
+            }
+        ]
+    },
+    {
+        "id": "button_scroll_down",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "nav_down",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "speller/scroll_down",
+                "object": "message_body"
+            }
+        ]
+    },
+    {
+        "id": "button_forward",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "forward"
+    },
+    {
+        "id": "button_remove",
+        "type": "PisakButton",
+        "style-class": "PisakEmailButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "bin"
+    },
+    {
+        "id": "message_content",
+        "type": "PisakBoxLayout",
+        "ratio-height": 0.8,
+        "ratio-width": 0.64,
+        "ratio-spacing": 0.05,
+
+        "orientation": "vertical",
+        "children": ["message_body", "message_subject"]
+    },
+    {
+        "id": "message_subject",
+        "type": "PisakLabel",
+        "style-class": "PisakEmailSingleMessageTitle"
+    },
+    {
+        "id": "message_body",
+        "type": "PisakScrolledText",
+        "style-class": "PisakEmailSingleMessage",
+        "ratio-width": 0.64,
+        "ratio-height": 0.65,
+        "background-color": "white"
+    }
+]

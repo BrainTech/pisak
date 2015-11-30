@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+
+'''
+Descriptor for photo viewer.
+'''
+import pisak
+from pisak import app_manager
+from pisak.viewer.description import viewer_app
+
+if __name__ == "__main__":
+    pisak.init()
+    app_manager.run(viewer_app)

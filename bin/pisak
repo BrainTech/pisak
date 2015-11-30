@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+
+"""
+Entry point for the whole PISAK program.
+"""
+
+import pisak
+from pisak import app_manager, logger
+from pisak.description import main_app
+
+if __name__ == '__main__':
+    pisak.init()
+    _std_log = logger.get_logger(__name__)
+    _event_log = logger.get_event_logger()
+    message = "PISAK was launched."
+    _std_log.info(message)
+    _event_log.info(message)
+    app_manager.run(main_app)
+    message = "PISAK was closed."
+    _std_log.info(message)
+    _event_log.info(message)

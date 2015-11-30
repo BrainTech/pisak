@@ -1,0 +1,219 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "center",
+        "y-align": "center",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-top": 0.02,
+        "ratio-margin-bottom": 0.04,
+        "ratio-spacing": 0.015,
+        "orientation": "vertical",
+        "children": ["middle_box_group", "header"]
+    },
+    {
+        "id": "header",
+        "type": "PisakLabel",
+        "style-class": "PisakBlogSinglePostTitle",
+        "x-expand": true,
+        "margin-right": 100,
+        "x-align": "end",
+        "text": "TYTUŁ BLOGA"
+    },
+    {
+        "id": "middle_box_group",
+        "type": "PisakScanningGroup",
+         "scanning-hilite": true,
+        "children": ["middle_box"],
+        "strategy": {
+            "type": "PisakRowStrategy"
+        }
+    },
+
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.02,
+        "children": ["post_menu", "post_text", "button_menu"]
+    },
+    {
+        "id": "button_menu",
+        "type": "PisakScanningGroup",
+        "children": ["button_menu_box"],
+        "strategy": {
+            "id": "menu_group_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "middle_box_group"
+        }
+    },
+    {
+        "id": "button_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.012,
+        "y-expand": true,
+        "y-align": "center",
+        "children": ["button_exit", "button_back",
+		     "photo_widget", "button_about"]
+    },
+    {
+        "id": "button_about",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": "O MNIE",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "o_mnie"
+    },
+    {
+        "id": "button_back",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": "LISTA POSTÓW",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "back"
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": "PANEL STARTOWY",
+        "ratio-width": 0.24,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+	"id": "photo_widget",
+	"type": "PisakBinLayout",
+	"ratio-width": 0.24,
+        "ratio-height": 0.18,
+	"children": ["photo"]
+    },
+    {
+	"id": "photo",
+	"type": "PisakBlogUserPhoto"
+    },
+    {
+        "id": "post_menu",
+        "type": "PisakScanningGroup",
+        "children": ["post_menu_box"],
+        "scanning-hilite": true,
+        "strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "middle_box_group"
+        }
+    },
+    {
+        "id": "post_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.012,
+        "y-align": "center",
+        "children": ["button_delete_post", "button_previous_post", "button_next_post",
+		     "button_scroll_up", "button_scroll_down",  "button_post_edit"]
+    },
+    {
+        "id": "button_delete_post",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "usun",
+	    "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "blog/delete_pending_post"
+                       }
+                   ]
+    },
+    {
+        "id": "button_post_edit",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "blog"
+    },
+    {
+        "id": "button_scroll_up",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "nav_up",
+	"signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "blog/scroll_post_up",
+			   "object": "post_text"
+                       }
+                   ]
+    },
+    {
+        "id": "button_scroll_down",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "nav_down",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "blog/scroll_post_down",
+			   "object": "post_text"
+                       }
+                   ]
+    },
+    {
+        "id": "button_previous_post",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "nav_left"
+    },
+    {
+        "id": "button_next_post",
+        "type": "PisakButton",
+        "style-class": "PisakBlogButton",
+        "label": " ",
+        "ratio-width": 0.07,
+        "ratio-height": 0.09,
+        "icon-size": 50,
+        "icon-name": "nav_right"
+    },
+    {
+	"id": "post_text",
+	"type": "PisakBlogPost",
+	"ratio-height": 0.8,
+	"ratio-width": 0.642
+    }
+]

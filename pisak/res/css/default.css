@@ -1,0 +1,1581 @@
+/* general */
+
+MxButton:scanning { 
+    color: #ccc;
+    border-image: url("black_flat.png");
+}
+
+PisakButton:disabled{
+    color: grey;
+    font-size: 20pt;
+    font-family: serif;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakClock {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+
+/* Loading screen  */
+
+MxLabel.LoadingScreen {
+  font-family: Kelson Sans;
+  font-size: 50pt;
+  font-weight: bold;
+  color: black;
+}
+
+
+/* Main panel */
+
+PisakButton.PisakMainPanelButton {
+    color: black;
+    font-size: 30pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakMainPanelButton:lag_hilite {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakMainPanelButton:hover {
+    color: white;
+    border-image: url("purple_flat.png") 5;
+}
+
+
+/* Speller */
+
+PisakScrolledText.PisakSpellerText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakSpellerText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakSpellerButton, PisakSpellerKey, PisakSpellerPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+
+PisakButton.PisakSpellerButton:hover, PisakSpellerKey:hover, PisakSpellerPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakSpellerButton:lag_hilite, PisakSpellerKey:lag_hilite, PisakSpellerPrediction:lag_hilite {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakSpellerButton:active, PisakSpellerKey:active, PisakSpellerPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakSpellerButton:scanning, MxButton.PisakSpellerKey:scanning, MxButton.PisakSpellerPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakSpellerButton:disabled, MxButton.PisakSpellerKey:disabled, MxButton.PisakSpellerPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+
+/* Viewer */
+
+MxProgressBar.PisakViewerProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakViewerProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakViewerProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+MxLabel.PisakViewerPhotoTile {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+MxLabel.PisakViewerAlbumHeader {
+  font-size: 40pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakButton.PisakViewerButton {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+
+}
+
+PisakButton.PisakViewerButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakViewerButton:lag_hilite {
+  border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakViewerButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+
+/* Paint */
+
+PisakButton.PisakPaintButton {
+  color: white;
+  font-size: 15pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+}
+
+PisakButton.PisakPaintButton:hover {
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakPaintButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakButton.PisakPaintButton:lag_hilite {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PaintColorMenu {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+MxLabel.PaintLineMenu {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+PisakButton.PisakPaintColorButton {
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakPaintColorButton:lag_hilite {
+    border-image: url("cyan_frame.png") 5;
+}
+
+PisakButton.PisakPaintColorButton:hover {
+    border-image: url("purple_frame.png") 5;
+}
+
+MxStack.PisakPaintEaselFrame {
+    padding: 5 5 5 5;
+    border-image: url("black_frame.png") 5;
+}
+
+
+/* Symboler */
+
+PisakButton.PisakSymbolerButton {
+   color: black;
+   font-size: 18pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakSymbolerButton:hover {
+   color: white;
+   border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakSymbolerButton:lag_hilite {
+   color: white;
+   border-image: url("cyan_flat.png");
+}
+
+MxButton.PisakSymbolerButton:scanning { 
+    color: #ccc;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakSymbolerButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakSlider.PisakSymbolerSlider {
+  -mx-trough-height: 15;
+  -mx-handle-height: 15;
+  -mx-handle-width: 25;
+}
+
+MxLabel.PisakSymbolerPhotoTileLabel {
+  font-family: Kelson Sans;
+  font-size: 16pt;
+  color: black;
+}
+
+MxFrame.PisakSymbolerEntryBackground {
+  border-image: url("fence_frame.png");
+}
+
+PisakSlider.PisakSymbolerSlider *#trough-background {
+   border-image: url("fence_frame.png") 2 2 2 2;
+}
+
+PisakSlider.PisakSymbolerSlider *#fill {
+}
+
+PisakSlider.PisakSymbolerSlider > MxButton {
+   border-image: url("black_flat.png");
+}
+
+PisakSlider.PisakSymbolerSlider {
+  -mx-trough-height: 15;
+  -mx-handle-height: 15;
+  -mx-handle-width: 25;
+}
+
+
+/* Audio */
+
+MxLabel.PisakAudioHeader {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+MxLabel.PisakAudioFolderTile {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+PisakPlaylist MxScrollBar *.vtrough {
+  border-image: url("white_flat.png") 5;
+}
+
+PisakPlaylist MxScrollBar MxButton.vhandle, PisakPlaylist MxScrollBar MxButton.vhandle:hover, PisakPlaylist MxScrollBar MxButton.vhandle:active {
+  border-image: url("cyan_flat.png");
+}
+
+PisakPlaylist MxButton.up-stepper, PisakPlaylist MxButton.up-stepper:hover, MxButton.up-stepper:active {
+  -mx-content-image: url("transparent.png");
+}
+
+PisakPlaylist MxButton.down-stepper, PisakPlaylist MxButton.down-stepper:hover, PisakPlaylist MxButton.down-stepper:active {
+  -mx-content-image: url("transparent.png");
+}
+
+PisakFrame.PisakAudioPlaylist {
+   border-image: url("white_frame_open.png") 5;
+}
+
+PisakFrame.PisakAudioFolderTile {
+   border-image: url("white_frame.png") 5;
+}
+
+MxLabel.PisakAudioPlaylistInfo {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+PisakButton.PisakAudioButton {
+   color: white;
+   font-size: 15pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("white_frame.png") 5;
+}
+
+PisakButton.PisakAudioButton:hover {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakAudioButton:lag_hilite {
+   color: black;
+   border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakAudioButton:toggled {
+}
+
+PisakButton.PisakAudioPlaylistButton {
+   color: white;
+   font-size: 20pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("transparent.png") 5;
+}
+
+PisakButton.PisakAudioPlaylistButton:hover {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakAudioPlaylistButton:toggled {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakAudioPlaylistButton:lag_hilite {
+   color: black;
+   border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakAudioButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxProgressBar.PisakAudioProgressBar {
+  border-image: url("white_flat.png");
+}
+
+MxProgressBarFill.PisakAudioProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakAudioProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+
+/*Movie*/
+
+MxLabel.PisakMoviePhotoTile {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+MxLabel.PisakMovieHeader {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: white;
+}
+
+PisakFrame.PisakMoviePhotoTile {
+   border-image: url("white_frame.png") 5;
+}
+
+PisakButton.PisakMovieButton {
+   color: white;
+   font-size: 15pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("white_frame.png") 5;
+}
+
+PisakButton.PisakMovieButton:hover {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+PisakButton.PisakMovieButton:lag_hilite {
+   color: black;
+   border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakMovieButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakButton.PisakMovieButton:toggled {
+}
+
+PisakButton.PisakMovieButton:working {
+   color: black;
+   border-image: url("white_flat.png");
+}
+
+MxLabel.PisakMovieClock {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+MxProgressBar.PisakMovieProgressBar {
+  border-image: url("white_flat.png");
+}
+
+MxProgressBarFill.PisakMovieProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakMovieProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: black;
+}
+
+
+/*Blog*/
+
+MxLabel.PisakBlogSpellerAboutMeHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+PisakScrolledText.PisakBlogSpellerAboutMeText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakBlogSpellerAboutMeText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakBlogSpellerAboutMeButton, 
+PisakSpellerKey.PisakBlogSpellerAboutMeKey, 
+PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakBlogSpellerAboutMeButton:hover, 
+PisakSpellerKey.PisakBlogSpellerAboutMeKey:hover, 
+PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogSpellerAboutMeButton:frozen, 
+PisakSpellerKey.PisakBlogSpellerAboutMeKey:frozen, 
+PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerAboutMeButton:active,
+PisakSpellerKey.PisakBlogSpellerAboutMeKey:active,
+PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+PisakButton.PisakBlogSpellerAboutMeButton:lag_hilite,
+PisakSpellerKey.PisakBlogSpellerAboutMeKey:lag_hilite,
+PisakSpellerPrediction.PisakBlogSpellerAboutMePrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+MxButton.PisakBlogSpellerAboutMeButton:scanning, 
+MxButton.PisakBlogSpellerAboutMeKey:scanning, 
+MxButton.PisakBlogSpellerAboutMePrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakBlogSpellerAboutMeButton:disabled, 
+MxButton.PisakBlogSpellerAboutMeKey:disabled, 
+MxButton.PisakBlogSpellerAboutMePrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakBlogSpellerPostHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+MxLabel.PisakBlogSpellerPostText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakBlogSpellerPostButton, 
+PisakSpellerKey.PisakBlogSpellerPostKey, 
+PisakSpellerPrediction.PisakBlogSpellerPostPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakBlogSpellerPostButton:hover, 
+PisakSpellerKey.PisakBlogSpellerPostKey:hover, 
+PisakSpellerPrediction.PisakBlogSpellerPostPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogSpellerPostButton:frozen, 
+PisakSpellerKey.PisakBlogSpellerPostKey:frozen, 
+PisakSpellerPrediction.PisakBlogSpellerPostPrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerPostButton:lag_hilite,
+PisakSpellerKey.PisakBlogSpellerPostKey:lag_hilite,
+PisakSpellerPrediction.PisakBlogSpellerPostPrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerPostButton:active,
+PisakSpellerKey.PisakBlogSpellerPostKey:active,
+PisakSpellerPrediction.PisakBlogSpellerPostPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakBlogSpellerPostButton:scanning, 
+MxButton.PisakBlogSpellerPostKey:scanning, 
+MxButton.PisakBlogSpellerPostPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakBlogSpellerPostButton:disabled, 
+MxButton.PisakBlogSpellerPostKey:disabled, 
+MxButton.PisakBlogSpellerPostPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakBlogSpellerTitleHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+PisakScrolledText.PisakBlogSpellerPostText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakBlogSpellerPostText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakScrolledText.PisakBlogSpellerTitleText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakBlogSpellerTitleText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakBlogSpellerTitleButton, 
+PisakSpellerKey.PisakBlogSpellerTitleKey, 
+PisakSpellerPrediction.PisakBlogSpellerTitlePrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakBlogSpellerTitleButton:hover, 
+PisakSpellerKey.PisakBlogSpellerTitleKey:hover, 
+PisakSpellerPrediction.PisakBlogSpellerTitlePrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogSpellerTitleButton:frozen, 
+PisakSpellerKey.PisakBlogSpellerTitleKey:frozen, 
+PisakSpellerPrediction.PisakBlogSpellerTitlePrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerTitleButton:lag_hilite,
+PisakSpellerKey.PisakBlogSpellerTitleKey:lag_hilite,
+PisakSpellerPrediction.PisakBlogSpellerTitlePrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerTitleButton:active,
+PisakSpellerKey.PisakBlogSpellerTitleKey:active,
+PisakSpellerPrediction.PisakBlogSpellerTitlePrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakBlogSpellerTitleButton:scanning, 
+MxButton.PisakBlogSpellerTitleKey:scanning, 
+MxButton.PisakBlogSpellerTitlePrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakBlogSpellerTitleButton:disabled, 
+MxButton.PisakBlogSpellerTitleKey:disabled, 
+MxButton.PisakBlogSpellerTitlePrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxProgressBar.PisakBlogViewerAboutMeProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakBlogViewerAboutMeProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakBlogViewerAboutMeProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+MxProgressBar.PisakBlogViewerProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakBlogViewerProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakBlogViewerProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+MxProgressBar.PisakBlogProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakBlogProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakBlogProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+MxLabel.PisakBlogViewerAlbumHeader {
+  font-size: 40pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakButton.PisakBlogViewerButton {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+}
+
+PisakButton.PisakBlogViewerButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogViewerButton:frozen {
+  border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogViewerButton:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogViewerButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakBlogViewerAboutMeAlbumHeader {
+  font-size: 40pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakButton.PisakBlogViewerAboutMeButton {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+}
+
+PisakButton.PisakBlogViewerAboutMeButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogViewerAboutMeButton:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogViewerAboutMeButton:frozen {
+  border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogViewerAboutMeButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakBlogAboutMeName {
+  font-size: 60pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakBlogAboutMe {
+  font-size: 35pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+PisakButton.PisakBlogButton {
+  color: black;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_frame.png") 5;
+
+}
+
+PisakButton.PisakBlogButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogButton:frozen {
+  border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogButton:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakButton.PisakBlogFlatButton {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+
+}
+
+PisakButton.PisakBlogFlatButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogFlatButton:frozen {
+  border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogFlatButton:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogFlatButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakBlogTitle {
+  font-size: 30pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakBlogAllPostsTitle {
+  font-size: 40pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakBlogSinglePostTitle {
+  font-size: 30pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakBlogAllPostsInfo {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakBlogPostTitle {
+  font-size: 25pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakScrolledText.PisakBlogPostText {
+  border-image: url("transparent.png");
+}
+
+MxLabel.PisakBlogPostText {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakFrame.PisakBlogPostTile {
+  border-image: url("black_frame.png") 5;
+}
+
+MxFrame.PisakBlogPostFrame {
+  border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakBlogPostTileTitle {
+  font-size: 25pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakBlogPostTileDate {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+PisakFrame.PisakBlogBlogTile {
+  border-image: url("black_frame.png") 5;
+}
+
+MxLabel.PisakBlogBlogTile {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakBlogSpellerCommentHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+PisakScrolledText.PisakBlogSpellerCommentText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakBlogSpellerCommentText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakBlogSpellerCommentButton, 
+PisakSpellerKey.PisakBlogSpellerCommentKey, 
+PisakSpellerPrediction.PisakBlogSpellerCommentPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakBlogSpellerCommentButton:hover, 
+PisakSpellerKey.PisakBlogSpellerCommentKey:hover, 
+PisakSpellerPrediction.PisakBlogSpellerCommentPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBlogSpellerCommentButton:lag_hilite,
+PisakSpellerKey.PisakBlogSpellerCommentKey:lag_hilite,
+PisakSpellerPrediction.PisakBlogSpellerCommentPrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerCommentButton:frozen, 
+PisakSpellerKey.PisakBlogSpellerCommentKey:frozen, 
+PisakSpellerPrediction.PisakBlogSpellerCommentPrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBlogSpellerCommentButton:active,
+PisakSpellerKey.PisakBlogSpellerCommentKey:active,
+PisakSpellerPrediction.PisakBlogSpellerCommentPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakBlogSpellerCommentButton:scanning, 
+MxButton.PisakBlogSpellerCommentKey:scanning, 
+MxButton.PisakBlogSpellerCommentPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakBlogSpellerCommentButton:disabled, 
+MxButton.PisakBlogSpellerCommentKey:disabled, 
+MxButton.PisakBlogSpellerCommentPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+
+/*Email*/
+
+PisakScrolledText.PisakEmailSpellerMessageContentText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakEmailSpellerMessageContentHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+MxLabel.PisakEmailSpellerMessageContentText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakEmailSpellerMessageContentButton, 
+PisakSpellerKey.PisakEmailSpellerMessageContentKey, 
+PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakEmailSpellerMessageContentButton:hover, 
+PisakSpellerKey.PisakEmailSpellerMessageContentKey:hover, 
+PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageContentButton:frozen, 
+PisakSpellerKey.PisakEmailSpellerMessageContentKey:frozen, 
+PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageContentButton:lag_hilite,
+PisakSpellerKey.PisakEmailSpellerMessageContentKey:lag_hilite,
+PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageContentButton:active,
+PisakSpellerKey.PisakEmailSpellerMessageContentKey:active,
+PisakSpellerPrediction.PisakEmailSpellerMessageContentPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakEmailSpellerMessageContentButton:scanning, 
+MxButton.PisakEmailSpellerMessageContentKey:scanning, 
+MxButton.PisakEmailSpellerMessageContentPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakEmailSpellerMessageContentButton:disabled, 
+MxButton.PisakEmailSpellerMessageContentKey:disabled, 
+MxButton.PisakEmailSpellerMessageContentPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakEmailTitle {
+  font-size: 30pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakEmailAddressTile {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+PisakScrolledText.PisakEmailSpellerMessageToText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakEmailSpellerMessageToHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+MxLabel.PisakEmailSpellerMessageToText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakEmailSpellerMessageToButton,
+PisakSpellerKey.PisakEmailSpellerMessageToKey,
+PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakEmailSpellerMessageToButton:hover,
+PisakSpellerKey.PisakEmailSpellerMessageToKey:hover,
+PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageToButton:frozen,
+PisakSpellerKey.PisakEmailSpellerMessageToKey:frozen,
+PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageToButton:lag_hilite,
+PisakSpellerKey.PisakEmailSpellerMessageToKey:lag_hilite,
+PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageToButton:active,
+PisakSpellerKey.PisakEmailSpellerMessageToKey:active,
+PisakSpellerPrediction.PisakEmailSpellerMessageToPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakEmailSpellerMessageToButton:scanning,
+MxButton.PisakEmailSpellerMessageToKey:scanning,
+MxButton.PisakEmailSpellerMessageToPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakEmailSpellerMessageToButton:disabled,
+MxButton.PisakEmailSpellerMessageToKey:disabled,
+MxButton.PisakEmailSpellerMessageToPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakScrolledText.PisakEmailSpellerMessageSubjectText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakEmailSpellerMessageSubjectHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+MxLabel.PisakEmailSpellerMessageSubjectText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakEmailSpellerMessageSubjectButton,
+PisakSpellerKey.PisakEmailSpellerMessageSubjectKey,
+PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakEmailSpellerMessageSubjectButton:hover,
+PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:hover,
+PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageSubjectButton:frozen,
+PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:frozen,
+PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageSubjectButton:lag_hilite,
+PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:lag_hilite,
+PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerMessageSubjectButton:active,
+PisakSpellerKey.PisakEmailSpellerMessageSubjectKey:active,
+PisakSpellerPrediction.PisakEmailSpellerMessageSubjectPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakEmailSpellerMessageSubjectButton:scanning,
+MxButton.PisakEmailSpellerMessageSubjectKey:scanning,
+MxButton.PisakEmailSpellerMessageSubjectPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakEmailSpellerMessageSubjectButton:disabled,
+MxButton.PisakEmailSpellerMessageSubjectKey:disabled,
+MxButton.PisakEmailSpellerMessageSubjectPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxProgressBar.PisakEmailProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakEmailProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakEmailProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+MxLabel.PisakEmailHeader {
+  font-family: Kelson Sans;
+  font-size: 25pt;
+  color: black;
+}
+
+PisakButton.PisakEmailButton {
+   color: black;
+   font-size: 15pt;
+   font-family: Kelson Sans;
+   font-weight: bold;
+   border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakEmailButton:hover {
+   color: white;
+   border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailButton:lag_hilite {
+   color: black;
+   border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailButton:toggled {
+}
+
+PisakButton.PisakEmailButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxButton.PisakEmailButton:scanning {
+    color: white;
+    border-image: url("black_flat.png") 5;
+}
+
+PisakFrame.PisakEmailAddressTile {
+  border-image: url("black_frame.png") 5;
+}
+
+MxLabel.PisakEmailInboxTile {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+PisakFrame.PisakEmailInboxTile {
+  border-image: url("black_frame.png") 5;
+}
+
+MxLabel.PisakEmailSentTile {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+PisakFrame.PisakEmailSentTile {
+  border-image: url("black_frame.png") 5;
+}
+
+MxLabel.PisakEmailDraftsTile {
+  font-family: Kelson Sans;
+  font-size: 20pt;
+  color: black;
+}
+
+PisakFrame.PisakEmailDraftsTile {
+  border-image: url("black_frame.png") 5;
+}
+
+PisakScrolledText.PisakEmailSpellerContactNameText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakEmailSpellerContactNameHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+MxLabel.PisakEmailSpellerContactNameText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakEmailSpellerContactNameButton,
+PisakSpellerKey.PisakEmailSpellerContactNameKey,
+PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakEmailSpellerContactNameButton:hover,
+PisakSpellerKey.PisakEmailSpellerContactNameKey:hover,
+PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailSpellerContactNameButton:frozen,
+PisakSpellerKey.PisakEmailSpellerContactNameKey:frozen,
+PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerContactNameButton:lag_hilite,
+PisakSpellerKey.PisakEmailSpellerContactNameKey:lag_hilite,
+PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerContactNameButton:active,
+PisakSpellerKey.PisakEmailSpellerContactNameKey:active,
+PisakSpellerPrediction.PisakEmailSpellerContactNamePrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakEmailSpellerContactNameButton:scanning,
+MxButton.PisakEmailSpellerContactNameKey:scanning,
+MxButton.PisakEmailSpellerContactNamePrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakEmailSpellerContactNameButton:disabled,
+MxButton.PisakEmailSpellerContactNameKey:disabled,
+MxButton.PisakEmailSpellerContactNamePrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+PisakScrolledText.PisakEmailSpellerContactAddressText {
+    border-image: url("fence_frame.png");
+}
+
+MxLabel.PisakEmailSpellerContactAddressHeader {
+   color: black;
+   font-size: 35px;
+   font-family: Kelson Sans;
+}
+
+MxLabel.PisakEmailSpellerContactAddressText {
+    color: black;
+    font-size: 50px;
+    font-family: Kelson Sans;
+}
+
+PisakButton.PisakEmailSpellerContactAddressButton,
+PisakSpellerKey.PisakEmailSpellerContactAddressKey,
+PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction {
+    color: black;
+    font-size: 18pt;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakEmailSpellerContactAddressButton:hover,
+PisakSpellerKey.PisakEmailSpellerContactAddressKey:hover,
+PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailSpellerContactAddressButton:frozen,
+PisakSpellerKey.PisakEmailSpellerContactAddressKey:frozen,
+PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:frozen {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerContactAddressButton:lag_hilite,
+PisakSpellerKey.PisakEmailSpellerContactAddressKey:lag_hilite,
+PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailSpellerContactAddressButton:active,
+PisakSpellerKey.PisakEmailSpellerContactAddressKey:active,
+PisakSpellerPrediction.PisakEmailSpellerContactAddressPrediction:active {
+    color: white;
+    border-image: url("grey_flat.png");
+}
+
+MxButton.PisakEmailSpellerContactAddressButton:scanning,
+MxButton.PisakEmailSpellerContactAddressKey:scanning,
+MxButton.PisakEmailSpellerContactAddressPrediction:scanning {
+    color: white;
+    border-image: url("black_flat.png");
+}
+
+MxButton.PisakEmailSpellerContactAddressButton:hover,
+MxButton.PisakEmailSpellerContactAddressKey:hover,
+MxButton.PisakEmailSpellerContactAddressPrediction:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+MxButton.PisakEmailSpellerContactAddressButton:disabled,
+MxButton.PisakEmailSpellerContactAddressKey:disabled,
+MxButton.PisakEmailSpellerContactAddressPrediction:disabled {
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxProgressBar.PisakEmailViewerContactProgressBar {
+  border-image: url("black_flat.png");
+}
+
+MxProgressBarFill.PisakEmailViewerContactProgressBar {
+  border-image: url("cyan_flat.png");
+}
+
+MxLabel.PisakEmailViewerContactProgressBar {
+  font-family: Kelson Sans;
+  font-size: 30pt;
+  color: white;
+}
+
+PisakButton.PisakEmailViewerContactButton {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("black_flat.png");
+}
+
+PisakButton.PisakEmailViewerContactButton:hover {
+  color: white;
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  font-weight: bold;
+  border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakEmailViewerContactButton:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailViewerContactButton:frozen {
+  border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakEmailViewerContactButton:disabled{
+    color: grey;
+    border-image: url("grey_frame.png") 5;
+}
+
+MxLabel.PisakEmailViewerContactAlbumHeader {
+  font-size: 40pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakEmailContact {
+  font-size: 35pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakEmailSingleMessageTitle {
+  font-size: 30pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakEmailSingleMessage {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+PisakFrame.PisakEmailDate {
+    border-image: url("black_frame.png") 5;
+}
+
+MxLabel.PisakEmailDate {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakEmailMessageTileDate {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakEmailMessageTileSubject {
+  font-size: 23pt;
+  font-family: Kelson Sans;
+  color: black;
+}
+
+MxLabel.PisakEmailMessageTileTo {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+ }
+
+MxLabel.PisakPopUp {
+  font-size: 35pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+MxLabel.PisakEmailMessageTileFrom {
+  font-size: 20pt;
+  font-family: Kelson Sans;
+  color: black;
+  font-weight: lighter;
+}
+
+PisakFrame.PisakEmailMessageTile {
+    border-image: url("black_frame.png") 5;
+}
+
+PisakFrame.PisakEmailSingleMessage {
+    border-image: url("black_frame_thin.png") 1;
+}
+
+/* BUDZIK */
+
+PisakButton.PisakBudzikButtonA {
+    color: black;
+    font-size: 100px;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("cyan_frame.png") 5;
+}
+
+PisakButton.PisakBudzikButtonA:hover {
+    color: white;
+    border-image: url("cyan_flat.png");
+}
+
+PisakButton.PisakBudzikButtonB {
+    color: black;
+    font-size: 100px;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("red_frame.png") 5;
+}
+
+PisakButton.PisakBudzikButtonB:hover {
+    color: white;
+    border-image: url("red_flat.png");
+}
+
+MxLabel.PisakBudzikLabel {
+    font-family: Kelson Sans;
+    font-size: 70px;
+    font-weight: bold;
+    color: black;
+}

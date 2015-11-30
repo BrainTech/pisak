@@ -1,0 +1,522 @@
+[
+    {
+        "id": "main",
+        "type": "PisakBinLayout",
+        "x-expand": true,
+        "y-expand": true,
+        "children": ["main_box", "background_box"]
+    },
+    {
+        "id": "background_box",
+        "type": "PisakBackgroundPattern",
+        "pattern": "gradient",
+        "rgba": "140, 188, 188, 255",
+        "background-color": "rgba(188, 236, 236, 255)",
+        "x-expand": true,
+        "y-expand": true
+    },
+    {
+        "id": "main_box",
+        "type": "PisakBoxLayout",
+        "x-align": "center",
+        "y-align": "end",
+        "x-expand": true,
+        "y-expand": true,
+        "ratio-margin-bottom": 0.02,
+        "ratio-spacing": 0.025,
+        "orientation": "vertical",
+        "children": ["progress_bar_bin", "middle_box_group"]
+    },
+    {
+        "id": "header",
+        "type": "PisakLabel",
+        "style-class": "PisakMovieHeader",
+        "color": "rgba(65, 139, 138, 255)"
+    },
+    {
+        "id": "middle_box_group",
+        "type": "PisakScanningGroup",
+        "children": ["middle_box"],
+        "strategy": {
+            "type": "PisakArbitraryOrderStrategy",
+            "subgroup-order": "main_menu, movie_menu"
+        }
+    },
+    {
+        "id": "middle_box",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.01,
+        "children": ["movie_box", "main_menu"]
+    },
+    {
+        "id": "main_menu",
+        "type": "PisakScanningGroup",
+        "strategy": {
+            "id": "menu_menu_strategy",
+            "type": "PisakRowStrategy",
+            "unwind-to": "middle_box_group"
+        },
+        "children": ["main_menu_box"]
+    },
+    {
+        "id": "menu_header",
+        "type": "PisakMenuHeader",
+        "name": "funkcjenapis",
+        "color": "rgba(65, 139, 138, 255)",
+        "height": 65.28
+    },
+    {
+        "id": "main_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.0013,
+        "y-expand": true,
+        "y-align": "end",
+        "children": ["button_exit", "button_library",
+ 		"button_louder", "button_quieter",
+		     "button_full", "button_player", "menu_header"]
+    },
+    {
+        "id": "button_exit",
+        "label": "PANEL STARTOWY",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "exit"
+    },
+    {
+        "id": "button_library",
+        "label": "BIBLIOTEKA",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "bib"
+    },
+    {
+        "id": "button_return",
+        "label": "POWRÓT",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "icon-size": 50,
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "back",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/stop",
+                "object": "playback"
+            }
+        ]
+    },
+    {
+        "id": "button_favs",
+        "label": "ULUBIONE",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "disabled": true,
+        "icon-size": 50,
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "ulubione",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "movie/add_or_remove_from_favs",
+                "object": "playback"
+            }
+        ]
+    },
+    {
+        "id": "button_louder",
+        "label": "GłOŚNIEJ",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "icon-size": 50,
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "louder",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/increase_volume",
+                "object": "playback"
+            }
+        ]
+    },
+     {
+        "id": "button_quieter",
+        "label": "CISZEJ",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "icon-size": 50,
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "quieter",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/decrease_volume",
+                "object": "playback"
+            }
+        ]
+    },
+    {
+        "id": "button_full",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": "PEŁNY EKRAN",
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "fullscreen",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "movie/toggle_fullscreen",
+                "object": "movie_widget"
+            },
+	        {
+                "name": "clicked",
+                "handler": "general/kill_group",
+                "object": "middle_box_group"
+            },
+	        {
+                "name": "clicked",
+                "handler": "general/kill_group",
+                "object": "main_menu"
+              }
+        ]
+    },
+    {
+        "id": "button_player",
+        "label": "ODTWARZACZ",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "icon-size": 50,
+        "ratio-width": 0.24,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "odtwarzacz",
+        "disabled_when": "scanning_off",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "scanning/set_pending_group",
+                "object": "movie_menu"
+            }
+        ]
+    },
+    {
+        "id": "movie_box",
+        "type": "MxFrame",
+        "style-class": "PisakMoviePlaylist",
+        "children": ["movie_box_container"]
+    },
+    {
+        "id": "movie_box_container",
+        "type": "PisakBoxLayout",
+        "ratio-spacing": 0.01,
+        "children": ["movie_menu", "movie_bin"]
+    },
+    {
+        "id": "movie_bin",
+        "type": "PisakBinLayout",
+        "ratio-width": 0.68,
+        "y-expand": true,
+        "children": ["movie"]
+    },
+    {
+        "id": "movie",
+        "type": "ClutterGstVideoTexture",
+        "x-expand": true,
+	"y-expand": true
+    },
+    {
+        "id": "movie_widget",
+        "type": "PisakMovieFullscreen",
+        "engine": "movie",
+	    "menu": "middle_box_group",
+        "exit_button": "button_full_exit"
+    },
+    {
+        "id": "button_full_exit",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+        "ratio-width": 0.09,
+        "ratio-height": 0.09,
+        "x": 0,
+        "y": 0,
+        "icon-name": "usun",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "movie/toggle_fullscreen",
+                "object": "movie_widget"
+            }
+        ]
+    },
+    {
+        "id": "playback",
+        "type": "PisakVideoPlayback",
+	    "engine": "movie",
+	    "signals": [
+	    {
+		"name": "eos",
+		"handler": "general/untoggle",
+                "object": "movie_button_play"
+	    },
+	    {
+		"name": "eos",
+		"handler": "general/set_unworking",
+                "object": "movie_button_rewind_forth"
+	    },
+	    {
+		"name": "eos",
+		"handler": "general/set_unworking",
+                "object": "movie_button_rewind_back"
+	    },
+	    {
+		"name": "eos",
+                "handler": "scanning/unpause_group",
+                "object": "movie_menu"
+            }
+	]
+    },
+    {
+        "id": "movie_menu",
+        "type": "PisakScanningGroup",
+        "children": ["movie_menu_box"],
+        "strategy": {
+            "type": "PisakRowStrategy",
+            "unwind-to": "middle_box_group"
+        }
+    },
+    {
+        "id": "movie_menu_box",
+        "type": "PisakBoxLayout",
+        "orientation": "vertical",
+        "ratio-spacing": 0.0013,
+        "y-expand": true,
+        "y-align": "end",
+        "children": ["movie_button_menu", "movie_button_skip_back",
+                     "movie_button_skip_forth", "movie_button_rewind_back",
+                     "movie_button_rewind_forth", "movie_button_stop",
+                     "movie_button_play", "movie_header"]
+    },
+    {
+        "id": "movie_header",
+        "type": "PisakMenuHeader",
+        "color": "rgba(75, 149, 148, 255)",
+        "name": "odtwarzacznapis",
+        "height": 65.28
+    },
+    {
+        "id": "movie_button_menu",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "main",
+        "disabled_when": "scanning_off",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "scanning/set_pending_group",
+                "object": "main_menu"
+            }
+        ]
+    },
+    {
+        "id": "movie_button_skip_forth",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "next_track",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/skip_forward",
+                "object": "playback"
+            }
+        ]
+    },
+    {
+        "id": "movie_button_skip_back",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "previous_track",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/skip_backward",
+                "object": "playback"
+            }
+        ]
+    },
+    {
+        "id": "movie_button_rewind_forth",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+	"scanning-pauser": true,
+        "label": " ",
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "forth",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/toggle_rewind_forward",
+                "object": "playback"
+            },
+            {
+                "name": "clicked",
+                "handler": "general/toggle_working"
+            },
+            {
+            "name": "clicked",
+            "handler": "general/set_unworking",
+              "object": "movie_button_rewind_back"
+            }
+        ]
+    },
+    {
+        "id": "movie_button_rewind_back",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+	"scanning-pauser": true,
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "backw",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/toggle_rewind_backward",
+                "object": "playback"
+            },
+            {
+                "name": "clicked",
+                "handler": "general/toggle_working"
+            },
+            {
+            "name": "clicked",
+            "handler": "general/set_unworking",
+              "object": "movie_button_rewind_forth"
+            }
+        ]
+    },
+    {
+        "id": "movie_button_stop",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+        "icon-size": 50,
+        "icon-name": "stop",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/stop",
+                "object": "playback"
+            },
+            {
+                "name": "clicked",
+                "handler": "general/untoggle",
+                "object": "movie_button_play"
+            },
+            {
+            "name": "clicked",
+            "handler": "general/set_unworking",
+              "object": "movie_button_rewind_back"
+            },
+            {
+            "name": "clicked",
+            "handler": "general/set_unworking",
+              "object": "movie_button_rewind_forth"
+            }
+        ]
+    },
+    {
+        "id": "movie_button_play",
+        "type": "PisakButton",
+        "style-class": "PisakMovieButton",
+        "label": " ",
+        "icon-size": 50,
+        "ratio-width": 0.06,
+        "ratio-height": 0.10547,
+	"toggled-icon-name": "pauza",
+        "icon-size": 50,
+        "icon-name": "play",
+        "signals": [
+            {
+                "name": "clicked",
+                "handler": "media/toggle_play",
+                "object": "playback"
+            },
+            {
+                "name": "clicked",
+                "handler": "general/toggle_toggle"
+            },
+            {
+            "name": "clicked",
+            "handler": "general/set_unworking",
+              "object": "movie_button_rewind_forth"
+            },
+            {
+            "name": "clicked",
+            "handler": "general/set_unworking",
+              "object": "movie_button_rewind_back"
+            }
+        ]
+    },
+    {
+        "id": "progress_bar_bin",
+        "type": "PisakBinLayout",
+        "ratio-width": 1,
+        "children": ["clock", "progress_bar"]
+    },
+    {
+        "id": "progress_bar",
+        "type": "PisakProgressBar",
+        "style-class": "PisakMovieProgressBar",
+        "ratio-width": 1,
+        "followed-object": "playback",
+        "progress-transition-duration": 1000,
+        "ratio-height": 0.05,
+        "label-ratio-x-offset": 0.85
+    },
+    {
+        "id": "clock",
+        "type": "PisakClock",
+        "style-class": "PisakMovieClock",
+        "x-expand": true,
+        "y-expand": true,
+        "margin-right": 10,
+        "y-align": "end",
+        "x-align": "end",
+        "measured-proccess": "playback"
+    }
+]
+
