@@ -6,20 +6,17 @@ being used. It also contains tools for conversion between different units.
 import sys
 from collections import namedtuple
 
-from gi.repository import Gdk
-
 
 MonitorSizeMM = namedtuple('MonitorSizeMM', 'width height')
 MonitorSizePix = namedtuple('MonitorSizePix', 'width height')
 
 size_pix = None
 size_mm = None
-SCREEN_DPMM = None
-SCREEN_DPI = None
-
 
 MONITOR_DPMM = None
 MONITOR_DPI = None
+MONITOR_X = None
+MONITOR_Y = None
 
 
 def initialize():
@@ -33,6 +30,8 @@ def initialize():
         MONITOR_DPMM = MONITOR_DPI / 25.4
         size_mm = MonitorSizeMM(size_pix.width / MONITOR_DPMM, size_pix.height / MONITOR_DPMM)
     else:
+        from gi.repository import Gdk
+
         screen = Gdk.Screen.get_default()
         n_monitors = screen.get_n_monitors()
         primary_monitor_id = screen.get_primary_monitor()
