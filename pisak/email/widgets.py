@@ -27,7 +27,7 @@ ERROR_MESSAGES = {
     "message_send_fail": "Wysyłanie wiadomości nie powiodło się.\n"
                     "Sprawdź połączenie z internetem i spróbuj ponownie.",
     "invalid_credentials": "Nieprawidłowa nazwa użytkownika lub hasło.",
-    "unknown": "Wystąpił błąd. Spróbuj ponownie."
+    "unknown": "Wystąpił błąd.\nSprawdź swoje połączenie internetowe i spróbuj ponownie."
 }
 
 

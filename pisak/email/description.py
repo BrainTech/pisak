@@ -2,7 +2,7 @@ import textwrap
 
 from gi.repository import GObject, Pango
 
-from pisak import res, logger, exceptions, handlers, unit
+from pisak import res, logger, exceptions, handlers
 from pisak.viewer import model
 from pisak.email import address_book, message, imap_client, config, widgets
 
@@ -60,7 +60,7 @@ def prepare_main_view(app, window, script, data):
     for contact in BUILTIN_CONTACTS:
         try:
             app.box["address_book"].add_contact(contact)
-        except address_book.AddressBookError as e:
+        except address_book.AddressBookError:
             pass  # TODO: notify the user
 
     counter_label = '  ( {} )'
@@ -70,25 +70,25 @@ def prepare_main_view(app, window, script, data):
         window.ui.button_address_book.set_extra_label(
             counter_label.format(str(contact_count))
         )
-    except address_book.AddressBookError as e:
+    except address_book.AddressBookError:
         pass  # TODO: say something
 
     client = app.box["imap_client"]
     try:
         try:
             client.login()
-        except imap_client.InvalidCredentialsError as e:
+        except imap_client.InvalidCredentialsError:
             window.load_popup(MESSAGES["invalid_credentials"], app.main_quit)
-        except imap_client.IMAPClientError as e:
+        except imap_client.IMAPClientError:
             window.load_popup(MESSAGES["login_fail"], app.main_quit)
         else:
             try:
-                inbox_all, inbox_unseen =  client.get_inbox_status()
+                inbox_all, inbox_unseen = client.get_inbox_status()
                 window.ui.button_inbox.set_extra_label(
                     counter_label.format("  /  ".join([str(inbox_unseen),
                                                        str(inbox_all)]))
                 )
-            except imap_client.IMAPClientError as e:
+            except imap_client.IMAPClientError:
                 pass  # TODO: do something
 
             try:
@@ -96,10 +96,10 @@ def prepare_main_view(app, window, script, data):
                 window.ui.button_sent.set_extra_label(
                     counter_label.format(str(sent_box_count))
                 )
-            except imap_client.IMAPClientError as e:
-                pass # TODO: display some warning
-    except exceptions.NoInternetError as e:
-        window.load_popup(MESSAGES["no_internet"], app.main_quit)
+            except imap_client.IMAPClientError:
+                pass  # TODO: display some warning
+    except exceptions.PisakException:
+        window.load_popup(MESSAGES["unknown"], app.main_quit)
 
 
 def prepare_drafts_view(app, window, script, data):
@@ -152,10 +152,10 @@ def prepare_inbox_view(app, window, script, data):
 
     try:
         inbox_count, _inbox_unseen = client.get_inbox_status()
-    except imap_client.IMAPClientError as e:
+    except imap_client.IMAPClientError:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.pager)
-    except exceptions.NoInternetError as e:
+    except exceptions.NoInternetError:
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.pager)
     else:
@@ -200,10 +200,10 @@ def prepare_sent_view(app, window, script, data):
 
     try:
         sent_box_count = client.get_sent_box_count()
-    except imap_client.IMAPClientError as e:
+    except imap_client.IMAPClientError:
         window.load_popup(MESSAGES["invalid_sent_box_name"],
                           container=window.ui.pager)
-    except exceptions.NoInternetError as e:
+    except exceptions.NoInternetError:
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.pager)
     else:
@@ -291,7 +291,7 @@ def prepare_address_book_view(app, window, script, data):
     contacts = []
     try:
         contacts = app.box["address_book"].get_all_contacts()
-    except address_book.AddressBookError as e:
+    except address_book.AddressBookError:
         pass  # TODO: display warning and/or try to reload the view
 
     def on_contact_select(tile, contact):
@@ -362,7 +362,7 @@ def prepare_contact_view(app, window, script, data):
     if data:
         try:
             contact = app.box["address_book"].get_contact(data["contact_id"])
-        except address_book.AddressBookError as e:
+        except address_book.AddressBookError:
             contact = None  # TODO: display warning
         if contact:
             window.ui.contact_address_text.set_text(contact.address)
@@ -410,7 +410,7 @@ def prepare_speller_contact_name_view(app, window, script, data):
         try:
             app.box["address_book"].edit_contact_name(
                 data["contact_id"], window.ui.text_box.get_text())
-        except address_book.AddressBookError as e:
+        except address_book.AddressBookError:
             pass  # TODO: display warning
 
     handlers.button_to_view(window, script, "button_exit")
@@ -447,7 +447,7 @@ def prepare_speller_contact_address_view(app, window, script, data):
                         address)
                     load = ("email/speller_contact_name",
                             {"contact_id": contact.id})
-                except address_book.AddressBookError as exc:
+                except address_book.AddressBookError:
                     # TODO: notify about failure
                     load = ("email/address_book",)
             else:
@@ -464,7 +464,7 @@ def prepare_speller_contact_address_view(app, window, script, data):
             try:
                 app.box["address_book"].edit_contact_address(
                     data["contact_id"], text_box.get_text())
-            except address_book.AddressBookError as e:
+            except address_book.AddressBookError:
                 pass  # TODO: display warning
 
             window.load_view("email/contact",
@@ -521,7 +521,7 @@ def prepare_viewer_contact_album_view(app, window, script, data):
         try:
             app.box["address_book"].edit_contact_photo(
                 contact_id, library.get_item_by_id(photo_id).path)
-        except address_book.AddressBookError as e:
+        except address_book.AddressBookError:
             pass  # TODO: display warning
         window.load_view("email/contact", {"contact_id": contact_id})
 
@@ -558,10 +558,10 @@ def prepare_single_message_view(app, window, script, data):
 
     try:
         message = data["message_source"](data["message_uid"])
-    except imap_client.IMAPClientError as exc:
+    except imap_client.IMAPClientError:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.message_content)
-    except exceptions.NoInternetError as exc:
+    except exceptions.NoInternetError:
         window.load_popup(MESSAGES["no_internet"],
                           container=window.ui.message_content)
     else:
