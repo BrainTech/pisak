@@ -579,9 +579,9 @@ def prepare_single_message_view(app, window, script, data):
             window.ui.message_body._fix_scroll()
 
         def reply():
-            '''
+            """
             Send a reply only to the sender of the original message.
-            '''
+            """
             # pick emal address only of the main sender from the
             # list of headers:
             app.box['new_message'].recipients = message['From'][0][1]
@@ -589,10 +589,10 @@ def prepare_single_message_view(app, window, script, data):
                              {'original_msg': message, 'action': 'reply'})
 
         def reply_all():
-            '''
+            """
             Send a reply to the sender and all the recipients
             of the original message.
-            '''
+            """
             # pick email addresses of the main sender and of all
             # the recipients except myself:
             setup = config.Config().get_account_setup()
@@ -613,9 +613,9 @@ def prepare_single_message_view(app, window, script, data):
 
         def change_msg(direction):
             ids_list = data['msg_ids_list']
-            msg_id = ids_list[(ids_list.index(data['message_uid']) +
-                               direction) % len(ids_list)]
-            data.update({'message_uid': msg_id})
+            new_msg_id = ids_list[(ids_list.index(data['message_uid']) +
+                                  direction) % len(ids_list)]
+            data.update({'message_uid': new_msg_id})
             window.load_view('email/single_message', data)
 
         handlers.connect_button(script, "button_next_mail",

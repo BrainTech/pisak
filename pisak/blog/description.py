@@ -80,7 +80,8 @@ def prepare_all_posts_view(app, window, script, data):
     def load_view(tile, post):
         posts_data.clean_up()
         window.load_view("blog/single_post",
-                         {"post": post.content, "posts": posts_data.data,
+                         {"post": post.content,
+                          "posts": posts_data,
                           "post_item": post})
 
     posts_data.item_handler = load_view
@@ -105,7 +106,6 @@ def prepare_single_post_view(app, window, script, data):
 
     post = data["post"]
     post_item = data["post_item"]
-    posts = data["posts"]
 
     content_box = script.get_object("post_text")
 
@@ -119,6 +119,7 @@ def prepare_single_post_view(app, window, script, data):
         else:
             nonlocal post_item
 
+            posts = data["posts"].data
             index = posts.index(post_item)
             index += direction
             if index == len(posts):
@@ -159,7 +160,6 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
     """
     post = data["post"]
     post_item = data['post_item']
-    posts = data["posts"]
     content = script.get_object("post_text")
 
     blog_name = script.get_object("header")
@@ -171,6 +171,7 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
         else:
             nonlocal post_item
 
+            posts = data['posts'].data
             index = posts.index(post_item)
             index += direction
             if index == len(posts):
@@ -219,7 +220,7 @@ def prepare_followed_blog_all_posts_view(app, window, script, data):
                           "post_item": post,
                           "blog_name": blog_name,
                           "blog_url": blog_url,
-                          "posts": posts_data.data})
+                          "posts": posts_data})
 
     posts_data.item_handler = load_view
     blog_name_widget = script.get_object("header")
