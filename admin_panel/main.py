@@ -222,6 +222,7 @@ class Panel(Ui_MainWindow):
 
     def onCheckBox_buttonSoundSupportToggled(self, checked):
         self._cache['sound_support_enabled'] = checked
+        self._cache['speech_synthesis'] = checked
 
     def onCheckBox_textCaseToggled(self, checked):
         self._cache['upper_case'] = checked
