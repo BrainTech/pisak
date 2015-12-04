@@ -1,6 +1,7 @@
 """
 Wordpress JSON REST API client implementation.
 """
+from threading import RLock
 import requests
 
 from pisak import logger
@@ -17,6 +18,8 @@ class Blog(object):
     :param address: blog's site domain (string) or ID (integer).
     """
     def __init__(self, address):
+        self._lock = Rlock()
+
         self.max_posts = 100  # api's max
         self.max_comments = 100  # api's max
         self.address_base = "https://public-api.wordpress.com/rest/v1.1/sites/"
@@ -24,7 +27,8 @@ class Blog(object):
 
     def _get(self, resource):
         try:
-            return requests.get(self.address + resource).json()
+            with self._lock:
+                return requests.get(self.address + resource).json()
         except requests.exceptions.ConnectionError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except Exception as exc:
