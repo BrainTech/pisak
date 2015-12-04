@@ -35,7 +35,7 @@ def initialize_session():
             "Attempt to initialize already initialized blog connection.")
 
 
-class Blog(object):
+class Blog:
     """
     Base blog object. Provides login handling, general class utilities and
     methods avalaible to use on any public Wordpress blog.

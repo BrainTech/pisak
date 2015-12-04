@@ -11,7 +11,7 @@ from pisak import res
 from pisak import properties, configurator
 
 
-class MediaPlaybackIface(object):
+class MediaPlaybackIface:
     """
     Interface of players of different kinds of media data.
     """

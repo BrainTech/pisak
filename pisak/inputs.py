@@ -122,7 +122,7 @@ class InputsError(exceptions.PisakException):
     pass
 
 
-class InputGroup(object):
+class InputGroup:
     """
     Group of elements reactive to the same input.
 

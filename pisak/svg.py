@@ -20,7 +20,7 @@ class PisakSVGError(exceptions.PisakException):
     pass
 
 
-class PisakSVG(object):
+class PisakSVG:
     """
     SVG file object being PISAK icon.
     """
@@ -86,7 +86,7 @@ class PisakSVG(object):
         self.css.__setattr__(node_name, {'stroke' : str(color),
                                          'fill' : str(color)})
 
-class PisakCSS(object):
+class PisakCSS:
     """
     CSS object to style PisakSVG - icons.
     """

@@ -4,7 +4,7 @@ Module for managing style-related issues.
 from gi.repository import Mx
 
 
-class StylableContainer(object):
+class StylableContainer:
     """
     Base class for objects being containers of stylables that propagate
     their style class prop for descendants

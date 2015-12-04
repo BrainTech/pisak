@@ -21,7 +21,7 @@ class  EmailSendingError(exceptions.PisakException):
     pass
 
 
-class SimpleMessage(object):
+class SimpleMessage:
     """
     Simple message consisting of just a subject, body and recipients.
     """

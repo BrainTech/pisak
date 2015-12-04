@@ -68,7 +68,7 @@ MAILBOX_HEADERS = {
 }
 
 
-class IMAPClient(object):
+class IMAPClient:
     """
     Class representing an email account connection.
     Used access protocol - IMAP.

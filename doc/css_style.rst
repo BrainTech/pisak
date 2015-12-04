@@ -34,7 +34,7 @@ Example of a CSS styling procedure:
 
 - first create some class and declare its GObject type::
 
-    class Foo(object):
+    class Foo:
         __gtype_name__ = 'PisakFoo'
 
 - then create two instances of the class in the JSON file (:doc:`json_layout_design`) and assign different

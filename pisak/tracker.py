@@ -20,7 +20,7 @@ CLIENT_START_MSG = 'start'
 CLIENT_STOP_MSG = 'stop'
 
 
-class TrackerServer(object):
+class TrackerServer:
     """
     Server for trackers.
     """

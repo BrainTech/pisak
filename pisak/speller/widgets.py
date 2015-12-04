@@ -102,7 +102,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
    * :attr:`ratio_height`
 
     """
-    class Insertion(object):
+    class Insertion:
         """
         Text replacement operation.
         """
@@ -156,7 +156,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         def __str__(self):
             return "+ {} @ {}".format(self.value, self.pos)
 
-    class Deletion(object):
+    class Deletion:
         """
         Text deletion operation
         """
@@ -212,7 +212,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         def __str__(self):
             return "- {} @ {}".format(self.value, self.pos)
 
-    class Replacement(object):
+    class Replacement:
         """
         Replacement operation
         """

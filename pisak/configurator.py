@@ -17,7 +17,7 @@ from pisak import logger
 _LOG = logger.get_logger(__name__)
 
 
-class Configurable(object):
+class Configurable:
     """
     Class initializing config for other PISAK classes.
     """

@@ -23,7 +23,7 @@ class LibraryException(exceptions.PisakException):
     pass
 
 
-class Category(object):
+class Category:
     """
     Category of items that share some common trait, i.e belong
     to the same folder etc.
@@ -122,7 +122,7 @@ specific purpose attributes.
 Item = namedtuple("Item", ("id", "path", "extra"))
 
 
-class FavouritesStore(object):
+class FavouritesStore:
     """
     Container for managing items marked as favourite. List of their paths
     is stored in a file in res directory.
@@ -192,7 +192,7 @@ class FavouritesStore(object):
         return path in self.get_all()
 
 
-class Library(object):
+class Library:
     """
     Library store. Contains lists with categories and items.
 
@@ -413,7 +413,7 @@ class Library(object):
         return self._categories
 
 
-class _Scanner(object):
+class _Scanner:
     """
     Library scanner. Scans directories using :func:`os.walk`.
     """

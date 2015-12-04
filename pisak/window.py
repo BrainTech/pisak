@@ -36,7 +36,7 @@ class WindowError(exceptions.PisakException):
     pass
 
 
-class _UI(object):
+class _UI:
     """
     User interface definition plain container.
 

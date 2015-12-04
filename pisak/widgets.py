@@ -391,7 +391,7 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
         return self.playback.is_playing()
 
 
-class TileContainer(object):
+class TileContainer:
     """
     Base utility class for objects containing tiles that defines parameters
     needed to specify their appereance and behaviour.
@@ -608,7 +608,7 @@ class DialogWindow(layout.Box, configurator.Configurable):
             pisak.app.window.input_group.load_content(self._prev_content)
 
 
-class ButtonSource(object):
+class ButtonSource:
     """
     Interface of the object that can produce descriptions
     of the multiple PisakButtons.
@@ -690,7 +690,7 @@ class ButtonMenu(layout.Box, configurator.Configurable):
                     row.add_child(button)
 
 
-class Timer(object):
+class Timer:
     """
     Base class for custom stopwatch-like objects that can measure
     time progress.

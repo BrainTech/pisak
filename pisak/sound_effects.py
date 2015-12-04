@@ -21,7 +21,7 @@ GObject.threads_init()
 Gst.init(arg_parser.get_args().args)
 
 
-class SoundEffectsPlayer(object):
+class SoundEffectsPlayer:
     """
     Player of some simple sound effects. Audio files are loaded just
     once when registered and then they are stored and available in a sounds pool,
@@ -88,7 +88,7 @@ class SoundEffectsPlayer(object):
             self._free_resource()
 
 
-class Synthesizer(object):
+class Synthesizer:
     """
     Speech synthesizer. Uses Milena text-to-speech program.
 

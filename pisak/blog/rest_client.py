@@ -11,7 +11,7 @@ from pisak.blog import exceptions, config
 _LOG = logger.get_logger(__name__)
 
 
-class Blog(object):
+class Blog:
     """
     Client of a blog that makes a JSON API avalaible.
 

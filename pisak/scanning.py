@@ -13,7 +13,7 @@ from pisak.sound_effects import Synthesizer
 _LOG = logger.get_logger(__name__)
 
 
-class Scannable(object):
+class Scannable:
     """
     Interface of object scannable by switcher groups. Switcher groups expect
     widgets implement this interface.
@@ -221,7 +221,7 @@ class ScanningException(exceptions.PisakException):
     pass
 
 
-class _GroupObserver(object):
+class _GroupObserver:
     """
     Helper class for Group. This class observes all group descendants. When
     subgroup change it schedules update in scanning seqence.
