@@ -364,8 +364,8 @@ class Library:
         ascendant order and then the highest value id + 1 is
         returned as the id. Ids start from 0.
         """
-        return (sorted([key for key in self._dict_items if
-                isinstance(key, int)])[-1] + 1) if \
+        return (max([key for key in self._dict_items if
+                isinstance(key, int)]) + 1) if \
             len(self._dict_items) > 0 else 0
 
     def append_category(self, category):
