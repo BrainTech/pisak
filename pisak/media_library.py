@@ -359,7 +359,10 @@ class Library:
         """
         Get id for new item to be inserted to the library.
 
-        :return: id.
+        :return: new id calculated in such a way that ids
+        of all the items in the library are sorted in an
+        ascendant order and then the highest value id + 1 is
+        returned as the id. Ids start from 0.
         """
         return (sorted([key for key in self._dict_items if
                 isinstance(key, int)])[-1] + 1) if \
