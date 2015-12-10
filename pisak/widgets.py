@@ -1727,7 +1727,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         super().__init__()
         self.box = None
         self.sounds = CaseInsensitiveDict()
-        self._sound = 'scan'
+        self._sound = None
         self._prepare_label()
         self.on_select_hilite_duration = None
         self.related_object = None
@@ -1754,8 +1754,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         return self._sound
 
     @sound.setter
-    def sound(self, value):
-        self._sound = value
+    def sound(self, name):
+        if isinstance(name, str):
+            self._sound = dirs.get_sound_path(name + '.wav')
 
     def __str__(self):
         return self.get_label() or self.get_id() or self._current_icon_name or super().__str__()
