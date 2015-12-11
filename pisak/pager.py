@@ -2,7 +2,6 @@
 Basic implementation of sliding page widget.
 """
 import threading
-import time
 import itertools
 from math import ceil
 from collections import OrderedDict
@@ -72,7 +71,6 @@ class LazyWorker:
             while any_left and self._running:
                 any_left = self._load_portion_by_number(
                     self._src.lazy_offset, self._step)
-                time.sleep(1)
                 self._src.lazy_offset += self._step
         else:
             flat = list(range(0, len(self._src._ids), self._step))

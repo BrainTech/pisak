@@ -1,6 +1,7 @@
 """
 Wordpress JSON REST API client implementation.
 """
+import time
 from threading import RLock
 import requests
 
@@ -18,7 +19,10 @@ class Blog:
     :param address: blog's site domain (string) or ID (integer).
     """
     def __init__(self, address):
-        self._lock = Rlock()
+        self._reqs_interval = 1  # minimal interval between subsequent reqests, in seconds
+        self._last_req_ts = 0  # timestamp of the last request
+
+        self._lock = RLock()
 
         self.max_posts = 100  # api's max
         self.max_comments = 100  # api's max
@@ -28,6 +32,12 @@ class Blog:
     def _get(self, resource):
         try:
             with self._lock:
+                while (time.time() - self._last_req_ts) < self._reqs_interval:
+                    # we should go to sleep for not too long because new
+                    # reqest can arrive at any time so maybe it can happen
+                    # that the timeout is just about to expire
+                    time.sleep(self._reqs_interval/5)
+                self._last_req_ts = time.time()
                 return requests.get(self.address + resource).json()
         except requests.exceptions.ConnectionError as exc:
             raise exceptions.BlogInternetError(exc) from exc
