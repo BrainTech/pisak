@@ -1,8 +1,6 @@
 """
 Module with tools to interface a WordPress based blog.
 """
-import time
-import threading
 import os.path
 from io import BytesIO
 
@@ -46,29 +44,14 @@ class Blog:
 
     def __init__(self, blog_address=None, custom_config=None):
         super().__init__()
-        self._reqs_interval = 1  # minimal interval between subsequent reqests, in seconds
-        self._last_req_ts = 0  # timestamp of the last request
-
-        self._lock = threading.RLock()
-
         self.address = blog_address
         self.config_dict = custom_config or config.get_blog_config()
         self._iface = None
         self._login()
 
-    def _call(self, method, use_requests=False, requests_resource=None):
+    def _call(self, method):
         try:
-            with self._lock:
-                while (time.time() - self._last_req_ts) < self._reqs_interval:
-                    # we should go to sleep for not too long because new
-                    # reqest can arrive at any time so maybe it can happen
-                    # that the timeout is just about to expire
-                    time.sleep(self._reqs_interval/5)
-                self._last_req_ts = time.time()
-                if use_requests:
-                    return getattr(requests, method)(requests_resource)
-                else:
-                    return self._iface.call(method)
+            return self._iface.call(method)
         except OSError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except wordpress_xmlrpc.exceptions.InvalidCredentialsError as exc:
@@ -83,7 +66,6 @@ class Blog:
         # raised by wordpress_xmlrpc on xmlrpc client ProtocolError but actually, on invalid
         # XML-RPC protocol, the OSError is raised by xmlrpc instead of the above
         try:
-            self._last_req_ts = time.time()
             self._iface = wordpress_xmlrpc.Client(address,
                                                   self.config_dict["user_name"],
                                                   self.config_dict["password"])
@@ -134,7 +116,7 @@ class _OwnBlog(Blog):
         if len(images) > 0:
             photo_url = images[0]
             try:
-                photo_bytes = self._call('get', True, photo_url).content
+                photo_bytes = requests.get(photo_url).content
             except requests.exceptions.ConnectionError as e:
                 _LOG.warning(e)
             else:
