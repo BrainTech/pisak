@@ -56,6 +56,7 @@ class Panel(Ui_MainWindow):
         self.horizontalSlider_volume.setValue(config.as_int('sound_effects_volume'))
         self.checkBox_sounds.setChecked(config.as_bool('sound_effects_enabled'))
         self.checkBox_buttonSoundSupport.setChecked(config.as_bool('sound_support_enabled'))
+        self.checkBox_speechSynthesis.setChecked(config.as_bool('speech_synthesis'))
         self.horizontalSlider_spriteTimeout.setValue(config['PisakSprite'].as_int('timeout'))
         self.comboBox_spellerLayout.setCurrentText(MAPS['SPELLER_LAYOUT'][config['speller']['layout']])
         self.checkBox_textCase.setChecked(config.as_bool('upper_case'))
@@ -146,6 +147,7 @@ class Panel(Ui_MainWindow):
         self.horizontalSlider_volume.valueChanged.connect(self.onHorizontalSlider_volumeValueChanged)
         self.checkBox_sounds.toggled.connect(self.onCheckBox_soundsToggled)
         self.checkBox_buttonSoundSupport.toggled.connect(self.onCheckBox_buttonSoundSupportToggled)
+        self.checkBox_speechSynthesis(self.onCheckBox_speechSynthesis)
         self.checkBox_textCase.toggled.connect(self.onCheckBox_textCaseToggled)
         self.horizontalSlider_cycleCount.valueChanged.connect(self.onHorizontalSlider_cycleCountValueChanged)
         self.horizontalSlider_interval.valueChanged.connect(self.onHorizontalSlider_intervalValueChanged)
@@ -222,6 +224,8 @@ class Panel(Ui_MainWindow):
 
     def onCheckBox_buttonSoundSupportToggled(self, checked):
         self._cache['sound_support_enabled'] = checked
+
+    def onCheckBox_speechSynthesis(self, checked):
         self._cache['speech_synthesis'] = checked
 
     def onCheckBox_textCaseToggled(self, checked):

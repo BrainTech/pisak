@@ -62,7 +62,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_selectApps">
        <attribute name="title">
@@ -397,10 +397,17 @@
                 </property>
                </widget>
               </item>
-              <item row="11" column="0">
+              <item row="12" column="0">
                <widget class="QCheckBox" name="checkBox_textCase">
                 <property name="text">
                  <string>Litery drukowane</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QCheckBox" name="checkBox_speechSynthesis">
+                <property name="text">
+                 <string>Syntezator mowy</string>
                 </property>
                </widget>
               </item>

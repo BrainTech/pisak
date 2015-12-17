@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'panel.ui'
 #
-# Created: Fri Oct 30 18:00:09 2015
+# Created: Thu Dec 17 19:08:52 2015
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -185,7 +185,10 @@ class Ui_MainWindow(object):
         self.formLayout.setWidget(10, QtWidgets.QFormLayout.LabelRole, self.checkBox_buttonSoundSupport)
         self.checkBox_textCase = QtWidgets.QCheckBox(self.tab_generalSettings)
         self.checkBox_textCase.setObjectName("checkBox_textCase")
-        self.formLayout.setWidget(11, QtWidgets.QFormLayout.LabelRole, self.checkBox_textCase)
+        self.formLayout.setWidget(12, QtWidgets.QFormLayout.LabelRole, self.checkBox_textCase)
+        self.checkBox_speechSynthesis = QtWidgets.QCheckBox(self.tab_generalSettings)
+        self.checkBox_speechSynthesis.setObjectName("checkBox_speechSynthesis")
+        self.formLayout.setWidget(11, QtWidgets.QFormLayout.LabelRole, self.checkBox_speechSynthesis)
         self.verticalLayout_3.addLayout(self.formLayout)
         self.line_8 = QtWidgets.QFrame(self.tab_generalSettings)
         self.line_8.setFrameShape(QtWidgets.QFrame.HLine)
@@ -588,7 +591,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(1)
         self.comboBox_skin.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -632,6 +635,7 @@ class Ui_MainWindow(object):
         self.checkBox_sounds.setText(_translate("MainWindow", "Odtwarzanie dźwięków"))
         self.checkBox_buttonSoundSupport.setText(_translate("MainWindow", "Wsparcie dźwiękowe dla przycisków"))
         self.checkBox_textCase.setText(_translate("MainWindow", "Litery drukowane"))
+        self.checkBox_speechSynthesis.setText(_translate("MainWindow", "Syntezator mowy"))
         self.label_prediction.setText(_translate("MainWindow", "Domyślna lista słów predykcji:"))
         self.lineEdit_prediction7.setText(_translate("MainWindow", "Chciałbym"))
         self.lineEdit_prediction1.setText(_translate("MainWindow", "Czy"))
