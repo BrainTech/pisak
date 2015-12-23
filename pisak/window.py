@@ -68,6 +68,9 @@ class Window(configurator.Configurable):
         # type of the window backend:
         self.type = None
 
+        # name of the application that the window belongs to
+        self.app_name = None
+
         # handler of the main input device:
         self.input_group = inputs.InputGroup(self.stage)
 
@@ -99,37 +102,33 @@ class Window(configurator.Configurable):
         an application that should be prepared and launched.
         """
         self.type = descriptor["type"]
-        view_list = descriptor.get("views")
-        app_name = descriptor.get("app")
-        self._read_config(app_name)
-        self._read_views(app_name, view_list)
-        self.initial_view = os.path.join(app_name, "main")
+        self.app_name = descriptor.get("app")
+        self._read_config()
+        self._read_views(descriptor.get("views"))
+        self.initial_view = os.path.join(self.app_name, "main")
 
-    def _read_config(self, app_name):
+    def _read_config(self):
         """
         Extract configuration parameters for the current application.
         Currently, these are optional and can influence only:
         type of views content that will replace their default content.
-
-        :param app_name: name of the current application.
         """
         self.apply_props()
-        self._configuration = self.config["PisakAppManager"]["apps"].get(app_name)
+        self._configuration = self.config["PisakAppManager"]["apps"].get(self.app_name)
 
-    def _read_views(self, app_name, view_list):
+    def _read_views(self, view_list):
         """
         Translate the view list received in the descriptor into the one
         understood by the views loader.
         Add any extra, built-in views with the `_add_builtin_views` method.
 
-        :param app_name: name of the current application.
         :param view_list: list of tuples of avalaible views, each consists
         of view name and view callable preparator.
         """
         skin = self.config['skin']
         speller_layout = self.config['speller']['layout']
         layout = 'default'
-        if app_name in ['speller', 'blog', 'email']:
+        if self.app_name in ['speller', 'blog', 'email']:
             layout = speller_layout
         if self._configuration:
             special_layout = self._configuration.get("layout")
@@ -138,8 +137,8 @@ class Window(configurator.Configurable):
         layout = '_'.join([layout, skin])
         self.views = {}
         for view_name, preparator in view_list:
-            self.views[os.path.join(app_name, view_name)] = (
-                dirs.get_json_path(view_name, layout, app_name), preparator
+            self.views[os.path.join(self.app_name, view_name)] = (
+                dirs.get_json_path(view_name, layout, self.app_name), preparator
             )
         self._add_builtin_views(self.views, layout)
 
@@ -201,7 +200,10 @@ class Window(configurator.Configurable):
                 handler = (lambda *_: unwind(unwind_data)) if \
                           unwind_data is not None else lambda *_: unwind()
             else:
-                handler = lambda *_: self.load_view(unwind, unwind_data)
+                if unwind.split('/')[0] == 'main_panel' and self.app_name != 'main_panel':
+                    handler = lambda *_: self.stage.destroy()
+                else:
+                    handler = lambda *_: self.load_view(unwind, unwind_data)
 
             Clutter.threads_add_timeout(0, timeout, handler)
 

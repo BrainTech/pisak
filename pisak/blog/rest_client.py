@@ -1,11 +1,12 @@
 """
 Wordpress JSON REST API client implementation.
 """
+import socket
 import time
 from threading import RLock
 import requests
 
-from pisak import logger
+from pisak import logger, blog
 from pisak.blog import exceptions, config
 
 
@@ -38,11 +39,18 @@ class Blog:
                     # that the timeout is just about to expire
                     time.sleep(self._reqs_interval/5)
                 self._last_req_ts = time.time()
+
+                socket.setdefaulttimeout(blog.REQUEST_TIMEOUT)
+
                 return requests.get(self.address + resource).json()
         except requests.exceptions.ConnectionError as exc:
             raise exceptions.BlogInternetError(exc) from exc
+        except socket.timeout:
+            raise
         except Exception as exc:
             raise exceptions.BlogMethodError(exc) from exc
+        finally:
+            socket.setdefaulttimeout(None)
 
     def get_all_posts(self):
         """

@@ -1,6 +1,7 @@
 """
 Module with specific description for blog application.
 """
+import socket
 import time
 
 from gi.repository import Clutter
@@ -17,6 +18,11 @@ import pisak.viewer.widgets  # @UnusedImport
 import pisak.viewer.handlers  # @UnusedImport
 import pisak.blog.widgets  # @UnusedImport
 import pisak.blog.handlers  # @UnusedImport
+
+
+MESSAGES = {
+    'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.'
+}
 
 
 def prepare_main_view(app, window, script, data):
@@ -47,17 +53,22 @@ def prepare_about_me_view(app, window, script, data):
     :param script: ClutterScript with the view description.
     :param data: some specific data.
     """
-    handlers.button_to_view(window, script, "button_edit_desc",
-                            "blog/speller_about_me")
-    handlers.button_to_view(window, script, "button_edit_photo",
-                            "blog/viewer_about_me_library")
-    handlers.button_to_view(window, script, "button_exit")
-    handlers.button_to_view(window, script, "button_back", "blog/main")
-    about_info = script.get_object("about")
-    about = wordpress.blog.get_about_me_page()
-    plain = html_parsers.extract_text(about.content)
-    if plain:
-        about_info.set_text(plain)
+    try:
+        about = wordpress.blog.get_about_me_page()
+    except socket.timeout:
+        window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
+    else:
+        about_info = script.get_object("about")
+        plain = html_parsers.extract_text(about.content)
+        if plain:
+            about_info.set_text(plain)
+
+        handlers.button_to_view(window, script, "button_edit_desc",
+                                "blog/speller_about_me")
+        handlers.button_to_view(window, script, "button_edit_photo",
+                                "blog/viewer_about_me_library")
+        handlers.button_to_view(window, script, "button_exit")
+        handlers.button_to_view(window, script, "button_back", "blog/main")
 
 
 def prepare_all_posts_view(app, window, script, data):
@@ -128,7 +139,10 @@ def prepare_single_post_view(app, window, script, data):
 
         content = post_to_load.content
         wordpress.blog.pending_post = content
-        content_box.load_html(wordpress.blog.compose_post_view(content))
+        try:
+            content_box.load_html(wordpress.blog.compose_post_view(content))
+        except socket.timeout:
+            window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
 
     load_new_post(0, post_item)
 
@@ -177,7 +191,10 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
             if index == len(posts):
                 index = 0
             post_to_load = posts[index]
-        content.load_html(data["blog"].compose_post_view(post_to_load.content))
+        try:
+            content.load_html(data["blog"].compose_post_view(post_to_load.content))
+        except socket.timeout:
+            window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
 
     load_new_post(0, post_item)
 
@@ -343,13 +360,17 @@ def prepare_speller_about_me_view(app, window, script, data):
     :param script: ClutterScript with the view description.
     :param data: some specific data.
     """
-    text_widget = script.get_object("text_box")
-    plain_bio = html_parsers.extract_text(
-        wordpress.blog.get_about_me_page().content)
-    if plain_bio:
-        text_widget.type_text(plain_bio)
-    handlers.button_to_view(window, script, "button_proceed", "blog/about_me")
-    handlers.button_to_view(window, script, "button_exit")
+    try:
+        bio = wordpress.blog.get_about_me_page()
+    except socket.timeout:
+        window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
+    else:
+        plain_bio = html_parsers.extract_text(bio.content)
+        if plain_bio:
+            text_widget = script.get_object("text_box")
+            text_widget.type_text(plain_bio)
+        handlers.button_to_view(window, script, "button_proceed", "blog/about_me")
+        handlers.button_to_view(window, script, "button_exit")
 
 
 def prepare_viewer_about_me_library_view(app, window, script, data):
@@ -379,8 +400,12 @@ def prepare_viewer_about_me_album_view(app, window, script, data):
     library = viewer_model.get_library()
 
     def pick_photo(tile):
-        wordpress.blog.update_about_me_photo(tile.preview_path)
-        window.load_view("blog/about_me")
+        try:
+            wordpress.blog.update_about_me_photo(tile.preview_path)
+        except socket.timeout:
+            window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
+        else:
+            window.load_view("blog/about_me")
 
     handlers.button_to_view(window, script, "button_library",
                             "blog/viewer_about_me_library")
@@ -406,12 +431,15 @@ def prepare_speller_comment_view(app, window, script, data):
         text_widget = script.get_object("text_box")
         text = html_parsers.apply_linebreaks(text_widget.get_text())
 
-        if data['previous_view'] == 'blog/single_post':
-            own_blog = wordpress.blog
-            own_blog.add_comment(data['post'].id, text)
-        else:
-            followed_blog = wordpress.Blog(data["blog_url"])
-            followed_blog.add_comment(data["post"]["ID"], text)
+        try:
+            if data['previous_view'] == 'blog/single_post':
+                own_blog = wordpress.blog
+                own_blog.add_comment(data['post'].id, text)
+            else:
+                followed_blog = wordpress.Blog(data["blog_url"])
+                followed_blog.add_comment(data["post"]["ID"], text)
+        except socket.timeout:
+            window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
 
     handlers.button_to_view(window, script, "button_exit")
     handlers.connect_button(script, "button_proceed", publish_comment)

@@ -1,3 +1,6 @@
+REQUEST_TIMEOUT = 5  # web request duration limit in seconds
+
+
 def test(config):
     """
     Test provided blog settings or server connection.
@@ -11,7 +14,7 @@ def test(config):
     socket.setdefaulttimeout(5)
 
     try:
-        dummy_blog = _OwnBlog(config)
+        _OwnBlog(config)
     except (socket.timeout, exceptions.BlogInternetError):
         ret = False, MESSAGES['no_internet']
     except exceptions.BlogAuthenticationError:

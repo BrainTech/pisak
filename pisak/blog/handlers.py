@@ -1,16 +1,25 @@
 """
 Library of blog application specific signal handlers.
 """
+import socket
+
 import pisak
 from pisak import signals, exceptions
-
 from pisak.blog import wordpress
 
 
 MESSAGES = {
     "publish-failed": "Nie udało się opublikować postu.\n"
                       "Sprawdź swoje łącze internetowe\n"
-                      "i spróbuj jeszcze raz."
+                      "i spróbuj jeszcze raz.",
+    'timeout-expired-publish': 'Coś poszło nie tak.\nWejdź na swój blog '
+                       'i sprawdź czy post został opublikowany.',
+    'timeout-expired-delete': 'Coś poszło nie tak.\nWejdź na swój blog '
+                       'i sprawdź czy post został usunięty.',
+    'timeout-expired-bio': 'Coś poszło nie tak.\nWejdź na swój blog '
+                       'i sprawdź czy profil został zaktualizowany.',
+    'timeout-expired-photo': 'Coś poszło nie tak.\nWejdź na swój blog '
+                       'i sprawdź czy zdjęcie zostało zmienione.',
 }
 
 
@@ -51,6 +60,8 @@ def publish_pending_post(source):
         wordpress.blog.pending_post = None
     except exceptions.PisakException:
         pisak.app.window.load_popup(MESSAGES['publish-failed'], 'blog/main')
+    except socket.timeout:
+        pisak.app.window.load_popup(MESSAGES['timeout-expired-publish'], 'main_panel/main')
 
 
 @signals.registered_handler("blog/delete_pending_post")
@@ -59,8 +70,11 @@ def delete_pending_post(source):
     Permanently delete the currently edited post from the blog.
     """
     if wordpress.blog.pending_post:
-        wordpress.blog.delete_post(wordpress.blog.pending_post)
-        wordpress.blog.pending_post = None
+        try:
+            wordpress.blog.delete_post(wordpress.blog.pending_post)
+            wordpress.blog.pending_post = None
+        except socket.timeout:
+            pisak.app.window.load_popup(MESSAGES['timeout-expired-delete'], 'main_panel/main')
 
 
 @signals.registered_handler("blog/publish_about_me_bio")
@@ -70,7 +84,10 @@ def publish_about_me_bio(text_field):
 
     :param text_field: text field that contains about me informations.
     """
-    wordpress.blog.update_about_me_bio(text_field.get_text())
+    try:
+        wordpress.blog.update_about_me_bio(text_field.get_text())
+    except socket.timeout:
+        pisak.app.window.load_popup(MESSAGES['timeout-expired-bio'], 'main_panel/main')
 
 
 def publish_about_me_photo(photo_path):
@@ -79,7 +96,10 @@ def publish_about_me_photo(photo_path):
 
     :param photo_path: photo path.
     """
-    wordpress.blog.update_about_me_photo(photo_path)
+    try:
+        wordpress.blog.update_about_me_photo(photo_path)
+    except socket.timeout:
+        pisak.app.window.load_popup(MESSAGES['timeout-expired-photo'], 'main_panel/main')
 
 
 @signals.registered_handler("blog/next_post")
