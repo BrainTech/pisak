@@ -598,7 +598,7 @@ class DataSource(GObject.GObject, properties.PropertyAdapter,
         :param direction: -1 or 1, that is whether data should be
         sent from backward or forward.
         """
-        Clutter.threads_add_timeout(0, 0.1, self._send_data, direction)
+        Clutter.threads_add_timeout(0, 100, self._send_data, direction)
 
     def _send_data(self, direction):
         """

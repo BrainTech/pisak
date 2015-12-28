@@ -58,8 +58,9 @@ class Blog:
 
         :return: list of all posts. Each post is a dictionary.
         """
-        return self._get(
-            "/posts/?number={}".format(str(self.max_posts)))["posts"]
+        res = self._get(
+            "/posts/?number={}".format(str(self.max_posts)))
+        return res['posts'] if 'posts' in res else []
 
     def get_many_posts(self, offset, number):
         """
@@ -70,9 +71,9 @@ class Blog:
 
         :return: list of posts.
         """
-        return self._get(
-            "/posts/?offset={}?number={}".format(
-                str(offset), str(number)))["posts"]
+        res = self._get(
+            "/posts/?offset={}?number={}".format(str(offset), str(number)))
+        return res['posts'] if 'posts' in res else []
 
     def get_post(self, ide):
         """
@@ -103,9 +104,10 @@ class Blog:
         :return: list of all comments for the given post.
         Each comment is a dictionary
         """
-        return self._get(
+        res = self._get(
             "/posts/{}/replies/?number={}".format(
-                str(post_ide), str(self.max_comments)))["comments"]
+                str(post_ide), str(self.max_comments)))
+        return res['comments'] if 'comments' in res else []
 
     def compose_post_view(self, post):
         """

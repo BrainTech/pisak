@@ -73,10 +73,16 @@ class PostTileSource(pager.DataSource):
         tile.title.set_text(html_parsers.extract_text(post_title) or
                             _NO_POST_TITLE)
         if isinstance(post_date, str):
-            post_date = datetime.strptime(
-                post_date.split("+")[0].replace("T", " "),
-                "%Y-%m-%d %H:%M:%S")
-        tile.date.set_text(utils.date_to_when(post_date))
+            parsed = post_date.split("+")[0].replace("T", " ")
+            try:
+                parsed = parsed.split('-')[0]
+                post_date = datetime.strptime(
+                    parsed, "%Y-%m-%d %H:%M:%S")
+            except ValueError as err:
+                _LOG.warning(err)
+                post_date = None
+        if post_date:
+            tile.date.set_text(utils.date_to_when(post_date))
         return tile
 
     def _query_portion_of_data_by_number(self, offset, number):

@@ -197,7 +197,8 @@
     },
     {
         "id": "posts_data",
-        "type": "PisakBlogPostTileSource"
+        "type": "PisakBlogPostTileSource",
+        "blog-type": "followed"
     },
     {
         "id": "progress_bar",
