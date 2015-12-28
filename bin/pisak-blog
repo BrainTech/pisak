@@ -7,12 +7,10 @@ from gi.repository import GtkClutter
 
 import pisak
 from pisak import app_manager
-from pisak.blog import wordpress
-from pisak.blog.description import blog_app
+from pisak.blog.description import blog_app, on_init
 
 
 if __name__ == "__main__":
     pisak.init()
     GtkClutter.init()
-    wordpress.initialize_session()
-    app_manager.run(blog_app)
+    app_manager.run(blog_app, on_init)

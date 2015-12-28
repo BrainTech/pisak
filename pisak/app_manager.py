@@ -22,15 +22,17 @@ import pisak
 from pisak import application, logger, configurator, properties,\
     widgets, arg_parser, inputs, dirs
 
+
 _LOG = logger.get_logger(__name__)
+
 
 MESSAGES = {
     "application_loading": "Wczytywanie aplikacji..."
 }
 
 
-### PISAK applications entry point.  ###
-def run(descriptor):
+###  PISAK applications entry point.  ###
+def run(descriptor, on_init=None):
     """
     Run an application.
 
@@ -41,6 +43,8 @@ def run(descriptor):
      to be launched ('clutter' or 'gtk'); 'app' - name of the application;
      'views' - list of all the application views, each view is a tuple with
      the view name and a function responsible for the view preparation.
+    :param on_init: callable, function that should be called on application init,
+    before GUI scene creation.
     """
     input_process = None
     device_server = None
@@ -59,7 +63,7 @@ def run(descriptor):
 
     pisak.app = AppType(arg_parser.get_args(), descriptor)
 
-    pisak.app.window.load_initial_view()
+    pisak.app.window.load_initial_view(on_init)
     pisak.app.main()
 
     pisak.app = None

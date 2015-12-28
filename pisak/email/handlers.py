@@ -1,6 +1,8 @@
 """
 Email application specific signal handlers.
 """
+import socket
+
 from pisak import exceptions, signals
 from pisak.email.widgets import ERROR_MESSAGES
 from pisak.email import message
@@ -41,6 +43,8 @@ def send(source, app):
     """
     try:
         app.box["new_message"].send()
+    except socket.timeout:
+        app.window.load_popup(ERROR_MESSAGES["too-slow-connection"], app.main_quit)
     except message.EmailSendingError as e:
         app.window.load_popup(ERROR_MESSAGES["message_send_fail"],
                               "email/main")

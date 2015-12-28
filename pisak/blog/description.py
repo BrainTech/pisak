@@ -7,7 +7,7 @@ import time
 from gi.repository import Clutter
 
 from pisak import handlers
-from pisak.blog import widgets, wordpress, config, html_parsers, rest_client
+from pisak.blog import widgets, wordpress, config, html_parsers, rest_client, exceptions
 
 from pisak.viewer import model as viewer_model
 
@@ -21,8 +21,23 @@ import pisak.blog.handlers  # @UnusedImport
 
 
 MESSAGES = {
-    'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.'
+    'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.',
+    'no-internet': 'Brak połączenia z internetem.\nAplikacja wymaga dostępu do internetu.'
 }
+
+
+def on_init(window):
+    try:
+        wordpress.initialize_session()
+    except exceptions.BlogInternetError:
+        window.load_popup(MESSAGES['no-internet'], 'main_panel/main')
+        ret = False
+    except socket.timeout:
+        window.load_popup(MESSAGES['too-slow-connection'], 'main_panel/main')
+        ret = False
+    else:
+        ret = True
+    return ret
 
 
 def prepare_main_view(app, window, script, data):

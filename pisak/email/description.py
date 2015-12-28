@@ -1,3 +1,4 @@
+import socket
 import textwrap
 
 from gi.repository import GObject, Pango
@@ -98,6 +99,8 @@ def prepare_main_view(app, window, script, data):
                 )
             except imap_client.IMAPClientError:
                 pass  # TODO: display some warning
+    except socket.timeout:
+        window.load_popup(MESSAGES["too-slow-connection"], app.main_quit)
     except exceptions.PisakException:
         window.load_popup(MESSAGES["unknown"], app.main_quit)
 
@@ -152,6 +155,8 @@ def prepare_inbox_view(app, window, script, data):
 
     try:
         inbox_count, _inbox_unseen = client.get_inbox_status()
+    except socket.timeout:
+        window.load_popup(MESSAGES["too-slow-connection"], app.main_quit)
     except imap_client.IMAPClientError:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.pager)
@@ -200,6 +205,8 @@ def prepare_sent_view(app, window, script, data):
 
     try:
         sent_box_count = client.get_sent_box_count()
+    except socket.timeout:
+        window.load_popup(MESSAGES["too-slow-connection"], app.main_quit)
     except imap_client.IMAPClientError:
         window.load_popup(MESSAGES["invalid_sent_box_name"],
                           container=window.ui.pager)
@@ -542,10 +549,13 @@ def prepare_single_message_view(app, window, script, data):
     msg_id = data["message_uid"]
 
     def remove_message():
-        if box == 'sent':
-            app.box['imap_client'].delete_message_from_sent_box(msg_id)
-        elif box == 'inbox':
-            app.box['imap_client'].delete_message_from_inbox(msg_id)
+        try:
+            if box == 'sent':
+                app.box['imap_client'].delete_message_from_sent_box(msg_id)
+            elif box == 'inbox':
+                app.box['imap_client'].delete_message_from_inbox(msg_id)
+        except socket.timeout:
+            window.load_popup(MESSAGES["too-slow-connection"], app.main_quit)
 
         window.load_view('email/{}'.format(box))
 
@@ -558,6 +568,8 @@ def prepare_single_message_view(app, window, script, data):
 
     try:
         message = data["message_source"](data["message_uid"])
+    except socket.timeout:
+        window.load_popup(MESSAGES["too-slow-connection"], app.main_quit)
     except imap_client.IMAPClientError:
         window.load_popup(MESSAGES["unknown"],
                           container=window.ui.message_content)

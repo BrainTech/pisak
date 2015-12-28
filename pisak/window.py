@@ -80,10 +80,16 @@ class Window(configurator.Configurable):
         self._init_layout()
         self._read_descriptor(descriptor)
 
-    def load_initial_view(self):
+    def load_initial_view(self, on_init=None):
         """
         Load initial view of the application.
+
+        :param on_init: function to be called before loading the initial view.
         """
+        if callable(on_init):
+            if not on_init(self):
+                return
+
         self.load_view(self.initial_view)
 
     def _init_layout(self):
@@ -201,7 +207,7 @@ class Window(configurator.Configurable):
                           unwind_data is not None else lambda *_: unwind()
             else:
                 if unwind.split('/')[0] == 'main_panel' and self.app_name != 'main_panel':
-                    handler = lambda *_: self.stage.destroy()
+                    handler = lambda *_: self.application.main_quit()
                 else:
                     handler = lambda *_: self.load_view(unwind, unwind_data)
 

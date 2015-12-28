@@ -9,7 +9,7 @@ import time
 import functools
 
 from pisak import logger, exceptions
-from pisak.email import config, parsers
+from pisak.email import config, parsers, REQUEST_TIMEOUT
 
 
 # monkeypatch because of too low limit set by default in the std module,
@@ -53,11 +53,17 @@ def _imap_errors_handler(custom_error):
             @functools.wraps(func)
             def handler(*args, **kwargs):
                 try:
+                    socket.setdefaulttimeout(REQUEST_TIMEOUT)
+
                     return func(*args, **kwargs)
+                except socket.timeout:
+                    raise
                 except socket.error as exc:
                     raise exceptions.NoInternetError(exc) from exc
                 except imaplib.IMAP4.error as exc:
                     raise custom_error(exc) from exc
+                finally:
+                    socket.setdefaulttimeout(None)
             return handler
         return wrapper
 
