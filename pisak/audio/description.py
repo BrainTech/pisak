@@ -7,6 +7,7 @@ from pisak import handlers
 import pisak.audio.handlers  # @UnusedImport
 from pisak.audio import widgets  # @UnusedImport
 
+
 def prepare_folders_view(app, window, script, data):
     """
     View preparator.
@@ -38,6 +39,7 @@ def prepare_playlist_view(app, window, script, data):
     ds.data_set_idx = ds.data_sets_ids_list.index(data["playlist_id"]) + 1
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_return", "audio/main")
+
 
 audio_app = {
     "app": "audio",

@@ -723,6 +723,9 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
         "progressed": (
             GObject.SIGNAL_RUN_FIRST, None,
             (GObject.TYPE_FLOAT, GObject.TYPE_INT64)),
+        "value-changed": (
+            GObject.SIGNAL_RUN_FIRST, None,
+            (GObject.TYPE_INT64, GObject.TYPE_INT64)),
         "limit-declared": (
             GObject.SIGNAL_RUN_FIRST, None,
             (GObject.TYPE_INT64,)),
@@ -801,7 +804,7 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
     @page_count.setter
     def page_count(self, value):
         self._page_count = value
-        self.emit('limit-declared', value)
+        self.emit('value-changed', self.page_index+1, value)
 
     @property
     def sound(self):
@@ -976,10 +979,10 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
             self.old_page.add_transition("x", self.old_page_transition)
             self._current_page.add_transition("x", self.new_page_transition)
         if self._page_count > 0:
-            self.emit("progressed", float(self.page_index+1) /
-                                    self._page_count, self.page_index+1)
+            self.emit('value-changed', self.page_index+1, self._page_count)
+            print(self.page_index)
         else:
-            self.emit("progressed", 0, 0)
+            self.emit("value-changed", 0, 0)
 
     def _reload(self):
         """

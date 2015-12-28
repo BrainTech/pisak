@@ -1457,6 +1457,10 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
     def followed_object(self, value):
         self._followed_object = value
         if value is not None:
+            try:
+                value.connect('value-changed', self._update_value)
+            except TypeError as exc:
+                _LOG.warning(exc)
             value.connect("limit-declared", self._set_counter_limit)
             value.connect("progressed", self._set_progress)
 
@@ -1487,8 +1491,6 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
         self.progress_transition.set_to(value)
         self.bar.remove_transition("progress")
         self.bar.add_transition("progress", self.progress_transition)
-        if self.counter_limit is not None:
-            self.step = int(value * self.counter_limit)
 
     @property
     def progress_transition_duration(self):
@@ -1524,6 +1526,11 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
             if self.get_width() and self.label_ratio_x_offset is not None:
                 px_x_offset = self.label_ratio_x_offset * self.get_width()
                 self.label.set_x(px_x_offset)
+
+    def _update_value(self, source, step, limit):
+        self.step = step
+        self._counter_limit = limit
+        self.progress = step/limit
 
     def _set_counter_limit(self, source, limit):
         self.counter_limit = limit
