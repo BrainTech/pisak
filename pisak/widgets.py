@@ -1530,7 +1530,7 @@ class ProgressBar(layout.Bin, properties.PropertyAdapter, configurator.Configura
     def _update_value(self, source, step, limit):
         self.step = step
         self._counter_limit = limit
-        self.progress = step/limit
+        self.progress = step/limit if limit > 0 else 0
 
     def _set_counter_limit(self, source, limit):
         self.counter_limit = limit
