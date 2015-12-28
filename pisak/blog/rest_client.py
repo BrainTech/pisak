@@ -33,14 +33,16 @@ class Blog:
     def _get(self, resource):
         try:
             with self._lock:
-                while (time.time() - self._last_req_ts) < self._reqs_interval:
+                if (time.time() - self._last_req_ts) < self._reqs_interval:
                     # we should go to sleep for not too long because new
                     # reqest can arrive at any time so maybe it can happen
                     # that the timeout is just about to expire
-                    time.sleep(self._reqs_interval/5)
-                self._last_req_ts = time.time()
+                    left_to_wait = self._reqs_interval - (time.time() - self._last_req_ts)
+                    time.sleep(left_to_wait)
 
-                return requests.get(self.address + resource).json()
+                ret = requests.get(self.address + resource).json()
+                self._last_req_ts = time.time()
+                return ret
         except requests.exceptions.ConnectionError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except socket.timeout:

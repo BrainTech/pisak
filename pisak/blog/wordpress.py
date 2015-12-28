@@ -60,17 +60,19 @@ class Blog:
     def _call(self, method, use_requests=False, requests_resource=None):
         try:
             with self._lock:
-                while (time.time() - self._last_req_ts) < self._reqs_interval:
+                if (time.time() - self._last_req_ts) < self._reqs_interval:
                     # we should go to sleep for not too long because new
                     # reqest can arrive at any time so maybe it can happen
                     # that the timeout is just about to expire
-                    time.sleep(self._reqs_interval/5)
-                self._last_req_ts = time.time()
+                    left_to_wait = self._reqs_interval - (time.time() - self._last_req_ts)
+                    time.sleep(left_to_wait)
 
                 if use_requests:
-                    return getattr(requests, method)(requests_resource)
+                    ret = getattr(requests, method)(requests_resource)
                 else:
-                    return self._iface.call(method)
+                    ret = self._iface.call(method)
+                self._last_req_ts = time.time()
+                return ret
         except OSError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except wordpress_xmlrpc.exceptions.InvalidCredentialsError as exc:
@@ -87,10 +89,10 @@ class Blog:
         # raised by wordpress_xmlrpc on xmlrpc client ProtocolError but actually, on invalid
         # XML-RPC protocol, the OSError is raised by xmlrpc instead of the above
         try:
-            self._last_req_ts = time.time()
             self._iface = wordpress_xmlrpc.Client(address,
                                                   self.config_dict["user_name"],
                                                   self.config_dict["password"])
+            self._last_req_ts = time.time()
         except OSError as exc:
             raise exceptions.BlogInternetError(exc) from exc
         except Exception as exc:
