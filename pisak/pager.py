@@ -980,7 +980,6 @@ class PagerWidget(layout.Bin, properties.PropertyAdapter,
             self._current_page.add_transition("x", self.new_page_transition)
         if self._page_count > 0:
             self.emit('value-changed', self.page_index+1, self._page_count)
-            print(self.page_index)
         else:
             self.emit("value-changed", 0, 0)
 
