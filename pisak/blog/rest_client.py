@@ -40,8 +40,6 @@ class Blog:
                     time.sleep(self._reqs_interval/5)
                 self._last_req_ts = time.time()
 
-                socket.setdefaulttimeout(blog.REQUEST_TIMEOUT)
-
                 return requests.get(self.address + resource).json()
         except requests.exceptions.ConnectionError as exc:
             raise exceptions.BlogInternetError(exc) from exc
@@ -49,8 +47,6 @@ class Blog:
             raise
         except Exception as exc:
             raise exceptions.BlogMethodError(exc) from exc
-        finally:
-            socket.setdefaulttimeout(None)
 
     def get_all_posts(self):
         """

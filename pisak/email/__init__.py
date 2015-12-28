@@ -1,6 +1,3 @@
-REQUEST_TIMEOUT = 5  # web request duration limit in seconds
-
-
 def test(config):
     """
     Test provided email settings or server connection.

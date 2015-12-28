@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from email.header import Header
 
 from pisak import logger, exceptions
-from pisak.email import config, REQUEST_TIMEOUT
+from pisak.email import config
 
 
 _LOG = logger.get_logger(__name__)
@@ -123,8 +123,6 @@ class SimpleMessage:
         server_out = "{}:{}".format(
                 setup["SMTP_server"], setup["SMTP_port"])
         try:
-            socket.setdefaulttimeout(REQUEST_TIMEOUT)
-
             server = smtplib.SMTP(server_out)
             server.ehlo_or_helo_if_needed()
             if server.has_extn("STARTTLS"):
@@ -145,8 +143,6 @@ class SimpleMessage:
             raise exceptions.NoInternetError(exc) from exc
         except (smtplib.SMTPException, SSLError) as exc:
             raise EmailSendingError(exc) from exc
-        finally:
-            socket.setdefaulttimeout(None)
 
     def clear(self):
         """

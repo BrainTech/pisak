@@ -20,6 +20,9 @@ import pisak.blog.widgets  # @UnusedImport
 import pisak.blog.handlers  # @UnusedImport
 
 
+REQUEST_TIMEOUT = 5  # web request duration limit in seconds
+
+
 MESSAGES = {
     'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.',
     'no-internet': 'Brak połączenia z internetem.\nAplikacja wymaga dostępu do internetu.'

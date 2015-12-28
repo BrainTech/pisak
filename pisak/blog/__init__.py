@@ -1,6 +1,3 @@
-REQUEST_TIMEOUT = 5  # web request duration limit in seconds
-
-
 def test(config):
     """
     Test provided blog settings or server connection.

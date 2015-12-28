@@ -3,11 +3,14 @@
 """
 Script to run Email application.
 """
+import socket
 
 import pisak
 from pisak import app_manager
-from pisak.email.description import email_app
+from pisak.email.description import email_app, REQUEST_TIMEOUT
 
 if __name__ == "__main__":
     pisak.init()
+    socket.setdefaulttimeout(REQUEST_TIMEOUT)
     app_manager.run(email_app)
+    socket.setdefaulttimeout(None)

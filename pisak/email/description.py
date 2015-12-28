@@ -16,6 +16,9 @@ import pisak.viewer.widgets  # @UnusedImport
 _LOG = logger.get_logger(__name__)
 
 
+REQUEST_TIMEOUT = 5  # web request duration limit in seconds
+
+
 MESSAGES = widgets.ERROR_MESSAGES
 
 

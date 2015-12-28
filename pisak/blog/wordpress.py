@@ -13,7 +13,7 @@ import requests
 from PIL import Image
 
 from pisak import logger, dirs
-from pisak.blog import config, exceptions, html_parsers, REQUEST_TIMEOUT
+from pisak.blog import config, exceptions, html_parsers
 
 
 _LOG = logger.get_logger(__name__)
@@ -67,8 +67,6 @@ class Blog:
                     time.sleep(self._reqs_interval/5)
                 self._last_req_ts = time.time()
 
-                socket.setdefaulttimeout(REQUEST_TIMEOUT)
-
                 if use_requests:
                     return getattr(requests, method)(requests_resource)
                 else:
@@ -81,8 +79,6 @@ class Blog:
             raise
         except Exception as exc:
             raise exceptions.BlogMethodError(exc) from exc
-        finally:
-            socket.setdefaulttimeout(None)
 
     def _login(self):
         address = (self.address or self.config_dict["address"]) + self.API
