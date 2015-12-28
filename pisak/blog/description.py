@@ -132,29 +132,23 @@ def prepare_single_post_view(app, window, script, data):
     :param script: ClutterScript with the view description.
     :param data: some specific data.
     """
-
-    post = data["post"]
     post_item = data["post_item"]
+    posts_data = data["posts"]
+    posts_data.current_post_idx = [post.content.id for post in posts_data.data].index(post_item.content.id)
 
     content_box = script.get_object("post_text")
 
-    title = config.get_blog_config()["title"]
-    blog_title = script.get_object("header")
-    blog_title.set_text(title)
+    blog_name = script.get_object("header")
+    blog_name.set_text(config.get_blog_config()["title"])
 
     def load_new_post(direction, arbitrary_post=None):
         if arbitrary_post:
             post_to_load = arbitrary_post
         else:
-            nonlocal post_item
-
-            posts = data["posts"].data
-            index = posts.index(post_item)
-            index += direction
-            if index == len(posts):
-                index = 0
-            post_to_load = posts[index]
-
+            posts = posts_data.data
+            new_index = (posts_data.current_post_idx + direction) % len(posts)
+            posts_data.current_post_idx = new_index
+            post_to_load = posts[new_index]
         content = post_to_load.content
         wordpress.blog.pending_post = content
         try:
@@ -190,8 +184,10 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
     :param script: ClutterScript with the view description.
     :param data: some specific data.
     """
-    post = data["post"]
-    post_item = data['post_item']
+    post_item = data["post_item"]
+    posts_data = data["posts"]
+    posts_data.current_post_idx = [post.content['ID'] for post in posts_data.data].index(post_item.content['ID'])
+
     content = script.get_object("post_text")
 
     blog_name = script.get_object("header")
@@ -201,14 +197,10 @@ def prepare_followed_blog_single_post_view(app, window, script, data):
         if arbitrary_post:
             post_to_load = arbitrary_post
         else:
-            nonlocal post_item
-
-            posts = data['posts'].data
-            index = posts.index(post_item)
-            index += direction
-            if index == len(posts):
-                index = 0
-            post_to_load = posts[index]
+            posts = posts_data.data
+            new_index = (posts_data.current_post_idx + direction) % len(posts)
+            posts_data.current_post_idx = new_index
+            post_to_load = posts[new_index]
         try:
             content.load_html(data["blog"].compose_post_view(post_to_load.content))
         except socket.timeout:
@@ -251,7 +243,8 @@ def prepare_followed_blog_all_posts_view(app, window, script, data):
     def load_view(tile, post):
         posts_data.clean_up()
         window.load_view("blog/followed_blog_single_post",
-                         {"blog": blog , "post": post.content,
+                         {"blog": blog,
+                          "post": post.content,
                           "post_item": post,
                           "blog_name": blog_name,
                           "blog_url": blog_url,

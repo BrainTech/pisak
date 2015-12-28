@@ -37,6 +37,7 @@ class PostTileSource(pager.DataSource):
     def __init__(self):
         super().__init__()
         self._blog_type = None
+        self.current_post_idx = None
         self.lazy_offset = 0
 
     @property
