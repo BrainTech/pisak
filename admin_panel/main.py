@@ -147,7 +147,7 @@ class Panel(Ui_MainWindow):
         self.horizontalSlider_volume.valueChanged.connect(self.onHorizontalSlider_volumeValueChanged)
         self.checkBox_sounds.toggled.connect(self.onCheckBox_soundsToggled)
         self.checkBox_buttonSoundSupport.toggled.connect(self.onCheckBox_buttonSoundSupportToggled)
-        self.checkBox_speechSynthesis(self.onCheckBox_speechSynthesis)
+        self.checkBox_speechSynthesis.toggled.connect(self.onCheckBox_speechSynthesis)
         self.checkBox_textCase.toggled.connect(self.onCheckBox_textCaseToggled)
         self.horizontalSlider_cycleCount.valueChanged.connect(self.onHorizontalSlider_cycleCountValueChanged)
         self.horizontalSlider_interval.valueChanged.connect(self.onHorizontalSlider_intervalValueChanged)
