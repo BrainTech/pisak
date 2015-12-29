@@ -940,8 +940,9 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
                         if icon_name in selection.sounds:
                             self.player.play(selection.sounds[icon_name])
                     else:
-                        synthesizer = Synthesizer(label)
-                        synthesizer.read(scan_time)
+                        if pisak.config.as_bool('speech_synthesis'):
+                            synthesizer = Synthesizer(label)
+                            synthesizer.read(scan_time)
                 elif isinstance(selection, Group):
                     self.player.play(selection.sound)
                 elif isinstance(selection, pisak.widgets.PhotoTile):
