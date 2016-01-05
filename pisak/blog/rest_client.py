@@ -20,7 +20,7 @@ class Blog:
     :param address: blog's site domain (string) or ID (integer).
     """
     def __init__(self, address):
-        self._reqs_interval = 1  # minimal interval between subsequent reqests, in seconds
+        self._reqs_interval = 2.5  # minimal interval between subsequent reqests, in seconds
         self._last_req_ts = 0  # timestamp of the last request
 
         self._lock = RLock()
@@ -40,6 +40,7 @@ class Blog:
                     left_to_wait = self._reqs_interval - (time.time() - self._last_req_ts)
                     time.sleep(left_to_wait)
 
+                self._last_req_ts = time.time()
                 ret = requests.get(self.address + resource).json()
                 self._last_req_ts = time.time()
                 return ret

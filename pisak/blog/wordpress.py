@@ -47,7 +47,7 @@ class Blog:
 
     def __init__(self, blog_address=None, custom_config=None):
         super().__init__()
-        self._reqs_interval = 1  # minimal interval between subsequent reqests, in seconds
+        self._reqs_interval = 2.5  # minimal interval between subsequent reqests, in seconds
         self._last_req_ts = 0  # timestamp of the last request
 
         self._lock = threading.RLock()
@@ -62,11 +62,12 @@ class Blog:
             with self._lock:
                 if (time.time() - self._last_req_ts) < self._reqs_interval:
                     # we should go to sleep for not too long because new
-                    # reqest can arrive at any time so maybe it can happen
+                    # request can arrive at any time so maybe it can happen
                     # that the timeout is just about to expire
                     left_to_wait = self._reqs_interval - (time.time() - self._last_req_ts)
                     time.sleep(left_to_wait)
 
+                self._last_req_ts = time.time()
                 if use_requests:
                     ret = getattr(requests, method)(requests_resource)
                 else:
@@ -106,8 +107,8 @@ class Blog:
         :param text: text of the comment.
         """
         self._call(wordpress_xmlrpc.methods.comments.NewComment(
-                    post_id, wordpress_xmlrpc.WordPressComment(
-                        {"content": text})))
+                   post_id, wordpress_xmlrpc.WordPressComment(
+                       {"content": text})))
 
 
 class _OwnBlog(Blog):
