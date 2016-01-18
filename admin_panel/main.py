@@ -85,6 +85,7 @@ class Panel(Ui_MainWindow):
         self.checkBox_paint.setChecked(available_apps.as_bool('paint'))
         self.checkBox_blog.setChecked(available_apps.as_bool('blog'))
         self.checkBox_email.setChecked(available_apps.as_bool('email'))
+        self.checkBox_budzik.setChecked(available_apps.as_bool('budzik'))
 
         scanning = config['PisakRowStrategy']
         self.horizontalSlider_cycleCount.setValue(scanning.as_int('max_cycle_count'))
@@ -142,6 +143,7 @@ class Panel(Ui_MainWindow):
         self.checkBox_movie.toggled.connect(self.onCheckBox_movieToggled)
         self.checkBox_audio.toggled.connect(self.onCheckBox_audioToggled)
         self.checkBox_email.toggled.connect(self.onCheckBox_emailToggled)
+        self.checkBox_budzik.toggled.connect(self.onCheckBox_budzikToggled)
         self.comboBox_input.currentIndexChanged[str].connect(self.onComboBox_inputCurrentIndexChanged)
         self.comboBox_skin.currentIndexChanged[str].connect(self.onComboBox_skinCurrentIndexChanged)
         self.horizontalSlider_volume.valueChanged.connect(self.onHorizontalSlider_volumeValueChanged)
@@ -196,6 +198,9 @@ class Panel(Ui_MainWindow):
 
     def onCheckBox_symbolerToggled(self, checked):
         self._cache['available_apps']['symboler'] = checked
+
+    def onCheckBox_budzikToggled(self, checked):
+        self._cache['available_apps']['budzik'] = checked
 
     def onCheckBox_movieToggled(self, checked):
         self._cache['available_apps']['movie'] = checked

@@ -24,11 +24,11 @@
         "x-align": "start",
         "x-expand": true,
         "y-expand": true,
-        "ratio_margin_top": 0.0136,
-        "ratio_margin_bottom": 0.0136,
+        "ratio_margin_top": 0.0336,
+        "ratio_margin_bottom": 0.336,
         "ratio_margin_left": 0.0211,
         "ratio_margin_right": 0.0211,
-        "ratio_spacing": 0.0211,
+        "ratio_spacing": 0.0001,
         "orientation": "vertical",
         "children": [
                         "button_box", "text_box"
@@ -38,7 +38,7 @@
 	"id": "text_box",
 	"type": "MxLabel",
 	"style-class": "PisakBudzikLabel",
-	"text": "Wybierz odpowiedź: "
+	"text": " "
     },
     {
         "id": "button_box",
@@ -46,11 +46,11 @@
         "x-align": "start",
         "x-expand": true,
         "y-expand": true,
-        "ratio_margin_top": 0.0136,
-        "ratio_margin_bottom": 0.0136,
-        "ratio_margin_left": 0.0211,
+        "ratio_margin_top": 0.09,
+        "ratio_margin_bottom": 0.336,
+        "ratio_margin_left": 0.0111,
         "ratio_margin_right": 0.0211,
-        "ratio_spacing": 0.0211,
+        "ratio_spacing": 0.04,
         "orientation": "horizontal",
         "children": [
                         "button_B", "button_A"
@@ -60,10 +60,13 @@
         "id": "button_A",
         "type": "PisakButton",
         "style-class": "PisakBudzikButtonA",
-        "text": "TAK",
+        "text": " ",
         "x-align": "middle",
-        "ratio-width": 0.4,
-        "ratio-height": 0.5,
+        "y-align": "middle",
+        "ratio-width": 0.46,
+        "ratio-height": 0.6,
+        "icon-size": 120,
+        "icon-name": "yes",
 	"signals": [
                        {
                            "name": "clicked",
@@ -76,10 +79,13 @@
         "id": "button_B",
         "type": "PisakButton",
         "style-class": "PisakBudzikButtonB",
-        "text": "NIE",
+        "text": " ",
         "x-align": "middle",
-        "ratio-width": 0.4,
-        "ratio-height": 0.5,
+	"y-align": "end",
+        "ratio-width": 0.44,
+        "ratio-height": 0.6,
+        "icon-size": 140,
+        "icon-name": "no",
 	"signals": [
                        {
                            "name": "clicked",

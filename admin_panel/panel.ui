@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>905</width>
-    <height>532</height>
+    <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,7 +62,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_selectApps">
        <attribute name="title">
@@ -74,7 +74,7 @@
           <x>10</x>
           <y>40</y>
           <width>653</width>
-          <height>247</height>
+          <height>275</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -170,6 +170,13 @@
             <widget class="QCheckBox" name="checkBox_blog">
              <property name="text">
               <string>blog</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_budzik">
+             <property name="text">
+              <string>budzik</string>
              </property>
             </widget>
            </item>
