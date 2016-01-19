@@ -7,9 +7,7 @@ that some application is being loaded.
 """
 import subprocess
 import threading
-import importlib
 import sys
-import traceback
 
 import gi
 
@@ -20,7 +18,7 @@ from gi.repository import GObject, Clutter, Mx
 
 import pisak
 from pisak import application, logger, configurator, properties,\
-    widgets, arg_parser, inputs, dirs
+    widgets, arg_parser, inputs, dirs, unit
 
 
 _LOG = logger.get_logger(__name__)
@@ -83,7 +81,11 @@ class LoadingScreen(Clutter.Stage):
 
     def __init__(self):
         super().__init__()
+        self.set_position(unit.MONITOR_X, unit.MONITOR_Y)
+        self.set_size(unit.w(1), unit.h(1))
         self._init_content()
+        if not arg_parser.get_args().debug:
+            self.set_fullscreen(True)
 
     def _init_content(self):
         self.set_layout_manager(Clutter.BinLayout())
@@ -149,8 +151,6 @@ class AppManager(Clutter.Actor,
         """
         pisak.app.window.input_group.stop_middleware()
         self.loading_screen.show()
-        if not arg_parser.get_args().debug:
-            self.loading_screen.set_fullscreen(True)
 
     def maximize_panel(self, event):
         """
