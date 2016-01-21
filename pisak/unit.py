@@ -54,7 +54,10 @@ def initialize():
                                   monitor_geometry.height)
         size_mm = MonitorSizeMM(screen.get_monitor_width_mm(monitor_id),
                                 screen.get_monitor_height_mm(monitor_id))
-        MONITOR_DPMM = size_pix.width / size_mm.width
+        try:
+            MONITOR_DPMM = size_pix.width / size_mm.width
+        except ZeroDivisionError:
+            MONITOR_DPMM = 72 / 25.4
         MONITOR_DPI = MONITOR_DPMM * 25.4
 
 
