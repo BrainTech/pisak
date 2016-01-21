@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo add-apt-repository ppa:ethanak/milena
+# sudo add-apt-repository ppa:ethanak/milena
 
 sudo apt-get update && sudo apt-get upgrade -y
 
@@ -12,20 +12,20 @@ sudo apt-get install -y gir1.2-gst-plugins-base-0.10 gir1.2-gst-plugins-base-1.0
 
 sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-configobj python3-requests python3-pyqt5 python3-cssutils
 
-sudo apt-get install -y milena
+# sudo apt-get install -y milena
 
 sudo pip3 install pressagio pydenticon ezodf python-wordpress-xmlrpc
 
 sudo pip3 install --pre pyusb
 
-# if [ -d ~/pisak ]; then
-#     echo "Directory ~/pisak exists." 
-# else
-#     cd ~/
-#     git clone http://github.com/BrainTech/pisak.git
-# fi
+if [ -d ~/pisak ]; then
+   echo "Directory ~/pisak exists."
+else
+   cd ~/
+   git clone http://github.com/BrainTech/pisak.git
+fi
 
-wget download.pisak.org/n_grams.sqlite -P ~/pisak/pisak/res 
+wget -c -N http://download.pisak.org/n_grams.sqlite -P ~/pisak/pisak/res
 
 if [ -d ~/.pisak ]; then
    echo "Directory ~/.pisak already exists."
