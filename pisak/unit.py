@@ -58,6 +58,9 @@ def initialize():
             MONITOR_DPMM = size_pix.width / size_mm.width
         except ZeroDivisionError:
             MONITOR_DPMM = 72 / 25.4
+            size_mm = MonitorSizeMM(size_pix.width / MONITOR_DPMM,
+                                    size_pix.height / MONITOR_DPMM)
+
         MONITOR_DPI = MONITOR_DPMM * 25.4
 
 
