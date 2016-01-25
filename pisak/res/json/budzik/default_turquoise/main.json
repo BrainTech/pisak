@@ -70,7 +70,7 @@
         "ratio-width": 0.46,
         "ratio-height": 0.6,
         "icon-size": 120,
-        "icon-name": "yes",
+        "icon-name": "tak",
 	"signals": [
                        {
                            "name": "clicked",
@@ -89,7 +89,7 @@
         "ratio-width": 0.44,
         "ratio-height": 0.6,
         "icon-size": 140,
-        "icon-name": "no",
+        "icon-name": "nie",
 	"signals": [
                        {
                            "name": "clicked",

@@ -1775,6 +1775,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
 
         :param label: text to be displayed on the button, string.
         """
+        self._assign_sound(label)
         super().set_label(label.upper() if self._upper_case else label)
 
     def _prepare_label(self):
@@ -2010,6 +2011,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             sound = dirs.get_sound_path(name + '.wav')
             if sound:
                 self.sounds[name] = sound
+                self.sounds[name.lower()] = sound
 
     def _set_initial_label(self, source, spec):
         self.set_default_label()
