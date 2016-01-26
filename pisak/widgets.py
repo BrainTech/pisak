@@ -2007,7 +2007,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         original_box.add_actor(self._padding, where)
 
     def _assign_sound(self, name):
-        if name:
+        if name and name.strip():
             sound = dirs.get_sound_path(name + '.wav')
             if sound:
                 self.sounds[name] = sound
