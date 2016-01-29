@@ -74,7 +74,7 @@
           <x>10</x>
           <y>40</y>
           <width>653</width>
-          <height>275</height>
+          <height>308</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -176,7 +176,14 @@
            <item>
             <widget class="QCheckBox" name="checkBox_budzik">
              <property name="text">
-              <string>budzik</string>
+              <string>rozmowa</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox_exitButton">
+             <property name="text">
+              <string>przycisk wyjścia</string>
              </property>
             </widget>
            </item>

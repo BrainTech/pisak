@@ -134,7 +134,8 @@ class AppManager(Clutter.Actor,
         for app, values in self.apps.items():
             if app in available and available.as_bool(app) and app != 'main_panel':
                 desc = {
-                    "exec_path": self._get_exec_path(values["module"]),
+                    "exec_path": self._get_exec_path(values["module"])
+                        if values['module'] else None,
                     "icon_size": values["icon_size"],
                     "icon_name": values["icon_name"],
                     "label": values["label"],
@@ -164,16 +165,19 @@ class AppManager(Clutter.Actor,
         Run an app with the given name as a new subprocess.
         Hide the current app stage.
 
-        :param app_exec: name of an app
+        :param app_exec: name of an app.
         """
-        if self.current_app is None:
-            self.minimize_panel()
-            worker = threading.Thread(
-                target=self._do_run_app,
-                args=(app_exec, ),
-                daemon=True
-            )
-            worker.start()
+        if app_exec is None:
+            pisak.app.main_quit()
+        else:
+            if self.current_app is None:
+                self.minimize_panel()
+                worker = threading.Thread(
+                    target=self._do_run_app,
+                    args=(app_exec, ),
+                    daemon=True
+                )
+                worker.start()
 
     def _do_run_app(self, app_exec):
         cmd = [app_exec] + sys.argv[1:] + ["--child"]

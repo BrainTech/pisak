@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'panel.ui'
 #
-# Created: Mon Jan 18 21:52:31 2016
+# Created: Fri Jan 29 15:23:52 2016
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -41,7 +41,7 @@ class Ui_MainWindow(object):
         self.tab_selectApps = QtWidgets.QWidget()
         self.tab_selectApps.setObjectName("tab_selectApps")
         self.horizontalLayoutWidget = QtWidgets.QWidget(self.tab_selectApps)
-        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 40, 653, 275))
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(10, 40, 653, 308))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
@@ -94,6 +94,9 @@ class Ui_MainWindow(object):
         self.checkBox_budzik = QtWidgets.QCheckBox(self.horizontalLayoutWidget)
         self.checkBox_budzik.setObjectName("checkBox_budzik")
         self.verticalLayout.addWidget(self.checkBox_budzik)
+        self.checkBox_exitButton = QtWidgets.QCheckBox(self.horizontalLayoutWidget)
+        self.checkBox_exitButton.setObjectName("checkBox_exitButton")
+        self.verticalLayout.addWidget(self.checkBox_exitButton)
         self.horizontalLayout_8.addLayout(self.verticalLayout)
         self.tabWidget.addTab(self.tab_selectApps, "")
         self.tab_generalSettings = QtWidgets.QWidget()
@@ -614,7 +617,8 @@ class Ui_MainWindow(object):
         self.checkBox_email.setText(_translate("MainWindow", "poczta e-mail"))
         self.checkBox_paint.setText(_translate("MainWindow", "rysowanie"))
         self.checkBox_blog.setText(_translate("MainWindow", "blog"))
-        self.checkBox_budzik.setText(_translate("MainWindow", "budzik"))
+        self.checkBox_budzik.setText(_translate("MainWindow", "rozmowa"))
+        self.checkBox_exitButton.setText(_translate("MainWindow", "przycisk wyjścia"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_selectApps), _translate("MainWindow", "Wybór aplikacji"))
         self.comboBox_input.setItemText(0, _translate("MainWindow", "przycisk"))
         self.comboBox_input.setItemText(1, _translate("MainWindow", "przycisk PISAK"))
