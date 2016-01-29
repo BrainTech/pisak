@@ -170,7 +170,8 @@ class ClutterApp(_Application):
         :param descriptor: general application descriptor.
         """
         clutter_window = window.Window(self, Clutter.Stage(), descriptor)
-        clutter_window.stage.set_title('Pisak Main')
+        clutter_window.stage.set_title('PISAK')
+        clutter_window.stage.set_position(unit.MONITOR_X, unit.MONITOR_Y)
         if arg_parser.get_args().debug:
             coeff = 0.7
             clutter_window.stage.set_size(coeff*unit.w(1), coeff*unit.h(1))
@@ -218,7 +219,8 @@ class GtkApp(_Application):
         gtk_window.stage = embed.get_stage()
         clutter_window = window.Window(self, gtk_window.stage, descriptor)
         clutter_window.wrapper = gtk_window
-        gtk_window.stage.set_title('Pisak Main')
+        gtk_window.stage.set_title('PISAK')
+        gtk_window.stage.set_position(unit.MONITOR_X, unit.MONITOR_Y)
         if arg_parser.get_args().debug:
             coeff = 0.7
             size = coeff*unit.w(1), coeff*unit.h(1)
@@ -226,6 +228,7 @@ class GtkApp(_Application):
             gtk_window.set_default_size(*size)
             gtk_window.set_resizable(True)
         else:
+            gtk_window.stage.set_size(unit.w(1), unit.h(1))
             gtk_window.stage.set_fullscreen(True)
             gtk_window.fullscreen()
         gtk_window.connect("destroy", lambda _: Gtk.main_quit())
