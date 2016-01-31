@@ -88,6 +88,7 @@
         "type": "PisakScanningGroup",
         "children": ["entry_menu_box"],
         "scanning-hilite": true,
+	"sound": "obróć",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"
