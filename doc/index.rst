@@ -18,6 +18,7 @@ Guides
    :maxdepth: 2
 
    dev_first_steps
+   command_line_options
    json_layout_design
    css_style
    useful_widgets
