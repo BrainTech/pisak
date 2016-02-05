@@ -68,7 +68,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	    "text": "5",
-        "sound": "linia 5 punktów",
+        "sound": "1",
         "label": " ",
 	    "icon-size": "50",
 	    "icon-name": "line_0",
@@ -92,7 +92,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "10",
-        "sound": "linia 10 punktów",
+        "sound": "2",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_1",
@@ -116,7 +116,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "20",
-        "sound": "linia 20 punktów",
+        "sound": "3",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_2",
@@ -140,7 +140,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "25",
-        "sound": "linia 25 punktów",
+        "sound": "4",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_3",
@@ -164,7 +164,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"text": "35",
-        "sound": "linia 35 punktów",
+        "sound": "5",
         "label": " ",
 	"icon-size": "50",
 	"icon-name": "line_4",
@@ -446,7 +446,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "red",
-        "sound": "linia czerwona",
+        "sound": "czerwony",
 	    "icon-name": " ",
         "signals": [
                 {
@@ -469,7 +469,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "blue",
-        "sound": "linia niebieska",
+        "sound": "niebieski",     
 	    "icon-name": " ",
         "signals": [
                 {
@@ -492,7 +492,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "green",
-        "sound": "linia zielona",
+        "sound": "zielony",    
 	"icon-name": " ",
         "signals": [
                 {
@@ -515,7 +515,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "yellow",
-        "sound": "linia żółta",
+        "sound": "zolty",    
 	"icon-name": " ",
         "signals": [
                 {
@@ -538,7 +538,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "purple",
-        "sound": "linia fioletowa",
+        "sound": "fioletowy",    
 	"icon-name": " ",
         "signals": [
                 {
@@ -561,7 +561,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "black",
-        "sound": "linia czarna",
+        "sound": "czarny",      
 	"icon-name": " ",
         "signals": [
                 {
@@ -584,7 +584,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "magenta",
-        "sound": "linia w kolorze fuksji",
+        "sound": "rozowy",      
 	"icon-name": " ",
         "signals": [
                 {
@@ -607,7 +607,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(10, 200, 200)",
-        "sound": "linia jasno niebieska",
+        "sound": "blekitny",     
 	"icon-name": " ",
         "signals": [
                 {
@@ -629,8 +629,8 @@
 	"label": " ",
         "ratio-width": 0.075,
         "ratio-height": 0.05,
-        "background-color": "rgb(200, 200, 10)",
-	    "sound": "linia ciemno żółta",
+        "background-color": "rgb(200, 200, 10)", 
+	    "sound": "zloty",  
         "icon-name": " ",
         "signals": [
                 {
@@ -651,8 +651,8 @@
         "related-object": "easel",        
 	"label": " ",
         "ratio-width": 0.075,
-        "ratio-height": 0.05,
-        "sound": "linia brązowa",
+        "ratio-height": 0.05,   
+        "sound": "brazowy",    
         "background-color": "rgb(200, 100, 2)",
 	"icon-name": " ",
         "signals": [
@@ -676,7 +676,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.05,
         "background-color": "rgb(2, 200, 100)",
-	    "sound": "linia jasno zielona",
+	"sound": "seledynowy",        
         "icon-name": " ",
         "signals": [
                 {
