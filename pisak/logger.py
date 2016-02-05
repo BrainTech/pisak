@@ -97,7 +97,7 @@ class _OBCILogger:
     PATH = OBCI_LOGS_PATH
 
     def __init__(self):
-        self._logs = []
+        self._logs = open(self.PATH, 'a')
 
     def log(self, time, event):
         """
@@ -106,13 +106,11 @@ class _OBCILogger:
         :param time: time.time() of the event.
         :param event: name of the event.
         """
-        self._logs.append(' '.join([str(time), event]) + '\n')
+        self._logs.write(' '.join([str(time), event]) + '\n')
+        self._logs.flush()
 
     def save(self):
-        if self._logs:
-            with open(self.PATH, 'a') as file:
-                file.writelines(self._logs)
-            self._logs.clear()
+        self._logs.close()
 
 
 def get_obci_logger():
