@@ -15,14 +15,14 @@ class elements_group(list):
 
 class Scanner:
 
-    def __init__(self, content):
+    def __init__(self, content, scanning_interval=100):
         self._ws_client = ws_client.Client(self._on_obci_feedback)
         self._rows = []
         self._columns = []
         self._elements = elements_group()
         self.update_content(content)
 
-        self.interval = 100  # scanning interval in miliseconds
+        self.interval = scanning_interval  # scanning interval in miliseconds
         self.flash_duration = 100  # duration of an item being flashed
 
         self._strategy = 'row'
