@@ -9,8 +9,9 @@ from pisak.obci import ws_client
 
 class elements_group(list):
 
+    @property
     def id_for_obci(self):
-        return 'Group: ' + ', '.join([element.id_for_obci() for element in self])
+        return 'Group: ' + ', '.join([element.id_for_obci for element in self])
 
 
 class Scanner:
@@ -169,7 +170,7 @@ class Scanner:
             new_row = elements_group()
             self._rows.append(new_row)
             for column_idx, element in enumerate(box.get_children()[0].get_children()):
-                element.id_for_obci = lambda: str(idx)
+                element.id_for_obci = str(idx)
                 new_row.append(element)
                 self._elements.append(element)
                 if column_idx >= len(self._columns):
@@ -204,7 +205,7 @@ class Scanner:
         self._flash_item_on(self._current_item)
 
     def _format_event(self):
-        return ' - '.join([str(time()), self._current_item.id_for_obci()])
+        return ' - '.join([str(time()), self._current_item.id_for_obci])
 
     def _log_event(self):
         self._logger.log(self._format_event())
