@@ -99,14 +99,13 @@ class _OBCILogger:
     def __init__(self):
         self._logs = open(self.PATH, 'a')
 
-    def log(self, time, event):
+    def log(self, msg):
         """
         Log an event.
 
-        :param time: time.time() of the event.
-        :param event: name of the event.
+        :param msg: properly formatted message to be logged.
         """
-        self._logs.write(' '.join([str(time), event]) + '\n')
+        self._logs.write(msg + '\n')
         self._logs.flush()
 
     def save(self):
