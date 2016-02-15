@@ -26,9 +26,10 @@ if __name__ == "__main__":
         handlers.button_to_view(window, script, "button_exit")
 
         keyboard = script.get_object('keyboard_panel')
-        scanning_interval = 100
+        obci_scanner = scanner.Scanner(
+            keyboard, scanning_interval=200, scanning_jitter=100,
+            highlight_duration=200, highlight_jitter=100)
         strategy_duration = 5000
-        obci_scanner = scanner.Scanner(keyboard, scanning_interval)
         obci_scanner.run_scenario(
             [(('row', 'random-no-replacement'), strategy_duration),
             (('column', 'random-no-replacement'), strategy_duration),

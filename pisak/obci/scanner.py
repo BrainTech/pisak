@@ -11,20 +11,25 @@ class elements_group(list):
 
     @property
     def id_for_obci(self):
-        return 'Group: ' + ', '.join([element.id_for_obci for element in self])
+        return [element.id_for_obci for element in self]
 
 
 class Scanner:
 
-    def __init__(self, content, scanning_interval=100):
+    def __init__(self, content, scanning_interval=1000, scanning_jitter=100,
+                 highlight_duration=1000, highlight_jitter=100):
         self._ws_client = ws_client.Client(self._on_obci_feedback)
         self._rows = []
         self._columns = []
         self._elements = elements_group()
         self.update_content(content)
 
-        self.interval = scanning_interval  # scanning interval in miliseconds
-        self.flash_duration = 100  # duration of an item being flashed
+        self.scanning_interval = scanning_interval  # scanning interval in miliseconds
+        self.scanning_jitter = scanning_jitter
+        self.highlight_duration = highlight_duration  # duration of an item being highlighted
+        self.highlight_jitter = highlight_jitter
+
+        self._highlighted = 0  # if anything is highlighted right now
 
         self._strategy = 'row'
         self._sampling = 'random-replacement'
@@ -127,7 +132,7 @@ class Scanner:
     def start(self, duration=-1):
         self._working = True
         self._current_cycle_start = time()
-        Clutter.threads_add_timeout(0, self.interval, self._on_cycle_timeout, duration)
+        self._add_timeout(duration)
 
     def stop(self):
         self._working = False
@@ -153,6 +158,15 @@ class Scanner:
         number_of_elements = self._parse_content(new_content)
         self._new_view_for_obci(number_of_elements)
 
+    def _add_timeout(self, duration):
+        Clutter.threads_add_timeout(0, self._calculate_new_timeout(),
+                                    self._on_cycle_timeout, duration)
+
+    def _calculate_new_timeout(self):
+        timeout, jitter = (self.highlight_duration, self.highlight_jitter) if \
+            self._highlighted else (self.scanning_interval, self.scanning_jitter)
+        return timeout + random.randint(-jitter, jitter)
+
     def _run_pending(self):
         if self._current_scenario:
             strategy, duration = self._current_scenario.pop(0)
@@ -170,7 +184,7 @@ class Scanner:
             new_row = elements_group()
             self._rows.append(new_row)
             for column_idx, element in enumerate(box.get_children()[0].get_children()):
-                element.id_for_obci = str(idx)
+                element.id_for_obci = idx
                 new_row.append(element)
                 self._elements.append(element)
                 if column_idx >= len(self._columns):
@@ -200,33 +214,36 @@ class Scanner:
                 item.disable_hilite()
 
     def _do_transition(self):
-        self._flash_item_off(self._current_item)
-        self._pick_next_item()
-        self._flash_item_on(self._current_item)
-
-    def _format_event(self):
-        return ' - '.join([str(time()), self._current_item.id_for_obci])
+        if self._highlighted:
+            self._flash_item_off(self._current_item)
+            self._current_item = None
+            self._highlighted = 0
+        else:
+            self._pick_next_item()
+            self._flash_item_on(self._current_item)
+            self._report_event()
+            self._highlighted = 1
 
     def _log_event(self):
-        self._logger.log(self._format_event())
+        pass
 
     def _report_event(self):
-        self._send_msg_to_obci(self._format_event())
+        self._send_msg_to_obci('highlighted', self._current_item.id_for_obci)
 
     def _on_cycle_timeout(self, duration):
         if 0 < duration < time() - self._current_cycle_start:
-            self._flash_item_off(self._current_item)
+            if self._highlighted:
+                self._flash_item_off(self._current_item)
             self.stop()
             self._run_pending()
-            return False
         else:
             if self._working:
                 self._do_transition()
-                self._report_event()
-                return True
+                self._add_timeout(duration)
             else:
-                self._flash_item_off(self._current_item)
-                return False
+                if self._highlighted:
+                    self._flash_item_off(self._current_item)
+        return False
 
     def _on_obci_feedback(self, msg):
         msg = str(msg)
@@ -252,11 +269,10 @@ class Scanner:
         self._send_msg_to_obci('stop')
 
     def _new_view_for_obci(self, number_of_elements):
-        self._send_msg_to_obci('new view, number of elements: ' +
-                               str(number_of_elements))
+        self._send_msg_to_obci('new view', str(number_of_elements))
 
-    def _send_msg_to_obci(self, msg):
-        self._ws_client.send(msg)
+    def _send_msg_to_obci(self, msg_type, msg_data=None):
+        self._ws_client.send_message(msg_type, msg_data)
 
 
 def parse_logs():
@@ -264,5 +280,4 @@ def parse_logs():
     with open(path, 'r') as file:
         lines = file.readlines()
     for line in lines:
-        timestamp, event = line.split(' - ', maxsplit=1)
-        event = event.rstrip('\n')
+        pass

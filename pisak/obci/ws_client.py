@@ -1,3 +1,5 @@
+import json
+
 from ws4py.client.threadedclient import WebSocketClient
 
 
@@ -17,3 +19,9 @@ class Client(WebSocketClient):
 
     def received_message(self, msg):
         self._on_new_msg(msg)
+
+    def send_message(self, msg_type, msg_data=None):
+        content = {'type': msg_type}
+        if msg_data is not None:
+            content.update({'data': msg_data})
+        self.send(json.dumps(content))
