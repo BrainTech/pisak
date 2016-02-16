@@ -271,7 +271,7 @@ class Scanner:
         self._send_msg_to_obci('stop')
 
     def _new_view_for_obci(self, number_of_elements):
-        self._send_msg_to_obci('new view', str(number_of_elements))
+        self._send_msg_to_obci('new_view', int(number_of_elements))
 
     def _send_msg_to_obci(self, msg_type, msg_data=None):
         self._ws_client.send_message(msg_type, msg_data)
