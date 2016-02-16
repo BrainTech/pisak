@@ -228,7 +228,9 @@ class Scanner:
         pass
 
     def _report_event(self):
-        self._send_msg_to_obci('highlighted', self._current_item.id_for_obci)
+        element_id = self._current_item.id_for_obci
+        self._send_msg_to_obci('highlighted', element_id if
+                               isinstance(element_id, list) else [element_id])
 
     def _on_cycle_timeout(self, duration):
         if 0 < duration < time() - self._current_cycle_start:
