@@ -21,6 +21,8 @@ def prepare_popup_view(app, window, script, data):
     :param script: current view ClutterScript.
     :param data: some extra, view-specific data.
     """
+    if not data['icon']:
+        window.ui.icon.hide()
     window.ui.message.set_text(data["message"])
 
 
@@ -183,7 +185,7 @@ class Window(configurator.Configurable):
         self.input_group.load_content(main_actor)
 
     def load_popup(self, message, unwind=None, unwind_data=None,
-                   container=None, timeout=5000):
+                   container=None, timeout=5000, icon=True):
         """
         Load a pop-up view with some message displayed and then, after a
         given amount of time automatically load some another view or
@@ -198,6 +200,7 @@ class Window(configurator.Configurable):
         :param timeout: time after which the `unwind`
         will be executed automatically, in miliseconds, default is 1 second, if -1 then
         the `unwind` to will not be executed at all.
+        :param icon: boolean, if icon should be displayed.
 
         :return: None.
         """
@@ -216,7 +219,7 @@ class Window(configurator.Configurable):
         if container:
             self._display_popup_widget(container, message)
         else:
-            self.load_view("popup", {"message": message})
+            self.load_view("popup", {"message": message, 'icon': icon})
 
     def _display_popup_widget(self, container, message):
         popup = widgets.Label()

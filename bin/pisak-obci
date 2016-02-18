@@ -5,14 +5,36 @@ Script to run testing OBCI application.
 """
 
 if __name__ == "__main__":
+    import time
+    import threading
+    import subprocess
+
+    from gi.repository import Clutter
+    from ws4py.exc import WebSocketException
+
     import pisak
-    from pisak import app_manager, handlers
-    from pisak.obci import scanner
+    from pisak import app_manager, handlers, logger
+    from pisak.obci import scanner, ws_client
 
     import pisak.speller.widgets  # @UnusedImport
     import pisak.speller.handlers  # @UnusedImport
 
     pisak.init()
+
+    LOG = logger.get_logger(__name__)
+
+    def run_cmd(cmd):
+        try:
+            subprocess.Popen(cmd.split())
+        except Exception as exc:
+            LOG.error(exc)
+
+    run_cmd('obci kill_scenario pisak')
+    run_cmd('obci launch pisak --ovr ' +
+            ':'.join([ws_client.SERVER_HOST,
+                      ws_client.SERVER_PORT]))
+
+    init = True
 
     def prepare_main_view(app, window, script, data):
         """
@@ -23,23 +45,54 @@ if __name__ == "__main__":
         :param script: ClutterScript with the view description.
         :param data: some specific data.
         """
-        handlers.button_to_view(window, script, "button_exit")
+        if init:
+            window.load_popup('Trwa ładowanie...', icon=False)
 
-        keyboard = script.get_object('keyboard_panel')
-        obci_scanner = scanner.Scanner(
-            keyboard, scanning_interval=200, scanning_jitter=100,
-            highlight_duration=200, highlight_jitter=100)
-        strategy_duration = 5000
-        obci_scanner.run_scenario(
-            [(('row', 'random-no-replacement'), strategy_duration),
-            (('column', 'random-no-replacement'), strategy_duration),
-            (('row+column', 'random-no-replacement'), strategy_duration),
-            (('element', 'random-no-replacement'), strategy_duration),
-            (('row', 'random-replacement-greedy'), strategy_duration),
-            (('column', 'random-replacement-greedy'), strategy_duration),
-            (('row+column', 'random-replacement-greedy'), strategy_duration),
-            (('element', 'random-replacement-greedy'), strategy_duration)]
-        )
+            def work(on_success, on_fail):
+                obci_ws_client = ws_client.Client()
+                start = time.time()
+                while True:
+                    try:
+                        obci_ws_client.connect()
+                    except (ConnectionRefusedError, WebSocketException) as exc:
+                        LOG.error(exc)
+                        if time.time() - start > 60:
+                            Clutter.threads_add_idle(0, lambda *_: on_fail('Nie udało się połączyć z OBCI',
+                                                                           unwind='main_panel'))
+                            return
+                        else:
+                            time.sleep(5)
+                    else:
+                        break
+
+                global init
+                init = False
+                Clutter.threads_add_idle(
+                    0, lambda *_: on_success('speller/main',
+                                             {'ws_client': obci_ws_client}))
+
+            thread = threading.Thread(target=work, daemon=None,
+                                      args=(window.load_view, window.load_popup))
+            thread.start()
+        else:
+            handlers.button_to_view(window, script, "button_exit")
+            keyboard = script.get_object('keyboard_panel')
+            obci_scanner = scanner.Scanner(
+                data['ws_client'], keyboard,
+                scanning_interval=200, scanning_jitter=100,
+                highlight_duration=200, highlight_jitter=100)
+            strategy_duration = 5000
+            obci_scanner.run_scenario(
+                [(('row', 'random-no-replacement'), strategy_duration),
+                (('column', 'random-no-replacement'), strategy_duration),
+                (('row+column', 'random-no-replacement'), strategy_duration),
+                (('element', 'random-no-replacement'), strategy_duration),
+                (('row', 'random-replacement-greedy'), strategy_duration),
+                (('column', 'random-replacement-greedy'), strategy_duration),
+                (('row+column', 'random-replacement-greedy'), strategy_duration),
+                (('element', 'random-replacement-greedy'), strategy_duration)]
+            )
+
 
     speller_app = {
         "app": "speller",
@@ -48,3 +101,5 @@ if __name__ == "__main__":
     }
 
     app_manager.run(speller_app)
+
+    run_cmd('obci kill_scenario pisak')

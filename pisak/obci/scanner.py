@@ -4,7 +4,6 @@ from time import time
 from gi.repository import Clutter
 
 from pisak import logger
-from pisak.obci import ws_client
 
 
 class elements_group(list):
@@ -16,9 +15,10 @@ class elements_group(list):
 
 class Scanner:
 
-    def __init__(self, content, scanning_interval=1000, scanning_jitter=100,
+    def __init__(self, ws_client, content, scanning_interval=1000, scanning_jitter=100,
                  highlight_duration=1000, highlight_jitter=100):
-        self._ws_client = ws_client.Client(self._on_obci_feedback)
+        self._ws_client = ws_client
+        self._ws_client.on_new_msg = self._on_obci_feedback
         self._rows = []
         self._columns = []
         self._elements = elements_group()
