@@ -25,14 +25,14 @@ if __name__ == "__main__":
 
     def run_cmd(cmd):
         try:
-            subprocess.Popen(cmd.split())
+            p = subprocess.Popen(cmd.split())
+            p.wait()
         except Exception as exc:
             LOG.error(exc)
 
     run_cmd('obci kill_scenario pisak')
-    run_cmd('obci launch pisak --ovr ' +
-            ':'.join([ws_client.SERVER_HOST,
-                      ws_client.SERVER_PORT]))
+    run_cmd('obci launch pisak --ovr {}:{}'.format(
+            ws_client.SERVER_HOST, ws_client.SERVER_PORT))
 
     init = True
 
