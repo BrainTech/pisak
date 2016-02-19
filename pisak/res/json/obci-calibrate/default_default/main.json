@@ -1,0 +1,30 @@
+[
+  {
+    "id": "main",
+    "type": "PisakBinLayout",
+    "background-color": "black",
+    "x-expand": true,
+    "y-expand": true,
+    "children": ["buttons"]
+  },
+  {
+    "id": "buttons",
+    "type": "PisakBoxLayout",
+    "orientation": "horizontal",
+    "ratio-spacing": 0.2,
+    "children": ["button_1", "button_2"]
+  },
+  {
+    "id": "button_2",
+    "type": "PisakOBCICalibrationLabel",
+    "style-class": "PisakOBCICalibration",
+    "text": "TAK",
+    "with_target": true
+  },
+  {
+    "id": "button_1",
+    "type": "PisakOBCICalibrationLabel",
+    "style-class": "PisakOBCICalibration",
+    "text": "NIE"
+  }
+]

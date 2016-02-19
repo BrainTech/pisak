@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+
+"""
+Script to run PISAK OBCI calibration.
+"""
+
+if __name__ == "__main__":
+    from pisak import app_manager
+    from pisak.obci import scanner
+
+    def prepare_main_view(app, window, script, data):
+        """
+        View preparator.
+
+        :param app: reference to the application, :see: :module:`pisak.application`.
+        :param window: application main window, :class:`pisak.window.Window` instance.
+        :param script: ClutterScript with the view description.
+        :param data: some specific data.
+        """
+        container = script.get_object('main')
+        obci_scanner = scanner.Scanner(
+            data['ws_client'], container,
+            scanning_interval=175, scanning_jitter=25,
+            highlight_duration=100, highlight_jitter=0)
+        strategy_duration = 120000  # 2 minutes
+        obci_scanner.run_scenario([(('row', 'order'), strategy_duration)])
+
+
+    calibration_app = {
+        "app": "obci-calibrate",
+        "type": "clutter",
+        "views": [("main", prepare_main_view)]
+    }
+
+    app_manager.run(calibration_app)

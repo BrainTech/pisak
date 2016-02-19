@@ -183,7 +183,7 @@ class Scanner:
         for box in content.get_children():
             new_row = elements_group()
             self._rows.append(new_row)
-            for column_idx, element in enumerate(box.get_children()[0].get_children()):
+            for column_idx, element in enumerate(box.get_children()):
                 element.id_for_obci = idx
                 new_row.append(element)
                 self._elements.append(element)

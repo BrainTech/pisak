@@ -660,7 +660,7 @@
         "type": "PisakScanningGroup",
         "children": ["keyboard_row_1_box"],
         "scanning-hilite": true,
-	"sound": "2",
+	    "sound": "2",
         "strategy": {
             "id": "keyboard_row_1_group_strategy",
             "type": "PisakRowStrategy",

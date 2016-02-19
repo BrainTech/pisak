@@ -1579,3 +1579,12 @@ MxLabel.PisakBudzikLabel {
     font-weight: bold;
     color: black;
 }
+
+
+/* OBCI */
+
+MxLabel.PisakOBCICalibration {
+    font-family: Kelson Sans;
+    font-size: 200px;
+    color: grey;
+}
