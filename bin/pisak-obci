@@ -5,36 +5,14 @@ Script to run testing OBCI application.
 """
 
 if __name__ == "__main__":
-    import time
-    import threading
-    import subprocess
-
-    from gi.repository import Clutter
-    from ws4py.exc import WebSocketException
-
     import pisak
     from pisak import app_manager, handlers, logger
-    from pisak.obci import scanner, ws_client
+    from pisak.obci import scanner, communication
 
     import pisak.speller.widgets  # @UnusedImport
     import pisak.speller.handlers  # @UnusedImport
 
     pisak.init()
-
-    LOG = logger.get_logger(__name__)
-
-    def run_cmd(cmd):
-        try:
-            p = subprocess.Popen(cmd.split())
-            p.wait()
-        except Exception as exc:
-            LOG.error(exc)
-
-    run_cmd('obci kill_scenario pisak')
-    run_cmd('obci launch pisak --ovr {}:{}'.format(
-            ws_client.SERVER_HOST, ws_client.SERVER_PORT))
-
-    init = True
 
     def prepare_main_view(app, window, script, data):
         """
@@ -45,35 +23,9 @@ if __name__ == "__main__":
         :param script: ClutterScript with the view description.
         :param data: some specific data.
         """
-        if init:
-            window.load_popup('Trwa ładowanie...', icon=False)
-
-            def work(on_success, on_fail):
-                obci_ws_client = ws_client.Client()
-                start = time.time()
-                while True:
-                    try:
-                        obci_ws_client.connect()
-                    except (ConnectionRefusedError, WebSocketException) as exc:
-                        LOG.error(exc)
-                        if time.time() - start > 60:
-                            Clutter.threads_add_idle(0, lambda *_: on_fail('Nie udało się połączyć z OBCI',
-                                                                           unwind='main_panel'))
-                            return
-                        else:
-                            time.sleep(5)
-                    else:
-                        break
-
-                global init
-                init = False
-                Clutter.threads_add_idle(
-                    0, lambda *_: on_success('speller/main',
-                                             {'ws_client': obci_ws_client}))
-
-            thread = threading.Thread(target=work, daemon=None,
-                                      args=(window.load_view, window.load_popup))
-            thread.start()
+        if not data or ('init' not in data) or data['init']:
+            communication.create_ws_client(window, 'speller/main')
+            return False
         else:
             handlers.button_to_view(window, script, "button_exit")
             keyboard = script.get_object('keyboard_panel')
@@ -93,13 +45,14 @@ if __name__ == "__main__":
                 (('element', 'random-replacement-greedy'), strategy_duration)]
             )
 
-
     speller_app = {
         "app": "speller",
         "type": "clutter",
         "views": [("main", prepare_main_view)]
     }
 
-    app_manager.run(speller_app)
+    @communication.handle_obci_scenario
+    def run_app():
+       app_manager.run(speller_app)
 
-    run_cmd('obci kill_scenario pisak')
+    run_app()

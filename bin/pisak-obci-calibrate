@@ -5,8 +5,14 @@ Script to run PISAK OBCI calibration.
 """
 
 if __name__ == "__main__":
+    import pisak
     from pisak import app_manager
-    from pisak.obci import scanner
+    from pisak.obci import scanner, communication
+
+    import pisak.obci.widgets  # @UnusedImport
+
+
+    pisak.init()
 
     def prepare_main_view(app, window, script, data):
         """
@@ -17,14 +23,16 @@ if __name__ == "__main__":
         :param script: ClutterScript with the view description.
         :param data: some specific data.
         """
-        container = script.get_object('main')
-        obci_scanner = scanner.Scanner(
-            data['ws_client'], container,
-            scanning_interval=175, scanning_jitter=25,
-            highlight_duration=100, highlight_jitter=0)
-        strategy_duration = 120000  # 2 minutes
-        obci_scanner.run_scenario([(('row', 'order'), strategy_duration)])
-
+        if not data or ('init' not in data) or data['init']:
+            communication.create_ws_client(window, 'obci-calibrate/main')
+        else:
+            container = script.get_object('main')
+            obci_scanner = scanner.Scanner(
+                data['ws_client'], container,
+                scanning_interval=175, scanning_jitter=25,
+                highlight_duration=100, highlight_jitter=0)
+            strategy_duration = 120000  # 2 minutes
+            obci_scanner.run_scenario([(('row', 'order'), strategy_duration)])
 
     calibration_app = {
         "app": "obci-calibrate",
@@ -32,4 +40,8 @@ if __name__ == "__main__":
         "views": [("main", prepare_main_view)]
     }
 
-    app_manager.run(calibration_app)
+    @communication.handle_obci_scenario
+    def run_app():
+       app_manager.run(calibration_app)
+
+    run_app()

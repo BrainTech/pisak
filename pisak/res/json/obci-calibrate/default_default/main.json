@@ -16,6 +16,11 @@
   },
   {
     "id": "button_2",
+    "type": "PisakBinLayout",
+    "children": ["proper_button_2"]
+  },
+  {
+    "id": "proper_button_2",
     "type": "PisakOBCICalibrationLabel",
     "style-class": "PisakOBCICalibration",
     "text": "TAK",

@@ -167,15 +167,17 @@ class Window(configurator.Configurable):
             message = "Descriptor has no view with name: {}".format(name)
             raise WindowError(message)
         view_path, prepare = self.views.get(name)
-        self.script = Clutter.Script()
-        self.script.load_from_file(view_path)
-        self.script.connect_signals_full(
+        script = Clutter.Script()
+        script.load_from_file(view_path)
+        script.connect_signals_full(
             signals.connect_registered, self.application)
-        self.ui = _UI(self.script)
+        self.ui = _UI(script)
         if callable(prepare):
-            prepare(self.application, self, self.script, data)
+            if prepare(self.application, self, script, data) == False:
+                return
+
         children = self.stage.get_children()
-        main_actor = self.script.get_object("main")
+        main_actor = script.get_object("main")
         if children:
             self.input_group.stop_middleware()
             old_child = children[0]
@@ -183,6 +185,7 @@ class Window(configurator.Configurable):
         else:
             self.stage.add_child(main_actor)
         self.input_group.load_content(main_actor)
+        self.script = script
 
     def load_popup(self, message, unwind=None, unwind_data=None,
                    container=None, timeout=5000, icon=True):
