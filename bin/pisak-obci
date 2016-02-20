@@ -7,7 +7,7 @@ Script to run testing OBCI application.
 if __name__ == "__main__":
     import pisak
     from pisak import app_manager, handlers, logger
-    from pisak.obci import scanner, communication
+    from pisak.obci import scanner, communication, widgets
 
     import pisak.speller.widgets  # @UnusedImport
     import pisak.speller.handlers  # @UnusedImport
@@ -29,8 +29,10 @@ if __name__ == "__main__":
         else:
             handlers.button_to_view(window, script, "button_exit")
             keyboard = script.get_object('keyboard_panel')
+            first_condition = lambda container: container.get_children()
+            second_condition = lambda container: container.get_children()[0].get_children()
             obci_scanner = scanner.Scanner(
-                data['ws_client'], keyboard,
+                data['ws_client'], keyboard, first_condition, second_condition,
                 scanning_interval=200, scanning_jitter=100,
                 highlight_duration=200, highlight_jitter=100)
             strategy_duration = 5000

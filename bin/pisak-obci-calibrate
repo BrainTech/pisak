@@ -7,7 +7,7 @@ Script to run PISAK OBCI calibration.
 if __name__ == "__main__":
     import pisak
     from pisak import app_manager
-    from pisak.obci import scanner, communication
+    from pisak.obci import scanner, communication, widgets
 
     import pisak.obci.widgets  # @UnusedImport
 
@@ -27,8 +27,12 @@ if __name__ == "__main__":
             communication.create_ws_client(window, 'obci-calibrate/main')
         else:
             container = script.get_object('main')
+            first_condition = lambda container: container.get_children()
+            second_condition = lambda container: [
+                item if isinstance(item, widgets.CalibrationLabel) else
+                item.get_children()[0] for item in container.get_children()]
             obci_scanner = scanner.Scanner(
-                data['ws_client'], container,
+                data['ws_client'], container, first_condition, second_condition,
                 scanning_interval=175, scanning_jitter=25,
                 highlight_duration=100, highlight_jitter=0)
             strategy_duration = 120000  # 2 minutes

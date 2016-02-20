@@ -15,14 +15,15 @@ class elements_group(list):
 
 class Scanner:
 
-    def __init__(self, ws_client, content, scanning_interval=1000, scanning_jitter=100,
+    def __init__(self, ws_client, content, first_condition, second_condition,
+                 scanning_interval=1000, scanning_jitter=100,
                  highlight_duration=1000, highlight_jitter=100):
         self._ws_client = ws_client
         self._ws_client.on_new_msg = self._on_obci_feedback
         self._rows = []
         self._columns = []
         self._elements = elements_group()
-        self.update_content(content)
+        self.update_content(content, first_condition, second_condition)
 
         self.scanning_interval = scanning_interval  # scanning interval in miliseconds
         self.scanning_jitter = scanning_jitter
@@ -153,9 +154,10 @@ class Scanner:
         self._start_obci()
         self._run_pending()
 
-    def update_content(self, new_content):
+    def update_content(self, new_content, first_condition, second_condition):
         self._stop_obci()
-        number_of_elements = self._parse_content(new_content)
+        number_of_elements = self._parse_content(new_content, first_condition,
+                                                 second_condition)
         self._new_view_for_obci(number_of_elements)
 
     def _add_timeout(self, duration):
@@ -178,12 +180,12 @@ class Scanner:
     def _reset_params(self):
         self._idx = 0
 
-    def _parse_content(self, content):
+    def _parse_content(self, content, first_condition, second_condition):
         idx = 0
-        for box in content.get_children():
+        for box in first_condition(content):
             new_row = elements_group()
             self._rows.append(new_row)
-            for column_idx, element in enumerate(box.get_children()):
+            for column_idx, element in enumerate(second_condition(box)):
                 element.id_for_obci = idx
                 new_row.append(element)
                 self._elements.append(element)
