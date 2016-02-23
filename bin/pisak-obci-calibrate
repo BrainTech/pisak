@@ -25,6 +25,7 @@ if __name__ == "__main__":
         """
         if not data or ('init' not in data) or data['init']:
             communication.create_ws_client(window, 'obci-calibrate/main')
+            return False
         else:
             container = script.get_object('main')
             first_condition = lambda container: container.get_children()

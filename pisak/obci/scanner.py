@@ -201,19 +201,21 @@ class Scanner:
         self._current_item = self._sampling_rule()
         self._idx += 1
 
-    def _flash_item_on(self, item):
+    def _flash_item_on(self, item, targets):
         if isinstance(item, list):
             for sub_item in item:
-                self._flash_item_on(sub_item)
+                self._flash_item_on(sub_item, targets)
         elif item:
-                item.enable_hilite()
+            is_target = item.enable_hilite()
+            if is_target:
+                targets.append(item.id_for_obci)
 
     def _flash_item_off(self, item):
         if isinstance(item, list):
             for sub_item in item:
                 self._flash_item_off(sub_item)
         elif item:
-                item.disable_hilite()
+            item.disable_hilite()
 
     def _do_transition(self):
         if self._highlighted:
@@ -222,17 +224,18 @@ class Scanner:
             self._highlighted = 0
         else:
             self._pick_next_item()
-            self._flash_item_on(self._current_item)
-            self._report_event()
+            targets = []
+            self._flash_item_on(self._current_item, targets)
+            self._report_event(targets)
             self._highlighted = 1
 
     def _log_event(self):
         pass
 
-    def _report_event(self):
+    def _report_event(self, targets):
         element_id = self._current_item.id_for_obci
-        self._send_msg_to_obci('highlighted', element_id if
-                               isinstance(element_id, list) else [element_id])
+        self._send_msg_to_obci('highlighted', [element_id if
+                               isinstance(element_id, list) else [element_id], targets])
 
     def _on_cycle_timeout(self, duration):
         if 0 < duration < time() - self._current_cycle_start:

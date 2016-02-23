@@ -16,7 +16,7 @@ class CalibrationLabel(widgets.Label, properties.PropertyAdapter):
             GObject.PARAM_READWRITE)
     }
 
-    FACE_PATH = res.get('sample.jpg')
+    FACE_PATH = res.get('piesel.png')
 
     def __init__(self):
         super().__init__()

@@ -28,8 +28,14 @@
   },
   {
     "id": "button_1",
+    "type": "PisakBinLayout",
+    "children": ["proper_button_1"]
+  },
+  {
+    "id": "proper_button_1",
     "type": "PisakOBCICalibrationLabel",
     "style-class": "PisakOBCICalibration",
-    "text": "NIE"
+    "text": "NIE",
+    "with_target": true
   }
 ]
