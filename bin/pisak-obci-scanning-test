@@ -7,7 +7,7 @@ Script to run testing OBCI application.
 if __name__ == "__main__":
     import pisak
     from pisak import app_manager, handlers
-    from pisak.obci import scanner
+    from pisak.obci import scanner, communication
 
     import pisak.speller.widgets  # @UnusedImport
     import pisak.speller.handlers  # @UnusedImport
@@ -23,23 +23,29 @@ if __name__ == "__main__":
         :param script: ClutterScript with the view description.
         :param data: some specific data.
         """
-        handlers.button_to_view(window, script, "button_exit")
-
-        keyboard = script.get_object('keyboard_panel')
-        obci_scanner = scanner.Scanner(
-            keyboard, scanning_interval=200, scanning_jitter=100,
-            highlight_duration=200, highlight_jitter=100)
-        strategy_duration = 5000
-        obci_scanner.run_scenario(
-            [(('row', 'random-no-replacement'), strategy_duration),
-            (('column', 'random-no-replacement'), strategy_duration),
-            (('row+column', 'random-no-replacement'), strategy_duration),
-            (('element', 'random-no-replacement'), strategy_duration),
-            (('row', 'random-replacement-greedy'), strategy_duration),
-            (('column', 'random-replacement-greedy'), strategy_duration),
-            (('row+column', 'random-replacement-greedy'), strategy_duration),
-            (('element', 'random-replacement-greedy'), strategy_duration)]
-        )
+        if not data or ('init' not in data) or data['init']:
+            communication.create_ws_client(window, 'speller/main')
+            return False
+        else:
+            handlers.button_to_view(window, script, "button_exit")
+            keyboard = script.get_object('keyboard_panel')
+            first_condition = lambda container: container.get_children()
+            second_condition = lambda container: container.get_children()[0].get_children()
+            obci_scanner = scanner.Scanner(
+                data['ws_client'], keyboard, first_condition, second_condition,
+                scanning_interval=200, scanning_jitter=100,
+                highlight_duration=200, highlight_jitter=100)
+            strategy_duration = 5000
+            obci_scanner.run_scenario(
+                [(('row', 'random-no-replacement'), strategy_duration),
+                (('column', 'random-no-replacement'), strategy_duration),
+                (('row+column', 'random-no-replacement'), strategy_duration),
+                (('element', 'random-no-replacement'), strategy_duration),
+                (('row', 'random-replacement-greedy'), strategy_duration),
+                (('column', 'random-replacement-greedy'), strategy_duration),
+                (('row+column', 'random-replacement-greedy'), strategy_duration),
+                (('element', 'random-replacement-greedy'), strategy_duration)]
+            )
 
     speller_app = {
         "app": "speller",
@@ -47,4 +53,8 @@ if __name__ == "__main__":
         "views": [("main", prepare_main_view)]
     }
 
-    app_manager.run(speller_app)
+    @communication.handle_obci_scenario
+    def run_app():
+       app_manager.run(speller_app)
+
+    run_app()

@@ -7,7 +7,7 @@ Script to run testing OBCI application.
 if __name__ == "__main__":
     import pisak
     from pisak import app_manager, handlers, logger
-    from pisak.obci import scanner, communication, widgets
+    from pisak.obci import scanner, communication
 
     import pisak.speller.widgets  # @UnusedImport
     import pisak.speller.handlers  # @UnusedImport
