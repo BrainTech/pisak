@@ -1547,3 +1547,16 @@ PisakFrame.PisakEmailMessageTile {
 PisakFrame.PisakEmailSingleMessage {
     border-image: url("white_flat.png") 5;
 }
+
+
+/* OBCI */
+
+MxLabel.PisakOBCICalibration {
+    font-family: Kelson Sans;
+    font-size: 300px;
+    color: rgb(50, 50, 50);
+}
+
+MxLabel.PisakOBCICalibration:hilited {
+    color: rgb(200, 200, 200);
+}
