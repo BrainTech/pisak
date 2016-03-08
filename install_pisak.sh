@@ -10,7 +10,7 @@ sudo apt-get install -y gir1.2-clutter-1.0 gir1.2-clutter-gst-2.0 gir1.2-mx-1.0 
 
 sudo apt-get install -y gir1.2-gst-plugins-base-0.10 gir1.2-gst-plugins-base-1.0 gstreamer0.10-plugins-good gstreamer0.10-plugins-ugly gstreamer0.10-plugins-base gstreamer0.10-plugins-bad gstreamer0.10-x gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-x gstreamer1.0-plugins-ugly libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-libav
 
-sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-configobj python3-requests python3-pyqt5 python3-cssutils
+sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-configobj python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-configobj python3-requests python3-pyqt5 python3-cssutils
 
 # sudo apt-get install -y milena
 
@@ -51,12 +51,20 @@ else
     echo "PYTHONPATH was not extended."
 fi
 
-echo "Do you want to extend you PATH var for easy PISAK launching?"
+echo "Do you want to explicitly set Clutter backend to X11 (required for Ubuntu 14.10+)?"
 read answer2
 if [[ ${answer2} = "Y" || ${answer2} = "y" ]]; then
+    echo "export CLUTTER_BACKEND=x11" >> ~/.bashrc
+    echo "CLUTTER_BACKEND has been set to X11."
+fi
+
+echo "Do you want to extend you PATH var for easy PISAK launching?"
+read answer3
+if [[ ${answer3} = "Y" || ${answer3} = "y" ]]; then
     echo "export PATH=\$PATH:.:~/pisak/bin" >> ~/.bashrc
     echo "You can run PISAK by typing 'pisak' in terminal after logging out and logging in."
     exit
 else
     echo "Launch scripts are in pisak/bin directory, remember to add it to your PATH variable to be able to have the apps work from the main window."
 fi
+
