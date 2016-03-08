@@ -57,7 +57,7 @@ class Blog:
         self._iface = None
         self._login()
 
-    def _call(self, method, use_requests=False, requests_resource=None):
+    def _call(self, method):
         try:
             with self._lock:
                 if (time.time() - self._last_req_ts) < self._reqs_interval:
@@ -68,10 +68,7 @@ class Blog:
                     time.sleep(left_to_wait)
 
                 self._last_req_ts = time.time()
-                if use_requests:
-                    ret = getattr(requests, method)(requests_resource)
-                else:
-                    ret = self._iface.call(method)
+                ret = self._iface.call(method)
                 self._last_req_ts = time.time()
                 return ret
         except OSError as exc:
@@ -141,7 +138,7 @@ class _OwnBlog(Blog):
         if len(images) > 0:
             photo_url = images[0]
             try:
-                photo_bytes = self._call('get', True, photo_url).content
+                photo_bytes = requests.get(photo_url).content
             except requests.exceptions.ConnectionError as e:
                 _LOG.warning(e)
             else:

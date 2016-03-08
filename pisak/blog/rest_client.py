@@ -3,7 +3,6 @@ Wordpress JSON REST API client implementation.
 """
 import socket
 import time
-from threading import RLock
 import requests
 
 from pisak import logger, blog
