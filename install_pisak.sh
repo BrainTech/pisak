@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# set minimal supported Ubuntu version here
+MIN_UBUNTU_VERSION="15.10"
+
 #### check if current system is supported ####
 
 command -v lsb_release >/dev/null 2>&1 || { echo >&2 "\"lsb_release\" program not found. Are you using Ubuntu Linux?"; exit 1; }
@@ -21,19 +24,26 @@ DIST_CODENAME=`lsb_release -cs`
 DIST_VERSION=`lsb_release -sr`
 #echo "Distribution version is '$DIST_VERSION'."
 
-#### check if current system is supported ####
+if version_gt $MIN_UBUNTU_VERSION $DIST_VERSION; then
+    echo "Your Ubuntu Linux is too old. Minimal required version: $MIN_UBUNTU_VERSION."
+    exit 1
+else
+    echo "You have Ubuntu $MIN_UBUNTU_VERSION or newer."
+fi
+
+#### install required packages ####
 
 # sudo add-apt-repository ppa:ethanak/milena
 
 sudo apt-get update && sudo apt-get upgrade -y
 
-sudo apt-get install -y git xdg-user-dirs wget libav-tools
+sudo apt-get install -y git wget xdg-user-dirs libav-tools
 
 sudo apt-get install -y gir1.2-clutter-1.0 gir1.2-clutter-gst-2.0 gir1.2-mx-1.0 gir1.2-rsvg-2.0 libmx-1.0-2 libclutter-1.0-0 gir1.2-webkit-3.0 gir1.2-gtkclutter-1.0
 
 sudo apt-get install -y gir1.2-gst-plugins-base-0.10 gir1.2-gst-plugins-base-1.0 gstreamer0.10-plugins-good gstreamer0.10-plugins-ugly gstreamer0.10-plugins-base gstreamer0.10-plugins-bad gstreamer0.10-x gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-x gstreamer1.0-plugins-ugly libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-libav
 
-sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-configobj python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-configobj python3-requests python3-pyqt5 python3-cssutils
+sudo apt-get install -y python3 python3-pip python3-gi python3-pil python3-gi-cairo python3-configobj python3-sqlalchemy python3-magic python3-bs4 python3-ws4py python3-taglib python3-configobj python3-requests python3-pyqt5 python3-cssutils python3-usb
 
 # install milena package if available
 MILENA_PACK=(apt-cache policy milena)
@@ -46,13 +56,13 @@ fi
 
 #### some Python packages are not available as Ubuntu deb packages ####
 
-pip3 install --user pressagio pydenticon ezodf python-wordpress-xmlrpc
+# pydenticon depends on Pillow, installed via pip3,
+# so additional libraries for building Pillow are required
+sudo apt-get install -y libjpeg-dev zlib1g-dev
+pip3 install --user pydenticon
 
-if version_gt $DIST_VERSION "15.10"; then
-    sudo apt-get install python3-usb
-else
-    pip3 install --user --pre pyusb
-fi
+# pure Python dependencies
+pip3 install --user pressagio ezodf python-wordpress-xmlrpc
 
 #### download pisak sources ####
 
