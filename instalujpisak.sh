@@ -25,16 +25,9 @@ if ! type milena_say &> /dev/null ; then
    rm -rf milena-0.2.88.3
 fi
 
-### fragment skryptu Aleksa, bez setuptools
 # pydenticon depends on Pillow, installed via pip3,
 # so additional libraries for building Pillow are required
-#sudo apt-get install -y libjpeg-dev zlib1g-dev
-#pip3 install --user pydenticon
-# pure Python dependencies
-#pip3 install --user pressagio ezodf python-wordpress-xmlrpc
-
-
-### PIP3
+sudo apt-get install -y libjpeg-dev zlib1g-dev
 pip3 install --user setuptools #tego chyba brakowało
 pip3 install --user pressagio pydenticon ezodf python-wordpress-xmlrpc
 
