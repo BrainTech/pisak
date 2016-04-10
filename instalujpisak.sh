@@ -8,7 +8,7 @@ sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install -y git xdg-user-dirs wget libav-tools
 sudo apt-get install -y gir1.2-clutter-1.0 gir1.2-clutter-gst-2.0 gir1.2-mx-1.0 gir1.2-rsvg-2.0 libmx-1.0-2 libclutter-1.0-0 gir1.2-webkit-3.0 gir1.2-gtkclutter-1.0
 sudo apt-get install -y gir1.2-gst-plugins-base-0.10 gir1.2-gst-plugins-base-1.0 gstreamer0.10-plugins-good gstreamer0.10-plugins-ugly gstreamer0.10-plugins-base gstreamer0.10-plugins-bad gstreamer0.10-x gstreamer1.0-plugins-bad gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-x gstreamer1.0-plugins-ugly libgstreamer-plugins-base0.10-0 libgstreamer-plugins-base1.0-0 gstreamer1.0-libav
-sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-configobj python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-configobj python3-requests python3-pyqt5 python3-cssutils python3-usb
+sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-configobj python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-requests python3-pyqt5 python3-cssutils python3-usb
 
 ### MILENA ze źródeł jeśli nie udało się zpakietów
 if ! type milena_say &> /dev/null ; then
@@ -93,9 +93,8 @@ if type ~/pisak/bin/pisak &> /dev/null ; then
     milena_say "Wygląda na to, że instalacja przebiegła pomyślnie"
     echo "Program możesz uruchomić poleceniem"
     echo "pisak"
-    milena_say "Program możesz uruchomić poleceniem pisak."
     echo "po ponownym zalogowaniu."
-    milena_say ". po ponownym zalogowaniu"
+    milena_say "Program możesz uruchomić poleceniem pisak po ponownym zalogowaniu"
 
   else
     echo "Wygląda na to, że instalacja przebiegła pomyślnie,"
