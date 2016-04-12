@@ -15,7 +15,7 @@ CONFIG_MAPS = {
         'keyboard': 'klawiatura (spacja)',
         'eyetracker': 'okulograf',
         'tobii': 'tobii',
-        'eviacam': 'eviacam',
+        'eviacam': 'ruchy głowy',
         'eyetracker-no-correction': 'okulograf bez korekcji',
         'eyetracker-mockup': 'okulograf testowy'},
     'REACT_ON': {

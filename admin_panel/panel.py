@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'panel.ui'
 #
-# Created: Fri Jan 29 15:23:52 2016
+# Created: Tue Apr 12 10:26:52 2016
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -117,10 +117,6 @@ class Ui_MainWindow(object):
         self.formLayout.setObjectName("formLayout")
         self.comboBox_input = QtWidgets.QComboBox(self.tab_generalSettings)
         self.comboBox_input.setObjectName("comboBox_input")
-        self.comboBox_input.addItem("")
-        self.comboBox_input.addItem("")
-        self.comboBox_input.addItem("")
-        self.comboBox_input.addItem("")
         self.comboBox_input.addItem("")
         self.comboBox_input.addItem("")
         self.comboBox_input.addItem("")
@@ -597,13 +593,13 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         self.comboBox_skin.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Konfiguracja PISAKa"))
         self.pushButton_abort.setText(_translate("MainWindow", "Anuluj"))
         self.pushButton_apply.setText(_translate("MainWindow", "Zastosuj"))
         self.pushButton_ok.setText(_translate("MainWindow", "Ok"))
@@ -622,13 +618,9 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_selectApps), _translate("MainWindow", "Wybór aplikacji"))
         self.comboBox_input.setItemText(0, _translate("MainWindow", "przycisk"))
         self.comboBox_input.setItemText(1, _translate("MainWindow", "przycisk PISAK"))
-        self.comboBox_input.setItemText(2, _translate("MainWindow", "okulograf"))
-        self.comboBox_input.setItemText(3, _translate("MainWindow", "tobii"))
-        self.comboBox_input.setItemText(4, _translate("MainWindow", "eviacam"))
-        self.comboBox_input.setItemText(5, _translate("MainWindow", "myszka"))
-        self.comboBox_input.setItemText(6, _translate("MainWindow", "okulograf bez korekcji"))
-        self.comboBox_input.setItemText(7, _translate("MainWindow", "okulograf testowy"))
-        self.comboBox_input.setItemText(8, _translate("MainWindow", "klawiatura (spacja)"))
+        self.comboBox_input.setItemText(2, _translate("MainWindow", "myszka"))
+        self.comboBox_input.setItemText(3, _translate("MainWindow", "klawiatura (spacja)"))
+        self.comboBox_input.setItemText(4, _translate("MainWindow", "ruchy głowy"))
         self.label_input.setText(_translate("MainWindow", "Urządzenie wejściowe"))
         self.comboBox_skin.setCurrentText(_translate("MainWindow", "domyślna"))
         self.comboBox_skin.setItemText(0, _translate("MainWindow", "domyślna"))

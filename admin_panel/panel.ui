@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Konfiguracja PISAKa</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
@@ -227,37 +227,17 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string>okulograf</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>tobii</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>eviacam</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
                   <string>myszka</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>okulograf bez korekcji</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>okulograf testowy</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
                   <string>klawiatura (spacja)</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>ruchy głowy</string>
                  </property>
                 </item>
                </widget>
