@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'panel.ui'
 #
-# Created: Tue Apr 12 10:26:52 2016
+# Created: Wed Apr 13 10:21:47 2016
 #      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -593,7 +593,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusBar)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         self.comboBox_skin.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -690,7 +690,7 @@ class Ui_MainWindow(object):
         self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.</p><p>W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &quot;a&quot; jest najkrótszy, a do pola z literą &quot;z&quot; najdłuższy.</p><p>Układ częstotliwościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.</p></body></html>"))
         self.comboBox_spellerLayout.setItemText(0, _translate("MainWindow", "domyślny"))
         self.comboBox_spellerLayout.setItemText(1, _translate("MainWindow", "alfabetyczny"))
-        self.comboBox_spellerLayout.setItemText(2, _translate("MainWindow", "częstotliwościowy"))
+        self.comboBox_spellerLayout.setItemText(2, _translate("MainWindow", "częstościowy"))
         self.label_spellerLayout.setText(_translate("MainWindow", "Układ klawiatury"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_spellerSettings), _translate("MainWindow", "Edytor tekstu"))
 

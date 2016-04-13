@@ -24,7 +24,7 @@ CONFIG_MAPS = {
     'SPELLER_LAYOUT': {
         'default': 'domyślny',
         'alphabetical': 'alfabetyczny',
-        'frequency': 'częstotliwościowy'}
+        'frequency': 'częstościowy'}
 }
 
 # make the mappings bidirectional
