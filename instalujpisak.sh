@@ -86,6 +86,17 @@ else
    fi
 fi
 
+### instalacja Eviacama
+cd
+git clone https://github.com/BrainTech/eviacam.git
+cd eviacam
+git checkout pisak
+sudo apt-get install -y libtool automake autoconf libxext-dev libxtst-dev libgtk2.0-dev libwxgtk3.0-dev libopencv-dev libv4l-dev
+./autogen.sh
+./configure
+make
+sudo make install
+
 ### komunikaty końcowe
 if type ~/pisak/bin/pisak &> /dev/null ; then
   if type milena_say &> /dev/null ; then
