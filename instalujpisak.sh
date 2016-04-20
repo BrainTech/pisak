@@ -97,6 +97,32 @@ sudo apt-get install -y libtool automake autoconf libxext-dev libxtst-dev libgtk
 make
 sudo make install
 
+### skróty na pulpicie
+cd
+if [ -d Desktop ]; then
+  cd Desktop
+else
+  cd Pulpit
+fi
+
+(echo "[Desktop Entry]";
+  echo "Version=1.0";
+  echo "Name=PISAK";
+  echo "Exec=pisak";
+  echo "Terminal=false";
+  echo "Type=Application";
+  echo "Icon=") >> PISAK.desktop
+chmod +x PISAK.desktop
+
+(echo "[Desktop Entry]";
+  echo "Version=1.0";
+  echo "Name=KonfiguracjaPISAKa";
+  echo "Exec=python3 ~/pisak/admin_panel/main.py";
+  echo "Terminal=false";
+  echo "Type=Application";
+  echo "Icon=") >> KonfiguracjaPISAKa.desktop
+chmod +x KonfiguracjaPISAKa.desktop
+
 ### komunikaty końcowe
 if type ~/pisak/bin/pisak &> /dev/null ; then
   if type milena_say &> /dev/null ; then
