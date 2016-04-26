@@ -61,7 +61,6 @@ def load_all():
                                          'folder_id': folder_id})
                             tracks.append(meta)
                 break
-    # tracks = sorted(tracks, key=lambda k: k['path'].split("/")[-2]) #sortuje liste według indeksu w nazwie albumu
     db.insert_many_tracks(tracks)
     db.close()
     _update_last_load_time(time.time())

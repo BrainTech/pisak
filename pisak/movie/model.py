@@ -13,7 +13,7 @@ _LOG = logger.get_logger(__name__)
 
 
 ACCEPTED_TYPES = [
-    ".mp4", ".avi", ".mkv", ".mpeg", ".ogg", ".rmvb", ".vob"
+    ".mp4", ".avi", ".mkv", ".mpeg", ".ogg"
 ]
 
 
