@@ -33,6 +33,7 @@ class FlatSource(pager.DataSource):
         self._set_preview(tile, movie.extra.get("cover"))
         tile.label_text = os.path.splitext(
             os.path.split(movie.path)[-1])[0]
+        tile.label_text = tile.label_text.split("_")[-1]
         return tile
 
     def _set_preview(self, tile, preview_path):

@@ -16,7 +16,8 @@ class FoldersSource(pager.DataSource):
     def __init__(self):
         super().__init__()
         self.data = db_manager.DBConnector().get_all_folders()
-
+        self.data = sorted(self.data, key=lambda tup: tup[1].split("_")[0])
+        
     def _produce_item(self, folder):
         tile = widgets.PhotoTile()
         self._prepare_item(tile)
@@ -25,9 +26,8 @@ class FoldersSource(pager.DataSource):
         tile.connect("clicked", self.item_handler, folder['id'])
         tile.scale_mode = Mx.ImageScaleMode.FIT
         tile.preview_path = folder['cover_path']
-        tile.label_text = folder['name']
+        tile.label_text = folder['name'].split("_")[-1]
         return tile
-
 
 class PlaylistSource(pager.DataSource):
     """
