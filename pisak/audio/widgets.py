@@ -16,7 +16,7 @@ class FoldersSource(pager.DataSource):
     def __init__(self):
         super().__init__()
         self.data = db_manager.DBConnector().get_all_folders()
-
+        
     def _produce_item(self, folder):
         tile = widgets.PhotoTile()
         self._prepare_item(tile)
@@ -27,7 +27,6 @@ class FoldersSource(pager.DataSource):
         tile.preview_path = folder['cover_path']
         tile.label_text = folder['name']
         return tile
-
 
 class PlaylistSource(pager.DataSource):
     """
