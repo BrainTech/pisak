@@ -42,7 +42,7 @@ INPUTS = {
     },
     "eviacam": {
         "process": {
-            "command": "eviacam -c",
+            "command": ' '.join(['eviacam', '-c', os.path.join(dirs.HOME_PISAK_CONFIGS, 'eviacam')]),
             "startup": "_wait_on_eviacam_startup"
         },
         "middleware": None
@@ -410,12 +410,8 @@ class PisakSwitchListener(GObject.GObject):
         _LOG.debug("Pisak-switch disconnected")
 
 
-def _wait_on_eviacam_startup(process):
-    while True:
-        out = process.stderr.readline()
-        if "Eviacam is ready to go." in str(out):
-            break
-        time.sleep(0.1)
+def _wait_on_eviacam_startup():
+    time.sleep(2.5)
 
 
 def run_input_process():
@@ -451,7 +447,7 @@ def run_input_process():
     startup = process_spec.get("startup")
     if startup:
         startup_func = eval(startup)
-        startup_func(process)
+        startup_func()
     _LOG.debug("Process {} was started up and is all ready now.".format(command))
     if not process_spec.get("server"):
         return process, None
