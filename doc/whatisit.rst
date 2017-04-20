@@ -63,3 +63,14 @@ Dictionary
 * configs - config files where section names are `gtype_name's`, keys are `property` names
 * :doc:`handlers` - handlers for specified signals, invoking functions
 * properties - characteristics of an object(width, height, source etc.)
+
+Admin panel
+----------
+The Administrator application, also known as Admin Panel or Control Panel is application where you manipulate PISAK's interface.
+
+.. image:: images/admin_panel.png
+   :width: 500pt
+
+To run admin panel execute in the terminal:
+.. code-block:: bash
+$ python3 pisak/admin_panel/main.py
