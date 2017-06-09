@@ -1194,7 +1194,7 @@
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.&lt;/p&gt;&lt;p&gt;W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &amp;quot;a&amp;quot; jest najkrótszy, a do pola z literą &amp;quot;z&amp;quot; najdłuższy.&lt;/p&gt;&lt;p&gt;Układ częstotliwościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.&lt;/p&gt;&lt;p&gt;W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &amp;quot;a&amp;quot; jest najkrótszy, a do pola z literą &amp;quot;z&amp;quot; najdłuższy.&lt;/p&gt;&lt;p&gt;Układ częstościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="wordWrap">
             <bool>true</bool>

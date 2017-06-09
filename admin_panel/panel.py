@@ -687,7 +687,7 @@ class Ui_MainWindow(object):
         self.label_emailPortSMTP.setText(_translate("MainWindow", "Port serwera SMTP"))
         self.pushButton_emailTest.setText(_translate("MainWindow", "Testuj połączenie"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_emailSettings), _translate("MainWindow", "Poczta e-mail"))
-        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.</p><p>W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &quot;a&quot; jest najkrótszy, a do pola z literą &quot;z&quot; najdłuższy.</p><p>Układ częstotliwościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.</p></body></html>"))
+        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p>Domyślny układ klawiatury to tzw. układ QWERTY, odpowiadający rozłożeniu przycisków na standardowej klawiaturze komputerowej.</p><p>W przypadku układu alfabetycznego klawisze są ułożone alfabetycznie, tzn. w przypadku użycia systemu skanowania czas dojścia do pola z literą &quot;a&quot; jest najkrótszy, a do pola z literą &quot;z&quot; najdłuższy.</p><p>Układ częstościowy segreguje litery zgodnie z częstością ich występowania w języku polskim.</p></body></html>"))
         self.comboBox_spellerLayout.setItemText(0, _translate("MainWindow", "domyślny"))
         self.comboBox_spellerLayout.setItemText(1, _translate("MainWindow", "alfabetyczny"))
         self.comboBox_spellerLayout.setItemText(2, _translate("MainWindow", "częstościowy"))
