@@ -42,7 +42,7 @@ INPUTS = {
     },
     "eviacam": {
         "process": {
-            "command": ' '.join(['eviacam', '-c', os.path.join(dirs.HOME_PISAK_CONFIGS, 'eviacam')]),
+            "command": "eviacam -c",
             "startup": "_wait_on_eviacam_startup"
         },
         "middleware": None
