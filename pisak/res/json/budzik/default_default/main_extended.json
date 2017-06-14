@@ -106,6 +106,7 @@
         "ratio-width": 0.285,
         "ratio-height": 0.6,
         "icon-size": 140,
-        "icon-name": "exit_large"
+        "icon-name": "exit_large",
+        "sound": "wyjście"
     }
 ]
