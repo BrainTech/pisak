@@ -53,7 +53,7 @@
         "ratio_spacing": 0.04,
         "orientation": "horizontal",
         "children": [
-                       "button_B", "button_A"
+                       "button_exit", "button_B", "button_A"
                     ]
     },
     {
@@ -63,7 +63,7 @@
         "text": " ",
         "x-align": "middle",
         "y-align": "middle",
-        "ratio-width": 0.448,
+        "ratio-width": 0.285,
         "ratio-height": 0.6,
         "icon-size": 120,
         "icon-name": "tak",
@@ -83,7 +83,7 @@
         "text": " ",
         "x-align": "middle",
 	"y-align": "middle",
-        "ratio-width": 0.448,
+        "ratio-width": 0.285,
         "ratio-height": 0.6,
         "icon-size": 140,
         "icon-name": "nie",
@@ -95,5 +95,18 @@
                            "object": "text_box"
                        }
                    ]
+    },
+    {
+        "id": "button_exit",
+        "type": "PisakButton",
+        "style-class": "PisakBudzikButtonExit",
+        "text": " ",
+        "x-align": "middle",
+        "y-align": "middle",
+        "ratio-width": 0.285,
+        "ratio-height": 0.6,
+        "icon-size": 140,
+        "icon-name": "exit_large",
+        "sound": "wyjście"
     }
 ]

@@ -656,7 +656,7 @@ class BaseStrategy(Strategy, properties.PropertyAdapter,
         self._select_lag = 1000
         self._start_up_lag = 0
         self._interval = 1000
-        self._lag_hilite_mode = "blink"
+        self._lag_hilite_mode = "still"
         self.blinking_freq = 100
         self._max_cycle_count = 2
         self._buttons = []

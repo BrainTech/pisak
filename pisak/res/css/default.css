@@ -1552,11 +1552,15 @@ PisakButton.PisakBudzikButtonA {
     font-size: 100px;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("cyan_frame.png") 5;
+    border-image: url("black_frame.png") 5;
 }
 
 PisakButton.PisakBudzikButtonA:hover {
     color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBudzikButtonA:lag_hilite {
     border-image: url("cyan_flat.png");
 }
 
@@ -1565,12 +1569,33 @@ PisakButton.PisakBudzikButtonB {
     font-size: 100px;
     font-family: Kelson Sans;
     font-weight: bold;
-    border-image: url("red_frame.png") 5;
+    border-image: url("black_frame.png") 5;
 }
 
 PisakButton.PisakBudzikButtonB:hover {
     color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBudzikButtonB:lag_hilite {
     border-image: url("red_flat.png");
+}
+
+PisakButton.PisakBudzikButtonExit {
+    color: black;
+    font-size: 100px;
+    font-family: Kelson Sans;
+    font-weight: bold;
+    border-image: url("black_frame.png") 5;
+}
+
+PisakButton.PisakBudzikButtonExit:hover {
+    color: white;
+    border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBudzikButtonExit:lag_hilite {
+    border-image: url("purple_flat.png");
 }
 
 MxLabel.PisakBudzikLabel {
