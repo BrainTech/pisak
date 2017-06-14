@@ -97,6 +97,23 @@ sudo apt-get install -y libtool automake autoconf libxext-dev libxtst-dev libgtk
 make
 sudo make install
 
+### skrypty rozruchowe
+cd 
+(echo "#!/bin/sh";   
+  echo "export CLUTTER_BACKEND=x11";   
+  echo "export PATH=\$PATH:/home/$(whoami)/pisak/bin";   
+  echo "export PYTHONPATH=/home/$(whoami)/pisak";   
+  echo "sleep 2";   
+  echo "pisak") > start_pisak.sh 
+chmod +x start_pisak.sh 
+
+(echo "#!/bin/sh";   
+  echo "export CLUTTER_BACKEND=x11";   
+  echo "export PYTHONPATH=/home/$(whoami)/pisak";   
+  echo "sleep 2";   
+  echo "python3 /home/$(whoami)/pisak/admin_panel/main.py") > konfiguruj_pisak.sh 
+chmod +x konfiguruj_pisak.sh
+
 ### skróty na pulpicie
 cd
 if [ -d Desktop ]; then
@@ -105,22 +122,22 @@ else
   cd Pulpit
 fi
 
-(echo "[Desktop Entry]";
-  echo "Version=1.0";
-  echo "Name=PISAK";
-  echo "Exec=pisak";
-  echo "Terminal=false";
-  echo "Type=Application";
-  echo "Icon=") >> PISAK.desktop
-chmod +x PISAK.desktop
+(echo "[Desktop Entry]";   
+  echo "Version=1.0";   
+  echo "Name=PISAK";   
+  echo "Exec=bash /home/$(whoami)/start_pisak.sh";   
+  echo "Terminal=false";   
+  echo "Type=Application";   
+  echo "Icon=") > PISAK.desktop 
+chmod +x PISAK.desktop 
 
-(echo "[Desktop Entry]";
-  echo "Version=1.0";
-  echo "Name=KonfiguracjaPISAKa";
-  echo "Exec=python3 ~/pisak/admin_panel/main.py";
-  echo "Terminal=false";
-  echo "Type=Application";
-  echo "Icon=") >> KonfiguracjaPISAKa.desktop
+(echo "[Desktop Entry]";   
+  echo "Version=1.0";   
+  echo "Name=KonfiguracjaPISAKa";   
+  echo "Exec=bash /home/$(whoami)/konfiguruj_pisak.sh";   
+  echo "Terminal=false";   
+  echo "Type=Application";   
+  echo "Icon=") > KonfiguracjaPISAKa.desktop 
 chmod +x KonfiguracjaPISAKa.desktop
 
 ### komunikaty końcowe
@@ -144,5 +161,3 @@ if type ~/pisak/bin/pisak &> /dev/null ; then
 else
   echo "NIESTETY NIE UDAŁO SIĘ ZAINSTALOWAĆ PISAKa"
 fi
-
-
