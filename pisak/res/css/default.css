@@ -1559,6 +1559,10 @@ PisakButton.PisakBudzikButtonA:hover {
     border-image: url("green_flat.png");
 }
 
+PisakButton.PisakBudzikButtonA:lag_hilite {
+    border-image: url("cyan_flat.png");
+}
+
 PisakButton.PisakBudzikButtonB {
     color: red;
     font-size: 100px;
@@ -1569,6 +1573,10 @@ PisakButton.PisakBudzikButtonB {
 
 PisakButton.PisakBudzikButtonB:hover {
     border-image: url("red_flat.png");
+}
+
+PisakButton.PisakBudzikButtonB:lag_hilite {
+    border-image: url("cyan_flat.png");
 }
 
 PisakButton.PisakBudzikButtonExit {
@@ -1582,6 +1590,10 @@ PisakButton.PisakBudzikButtonExit {
 PisakButton.PisakBudzikButtonExit:hover {
     color: white;
     border-image: url("purple_flat.png");
+}
+
+PisakButton.PisakBudzikButtonExit:lag_hilite {
+    border-image: url("cyan_flat.png");
 }
 
 MxLabel.PisakBudzikLabel {
