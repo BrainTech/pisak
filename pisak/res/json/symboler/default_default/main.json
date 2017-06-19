@@ -88,7 +88,7 @@
         "type": "PisakScanningGroup",
         "children": ["entry_menu_box"],
         "scanning-hilite": true,
-	"sound": "obróć",
+	"sound": "1",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"
@@ -204,7 +204,7 @@
         "type": "PisakScanningGroup",
         "children": ["symboler_menu_box"],
         "scanning-hilite": true,
-	"sound": "funkcje",
+	"sound": "2",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"
@@ -441,7 +441,7 @@
         "type": "PisakScanningGroup",
         "children": ["pager_menu_box"],
         "scanning-hilite": true,
-	"sound": "pisanie",
+	"sound": "3",
         "strategy": {
             "type": "PisakRowStrategy",
             "unwind-to": "main"
@@ -526,6 +526,7 @@
         "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "backspace",
+        "sound": "usun",
         "signals": [
                        {
                            "name": "clicked",
@@ -545,6 +546,7 @@
         "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "house",
+        "sound": "strona_tytułowa",
         "signals": [
                        {
                            "name": "clicked",
