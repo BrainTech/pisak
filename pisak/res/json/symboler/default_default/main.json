@@ -214,13 +214,12 @@
         "id": "symboler_menu_box",
         "type": "PisakBoxLayout",
         "orientation": "vertical",
-        "ratio-margin-top": 0.011764705,
+        "ratio-margin-top": 0.006,
         "y-align": "start",
         "y-expand": true,
-        "ratio-spacing": 0.011764705,
+        "ratio-spacing": 0.0168,
         "children": [
-                        "button_exit", "button_7",
-                        "button_5","button_4", "button_6", "button_3",
+                        "button_exit", "button_8", "button_6", "button_3",
                         "button_2", "button_1", "menu_header"
                     ]
     },
@@ -231,7 +230,7 @@
         "text": "TABLICA",
         "x-align": "start",
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "TABLICA",
         "icon-name": "bliss",
@@ -251,7 +250,7 @@
         "text": "ZAPISZ",
         "x-align": "start",
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "ZAPISZ",
         "icon-name": "zapisz",
@@ -270,7 +269,7 @@
         "text": "WCZYTAJ",
         "x-align": "start",
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "WCZYTAJ",
         "icon-name": "wczytaj",
@@ -291,7 +290,7 @@
         "x-align": "start",
         "disabled": true,
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "WYŚLIJ",
         "icon-name": "wyslij"
@@ -305,7 +304,7 @@
         "x-align": "start",
         "disabled": true,
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "DRUKUJ",
         "icon-name": "drukuj"
@@ -317,7 +316,7 @@
         "text": "NOWY",
         "x-align": "start",
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "NOWY",
         "icon-name": "nowy_dokument",
@@ -338,10 +337,29 @@
         "text": "WRÓĆ",
         "x-align": "start",
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "WRÓĆ",
         "icon-name": "powrot"
+    },
+    {
+        "id": "button_8",
+        "type": "PisakButton",
+        "style-class": "PisakSymbolerButton",
+        "text": "PRZECZYTAJ",
+        "x-align": "start",
+        "ratio-width": 0.154098360,
+        "ratio-height": 0.1,
+        "icon-size": 50,
+        "label": "PRZECZYTAJ",
+        "icon-name": "przeczytaj",
+        "signals": [
+                       {
+                           "name": "clicked",
+                           "handler": "symboler/text_to_speech",
+                           "object": "entry"
+                       }
+                    ]
     },
     {
         "id": "button_exit",
@@ -350,7 +368,7 @@
         "text": "WYJŚCIE",
         "x-align": "start",
         "ratio-width": 0.154098360,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 50,
         "label": "WYJŚCIE",
         "icon-name": "wyjdz"
@@ -436,9 +454,9 @@
         "y-align": "start",
         "y-expand": true,
         "ratio-margin-top": 0.070588235,
-        "ratio_spacing": 0.011764705,
+        "ratio_spacing": 0.0168,
         "children": [
-                        "pager_button_5", "pager_button_8", "pager_button_6",
+                        "pager_button_5", "pager_button_6",
                         "pager_button_4", "pager_button_7", "pager_button_3",
                         "pager_button_2", "pager_button_1"
                     ]
@@ -451,7 +469,7 @@
 	"scanning-pauser": true,
         "label": " ",
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "auto_symboler",
         "signals": [
@@ -469,7 +487,7 @@
         "x-align": "start",
         "label": " ",
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "nav_right",
         "signals": [
@@ -487,7 +505,7 @@
         "x-align": "start",
         "label": " ",
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "nav_left",
         "signals": [
@@ -505,7 +523,7 @@
         "x-align": "start",
         "label": " ",
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "backspace",
         "signals": [
@@ -524,7 +542,7 @@
         "label": " ",
         "ratio-width": 0.09,
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "house",
         "signals": [
@@ -536,31 +554,13 @@
                     ]
     },
     {
-        "id": "pager_button_6",
-        "type": "PisakButton",
-        "style-class": "PisakSymbolerButton",
-        "x-align": "start",
-        "label": " ",
-        "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
-        "icon-size": 37,
-        "icon-name": "przeczytaj",
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "symboler/text_to_speech",
-                           "object": "entry"
-                       }
-                    ]
-    },
-    {
         "id": "pager_button_7",
         "type": "PisakButton",
         "style-class": "PisakSymbolerButton",
         "x-align": "start",
         "label": " ",
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "bliss",
         "disabled_when": "scanning_off",
@@ -579,7 +579,7 @@
         "x-align": "start",
         "label": " ",
         "ratio-width": 0.049180327,
-        "ratio-height": 0.082352941,
+        "ratio-height": 0.1,
         "icon-size": 37,
         "icon-name": "funkcje",
         "signals": [

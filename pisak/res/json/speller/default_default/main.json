@@ -7,7 +7,7 @@
                         "type": "PisakRowStrategy"
                     },
         "children": [
-                        "main_box", "background_box"
+                       "logo_box",  "main_box", "background_box"
                     ]
     },
     {
@@ -97,8 +97,26 @@
         "id": "menu_header",
         "type": "PisakMenuHeader",
         "name": "funkcjenapis",
-        "ratio-width": 0.1,
-        "ratio-height": 0.06
+        "ratio-width": 0.20,
+        "ratio-height": 0.11,
+        "x-align": "middle",
+        "ratio-spacing": 0.5
+    },
+    {
+        "id": "logo_box",
+        "type": "PisakBoxLayout",
+        "x-align": "start",
+        "x-expand": true,
+        "y-expand": false,
+        "ratio_margin_top": 0.0136,
+        "ratio_margin_bottom": 0.7,
+        "ratio_margin_left": 0.0211,
+        "ratio_margin_right": 0.0211,
+        "ratio_spacing": 0,
+        "orientation": "horizontal",
+        "children": [
+                        "prediction_header", "menu_header"
+                    ]
     },
     {
         "id": "speller_menu_box",
@@ -110,7 +128,7 @@
         "children": [
                         "button_exit", "button_7", "button_6", "button_8",
                         "button_5","button_4", "button_3", "button_2",
-                        "button_1", "menu_header"
+                        "button_1"
                     ]
     },
     {
@@ -218,46 +236,6 @@
         ]
     },
     {
-        "id": "button_6",
-        "type": "PisakButton",
-        "style-class": "PisakSpellerButton",
-        "text": "WYŚLIJ",
-        "x-align": "start",
-        "disabled": true,
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
-        "icon-size": 50,
-        "label": "WYŚLIJ",
-        "icon-name": "wyslij",
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/send",
-                           "object": "text_box"
-                       }
-                   ]
-    },
-    {
-        "id": "button_7",
-        "type": "PisakButton",
-        "style-class": "PisakSpellerButton",
-        "text": "DRUKUJ",
-        "x-align": "start",
-        "disabled": true,
-        "ratio-width": 0.18312,
-        "ratio-height": 0.085,
-        "icon-size": 50,
-        "label": "DRUKUJ",
-        "icon-name": "drukuj",
-        "signals": [
-                       {
-                           "name": "clicked",
-                           "handler": "speller/print",
-                           "object": "text_box"
-                       }
-                   ]
-    },
-    {
         "id": "button_8",
         "type": "PisakButton",
         "style-class": "PisakSpellerButton",
@@ -315,17 +293,19 @@
         "ratio-spacing": 0.0136,
         "children":
         [
-            "prediction_9", "prediction_8", "prediction_7","prediction_6",
+            "prediction_7","prediction_6",
             "prediction_5", "prediction_4","prediction_3", "prediction_2",
-            "prediction_1", "prediction_header"
+            "prediction_1"
         ]
     },
     {
         "id": "prediction_header",
         "type": "PisakMenuHeader",
         "name": "predykcjanapis",
-        "ratio-width": 0.1,
-        "ratio-height": 0.06
+        "ratio-width": 0.15,
+        "ratio-height": 0.07,
+        "x-align": "middle",
+        "ratio-spacing": 0.5
     },
     {
         "id": "prediction_1",
