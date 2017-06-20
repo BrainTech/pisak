@@ -6,7 +6,8 @@
         "y-expand": true,
         "strategy": {
             "id": "main_strategy",
-            "type": "PisakRowStrategy"
+            "type": "PisakArbitraryOrderStrategy",
+            "subgroup-order": "entry_menu, symboler_menu, pager_menu"
         },
         "children": [
                         "main_box", "background_box"
