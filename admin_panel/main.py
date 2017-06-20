@@ -243,18 +243,22 @@ class Panel(Ui_MainWindow):
 
     def onHorizontalSlider_cycleCountValueChanged(self, value):
         self._cache['PisakRowStrategy']['max_cycle_count'] = value
+        self._cache['PisakArbitraryOrderStrategy']['max_cycle_count'] = value
         self.label_cycleCountCounter.setText(str(value))
 
     def onHorizontalSlider_intervalValueChanged(self, value):
         self._cache['PisakRowStrategy']['interval'] = value
+        self._cache['PisakArbitraryOrderStrategy']['interval'] = value
         self.label_intervalCounter.setText(str(round(value/1000, 2)))
 
     def onHorizontalSlider_startUpLagValueChanged(self, value):
         self._cache['PisakRowStrategy']['start_up_lag'] = value
+        self._cache['PisakArbitraryOrderStrategy']['start_up_lag'] = value
         self.label_startUpLagCounter.setText(str(round(value/1000, 2)))
 
     def onHorizontalSlider_selectLagValueChanged(self, value):
         self._cache['PisakRowStrategy']['select_lag'] = value
+        self._cache['PisakArbitraryOrderStrategy']['select_lag'] = value
         self.label_selectLagCounter.setText(str(round(value/1000, 2)))
 
     def onHorizontalSlider_spriteTimeoutValueChanged(self, value):
