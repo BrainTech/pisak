@@ -448,7 +448,7 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
         self.input_handler_token = self.signal_source.connect(
-            signal, lambda *args: handler(self, *args))
+            signal, lambda *args: Clutter.threads_add_idle(100, handler, self, *args))
         self.killed = False
         if self.scanning_hilite:
             self.enable_scan_hilite()
