@@ -97,6 +97,10 @@ sudo apt-get install -y libtool automake autoconf libxext-dev libxtst-dev libgtk
 make
 sudo make install
 
+### prawidła pisak-switch
+cd /etc/udev/rules.d
+sudo sh -c 'echo "SUBSYSTEM==\"usb\", ATTR{idVendor}==\"16c0\", ATTR{idProduct}==\"05dc\", GROUP=\"plugdev\", MODE=\"0660\"" > /etc/udev/rules.d/99-pisak.rules'
+
 ### skrypty rozruchowe
 cd 
 (echo "#!/bin/sh";   
