@@ -477,6 +477,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         if len(text) > 0:
             operation = Text.Deletion(0, self.get_text())
             self._add_operation(operation)
+        self.clutter_text.emit('cursor-changed')
 
     def get_endmost_string(self):
         """
