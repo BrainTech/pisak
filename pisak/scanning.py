@@ -447,8 +447,16 @@ class Group(Clutter.Actor, properties.PropertyAdapter,
 
         signal, handler, self.signal_source = \
             pisak.app.window.input_group.get_scanning_desc(self)
-        self.input_handler_token = self.signal_source.connect(
-            signal, lambda *args: Clutter.threads_add_idle(100, handler, self, *args))
+
+        # different registation type needed for pisak-switch to work
+        input_source = pisak.config.get("input")
+        if input_source != "pisak-switch":
+            self.input_handler_token = self.signal_source.connect(
+                signal, lambda *args: handler(self, *args)) 
+        else:
+            self.input_handler_token = self.signal_source.connect(
+                signal, lambda *args: Clutter.threads_add_idle(100, handler, self, *args))
+
         self.killed = False
         if self.scanning_hilite:
             self.enable_scan_hilite()
