@@ -32,6 +32,10 @@ You'll need libusb library (http://www.libusb.org/). If you don't have it, type:
 
     $sudo apt-get install libusb-dev
 
+Micronucleus requires avr-gcc and avr-libc in order to be compiled::
+
+    $sudo apt-get install avr-libc gcc-avr
+
 Next, go to the /micronucleus/commandline and install micronucleus::
 
     $make

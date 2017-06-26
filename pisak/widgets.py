@@ -2338,8 +2338,8 @@ class BackgroundPattern(layout.Bin):
         :param h: height of canvas in pixels
         """
         self.set_content_repeat(Clutter.ContentRepeat.BOTH)
-        self.set_content_scaling_filters(Clutter.ScalingFilter.TRILINEAR,
-                                         Clutter.ScalingFilter.TRILINEAR)
+        self.set_content_scaling_filters(Clutter.ScalingFilter.LINEAR,
+                                         Clutter.ScalingFilter.LINEAR)
         context.set_source_rgba(*utils.convert_color(
             self.get_background_color()))
         context.paint()
