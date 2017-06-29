@@ -326,7 +326,7 @@ class Playlist(Mx.ScrollView, properties.PropertyAdapter,
         self.playback.play()
 
     def move_focus(self, previous=None, direction=None,
-                   and_play=False):
+                   and_play=True):
         """
         Move focus to the current item and play it if ordered so.
 
