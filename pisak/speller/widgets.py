@@ -289,14 +289,13 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         self.connect("notify::mapped", self._init_setup)
         self._set_text_params()
         self.add_actor(self.box)
+        self.clutter_text.connect("cursor-changed",
+                                  self._scroll_to_view)
 
     def _init_setup(self, *args):
         self.parent = self.get_parent()
-        
         if isinstance(self.parent, CursorGroup):
             self.parent.connect("cursor-moved", self._check_to_resize)
-            self.clutter_text.connect("cursor-changed",
-                                      self._scroll_to_view)
         self._check_to_resize()
 
     def _fix_scroll(self, *args):
@@ -332,7 +331,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         pango_layout = self.clutter_text.get_layout()
         pango_lines = pango_layout.get_lines()
         lines_quantity = len(pango_lines)
-        if self._lines_quantity != lines_quantity:
+        if self._lines_quantity != lines_quantity or self._lines_quantity == 1:
             self._lines_quantity = lines_quantity
             self.text.set_height((self._lines_quantity+2)*cursor_size)
             #add 2 lines so that the text is not written at the lowest line
@@ -478,6 +477,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         if len(text) > 0:
             operation = Text.Deletion(0, self.get_text())
             self._add_operation(operation)
+        self.clutter_text.emit('cursor-changed')
 
     def get_endmost_string(self):
         """
