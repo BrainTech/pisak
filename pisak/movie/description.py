@@ -41,6 +41,7 @@ def prepare_player_view(app, window, script, data):
     movie_path = movie.path
     playback = script.get_object("playback")
     playback.filename = movie_path
+    playback.play()
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_library", "movie/main")
 

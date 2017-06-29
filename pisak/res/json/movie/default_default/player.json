@@ -464,9 +464,9 @@
         "icon-size": 50,
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-	"toggled-icon-name": "pauza",
+	"toggled-icon-name": "play",
         "icon-size": 50,
-        "icon-name": "play",
+        "icon-name": "pauza",
         "signals": [
             {
                 "name": "clicked",
