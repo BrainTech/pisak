@@ -396,6 +396,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         """
         if len(self.history) > 0:
             self.history.pop().revert(self)
+        self.clutter_text.emit('cursor-changed')
 
     def get_cursor_position(self):
         """
@@ -459,6 +460,7 @@ class Text(Mx.ScrollView, properties.PropertyAdapter, configurator.Configurable,
         text = self.get_text()[pos]
         operation = Text.Deletion(pos, text)
         self._add_operation(operation)
+        self.clutter_text.emit('cursor-changed')
 
     def delete_text(self, start_pos, end_pos):
         """
