@@ -456,9 +456,9 @@
         "ratio-margin-top": 0.070588235,
         "ratio_spacing": 0.0168,
         "children": [
-                        "pager_button_5", "pager_button_6",
-                        "pager_button_4", "pager_button_7", "pager_button_3",
-                        "pager_button_2", "pager_button_1"
+                        "pager_button_5",
+                        "pager_button_7", "pager_button_3", "pager_button_2",
+                        "pager_button_1", "pager_button_4"
                     ]
     },
     {
