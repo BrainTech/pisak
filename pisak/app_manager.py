@@ -136,7 +136,7 @@ class AppManager(Clutter.Actor,
         for app, values in self.apps.items():
             if app in available and available.as_bool(app) and app != 'main_panel':
                 desc = {
-                    "exec_path": self._get_exec_path(values["module"])
+                    "exec_path": AppManager._get_exec_path(values["module"])
                         if values['module'] else None,
                     "icon_size": values["icon_size"],
                     "icon_name": values["icon_name"],
@@ -167,16 +167,25 @@ class AppManager(Clutter.Actor,
 
         :param app_exec: name of an app.
         """
+        self.current_app = None
         if app_exec is None:
             pisak.app.main_quit()
         else:
+            app_name = app_exec.replace('pisak-', '')
             if self.current_app is None:
-                self.minimize_panel()
-                worker = threading.Thread(
-                    target=self._do_run_app,
-                    args=(app_exec, ),
-                    daemon=True
-                )
+                if AppManager._is_external(app_exec):
+                    worker = threading.Thread(
+                        target=self._do_run_app_ext,
+                        args=(app_name, ),
+                        daemon=True
+                    )
+                else:
+                    self.minimize_panel()
+                    worker = threading.Thread(
+                        target=self._do_run_app,
+                        args=(app_exec, ),
+                        daemon=True
+                    )
                 worker.start()
 
     def _do_run_app(self, app_exec):
@@ -186,5 +195,23 @@ class AppManager(Clutter.Actor,
         Clutter.threads_add_idle(0, self.maximize_panel, None)
         self.current_app = None
 
-    def _get_exec_path(self, module_name):
+    def _do_run_app_ext(self, app_name):
+        app_path = '~/pisak/pisak/res/external/' + app_name + '/' + app_name + '.py'
+        subprocess.Popen(["python2 " + app_path], shell=True)
+        self.maximize_panel(None)
+        self.current_app = None
+
+    @staticmethod
+    def _get_exec_path(module_name):
         return 'pisak-' + str(module_name)
+
+    @staticmethod
+    def _is_external(app_exec):
+        import os
+        path = os.environ['HOME'] + '/pisak/bin'
+        directory = os.fsencode(path)
+        for file in os.listdir(path):
+            filename = os.fsdecode(file)
+            if app_exec == filename:
+                return False
+        return True
