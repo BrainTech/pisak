@@ -1,0 +1,281 @@
+<?xml version="1.0" ?>
+<PsychoPy2experiment encoding="utf-8" version="1.84.2+brain4">
+  <Settings>
+    <Param name="Monitor" updates="None" val="testMonitor" valType="str"/>
+    <Param name="color" updates="None" val="$[0,0,0]" valType="str"/>
+    <Param name="colorSpace" updates="None" val="rgb" valType="str"/>
+    <Param name="Experiment info" updates="None" val="{'participant':'', 'session':'001'}" valType="code"/>
+    <Param name="Save tag file" updates="None" val="True" valType="bool"/>
+    <Param name="JS libs" updates="None" val="packaged" valType="str"/>
+    <Param name="Units" updates="None" val="use prefs" valType="str"/>
+    <Param name="Save excel file" updates="None" val="False" valType="bool"/>
+    <Param name="Enable Escape" updates="None" val="True" valType="bool"/>
+    <Param name="Save psydat file" updates="None" val="True" valType="bool"/>
+    <Param name="Window size (pixels)" updates="None" val="(1024, 768)" valType="code"/>
+    <Param name="Full-screen window" updates="None" val="True" valType="bool"/>
+    <Param name="blendMode" updates="None" val="avg" valType="str"/>
+    <Param name="Use version" updates="None" val="" valType="str"/>
+    <Param name="HTML path" updates="None" val="html" valType="str"/>
+    <Param name="Save csv file" updates="None" val="False" valType="bool"/>
+    <Param name="OSF Project ID" updates="None" val="" valType="str"/>
+    <Param name="Save log file" updates="None" val="True" valType="bool"/>
+    <Param name="Save wide csv file" updates="None" val="True" valType="bool"/>
+    <Param name="Show mouse" updates="None" val="False" valType="bool"/>
+    <Param name="Data filename" updates="None" val="u'data/%s_%s_%s' % (expInfo['participant'], expName, expInfo['date'])" valType="code"/>
+    <Param name="Show info dlg" updates="None" val="True" valType="bool"/>
+    <Param name="expName" updates="None" val="budzikp" valType="str"/>
+    <Param name="logging level" updates="None" val="exp" valType="code"/>
+    <Param name="Screen" updates="None" val="1" valType="num"/>
+  </Settings>
+  <Routines>
+    <Routine name="select">
+      <ImageComponent name="image">
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$object1 + &quot;.png&quot;" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="pos" updates="constant" val="(-0.5, 0)" valType="code"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="size" updates="constant" val="(0.5, 0.8)" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="name" updates="None" val="image" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+      </ImageComponent>
+      <ImageComponent name="image_2">
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$object2 + &quot;.png&quot;" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="pos" updates="constant" val="(0.5, 0)" valType="code"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="size" updates="constant" val="(0.5, 0.8)" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="name" updates="None" val="image_2" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+      </ImageComponent>
+      <MouseComponent name="mouse">
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="name" updates="None" val="mouse" valType="code"/>
+        <Param name="timeRelativeTo" updates="constant" val="routine" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutineOnPress" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="saveMouseState" updates="None" val="on click" valType="str"/>
+      </MouseComponent>
+      <PolygonComponent name="polygon">
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="size" updates="constant" val="(2, 0.5)" valType="code"/>
+        <Param name="fillColor" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="nVertices" updates="constant" val="2" valType="int"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="90" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="name" updates="None" val="polygon" valType="code"/>
+        <Param name="lineColor" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="1" valType="code"/>
+      </PolygonComponent>
+    </Routine>
+    <Routine name="eval">
+      <CodeComponent name="evaluateAnswer">
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="name" updates="None" val="evaluateAnswer" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="from enum import Enum&amp;#10;&amp;#10;class Side(Enum):&amp;#10;    LEFT = 0&amp;#10;    RIGHT = 1&amp;#10;&amp;#10;class Answer:&amp;#10;    def __init__(self):&amp;#10;        self.side = None&amp;#10;        self.isCorrect = False&amp;#10;&amp;#10;ans = Answer()&amp;#10;if (mouse.x[-1] &lt;= 0):&amp;#10;    ans.side = Side.LEFT&amp;#10;else:&amp;#10;    ans.side = Side.RIGHT&amp;#10;&amp;#10;if (str(correct) == str(object1)):&amp;#10;    corrSide = Side.LEFT&amp;#10;else:&amp;#10;    corrSide = Side.RIGHT&amp;#10;&amp;#10;ans.isCorrect = ans.side == corrSide&amp;#10;print(ans.isCorrect)" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+      </CodeComponent>
+      <CodeComponent name="highlightSelection">
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="name" updates="None" val="highlightSelection" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="if (ans.side == Side.LEFT):&amp;#10;    highlight_pos = (-1, 0)&amp;#10;else:&amp;#10;    highlight_pos = (1, 0)" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+      </CodeComponent>
+      <PolygonComponent name="polygon_2">
+        <Param name="lineColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="pos" updates="set every repeat" val="$highlight_pos" valType="code"/>
+        <Param name="fillColorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="size" updates="constant" val="(2, 2)" valType="code"/>
+        <Param name="fillColor" updates="constant" val="$[0.6,0.6,1]" valType="str"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="nVertices" updates="constant" val="4" valType="int"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="stopVal" updates="constant" val="2" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="name" updates="None" val="polygon_2" valType="code"/>
+        <Param name="lineColor" updates="constant" val="$[0.6,0.6,1]" valType="str"/>
+        <Param name="lineWidth" updates="constant" val="1" valType="code"/>
+      </PolygonComponent>
+      <ImageComponent name="image_3">
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$object1 + &quot;.png&quot;" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="pos" updates="constant" val="(-0.5, 0)" valType="code"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="size" updates="constant" val="(0.5, 0.8)" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="stopVal" updates="constant" val="2" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="name" updates="None" val="image_3" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+      </ImageComponent>
+      <ImageComponent name="image_4">
+        <Param name="flipVert" updates="constant" val="False" valType="bool"/>
+        <Param name="color" updates="constant" val="$[1,1,1]" valType="str"/>
+        <Param name="image" updates="set every repeat" val="$object2 + &quot;.png&quot;" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="pos" updates="constant" val="(0.5, 0)" valType="code"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="size" updates="constant" val="(0.5, 0.8)" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="stopVal" updates="constant" val="2" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="interpolate" updates="constant" val="linear" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="texture resolution" updates="constant" val="128" valType="code"/>
+        <Param name="name" updates="None" val="image_4" valType="code"/>
+        <Param name="mask" updates="constant" val="None" valType="str"/>
+        <Param name="flipHoriz" updates="constant" val="False" valType="bool"/>
+      </ImageComponent>
+      <CodeComponent name="logAnswer">
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="Begin Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="name" updates="None" val="logAnswer" valType="code"/>
+        <Param name="Begin Routine" updates="constant" val="" valType="extendedCode"/>
+        <Param name="End Routine" updates="constant" val="trials.addData('ans.isCorrect', ans.isCorrect)" valType="extendedCode"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="End Experiment" updates="constant" val="" valType="extendedCode"/>
+        <Param name="Each Frame" updates="constant" val="" valType="extendedCode"/>
+      </CodeComponent>
+    </Routine>
+    <Routine name="instr">
+      <TextComponent name="text">
+        <Param name="opacity" updates="constant" val="1" valType="code"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="colorSpace" updates="constant" val="rgb" valType="str"/>
+        <Param name="name" updates="None" val="text" valType="code"/>
+        <Param name="wrapWidth" updates="constant" val="" valType="code"/>
+        <Param name="color" updates="constant" val="white" valType="str"/>
+        <Param name="text" updates="set every repeat" val="&quot;Wybierz obiekt:\n&quot; + $correct" valType="str"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="pos" updates="constant" val="(0, 0)" valType="code"/>
+        <Param name="flip" updates="constant" val="" valType="str"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="units" updates="None" val="from exp settings" valType="str"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="ori" updates="constant" val="0" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="font" updates="constant" val="Arial" valType="str"/>
+        <Param name="letterHeight" updates="constant" val="0.1" valType="code"/>
+      </TextComponent>
+      <KeyboardComponent name="key_resp_2">
+        <Param name="correctAns" updates="constant" val="" valType="str"/>
+        <Param name="tagParams" updates="set every repeat" val="{}" valType="code"/>
+        <Param name="name" updates="None" val="key_resp_2" valType="code"/>
+        <Param name="stopVal" updates="constant" val="" valType="code"/>
+        <Param name="durationEstim" updates="None" val="" valType="code"/>
+        <Param name="forceEndRoutine" updates="constant" val="True" valType="bool"/>
+        <Param name="startEstim" updates="None" val="" valType="code"/>
+        <Param name="discard previous" updates="constant" val="True" valType="bool"/>
+        <Param name="storeCorrect" updates="constant" val="False" valType="bool"/>
+        <Param name="startType" updates="None" val="time (s)" valType="str"/>
+        <Param name="tagName" updates="set every repeat" val="" valType="str"/>
+        <Param name="allowedKeys" updates="constant" val="'space'" valType="code"/>
+        <Param name="stopType" updates="None" val="duration (s)" valType="str"/>
+        <Param name="startVal" updates="None" val="0.0" valType="code"/>
+        <Param name="store" updates="constant" val="last key" valType="str"/>
+        <Param name="syncScreenRefresh" updates="constant" val="True" valType="bool"/>
+      </KeyboardComponent>
+    </Routine>
+  </Routines>
+  <Flow>
+    <LoopInitiator loopType="TrialHandler" name="trials">
+      <Param name="conditionsFile" updates="None" val="conditions.xlsx" valType="str"/>
+      <Param name="name" updates="None" val="trials" valType="code"/>
+      <Param name="isTrials" updates="None" val="True" valType="bool"/>
+      <Param name="random seed" updates="None" val="" valType="code"/>
+      <Param name="loopType" updates="None" val="sequential" valType="str"/>
+      <Param name="nReps" updates="None" val="1" valType="code"/>
+      <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
+      <Param name="conditions" updates="None" val="[{'object1': u'circle', 'object2': u'square', 'correct': u'square'}, {'object1': u'square', 'object2': u'triangle', 'correct': u'triangle'}]" valType="str"/>
+      <Param name="Selected rows" updates="None" val="" valType="str"/>
+    </LoopInitiator>
+    <Routine name="instr"/>
+    <Routine name="select"/>
+    <Routine name="eval"/>
+    <LoopTerminator name="trials"/>
+  </Flow>
+</PsychoPy2experiment>
