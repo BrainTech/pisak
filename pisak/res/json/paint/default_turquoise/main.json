@@ -73,7 +73,7 @@
 	    "text": "5",
         "sound": "linia 5 punktów",
         "label": " ",
-	    "icon-size": "50",
+	    "icon-size": 0"50",
 	    "icon-name": "line_0",
         "signals": [
                 {
@@ -97,7 +97,7 @@
 	    "text": "10",
         "sound": "linia 10 punktów",
         "label": " ",
-	    "icon-size": "50",
+	    "icon-size": 0"50",
 	    "icon-name": "line_1",
         "signals": [
                 {
@@ -121,7 +121,7 @@
 	    "text": "20",
         "sound": "linia 20 punktów",
         "label": " ",
-	    "icon-size": "50",
+	    "icon-size": 0"50",
 	    "icon-name": "line_2",
         "signals": [
                 {
@@ -145,7 +145,7 @@
 	    "text": "25",
         "sound": "linia 25 punktów",
         "label": " ",
-	    "icon-size": "50",
+	    "icon-size": 0"50",
 	    "icon-name": "line_3",
         "signals": [
                 {
@@ -169,7 +169,7 @@
 	    "text": "35",
         "sound": "linia 35 punktów",
         "label": " ",
-	    "icon-size": "50",
+	    "icon-size": 0"50",
 	    "icon-name": "line_4",
         "signals": [
                 {
@@ -270,7 +270,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"label": " ", 
-	"icon-size": 50,
+	"icon-size": 0,
 	"icon-name": "localize",
         "signals": [
                 {
@@ -296,7 +296,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
 	"icon-name": "backspace2",
         "signals": [
                 {
@@ -313,7 +313,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	    "label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "palette",
         "disabled_when": "scanning_off",
         "signals": [
@@ -331,7 +331,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	    "label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
 	    "icon-name": "thickness",
         "disabled_when": "scanning_off",
         "signals": [
@@ -349,7 +349,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
 	"icon-name": "zapisz",
         "signals": [
                 {
@@ -366,7 +366,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
 	"icon-name": "angle",
         "signals": [
                 {
@@ -392,7 +392,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
 	"icon-name": "bin",
         "signals": [
                 {
@@ -409,7 +409,7 @@
         "ratio-width": 0.075,
         "ratio-height": 0.12,
 	"label": " ",
-        "icon-size": 50,
+        "icon-size": 0,
 	"icon-name": "exit"
     },
     {

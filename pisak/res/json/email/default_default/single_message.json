@@ -192,7 +192,7 @@
         "text": "NASTĘPNA WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "next"
     },
     {
@@ -202,7 +202,7 @@
         "text": "POPRZEDNIA WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "previous"
     },
     {
@@ -212,7 +212,7 @@
         "text": "ZAPISZ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "zapisz"
     },
     {
@@ -222,7 +222,7 @@
         "text": "NOWA WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "edytuj_opis"
     },
     {
@@ -232,7 +232,7 @@
         "text": "LISTA WIADOMOŚCI",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "back"
     },
     {
@@ -242,7 +242,7 @@
         "text": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
@@ -270,7 +270,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "reply"
     },
     {
@@ -280,7 +280,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "reply_all"
     },
     {
@@ -290,7 +290,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "nav_up",
         "signals": [
             {
@@ -307,7 +307,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "nav_down",
         "signals": [
             {
@@ -324,7 +324,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "forward"
     },
     {
@@ -334,7 +334,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "bin2"
     },
     {

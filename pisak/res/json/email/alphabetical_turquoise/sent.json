@@ -105,7 +105,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "edytuj_opis"
     },
     {
@@ -115,7 +115,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "back"
     },
     {
@@ -125,7 +125,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
@@ -133,10 +133,10 @@
         "label": "WYBIERZ WIADOMOŚĆ",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "icon-size": 50,
+        "icon-size": 0,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "movie_folder",
         "disabled_when": "scanning_off",
         "signals": [
@@ -152,10 +152,10 @@
         "label": "POPRZEDNIA STRONA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "icon-size": 50,
+        "icon-size": 0,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "previous",
         "signals": [
                        {
@@ -170,10 +170,10 @@
         "label": "NASTĘPNA STRONA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "icon-size": 50,
+        "icon-size": 0,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "next",
         "signals": [
                        {
@@ -189,10 +189,10 @@
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
 	"scanning-pauser": true,
-        "icon-size": 50,
+        "icon-size": 0,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "auto",
         "signals": [
                        {

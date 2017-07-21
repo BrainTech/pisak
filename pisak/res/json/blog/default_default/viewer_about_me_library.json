@@ -82,20 +82,20 @@
         "text": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
         "id": "button_automatic",
         "type": "PisakButton",
         "style-class": "PisakBlogViewerAboutMeButton",
-        "icon-size": 50,
+        "icon-size": 0,
 	"scanning-pauser": true,
         "text": "AUTOMAT",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
         "icon-name": "auto",
-        "icon-size": 50,
+        "icon-size": 0,
         "signals": [
                        {
                            "name": "clicked",
@@ -111,7 +111,7 @@
         "text": "WYBIERZ ALBUM",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "album",
         "disabled_when": "scanning_off",
         "signals": [
@@ -129,7 +129,7 @@
         "text": "NASTĘPNA STRONA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "next",
         "signals": [
                        {

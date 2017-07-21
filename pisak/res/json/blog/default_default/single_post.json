@@ -78,7 +78,7 @@
         "text": "O MNIE",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "o_mnie"
     },
     {
@@ -88,7 +88,7 @@
         "text": "LISTA POSTÓW",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "back"
     },
     {
@@ -98,7 +98,7 @@
         "text": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
@@ -139,7 +139,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "komentuj_post"
     },
     {
@@ -149,7 +149,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "usun",
 	    "signals": [
                        {
@@ -165,7 +165,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "edit_blog"
     },
     {
@@ -175,7 +175,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "nav_up",
 	    "signals": [
                        {
@@ -192,7 +192,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "nav_down",
         "signals": [
                        {
@@ -209,7 +209,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "nav_left3"
     },
     {
@@ -219,7 +219,7 @@
         "label": " ",
         "ratio-width": 0.07,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "nav_right3"
     },
     {

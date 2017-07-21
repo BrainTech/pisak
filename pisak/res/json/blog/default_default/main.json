@@ -76,7 +76,7 @@
         "ratio-width": 0.5,
         "ratio-height": 0.10,
 	"custom-padding": "left",
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
@@ -86,7 +86,7 @@
         "text": "INNE",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
 	    "custom-padding": "left",
         "icon-name": "zmeczone_oko"
     },
@@ -97,7 +97,7 @@
         "text": "ULUBIONE",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
 	"custom-padding": "left",
         "icon-name": "ulubione"
     },
@@ -108,7 +108,7 @@
         "text": "MÓJ BLOG",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
 	"custom-padding": "left",
         "icon-name": "blog"
     },

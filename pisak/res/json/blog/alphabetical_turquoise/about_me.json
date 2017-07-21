@@ -67,7 +67,7 @@
         "label": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
@@ -77,7 +77,7 @@
         "label": "STRONA TYTUŁOWA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "back"
     },
     {
@@ -98,7 +98,7 @@
         "label": "EDYTUJ OPIS",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "edytuj_opis"
     },
     {
@@ -108,7 +108,7 @@
         "label": "EDYTUJ ZDJĘCIE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "edytuj_zdjecie"
     }
 ]

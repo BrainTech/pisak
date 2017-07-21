@@ -67,7 +67,7 @@
         "label": "O MNIE",
         "ratio-width": 0.24,
         "ratio-height": 0.08,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "o_mnie"
     },
     {
@@ -82,7 +82,7 @@
         "label": "STRONA TYTUŁOWA",
         "ratio-width": 0.24,
         "ratio-height": 0.08,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "back"
     },
     {
@@ -92,14 +92,14 @@
         "label": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.08,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "exit"
     },
     {
         "id": "button_automatic",
         "type": "PisakButton",
         "style-class": "PisakBlogButton",
-        "icon-size": 50,
+        "icon-size": 0,
 	"scanning-pauser": true,
         "label": "AUTOMAT",
         "ratio-width": 0.24,
@@ -120,7 +120,7 @@
         "label": "WYBIERZ BLOG",
         "ratio-width": 0.24,
         "ratio-height": 0.08,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "oryginal",
         "disabled_when": "scanning_off",
         "signals": [
@@ -138,7 +138,7 @@
         "label": "NASTĘPNA STRONA",
         "ratio-width": 0.24,
         "ratio-height": 0.08,
-        "icon-size": 50,
+        "icon-size": 0,
         "icon-name": "next",
         "signals": [
                        {
