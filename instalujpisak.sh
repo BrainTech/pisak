@@ -144,6 +144,10 @@ chmod +x PISAK.desktop
   echo "Icon=") > KonfiguracjaPISAKa.desktop 
 chmod +x KonfiguracjaPISAKa.desktop
 
+### kompatybilność z launcherem unity
+cp PISAK.desktop /home/$(whoami)/.local/share/applications/
+cp KonfiguracjaPISAKa.desktop /home/$(whoami)/.local/share/applications/
+
 ### komunikaty końcowe
 if type ~/pisak/bin/pisak &> /dev/null ; then
   if type milena_say &> /dev/null ; then
