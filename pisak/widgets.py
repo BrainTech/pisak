@@ -1951,9 +1951,6 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @icon_size.setter
     def icon_size(self, value):
         self._icon_size = int(value)
-        print("SIZE SETTER:")
-        print(value)
-        print(self._icon_size)
 
     @property
     def spacing(self):
