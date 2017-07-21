@@ -1951,6 +1951,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
     @icon_size.setter
     def icon_size(self, value):
         self._icon_size = int(value)
+        print("SIZE SETTER:")
+        print(value)
+        print(self._icon_size)
 
     @property
     def spacing(self):
@@ -2046,10 +2049,11 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         icon_width_ratio = 0.8
         icon_size_ratio = 0.7
         icon_preffered_height = int(min(self.get_size()) * icon_size_ratio)
-        if icon_preffered_height > 1:
-            self.icon_size = icon_preffered_height
         if self.svg:
             if self.icon_size:
+                self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
+            elif icon_preffered_height > 1:
+                self.icon_size = icon_preffered_height
                 self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
             self._set_icon()
 
