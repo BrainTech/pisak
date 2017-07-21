@@ -1744,6 +1744,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         self.space = None
         self._padding = None
         self.custom_padding = None
+        self._icon_size = None
         self.svg = None
         self.icon_name = None
         self.disabled = False
