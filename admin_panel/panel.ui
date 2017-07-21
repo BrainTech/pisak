@@ -179,6 +179,11 @@
               <string>rozmowa</string>
              </property>
             </widget>
+            <widget class="QCheckBox" name="checkBox_budzikp">
+             <property name="text">
+              <string>budzikp</string>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QCheckBox" name="checkBox_exitButton">
