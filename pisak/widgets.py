@@ -2050,11 +2050,9 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         icon_size_ratio = 0.7
         icon_preffered_height = int(min(self.get_size()) * icon_size_ratio)
         if self.svg:
-            if self.icon_size:
-                self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
-            elif icon_preffered_height > 1:
+            if (not self.icon_size or self.icon_size == 0) and icon_preffered_height > 1:
                 self.icon_size = icon_preffered_height
-                self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
+            self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
             self._set_icon()
 
     def _load_icon(self):
