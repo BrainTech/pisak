@@ -86,6 +86,7 @@ class Panel(Ui_MainWindow):
         self.checkBox_blog.setChecked(available_apps.as_bool('blog'))
         self.checkBox_email.setChecked(available_apps.as_bool('email'))
         self.checkBox_budzik.setChecked(available_apps.as_bool('budzik'))
+        self.checkBox_budzikp.setChecked(available_apps.as_bool('budzikp'))
         self.checkBox_exitButton.setChecked(available_apps.as_bool('exit_button'))
 
         scanning = config['PisakRowStrategy']
@@ -145,6 +146,7 @@ class Panel(Ui_MainWindow):
         self.checkBox_audio.toggled.connect(self.onCheckBox_audioToggled)
         self.checkBox_email.toggled.connect(self.onCheckBox_emailToggled)
         self.checkBox_budzik.toggled.connect(self.onCheckBox_budzikToggled)
+        self.checkBox_budzikp.toggled.connect(self.onCheckBox_budzikpToggled)
         self.checkBox_exitButton.toggled.connect(self.onCheckBox_exitButtonToggled)
         self.comboBox_input.currentIndexChanged[str].connect(self.onComboBox_inputCurrentIndexChanged)
         self.comboBox_skin.currentIndexChanged[str].connect(self.onComboBox_skinCurrentIndexChanged)
@@ -203,6 +205,9 @@ class Panel(Ui_MainWindow):
 
     def onCheckBox_budzikToggled(self, checked):
         self._cache['available_apps']['budzik'] = checked
+
+    def onCheckBox_budzikpToggled(self, checked):
+        self._cache['available_apps']['budzikp'] = checked
 
     def onCheckBox_exitButtonToggled(self, checked):
         self._cache['available_apps']['exit_button'] = checked
