@@ -70,7 +70,7 @@
 	    "scanning-pauser": true,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "auto",
         "signals": [
             {
@@ -87,7 +87,7 @@
         "label": "POPRZEDNIE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "previous",
         "signals": [
             {
@@ -104,7 +104,7 @@
         "label": "NASTĘPNE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "next",
         "signals": [
             {
@@ -121,7 +121,7 @@
         "label": "EDYCJA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "edycja"
     },
     {
@@ -131,7 +131,7 @@
         "label": "ULUBIONE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "ulubione",
         "signals": [
             {
@@ -148,7 +148,7 @@
         "label": "ALBUM",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "album"
     },
     {
@@ -158,7 +158,7 @@
         "label": "BIBLIOTEKA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "bib"
     },
     {

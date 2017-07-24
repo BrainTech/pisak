@@ -119,7 +119,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "ZAPISZ",
         "icon-name": "zapisz",
         "signals": [
@@ -138,7 +138,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "LITERY",
         "icon-name": "klawiatura",
         "disabled_when": "scanning_off",
@@ -158,7 +158,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "PREDYKCJA",
         "icon-name": "predykcja",
         "disabled_when": "scanning_off",
@@ -179,7 +179,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "AKCEPTUJ",
         "icon-name": "ocena"
     },
@@ -191,7 +191,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WCZYTAJ",
         "icon-name": "wczytaj",
         "signals": [
@@ -210,7 +210,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "CZYTAJ",
         "icon-name": "przeczytaj",
         "signals": [
@@ -230,7 +230,7 @@
         "disabled": true,
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WYŚLIJ",
         "icon-name": "wyslij",
         "signals": [
@@ -250,7 +250,7 @@
         "disabled": true,
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "DRUKUJ",
         "icon-name": "drukuj",
         "signals": [
@@ -269,7 +269,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "NOWY",
         "icon-name": "nowy_dokument",
         "signals": [
@@ -288,7 +288,7 @@
         "x-align": "start",
         "ratio-width": 0.18312,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WYJŚCIE",
         "icon-name": "wyjdz"
     },
@@ -499,7 +499,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "predykcja",
         "disabled_when": "scanning_off",
         "spacing": 0,
@@ -518,7 +518,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "spacja",
         "spacing": 0,
         "signals": [
@@ -536,7 +536,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "backspace",
         "spacing": 0,
         "signals": [
@@ -554,7 +554,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "cofnij",
         "signals": [
                        {
@@ -572,7 +572,7 @@
         "alternative-text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "specjalne",
         "related-object": "keyboard_panel",
         "signals": [
@@ -590,7 +590,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "wielkie_litery",
         "spacing": 0,
         "signals": [
@@ -608,7 +608,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "polskie",
         "related-object": "keyboard_panel",
         "signals": [
@@ -626,7 +626,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "enter",
         "spacing": 0,
         "signals": [
@@ -654,7 +654,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "funkcje",
         "disabled_when": "scanning_off",
         "signals": [
@@ -934,7 +934,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_up",
         "signals": [
                        {
@@ -1049,7 +1049,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_left",
         "signals": [
                        {
@@ -1066,7 +1066,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_right",
         "signals": [
                        {
@@ -1083,7 +1083,7 @@
         "text": " ",
         "ratio-width": 0.048,
         "ratio-height": 0.085,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_down",
         "signals": [
                        {

@@ -106,7 +106,7 @@
         "label": "WYŚLIJ WIADOMOŚĆ",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "wyslij"
     },
     {
@@ -116,7 +116,7 @@
         "label": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.09,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
@@ -126,7 +126,7 @@
         "label": "EKRAN GŁÓWNY",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "back"
     },
     {
@@ -147,7 +147,7 @@
         "label": "EDYTUJ ADRES",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "house"
     },
     {
@@ -157,7 +157,7 @@
         "label": "EDYTUJ IMIĘ",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "edytuj_opis"
     },
     {
@@ -167,7 +167,7 @@
         "label": "EDYTUJ ZDJĘCIE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "edytuj_zdjecie"
     }
 ]

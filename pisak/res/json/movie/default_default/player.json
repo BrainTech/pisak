@@ -81,7 +81,7 @@
         "style-class": "PisakMovieButton",
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
@@ -91,7 +91,7 @@
         "style-class": "PisakMovieButton",
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "bib"
     },
     {
@@ -99,10 +99,10 @@
         "text": "POWRÓT",
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
-        "icon-size": 0,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "back",
         "signals": [
             {
@@ -118,10 +118,10 @@
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
         "disabled": true,
-        "icon-size": 0,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "ulubione",
         "signals": [
             {
@@ -136,10 +136,10 @@
         "text": "GłOŚNIEJ",
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
-        "icon-size": 0,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "louder",
         "signals": [
             {
@@ -154,10 +154,10 @@
         "text": "CISZEJ",
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
-        "icon-size": 0,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "quieter",
         "signals": [
             {
@@ -174,7 +174,7 @@
         "text": "PEŁNY EKRAN",
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "fullscreen",
         "signals": [
             {
@@ -199,10 +199,10 @@
         "text": "ODTWARZACZ",
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
-        "icon-size": 0,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "odtwarzacz",
         "disabled_when": "scanning_off",
         "signals": [
@@ -325,7 +325,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "main",
         "disabled_when": "scanning_off",
         "signals": [
@@ -343,7 +343,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "skip_ahead",
         "signals": [
             {
@@ -360,7 +360,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "skip_behind",
         "signals": [
             {
@@ -378,7 +378,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "forth",
         "signals": [
             {
@@ -405,7 +405,7 @@
 	"scanning-pauser": true,
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "backw",
         "signals": [
             {
@@ -431,7 +431,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "stop",
         "signals": [
             {
@@ -461,11 +461,11 @@
         "type": "PisakButton",
         "style-class": "PisakMovieButton",
         "label": " ",
-        "icon-size": 0,
+        "icon-size": -1,
         "ratio-width": 0.06,
         "ratio-height": 0.095,
 	"toggled-icon-name": "play",
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "pauza",
         "signals": [
             {

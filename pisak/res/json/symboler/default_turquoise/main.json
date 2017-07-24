@@ -116,7 +116,7 @@
         "text": " ",
         "ratio-width": 0.042786885,
         "ratio-height": 0.0688235294,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_right",
         "signals": [
                         {
@@ -134,7 +134,7 @@
         "text": " ",
         "ratio-width": 0.042786885,
         "ratio-height": 0.0688235294,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_left",
         "signals": [
                         {
@@ -235,7 +235,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "TABLICA",
         "icon-name": "bliss",
         "disabled_when": "scanning_off",
@@ -255,7 +255,7 @@
         "x-align": "start",
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "ZAPISZ",
         "icon-name": "zapisz",
         "signals": [
@@ -274,7 +274,7 @@
         "x-align": "start",
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WCZYTAJ",
         "icon-name": "wczytaj",
         "signals": [
@@ -295,7 +295,7 @@
         "disabled": true,
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WYŚLIJ",
         "icon-name": "wyslij"
     },
@@ -309,7 +309,7 @@
         "disabled": true,
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "DRUKUJ",
         "icon-name": "drukuj"
     },
@@ -321,7 +321,7 @@
         "x-align": "start",
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "NOWY",
         "icon-name": "nowy_dokument",
         "signals": [
@@ -342,7 +342,7 @@
         "x-align": "start",
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WRÓĆ",
         "icon-name": "powrot"
     },
@@ -354,7 +354,7 @@
         "x-align": "start",
         "ratio-width": 0.154098360,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "label": "WYJŚCIE",
         "icon-name": "wyjdz"
     },
@@ -453,7 +453,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "auto_symboler",
         "signals": [
                        {
@@ -471,7 +471,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_right",
         "signals": [
                        {
@@ -489,7 +489,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "nav_left",
         "signals": [
                        {
@@ -507,7 +507,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "backspace",
         "signals": [
                        {
@@ -525,7 +525,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "house",
         "signals": [
                        {
@@ -543,7 +543,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "przeczytaj",
         "signals": [
                        {
@@ -561,7 +561,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "bliss",
         "disabled_when": "scanning_off",
         "signals": [
@@ -580,7 +580,7 @@
         "text": " ",
         "ratio-width": 0.05344,
         "ratio-height": 0.09505,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "funkcje",
         "signals": [
             {

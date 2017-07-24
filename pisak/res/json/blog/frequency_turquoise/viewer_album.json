@@ -91,7 +91,7 @@
         "label": "OPUBLIKUJ POST",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "blog",
 	"signals": [
                        {
@@ -107,7 +107,7 @@
         "label": "BIBLIOTEKA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "bib"
     },
     {
@@ -117,14 +117,14 @@
         "label": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
         "id": "button_automatic",
         "type": "PisakButton",
         "style-class": "PisakBlogViewerButton",
-        "icon-size": 0,
+        "icon-size": -1,
 	"scanning-pauser": true,
         "label": "AUTOMAT",
         "ratio-width": 0.24,
@@ -145,7 +145,7 @@
         "label": "WYBIERZ ZDJĘCIE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "oryginal",
         "disabled_when": "scanning_off",
         "signals": [
@@ -163,7 +163,7 @@
         "label": "NASTĘPNA STRONA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 0,
+        "icon-size": -1,
         "icon-name": "next",
         "signals": [
                        {
