@@ -132,7 +132,7 @@ fi
   echo "Exec=bash /home/$(whoami)/start_pisak.sh";   
   echo "Terminal=false";   
   echo "Type=Application";   
-  echo "Icon=") > PISAK.desktop 
+  echo "Icon=/home/$(whoami)/pisak/pisak/res/pisak_logo.png") > PISAK.desktop 
 chmod +x PISAK.desktop 
 
 (echo "[Desktop Entry]";   
@@ -141,7 +141,7 @@ chmod +x PISAK.desktop
   echo "Exec=bash /home/$(whoami)/konfiguruj_pisak.sh";   
   echo "Terminal=false";   
   echo "Type=Application";   
-  echo "Icon=") > KonfiguracjaPISAKa.desktop 
+  echo "Icon=/home/$(whoami)/pisak/pisak/res/pisak_config.png") > KonfiguracjaPISAKa.desktop 
 chmod +x KonfiguracjaPISAKa.desktop
 
 ### komunikaty końcowe
