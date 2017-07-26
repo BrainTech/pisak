@@ -174,11 +174,7 @@ class AppManager(Clutter.Actor,
             app_name = app_exec.replace('pisak-', '')
             if self.current_app is None:
                 if AppManager._is_external(app_exec):
-                    worker = threading.Thread(
-                        target=self._do_run_app_ext,
-                        args=(app_name, ),
-                        daemon=True
-                    )
+                    self._do_run_app_ext(app_name)
                 else:
                     self.minimize_panel()
                     worker = threading.Thread(
@@ -186,7 +182,7 @@ class AppManager(Clutter.Actor,
                         args=(app_exec, ),
                         daemon=True
                     )
-                worker.start()
+                    worker.start()
 
     def _do_run_app(self, app_exec):
         cmd = [app_exec] + sys.argv[1:] + ["--child"]
@@ -196,9 +192,9 @@ class AppManager(Clutter.Actor,
         self.current_app = None
 
     def _do_run_app_ext(self, app_name):
+        import os
         app_path = '~/pisak/pisak/res/external/' + app_name + '/' + app_name + '.py'
-        subprocess.Popen(["python2 " + app_path], shell=True)
-        self.maximize_panel(None)
+        os.system("python2 "+app_path)
         self.current_app = None
 
     @staticmethod
