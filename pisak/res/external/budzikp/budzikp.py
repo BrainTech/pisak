@@ -369,7 +369,6 @@ for thisTrial in trials:
         corrSide = Side.RIGHT
     
     ans.isCorrect = ans.side == corrSide
-    print(ans.isCorrect)
     if (ans.side == Side.LEFT):
         highlight_pos = (-1, 0)
     else:
