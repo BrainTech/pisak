@@ -30,7 +30,7 @@ from os.path import expanduser
 _homeDir = expanduser("~")
 
 # Store info about the experiment session
-expName = 'budzikp'  # from the Builder filename that created this script
+expName = 'zadanie'  # from the Builder filename that created this script
 expInfo = {'participant':'', 'session':'001'}
 dlg = gui.DlgFromDict(dictionary=expInfo, title=expName)
 if dlg.OK == False:
