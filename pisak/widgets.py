@@ -1693,7 +1693,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
             "name of the icon displayed on the button",
             "blank", GObject.PARAM_READWRITE),
         "icon_size": (
-            GObject.TYPE_INT64, "", "", 0, 1000, 50,
+            GObject.TYPE_INT64, "", "", -1, 1000, 50,
             GObject.PARAM_READWRITE),
         "toggled_icon_name": (
             GObject.TYPE_STRING, "toggled state icon",
@@ -2048,7 +2048,7 @@ class Button(Mx.Button, properties.PropertyAdapter, scanning.StylableScannable,
         icon_size_ratio = 0.7
         icon_preffered_height = int(min(self.get_size()) * icon_size_ratio)
         if self.svg:
-            if (not self.icon_size or self.icon_size == 0) and icon_preffered_height > 1:
+            if (not self.icon_size or self.icon_size == -1) and icon_preffered_height > 1:
                 self.icon_size = icon_preffered_height
             self.image.set_size(self.icon_size * icon_width_ratio, self.icon_size)
             self._set_icon()

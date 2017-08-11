@@ -70,7 +70,7 @@
 	    "text": "5",
         "sound": "1",
         "label": " ",
-	    "icon-size": -1"50",
+	    "icon-size": -1,
 	    "icon-name": "line_0",
         "signals": [
                 {
@@ -94,7 +94,7 @@
 	"text": "10",
         "sound": "2",
         "label": " ",
-	"icon-size": -1"50",
+	"icon-size": -1,
 	"icon-name": "line_1",
         "signals": [
                 {
@@ -118,7 +118,7 @@
 	"text": "20",
         "sound": "3",
         "label": " ",
-	"icon-size": -1"50",
+	"icon-size": -1,
 	"icon-name": "line_2",
         "signals": [
                 {
@@ -142,7 +142,7 @@
 	"text": "25",
         "sound": "4",
         "label": " ",
-	"icon-size": -1"50",
+	"icon-size": -1,
 	"icon-name": "line_3",
         "signals": [
                 {
@@ -166,7 +166,7 @@
 	"text": "35",
         "sound": "5",
         "label": " ",
-	"icon-size": -1"50",
+	"icon-size": -1,
 	"icon-name": "line_4",
         "signals": [
                 {
