@@ -179,9 +179,9 @@
               <string>rozmowa</string>
              </property>
             </widget>
-            <widget class="QCheckBox" name="checkBox_budzikp">
+            <widget class="QCheckBox" name="checkBox_zadanie">
              <property name="text">
-              <string>budzikp</string>
+              <string>zadanie</string>
              </property>
             </widget>
            </item>
