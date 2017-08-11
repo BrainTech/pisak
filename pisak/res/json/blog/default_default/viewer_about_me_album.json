@@ -89,7 +89,7 @@
         "text": "BIBLIOTEKA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "bib"
     },
     {
@@ -99,14 +99,14 @@
         "text": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
         "id": "button_automatic",
         "type": "PisakButton",
         "style-class": "PisakBlogViewerAboutMeButton",
-        "icon-size": 50,
+        "icon-size": -1,
 	"scanning-pauser": true,
         "text": "AUTOMAT",
         "ratio-width": 0.24,
@@ -127,7 +127,7 @@
         "text": "WYBIERZ ZDJĘCIE",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "oryginal",
         "disabled_when": "scanning_off",
         "signals": [
@@ -145,7 +145,7 @@
         "text": "NASTĘPNA STRONA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "next",
         "signals": [
                        {

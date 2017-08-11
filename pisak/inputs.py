@@ -358,17 +358,21 @@ class PisakSwitchListener(GObject.GObject):
         """
         usb_manufacturer = "pisak.org"
         usb_product = "pisak-switch"
-        while self.device is None:
-            for dev in usb.core.find(find_all=True, bDeviceClass=3):
-                try:
-                    if (dev.manufacturer == usb_manufacturer
-                            and dev.product == usb_product):
-                        self.device = dev
-                        _LOG.debug("Connected with pisak-switch.")
-                except usb.core.USBError:
-                    msg = "Cannot connect with pisak-switch."
-                    _LOG.error(msg, pisak.config)
-            time.sleep(1)
+
+        for dev in usb.core.find(find_all=True, bDeviceClass=3):
+            try:
+                if (dev.manufacturer == usb_manufacturer
+                        and dev.product == usb_product):
+                    self.device = dev
+                    _LOG.debug("Connected with pisak-switch.")
+            except usb.core.USBError:
+                msg = "Cannot connect with pisak-switch."
+                _LOG.error(msg, pisak.config)
+        if self.device is None:
+            msg = "pisak-switch not found. Terminating PISAK."
+            _LOG.error(msg, pisak.config)
+            raise SystemExit
+
         dev_configuration = self.device.get_active_configuration()
         dev_interface = dev_configuration[(0, 0)]
         if self.device.is_kernel_driver_active(dev_interface.bInterfaceNumber):
