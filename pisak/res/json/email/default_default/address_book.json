@@ -109,7 +109,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "wyslij",
         "signals": [
             {
@@ -125,7 +125,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "dodaj_do_playlisty"
     },
     {
@@ -135,7 +135,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "back"
     },
     {
@@ -145,7 +145,7 @@
         "style-class": "PisakEmailButton",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
@@ -153,10 +153,10 @@
         "text": "WYBIERZ ADRESATA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "movie_folder",
         "disabled_when": "scanning_off",
         "signals": [
@@ -172,10 +172,10 @@
         "text": "POPRZEDNIA STRONA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "previous",
         "signals": [
                        {
@@ -190,10 +190,10 @@
         "text": "NASTĘPNA STRONA",
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "next",
         "signals": [
                        {
@@ -209,10 +209,10 @@
         "type": "PisakButton",
         "style-class": "PisakEmailButton",
 	"scanning-pauser": true,
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "auto",
         "signals": [
                        {

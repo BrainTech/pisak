@@ -125,7 +125,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "ZAPISZ",
         "icon-name": "zapisz",
         "signals": [
@@ -144,7 +144,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "LITERY",
         "icon-name": "klawiatura",
         "disabled_when": "scanning_off",
@@ -164,7 +164,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "DOMENA",
         "icon-name": "domain2",
         "disabled_when": "scanning_off",
@@ -185,7 +185,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "AKCEPTUJ",
         "icon-name": "ocena"
     },
@@ -197,7 +197,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "WCZYTAJ",
         "icon-name": "wczytaj",
         "signals": [
@@ -216,7 +216,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "CZYTAJ",
         "icon-name": "przeczytaj",
         "signals": [
@@ -236,7 +236,7 @@
         "disabled": true,
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "WYŚLIJ",
         "icon-name": "wyslij",
         "signals": [
@@ -256,7 +256,7 @@
         "disabled": true,
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "DRUKUJ",
         "icon-name": "drukuj",
         "signals": [
@@ -275,7 +275,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "NOWY",
         "icon-name": "nowy_dokument",
         "signals": [
@@ -294,7 +294,7 @@
         "x-align": "start",
         "ratio-width": 0.15446,
         "ratio-height": 0.09505,
-        "icon-size": 50,
+        "icon-size": -1,
         "label": "WYJŚCIE",
         "icon-name": "wyjdz"
     },
@@ -490,7 +490,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "domain2",
         "disabled_when": "scanning_off",
         "spacing": 0,
@@ -509,7 +509,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "backspace",
         "spacing": 0,
         "signals": [
@@ -527,7 +527,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "cofnij",
         "spacing": 0,
         "signals": [
@@ -599,7 +599,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "funkcje",
         "disabled_when": "scanning_off",
         "signals": [
@@ -843,7 +843,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "nav_up",
         "signals": [
                        {
@@ -944,7 +944,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "nav_left",
         "signals": [
                        {
@@ -961,7 +961,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "nav_right",
         "signals": [
                        {
@@ -978,7 +978,7 @@
         "text": " ",
         "ratio-width": 0.06076,
         "ratio-height": 0.09505,
-        "icon-size": 30,
+        "icon-size": -1,
         "icon-name": "nav_down",
         "signals": [
                        {
