@@ -43,7 +43,7 @@ sudo apt-get dist-upgrade</code></pre>
 
 2. Pobieramy PISAKa w wersji budzik
     
-    <pre><code>git clone -b feature/budzik --single-branch https://git.braintech.pl/brain/pisak.git</code></pre>
+    <pre><code>git clone -b budzik --single-branch https://git.braintech.pl/brain/pisak.git</code></pre>
     
     Podając:
       * username: budzik
