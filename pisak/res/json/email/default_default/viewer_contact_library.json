@@ -82,7 +82,7 @@
         "text": "PANEL STARTOWY",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
@@ -92,20 +92,20 @@
         "text": "POWRÓT",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "back"
     },
     {
         "id": "button_automatic",
         "type": "PisakButton",
         "style-class": "PisakEmailViewerContactButton",
-        "icon-size": 50,
+        "icon-size": -1,
 	"scanning-pauser": true,
         "text": "AUTOMAT",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
         "icon-name": "auto",
-        "icon-size": 50,
+        "icon-size": -1,
         "signals": [
                        {
                            "name": "clicked",
@@ -121,7 +121,7 @@
         "text": "WYBIERZ ALBUM",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "album",
         "disabled_when": "scanning_off",
         "signals": [
@@ -139,7 +139,7 @@
         "text": "NASTĘPNA STRONA",
         "ratio-width": 0.24,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "next",
         "signals": [
                        {

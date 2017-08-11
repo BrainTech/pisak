@@ -80,7 +80,7 @@
         "label": "NOWA WIADOMOŚĆ",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
 	    "custom-padding": "left",
         "icon-name": "edytuj_opis"
 	},
@@ -91,7 +91,7 @@
         "label": "KSIĄŻKA ADRESOWA",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
 	    "custom-padding": "left",
         "icon-name": "edytuj_zdjecie"
 	},
@@ -103,7 +103,7 @@
         "ratio-width": 0.5,
         "ratio-height": 0.10,
 	    "custom-padding": "left",
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "exit"
     },
     {
@@ -113,7 +113,7 @@
         "label": "SZKICE",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
 	    "custom-padding": "left",
         "icon-name": "edytuj2"
     },
@@ -124,7 +124,7 @@
         "label": "WYSŁANE",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
 	    "custom-padding": "left",
         "icon-name": "komentuj"
     },
@@ -135,7 +135,7 @@
         "label": "ODEBRANE",
         "ratio-width": 0.5,
         "ratio-height": 0.10,
-        "icon-size": 50,
+        "icon-size": -1,
 	    "custom-padding": "left",
         "icon-name": "nawigator_ebook"
     },

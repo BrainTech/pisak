@@ -82,7 +82,7 @@
         "style-class": "PisakAudioButton",
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "exit",
         "signals": [
             {
@@ -97,10 +97,10 @@
         "text": "POWRÓT",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "back",
         "signals": [
             {
@@ -116,10 +116,10 @@
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "disabled": true,
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "ocena"
     },
     {
@@ -127,10 +127,10 @@
         "text": "ULUBIONE",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "ulubione",
         "signals": [
             {
@@ -145,10 +145,10 @@
         "text": "GłOŚNIEJ",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "louder",
         "signals": [
             {
@@ -165,7 +165,7 @@
         "style-class": "PisakAudioButton",
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "quieter",
         "signals": [
             {
@@ -180,10 +180,10 @@
         "text": "POPRZEDNIA\nPLAYLISTA",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "previous",
         "signals": [
             {
@@ -203,10 +203,10 @@
         "text": "NASTĘPNA\nPLAYLISTA",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "next",
         "signals": [
             {
@@ -227,10 +227,10 @@
         "text": "ODTWARZACZ",
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.24,
         "ratio-height": 0.090,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "odtwarzacz",
         "disabled_when": "scanning_off",
         "signals": [
@@ -340,7 +340,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "main",
         "disabled_when": "scanning_off",
         "signals": [
@@ -358,7 +358,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "random",
         "signals": [
             {
@@ -375,7 +375,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "looped",
         "signals": [
             {
@@ -392,7 +392,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "next_track",
         "signals": [
             {
@@ -409,7 +409,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "previous_track",
         "signals": [
             {
@@ -426,7 +426,7 @@
         "label": " ",
         "ratio-width": 0.06,
         "ratio-height": 0.095,
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "stop",
         "signals": [
             {
@@ -446,11 +446,11 @@
         "type": "PisakButton",
         "style-class": "PisakAudioButton",
         "label": " ",
-        "icon-size": 50,
+        "icon-size": -1,
         "ratio-width": 0.06,
         "ratio-height": 0.095,
 	    "toggled-icon-name": "pauza",
-        "icon-size": 50,
+        "icon-size": -1,
         "icon-name": "play",
         "signals": [
             {
