@@ -154,6 +154,7 @@ cd
 (echo "[Desktop]";echo "Session=gnome") > .dmrc
 cd /var/lib/AccountsService/users
 sudo sed -i -e 's/XSession=.*/XSession=gnome/g' $(whoami)
+gsettings set org.gnome.desktop.background show-desktop-icons true
 
 ### komunikaty końcowe
 if type ~/pisak/bin/pisak &> /dev/null ; then
