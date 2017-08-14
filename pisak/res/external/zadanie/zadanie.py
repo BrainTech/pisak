@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.84.2+brain4),
-    on Wed 19 Jul 2017 05:57:21 PM CEST
+    on Wed 16 Aug 2017 03:06:34 PM CEST
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, gui, visual, core, data, event, logging, sound
+from psychopy import locale_setup, gui, visual, core, data, event, logging, sound, prefs
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -20,6 +20,11 @@ from numpy import (sin, cos, tan, log, log10, pi, average,
 from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
+
+import pygame
+
+# Ensure that pygame is being used to spawn window
+prefs.general['winType'] = 'pygame'
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
@@ -160,7 +165,7 @@ for thisTrial in trials:
     continueRoutine = True
     # update component parameters for each repeat
     text.setTagParams({})
-    text.setText("Wybierz obiekt:\n" + correct)
+    text.setText("Wybierz obiekt: " + correct)
     text.setTagName('')
     key_resp_2 = event.BuilderKeyResponse()
     # keep track of which components have finished
@@ -275,6 +280,7 @@ for thisTrial in trials:
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
         
+        ev = pygame.event.poll()
         # *image_2* updates
         if t >= 0.0 and image_2.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -287,10 +293,10 @@ for thisTrial in trials:
             mouse.tStart = t
             mouse.frameNStart = frameN  # exact frame index
             mouse.status = STARTED
-            event.mouseButtons = [0, 0, 0]  # reset mouse buttons to be 'up'
+            pygame.event.clear()  # reset mouse buttons to be 'up'
         if mouse.status == STARTED:  # only update if started and not stopped!
             buttons = mouse.getPressed()
-            if sum(buttons) > 0:  # ie if any button is pressed
+            if ev.type == pygame.MOUSEBUTTONDOWN:  # ie if any button is pressed
                 x, y = mouse.getPos()
                 mouse.x.append(x)
                 mouse.y.append(y)
@@ -300,7 +306,8 @@ for thisTrial in trials:
                 mouse.time.append(selectClock.getTime())
                 # abort routine on response
                 continueRoutine = False
-        
+                ev = None
+                
         # *polygon* updates
         if t >= 0.0 and polygon.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -369,6 +376,7 @@ for thisTrial in trials:
         corrSide = Side.RIGHT
     
     ans.isCorrect = ans.side == corrSide
+    print(ans.isCorrect)
     if (ans.side == Side.LEFT):
         highlight_pos = (-1, 0)
     else:
