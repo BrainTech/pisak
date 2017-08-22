@@ -86,6 +86,8 @@ else
       rm -rf ~/.pisak/.git 
    fi
 fi
+cd
+cp pisak/pisak/res/configs/* .pisak/configs/
 
 ### instalacja Eviacama
 cd
