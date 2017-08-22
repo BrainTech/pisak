@@ -27,15 +27,6 @@ sudo apt-get dist-upgrade</code></pre>
 
     <pre><code>sudo apt-get install git</code></pre>
 
-7. W ustawieniach systemu (System Settings -> Power Management):
-     * wyłączamy gaszenie ekranu i usypianie komputera przy nieaktywności,
-     * wyłączamy gaszenie ekranu przy niskim stanie baterii i przy zamknięciu pokrywy.
-
-8. W ustawieniach systemu (System Settings -> Brightness & Lock):
-    * odznaczamy opcję *Dim screen to saver power* 
-    * ustawiamy opcję *Turn screen off when inactive for* na *Never*
-    * ustawiamy opcję *Lock* na *OFF*
-    
 ### B. Instalacja oprogramowania PISAK ###
 1. Przechodzimy do katalogu domowego
 
@@ -45,20 +36,24 @@ sudo apt-get dist-upgrade</code></pre>
     
     <pre><code>git clone -b budzik --single-branch https://git.braintech.pl/brain/pisak.git</code></pre>
     
-    Podając:
-      * username: budzik
-      * password: budzik
+    Podając swój login i hasło
     
 3. Instalujemy PISAKa:
     
     <pre><code>cd pisak
     bash instalujpisak.sh</code></pre>
 
-4. Konfigurujemy PISAKa:
+4. W ustawieniach systemu (System Settings -> Power):
+
+    * odznaczamy opcję *Dim screen when inactive* 
+    * ustawiamy opcję *Blank screen* na *Never*
+    * ustawiamy opcję *Automatic suspend* na *OFF*
+
+5. Konfigurujemy PISAKa:
 
     Stworzony na pulpicie skrót 'Konfiguracja PISAKa' umożliwia wejście w panel ustawień aplikacji
 
-5. Uruchamiamy aplikację
+6. Uruchamiamy aplikację
 
     PISAK uruchomi się po kliknięciu na skrót 'PISAK' na pulpicie, bądź poprzez wyszkukiwarkę systemową.
     Możliwe jest też uruchamianie bezpośrednio z terminala poprzez wpisanie polecenia 'pisak'
