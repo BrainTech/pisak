@@ -153,7 +153,12 @@ cp KonfiguracjaPISAKa.desktop /home/$(whoami)/.local/share/applications/
 cd
 (echo "[Desktop]";echo "Session=gnome") > .dmrc
 cd /var/lib/AccountsService/users
-sudo sed -i -e 's/XSession=.*/XSession=gnome/g' $(whoami)
+if grep -Fq "XSession" $(whoami) 
+then
+  sudo sed -i -e 's/XSession=.*/XSession=gnome/g' $(whoami)
+else
+  echo "XSession=gnome" | sudo tee --append $(whoami) > /dev/null
+fi 
 gsettings set org.gnome.desktop.background show-desktop-icons true
 
 ### komunikaty końcowe
