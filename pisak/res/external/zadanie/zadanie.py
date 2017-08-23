@@ -187,6 +187,8 @@ for thisTrial in trials:
             text.tStart = t
             text.frameNStart = frameN  # exact frame index
             text.setAutoDraw(True)
+
+        evv = pygame.event.poll()
         
         # *key_resp_2* updates
         if t >= 0.0 and key_resp_2.status == NOT_STARTED:
@@ -197,17 +199,18 @@ for thisTrial in trials:
             # keyboard checking is just starting
             win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
             event.clearEvents(eventType='keyboard')
+            pygame.event.clear()
         if key_resp_2.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
             
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
-            if len(theseKeys) > 0:  # at least one key was pressed
-                key_resp_2.keys = theseKeys[-1]  # just the last key pressed
+            if evv.type == pygame.KEYDOWN and evv.key == pygame.K_SPACE:  # at least one key was pressed
                 key_resp_2.rt = key_resp_2.clock.getTime()
                 # a response ends the routine
                 continueRoutine = False
+                evv == None
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -376,7 +379,6 @@ for thisTrial in trials:
         corrSide = Side.RIGHT
     
     ans.isCorrect = ans.side == corrSide
-    print(ans.isCorrect)
     if (ans.side == Side.LEFT):
         highlight_pos = (-1, 0)
     else:
