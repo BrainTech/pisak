@@ -121,7 +121,7 @@ HOME_SYMBOLS_SHEETS = ensure_dir(os.path.join(HOME_PISAK_DIR, "symboler_sheets")
 """
 Path to the main configuration file avalaible for the user.
 """
-HOME_MAIN_CONFIG = os.path.join(HOME_PISAK_CONFIGS, "main_config.ini")
+HOME_MAIN_CONFIG = os.path.join(HOME_PISAK_CONFIGS, "default_config.ini")
 
 """
 Path to the symbols model for "symboler" application.
