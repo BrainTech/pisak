@@ -14,6 +14,7 @@ sudo apt-get install -y gir1.2-gst-plugins-base-0.10 gir1.2-gst-plugins-base-1.0
 sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-configobj python3-sqlalchemy python3-magic python3-pip python3-bs4 python3-ws4py python3-taglib python3-requests python3-pyqt5 python3-cssutils python3-usb
 sudo apt-get install -y psychopy-brain
 sudo apt-get install -y gnome-shell
+sudo apt-get install -y v4l-utils
 
 ### MILENA ze źródeł jeśli nie udało się zpakietów
 if ! type milena_say &> /dev/null ; then
@@ -103,6 +104,12 @@ sudo apt-get install -y libtool automake autoconf libxext-dev libxtst-dev libgtk
 ./configure
 make
 sudo make install
+
+### konfiguracja Eviacama
+cd ~/.pisak
+cp configs/eviacam .
+CAM=$(v4l2-ctl --list-devices | sed -n 1p | sed 's/ [(].*$//g')
+sed -i "s/cameraName=.*/cameraName=\" (Id:0) $CAM\"/g" eviacam
 
 ### prawidła pisak-switch
 cd /etc/udev/rules.d
