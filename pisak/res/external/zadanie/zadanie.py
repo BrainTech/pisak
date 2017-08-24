@@ -373,7 +373,7 @@ for thisTrial in trials:
     else:
         ans.side = Side.RIGHT
     
-    if (str(correct) == str(object1)):
+    if correct.encode('utf-8') == object1.encode('utf-8'):
         corrSide = Side.LEFT
     else:
         corrSide = Side.RIGHT
