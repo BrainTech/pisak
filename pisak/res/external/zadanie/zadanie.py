@@ -64,7 +64,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 win = visual.Window(
     size=(1920, 1080), fullscr=True, screen=0,
     allowGUI=False, allowStencil=False,
-    monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+    monitor='testMonitor', color=[1,1,1], colorSpace='rgb',
     blendMode='avg', useFBO=True)
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
@@ -79,7 +79,7 @@ text = visual.TextStim(win=win, name='text',
     text='default text',
     font='Arial',
     pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color='black', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "select"
@@ -104,8 +104,8 @@ polygon = visual.Line(
     win=win, name='polygon',
     start=(-(2, 0.5)[0]/2.0, 0), end=(+(2, 0.5)[0]/2.0, 0),
     ori=90, pos=(0, 0),
-    lineWidth=1, lineColor=[1,1,1], lineColorSpace='rgb',
-    fillColor=[1,1,1], fillColorSpace='rgb',
+    lineWidth=1, lineColor=[0,0,0], lineColorSpace='rgb',
+    fillColor=[0,0,0], fillColorSpace='rgb',
     opacity=1, depth=-3.0, interpolate=True)
 
 # Initialize components for Routine "eval"
