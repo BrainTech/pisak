@@ -4,7 +4,8 @@
 sudo add-apt-repository ppa:ethanak/milena -y
 
 ### repozytorium psychopy-brain
-sudo apt-add-repository http://obci:dlugi_przedluzacz@deb-stable.braintech.pl
+sudo sh -c "echo deb http://obci:dlugi_przedluzacz@deb-stable.braintech.pl/xenial / > /etc/apt/sources.list.d/braintech-stable-xenial.list"
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1452AFDF
 
 ### pakiety ogólnie
 sudo apt-get update && sudo apt-get upgrade -y
