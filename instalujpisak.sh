@@ -150,6 +150,7 @@ cp PISAK.desktop /home/$(whoami)/.local/share/applications/
 cp KonfiguracjaPISAKa.desktop /home/$(whoami)/.local/share/applications/
 
 ### zmiania domyslnej sesji na gnome
+gsettings set org.gnome.desktop.background show-desktop-icons true
 cd
 (echo "[Desktop]";echo "Session=gnome") > .dmrc
 cd /var/lib/AccountsService/users
@@ -159,7 +160,6 @@ then
 else
   echo "XSession=gnome" | sudo tee --append $(whoami) > /dev/null
 fi 
-gsettings set org.gnome.desktop.background show-desktop-icons true
 
 ### komunikaty końcowe
 if type ~/pisak/bin/pisak &> /dev/null ; then
