@@ -91,6 +91,7 @@ else
 fi
 cd
 cp pisak/pisak/res/configs/* .pisak/configs/
+cp -r pisak/pisak/res/json/* .pisak/json/
 
 ### instalacja Eviacama
 cd
