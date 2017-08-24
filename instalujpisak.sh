@@ -12,6 +12,8 @@ sudo apt-get install -y python3 python3-gi python3-pil python3-gi-cairo python3-
 sudo apt-get install -y gnome-shell
 sudo apt-get install -y v4l-utils
 
+gsettings set org.gnome.desktop.background show-desktop-icons true
+
 ### MILENA ze źródeł jeśli nie udało się zpakietów
 if ! type milena_say &> /dev/null ; then
    sudo apt-get install -y sox libsox-fmt-all antiword odt2txt libenca-dev libao-dev lame faac poppler-utils vorbis-tools 
@@ -168,7 +170,6 @@ then
 else
   echo "XSession=gnome" | sudo tee --append $(whoami) > /dev/null
 fi 
-gsettings set org.gnome.desktop.background show-desktop-icons true
 
 ### komunikaty końcowe
 if type ~/pisak/bin/pisak &> /dev/null ; then
