@@ -764,9 +764,10 @@
         "type": "PisakBoxLayout",
         "ratio_spacing": 0.0128,
         "children": [
-                        "key_2_10", "key_2_9", "key_2_8", "key_2_7",
+                       
+                        "key_2_9", "key_2_8", "key_2_7",
                         "key_2_6", "key_2_5", "key_2_4", "key_2_3",
-                        "key_2_2", "key_2_1"
+                        "key_2_2", "key_2_1", "key_2_10"
                     ]
     },
     {
@@ -887,9 +888,9 @@
         "type": "PisakBoxLayout",
         "ratio_spacing": 0.0128,
         "children": [
-                        "key_3_10", "key_3_9", "key_3_8", "key_3_7",
+                         "key_3_7",
                         "key_3_6", "key_3_5", "key_3_4", "key_3_3",
-                        "key_3_2", "key_3_1"
+                        "key_3_2", "key_3_1", "key_3_9", "key_3_8", "key_3_10"
                     ]
     },
     {
