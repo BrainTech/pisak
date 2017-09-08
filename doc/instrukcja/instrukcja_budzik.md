@@ -43,16 +43,18 @@ sudo apt-get dist-upgrade</code></pre>
     <pre><code>cd pisak
     bash instalujpisak.sh</code></pre>
 
-4. W ustawieniach systemu (System Settings -> Power):
+4. Wylogowujemy i logujemy ponownie
+
+5. W ustawieniach systemu (System Settings -> Power):
 
     * odznaczamy opcję *Dim screen when inactive* 
     * ustawiamy opcję *Blank screen* na *Never*
     * ustawiamy opcję *Automatic suspend* na *OFF*
 
-5. Konfigurujemy PISAKa
+6. Konfigurujemy PISAKa
 
     Stworzony na pulpicie skrót 'Konfiguracja PISAKa' umożliwia wejście w panel ustawień aplikacji.
 
-6. Uruchamiamy aplikację
+7. Uruchamiamy aplikację
 
     PISAK uruchomi się po kliknięciu w znajdujący się na pulpicie skrót 'PISAK' lub wpisując polecenie pisak w wyszukiwarce Dash. Ponadto PISAKa można uruchomić wpisując w terminalu komendę pisak.
