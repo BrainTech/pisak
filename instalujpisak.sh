@@ -19,8 +19,7 @@ if ! type milena_say &> /dev/null ; then
    sudo apt-get install -y sox libsox-fmt-all antiword odt2txt libenca-dev libao-dev lame faac poppler-utils vorbis-tools 
    sudo apt-get install -y mbrola mbrola-pl1
    cd
-   #to chyba można położyć na pisak.org?
-   wget -N http://tts.polip.com/files/milena-0.2.88.3.tar.gz
+   wget -N https://download.pisak.org/milena-0.2.88.3.tar.gz
    tar xvfz milena-0.2.88.3.tar.gz
    cd  milena-0.2.88.3
    make && sudo make install
