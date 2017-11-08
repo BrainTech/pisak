@@ -1,8 +1,5 @@
 #!/bin/bash
 
-### dodajemy repo Mileny -- a nuż kiedyś pojawią się poprawione pakiety
-sudo add-apt-repository ppa:ethanak/milena -y
-
 ### pakiety ogólnie
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install -y git xdg-user-dirs wget libav-tools
