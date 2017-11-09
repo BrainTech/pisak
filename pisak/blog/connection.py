@@ -1,8 +1,15 @@
 import queue
 import threading
+import urllib
 
 from gi.repository import Clutter
 
+def internet_on():
+    try:
+        response = urllib.request.urlopen('http://216.58.209.67',timeout=1)
+        return True
+    except urllib.error.URLError as err:
+        return False
 
 class ConnectionManager:
 

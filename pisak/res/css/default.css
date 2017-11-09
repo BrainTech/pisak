@@ -1524,10 +1524,10 @@ MxLabel.PisakEmailMessageTileTo {
  }
 
 MxLabel.PisakPopUp {
-  font-size: 35pt;
+  font-size: 30pt;
   font-family: Kelson Sans;
   color: black;
-  font-weight: lighter;
+  font-weight: bold;
 }
 
 MxLabel.PisakEmailMessageTileFrom {

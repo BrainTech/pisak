@@ -14,7 +14,7 @@ from PIL import Image
 
 from pisak import logger, dirs
 from pisak.blog import config, exceptions, html_parsers
-
+from pisak.blog.connection import internet_on
 
 _LOG = logger.get_logger(__name__)
 
@@ -86,13 +86,21 @@ class Blog:
         # can be raised on connection troubles; ServerConnectionError can be
         # raised by wordpress_xmlrpc on xmlrpc client ProtocolError but actually, on invalid
         # XML-RPC protocol, the OSError is raised by xmlrpc instead of the above
+
+        if not(internet_on()):
+            raise exceptions.BlogInternetError()
+
+        for key in ['user_name', 'address', 'password']:
+            if not(self.config_dict[key]):
+                raise exceptions.BlogEmptyConfError() 
+
         try:
             self._iface = wordpress_xmlrpc.Client(address,
                                                   self.config_dict["user_name"],
                                                   self.config_dict["password"])
             self._last_req_ts = time.time()
         except OSError as exc:
-            raise exceptions.BlogInternetError(exc) from exc
+            raise exceptions. BlogConfigurationError(exc) from exc
         except Exception as exc:
             raise exceptions.BlogMethodError(exc) from exc
 
