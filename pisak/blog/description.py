@@ -26,7 +26,7 @@ REQUEST_TIMEOUT = 5  # web request duration limit in seconds
 MESSAGES = {
     'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.',
     'no-internet': 'Brak połączenia z internetem.\nPodłącz komputer do sieci i spróbuj ponownie.',
-    'empty-config': 'Przed uruchomieniem aplikacji należy skonfigurować bloga.',
+    'empty-config': 'Przed uruchomieniem aplikacji należy skonfigurować \nbloga.',
     'wrong-config': 'Nieprawidłowa nazwa użytkownika, hasło lub blog nie istnieje.\nSprawdź konfigurację bloga i spróbuj ponownie.'
 }
 
