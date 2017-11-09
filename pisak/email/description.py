@@ -1,3 +1,4 @@
+import urllib
 import socket
 import textwrap
 
@@ -42,6 +43,12 @@ BUILTIN_CONTACTS = [
     }
 ]
 
+def internet_on():
+    try:
+        response = urllib.request.urlopen('http://216.58.209.67',timeout=1)
+        return True
+    except urllib.error.URLError as err:
+        return False
 
 def prepare_main_view(app, window, script, data):
     """
@@ -77,14 +84,24 @@ def prepare_main_view(app, window, script, data):
     except address_book.AddressBookError:
         pass  # TODO: say something
 
+    if not(internet_on()):
+        window.load_popup(MESSAGES["no_internet"], 'main_panel/main')
+        return False
+    
     client = app.box["imap_client"]
+    oblig_keys =  {key:client._setup[key] for key in client._setup if key!='sent_folder'}
+    if ( any(bool(value) == False for value in oblig_keys.values()) ):
+            window.load_popup(MESSAGES["empty_config"], 'main_panel/main')
+            return False
     try:
         try:
             client.login()
         except imap_client.InvalidCredentialsError:
             window.load_popup(MESSAGES["invalid_credentials"], app.main_quit)
+            return False
         except imap_client.IMAPClientError:
             window.load_popup(MESSAGES["login_fail"], app.main_quit)
+            return False
         else:
             try:
                 inbox_all, inbox_unseen = client.get_inbox_status()
@@ -93,21 +110,23 @@ def prepare_main_view(app, window, script, data):
                                                        str(inbox_all)]))
                 )
             except imap_client.IMAPClientError:
-                pass  # TODO: do something
-
+                return False # TODO: do something
+            
             try:
                 sent_box_count = client.get_sent_box_count()
                 window.ui.button_sent.set_extra_label(
                     counter_label.format(str(sent_box_count))
                 )
             except imap_client.IMAPClientError:
-                pass  # TODO: display some warning
+                return False # TODO: display some warning
+
     except socket.timeout:
         window.load_popup(MESSAGES["too-slow-connection"], app.main_quit)
+        return False
     except exceptions.PisakException:
         window.load_popup(MESSAGES["unknown"], app.main_quit)
-
-
+        return False
+            
 def prepare_drafts_view(app, window, script, data):
     """
     View preparator.
@@ -205,7 +224,7 @@ def prepare_sent_view(app, window, script, data):
         )
 
     data_source.item_handler = load_single_msg
-
+        
     try:
         sent_box_count = client.get_sent_box_count()
     except socket.timeout:

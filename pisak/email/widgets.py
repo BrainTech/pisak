@@ -15,8 +15,9 @@ _LOG = logger.get_logger(__name__)
 DATE_FORMAT = '%d-%m-%Y %H:%M'
 
 ERROR_MESSAGES = {
-    "no_internet": "Brak połączenia z internetem.\nSprawdź "
-                   "łącze i spróbuj ponownie",
+    "no_internet": "Brak połączenia z internetem.\nPodłącz komputer "
+                   "do sieci i spróbuj ponownie",
+    "empty_config": "Przed uruchomieniem aplikacji należy skonfigurować \nskrzynkę pocztową.",
     "login_fail": "Błąd podczas logowania. Sprawdź swoje ustawienia\n"
                     "skrzynki i spróbuj ponownie.",
     "empty_mailbox": "Brak wiadomości w skrzynce.",
@@ -27,7 +28,7 @@ ERROR_MESSAGES = {
     "message_send_fail": "Wysyłanie wiadomości nie powiodło się.\n"
                     "Sprawdź połączenie z internetem i spróbuj ponownie.",
     "invalid_credentials": "Nieprawidłowa nazwa użytkownika lub hasło.",
-    "unknown": "Wystąpił błąd.\nSprawdź swoje połączenie internetowe \ni spróbuj ponownie.",
+    "unknown": "Wystąpił błąd.\nSprawdź swoje połączenie internetowe, \nkonfiguracje skrzynki pocztowej i spróbuj ponownie.",
     'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.'
 }
 
