@@ -10,6 +10,17 @@ class BlogInternetError(exceptions.PisakException):
     """
     pass
 
+class BlogEmptyConfError(exceptions.PisakException):
+    """
+    Error raised when at least one of the obligatory configuration fields is empty.
+    """
+    pass
+
+class BlogConfigurationError(exceptions.PisakException):
+    """
+    Error raised when configuration is incorrect.
+    """
+    pass
 
 class BlogAuthenticationError(exceptions.PisakException):
     """

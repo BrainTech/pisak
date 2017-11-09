@@ -25,13 +25,21 @@ REQUEST_TIMEOUT = 5  # web request duration limit in seconds
 
 MESSAGES = {
     'too-slow-connection': 'Błąd połączenia - \nzbyt wolne połączenie z internetem.',
-    'no-internet': 'Brak połączenia z internetem.\nAplikacja wymaga dostępu do internetu.'
+    'no-internet': 'Brak połączenia z internetem.\nPodłącz komputer do sieci i spróbuj ponownie.',
+    'empty-config': 'Przed uruchomieniem aplikacji należy skonfigurować bloga.',
+    'wrong-config': 'Nieprawidłowa nazwa użytkownika, hasło lub blog nie istnieje.\nSprawdź konfigurację bloga i spróbuj ponownie.'
 }
 
 
 def on_init(window):
     try:
         wordpress.initialize_session()
+    except exceptions.BlogEmptyConfError:
+        window.load_popup(MESSAGES['empty-config'], 'main_panel/main')
+        ret = False
+    except exceptions.BlogConfigurationError:
+        window.load_popup(MESSAGES['wrong-config'], 'main_panel/main')
+        ret = False
     except exceptions.BlogInternetError:
         window.load_popup(MESSAGES['no-internet'], 'main_panel/main')
         ret = False
