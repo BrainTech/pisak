@@ -259,7 +259,6 @@ def prepare_speller_message_body_view(app, window, script, data):
         window.ui.text_box.set_cursor_position(0)
     elif app.box['new_message'].body:
         window.ui.text_box.type_text(app.box['new_message'].body)
-
     handlers.button_to_view(window, script, "button_exit")
     handlers.button_to_view(window, script, "button_proceed",
                         "email/address_book", {"pick_recipients_mode": True})
@@ -610,6 +609,7 @@ def prepare_single_message_view(app, window, script, data):
 
         if "Body" in message:
             window.ui.message_body.type_text(message["Body"])
+            window.ui.message_body.set_cursor_position(0)
             window.ui.message_body._fix_scroll()
 
         def reply():
